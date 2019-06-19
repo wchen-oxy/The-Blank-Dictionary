@@ -1,0 +1,20 @@
+1. Romanization
+2. IPA Pronunciation
+3. Category
+4. English Translation
+5. Tibetan Script Translation
+6. Bhutia Translation
+7. Example
+
+CREATE TABLE Word(
+romanization varchar(100),
+ipa varchar(100),
+category varchar (100),
+eng_trans varchar (100),
+tib_trans varchar (100),
+bhut_trans varchar (100),
+example varchar (100),
+PRIMARY KEY (romanization)
+);
+
+
