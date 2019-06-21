@@ -1,35 +1,29 @@
-body {
-  padding: 0;
-  margin: 0;
-  background: #f2f6e9;
-}
-/*--- navigation bar ---*/
-.navbar {
-  background:#ba375c;
-}
-.nav-link,
-.navbar-brand {
-  color: #fff;
-  cursor: pointer;
-}
-.nav-link {
-  margin-right: 1em !important;
-}
-.nav-link:hover {
-  color: #000;
-}
-.navbar-collapse {
-  justify-content: flex-end;
-}
-
-/*---Background Image---*/
+/*---Home Page Stuff---*/
 .header {
   /*background-image: url('/static/images/ocean.jpg');*/
   background-color: #ba375c;
   background-size: cover;
-  background-position: center;
+  
   position: fixed;
 }
+
+.container{
+	margin-top: 15%;
+}
+
+
+#Title{
+color: white;
+}
+
+#Title{
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer */
+   -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+}
+
 
 /*--Darkens the Header--*/
 /*.overlay {
@@ -42,7 +36,8 @@ body {
 }*/
 
 /*--Title Page*/
-.Title {
+
+/*.Title {
   left: 50%;
   position: absolute;
   top: 40%;
@@ -58,5 +53,6 @@ body {
   color: #fff;
   font-size: 1.3rem;
   line-height: 1.5;
-}
+}*/
+
 
