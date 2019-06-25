@@ -13,8 +13,9 @@
   <title>Your Dictionary</title>
 </head>
 <body>
- <nav class="navbar navbar-expand-md">
+<!--  <nav class="navbar navbar-expand-md">
   <a class="navbar-brand" href="http://127.0.0.1:8000">Logo</a>
+  <form class="form-inline mt-2 mt-md-0"> <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"> <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> </form>
   <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -31,4 +32,37 @@
       </li>
     </ul>
   </div>
-</nav>
+</nav> -->
+
+<nav class="navbar navbar-expand-md fixed-top">
+    <a class="navbar-brand" href="http://127.0.0.1:8000">Logo</a>
+    <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      {% if not home %}
+      <form class="form-inline mt-2 mt-md-0" name="myform" method="get" action="/entry/bhutia_english/" method="get">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query">
+        <button class="btn btn-outline-light" type="submit" action="/entry/bhutia_english/" method="get">Search</button>
+      </form>
+      <div class="col col-xl-auto col-lg-auto col-md-auto col-sm-auto col-auto">
+        <select id="translation" class="custom-select">
+          <option id="be" value="bhutToEng" selected>Bhutia to English</option>
+          <option id="eb" value="engToBhut">English to Bhutia</option>
+          <option id="tb" value="tibToBhut">Tibetan to Bhutia</option>
+        </select>
+      </div>
+      {% endif %}
+    </div>
+  </nav>

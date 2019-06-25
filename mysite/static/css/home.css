@@ -1,6 +1,5 @@
 /*---Home Page Stuff---*/
 .header {
-  /*background-image: url('/static/images/ocean.jpg');*/
   background-color: #ba375c;
   background-size: cover;
   
@@ -24,35 +23,5 @@ color: white;
   -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 }
 
-
-/*--Darkens the Header--*/
-/*.overlay {
-  position: absolute;
-  min-height: 100%;
-  min-width: 100%;
-  left: 0;
-  top: 0;
-  background: rgba(0, 0, 0, 0.6);
-}*/
-
-/*--Title Page*/
-
-/*.Title {
-  left: 50%;
-  position: absolute;
-  top: 40%;
-  transform: translate(-50%, -55%);
-  text-align: center;
-}
-
-.description h1 {
-  color: #6ab446;
-}
-
-.description p {
-  color: #fff;
-  font-size: 1.3rem;
-  line-height: 1.5;
-}*/
 
 
