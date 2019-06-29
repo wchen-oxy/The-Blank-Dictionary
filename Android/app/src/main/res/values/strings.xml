@@ -4,4 +4,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title">The Blank Dictionary</string>
+    <string name="search_hint">Enter your search term here!</string>
 </resources>

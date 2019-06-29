@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
@@ -51,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton button = findViewById(R.id.searchButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+//                //activity shit
+//                Intent myIntent = new Intent(MainActivity.this,SearchActivity.class);
+////                myIntent.putExtra("key", value); //Optional parameters
+//                MainActivity.this.startActivity(myIntent);
+
+                //fragment shit
                 SearchFrag searchFrag = new SearchFrag();
                 fragmentManager = getSupportFragmentManager();
                 searchTransaction = fragmentManager.beginTransaction();
