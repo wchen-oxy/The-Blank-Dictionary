@@ -27,17 +27,17 @@ def search(request):
         else:
             if request.path == "/entry/bhutia_english/":
                 exact_entry = Word.objects.filter(bhut_trans__iexact=query)
-                entrys = Word.objects.filter(bhut_trans__icontains=query)
-                return render(request, 'entry.html', {'entrys': entrys, 'query': exact_entry})
+                entries = Word.objects.filter(bhut_trans__icontains=query)
+                return render(request, 'entry.html', {'possible': entries, 'bhu_eng_exact': exact_entry})
 
             if request.path == "/entry/english_bhutia/":
                 exact_entry = Word.objects.filter(eng_trans__iexact=query)
-                entrys = Word.objects.filter(eng_trans__icontains=query)
-                return render(request, 'entry.html', {'entrys': entrys, 'query': exact_entry})
+                entries = Word.objects.filter(eng_trans__icontains=query)
+                return render(request, 'entry.html', {'possible': entries, 'eng_bhut_exact': exact_entry})
 
             if request.path == "/entry/tibetan_bhutia/":
                 exact_entry = Word.objects.filter(tib_trans__iexact=query)
-                entrys = Word.objects.filter(tib_trans__icontains=query)
-                return render(request, 'entry/entry_list.html', {'entrys': entrys, 'query': exact_entry})
+                entries = Word.objects.filter(tib_trans__icontains=query)
+                return render(request, 'entry/entry_list.html', {'possible': entries, 'tib_bhut_exact': exact_entry})
         return render(request, 'entry.html', {'error': error})
     # return render(request, 'entry.html', {'error': error})

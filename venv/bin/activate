@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/Work/Documents/Coding/Ongoing/LanguageFlow/venv"
+VIRTUAL_ENV="/Users/Work/Documents/Coding/Ongoing/BlankDictionary/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -13,8 +13,7 @@ class Word(models.Model):
     ipa = models.CharField(max_length=100, blank=True, null=True)
     category = models.CharField(max_length=100, blank=True, null=True)
     eng_trans = models.CharField(max_length=100, blank=True, null=True)
-    tib_trans = models.CharField(max_length=100, blank=True, null=True)
-    bhut_trans = models.CharField(max_length=100, blank=True, null=True)
+    tib_script = models.CharField(max_length=100, blank=True, null=True)
     example = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
