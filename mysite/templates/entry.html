@@ -11,56 +11,42 @@
 <!-- Section for if an error exists -->
 
 {% if error %}
-<main role="main" class="container">	
+<main role="main" class="container">
 	<div class="row">
 		<h1 class="col-2-3">Term Not Found.</h1>
 	</div>
 </main>
 {% endif %}
 
-<main role="main" class="container">	
-	<div class="row">
-		<!-- Begin eng to bhut translation -->
-		{% if eng_bhut_exact %}
-		<h1 class="col-2-3">{{Word.romanization}}</h1>
-		{% endif %}
-
-		<!-- Begin eng to tib script translation -->
-		{% if eng_tib_exact%}
-		<h1 class="col-2-3">{{Word.tib_script}}</h1>
-		{% endif %}
-
-		<!-- Begin bhut to eng translation -->
-		{% if bhu_eng_exact %}
-		<h1 class="col-2-3">{{Word.eng_trans}}</h1>
-		{% endif %}
-	</div>
-	<div class="row">
-		<h3 class="col-2-3"> {{Word.ipa}}</h1>
-	</div>
-	<div class="row">
-		<h1 class="col-2-3">{{Word.example}}</h1>
-	</div>
+<main role="main" class="container">
+	
+	<!-- Begin eng to bhut translation -->
+	{% if eng_bhut_exact %}
+	{% with word=eng_bhut_exact.0 %}
+	{% include "definition.html" %}
+	{% endwith %}
+	{% endif %}	
+	
 	{% if possible %}
 	<div class="row">
 		<h2 class="col-2-3">Did you mean?</h2>
+
 		{% for match in possible %}
 		{% if eng_bhut_exact %}
-		<h3 class="col-2-3">{{Word.romanization}}</h1>
+		<h3 class="col-2-3">{{Word.romanization}}</h3>
 		{% endif %}
 
 		<!-- Begin eng to tib script translation -->
 		{% if eng_tib_exact%}
-		<h3 class="col-2-3">{{Word.tib_script}}</h1>
+		<h3 class="col-2-3">{{Word.tib_script}}</h3>
 		{% endif %}
 
 		<!-- Begin bhut to eng translation -->
 		{% if bhu_eng_exact %}
-		<h3 class="col-2-3">{{Word.eng_trans}}</h1>
+		<h3 class="col-2-3">{{Word.eng_trans}}</h3>
 		{% endif %}
 		{% endfor %}
-			{% endif %}
-		}
+		{% endif %}
 	</main>
 
 	<!-- Optional JavaScript -->

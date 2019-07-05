@@ -6,13 +6,12 @@
 6. Bhutia Translation
 7. Example
 
-CREATE TABLE Word(
+CREATE TABLE Bhutia(
 romanization varchar(100),
 ipa varchar(100),
 category varchar (100),
 eng_trans varchar (100),
-tib_trans varchar (100),
-bhut_trans varchar (100),
+tib_script varchar (100),
 example varchar (100),
 PRIMARY KEY (romanization)
 );

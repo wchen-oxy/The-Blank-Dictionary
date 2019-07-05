@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path, re_path
+from django.conf.urls import url
+
 
 from . import views
 
@@ -22,5 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
     path('entry/', include('mainapp.urls')),
+    path('test/', views.test),
+    # url('download/', views.download, name="download"),
+    path('download/<slug:pack>', views.download),
 
 ]

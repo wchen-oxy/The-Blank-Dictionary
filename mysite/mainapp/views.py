@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Word
+from .models import Bhutia
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 
 
@@ -17,27 +17,55 @@ def entry(request):
     error = True
     return render(request, 'entry.html', {'error': error})
 
-def search(request):
+# def search(request):
+#     error = False
+#     if 'query' in request.GET:
+#         query = request.GET['query']
+#
+#         if not query:
+#             error = True
+#         else:
+#             if request.path == "/entry/bhutia_english/":
+#                 exact_entry = Word.objects.filter(bhut_trans__iexact=query)
+#                 entries = Word.objects.filter(bhut_trans__icontains=query)
+#                 return render(request, 'entry.html', {'possible': entries, 'bhu_eng_exact': exact_entry})
+#
+#             if request.path == "/entry/english_bhutia/":
+#                 exact_entry = Word.objects.filter(eng_trans__iexact=query)
+#                 entries = Word.objects.filter(eng_trans__icontains=query)
+#                 return render(request, 'entry.html', {'possible': entries, 'eng_bhut_exact': exact_entry})
+#
+#             if request.path == "/entry/tibetan_bhutia/":
+#                 exact_entry = Word.objects.filter(tib_trans__iexact=query)
+#                 entries = Word.objects.filter(tib_trans__icontains=query)
+#                 return render(request, 'entry/entry_list.html', {'possible': entries, 'tib_bhut_exact': exact_entry})
+#         return render(request, 'entry.html', {'error': error})
+#     # return render(request, 'entry.html', {'error': error})
+
+
+def search(request, translation):
     error = False
     if 'query' in request.GET:
         query = request.GET['query']
 
         if not query:
             error = True
+            return render(request, 'entry.html', {'error': error})
         else:
-            if request.path == "/entry/bhutia_english/":
-                exact_entry = Word.objects.filter(bhut_trans__iexact=query)
-                entries = Word.objects.filter(bhut_trans__icontains=query)
+            if translation == "english_bhutia":
+                exact_entry = Word.objects.filter(romanization__iexact=query)
+                entries = Word.objects.filter(romanization__icontains=query)
                 return render(request, 'entry.html', {'possible': entries, 'bhu_eng_exact': exact_entry})
 
-            if request.path == "/entry/english_bhutia/":
+            if translation == "bhutia_english":
                 exact_entry = Word.objects.filter(eng_trans__iexact=query)
                 entries = Word.objects.filter(eng_trans__icontains=query)
-                return render(request, 'entry.html', {'possible': entries, 'eng_bhut_exact': exact_entry})
+                # return HttpResponse(exact_entry)
+                print(exact_entry)
+                return render(request, 'entry.html', {'eng_bhut_exact': exact_entry})
 
-            if request.path == "/entry/tibetan_bhutia/":
-                exact_entry = Word.objects.filter(tib_trans__iexact=query)
-                entries = Word.objects.filter(tib_trans__icontains=query)
-                return render(request, 'entry/entry_list.html', {'possible': entries, 'tib_bhut_exact': exact_entry})
+            if translation == "tibetan_bhutia":
+                exact_entry = Word.objects.filter(tib_script__iexact=query)
+                entries = Word.objects.filter(tib_script__icontains=query)
+                return render(request, 'entry.html', {'possible': entries, 'tib_bhut_exact': exact_entry})
         return render(request, 'entry.html', {'error': error})
-    # return render(request, 'entry.html', {'error': error})

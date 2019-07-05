@@ -8,7 +8,7 @@
 from django.db import models
 
 
-class Word(models.Model):
+class Bhutia(models.Model):
     romanization = models.CharField(primary_key=True, max_length=100)
     ipa = models.CharField(max_length=100, blank=True, null=True)
     category = models.CharField(max_length=100, blank=True, null=True)
@@ -18,7 +18,7 @@ class Word(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Word'
+        db_table = 'Bhutia'
 
     def __str__(self):
         template = '{0.romanization}'
