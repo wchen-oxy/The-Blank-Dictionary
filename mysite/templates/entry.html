@@ -21,40 +21,72 @@
 <main role="main" class="container">
 	
 	<!-- Begin eng to bhut translation -->
+	{% if bhut_eng_exact %}
+	{% with word=bhut_eng_exact.0 %}
+	{% include "definition.html" %}
+	{% endwith %}
+	{% endif %}	
+
 	{% if eng_bhut_exact %}
 	{% with word=eng_bhut_exact.0 %}
 	{% include "definition.html" %}
 	{% endwith %}
 	{% endif %}	
+
+	{% if tib_bhut_exact %}
+	{% with word=tib_bhut_exact.0 %}
+	{% include "definition.html" %}
+	{% endwith %}
+	{% endif %}	
 	
-	{% if possible %}
+	{% if be_possible %}
 	<div class="row">
-		<h2 class="col-2-3">Did you mean?</h2>
-
-		{% for match in possible %}
-		{% if eng_bhut_exact %}
-		<h3 class="col-2-3">{{Word.romanization}}</h3>
-		{% endif %}
-
-		<!-- Begin eng to tib script translation -->
-		{% if eng_tib_exact%}
-		<h3 class="col-2-3">{{Word.tib_script}}</h3>
-		{% endif %}
-
-		<!-- Begin bhut to eng translation -->
-		{% if bhu_eng_exact %}
-		<h3 class="col-2-3">{{Word.eng_trans}}</h3>
+		<h4 class="col-2-3">Did you mean?</h4>
+	</div>			
+	{% for match in be_possible %}
+	{% if match.romanization != bhut_eng_exact.0.romanization %}
+	<div class="row">
+		<p> {{match.romanization}} </p>
+			</div>
 		{% endif %}
 		{% endfor %}
-		{% endif %}
-	</main>
+	{% endif %}
 
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="{% static 'js/avg.js' %}"></script>
+	{% if eb_possible %}
+	<div class="row">
+		<h4 class="col-2-3">Did you mean?</h4>
+	</div>			
+	{% for match in eb_possible %}
+	{% if match.romanization != eng_bhut_exact.0.romanization %}
+	<div class="row">
+		<p> {{match.romanization}} </p>
+			</div>
+
+		{% endif %}
+		{% endfor %}
+	{% endif %}
+
+	{% if tb_possible %}
+	<div class="row">
+		<h4 class="col-2-3">Did you mean?</h4>
+	</div>			
+	{% for match in tb_possible %}
+	{% if match.tib_script != tib_bhut_exact.0.tib_script %}
+	<div class="row">
+		<p> {{match.tib_script}} </p>
+			</div>
+		{% endif %}
+		{% endfor %}
+	{% endif %}
+
+</main>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="{% static 'js/avg.js' %}"></script>
 </body>
 
 </html>
