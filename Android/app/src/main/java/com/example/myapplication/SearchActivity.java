@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+import com.example.myapplication.SearchAdaptor;
 
 public class SearchActivity extends AppCompatActivity {
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,10 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            System.out.println("THis is query: " + query);
+            System.out.println("This is option" + intent.getStringExtra("Translation"));
 //           TODO:implement this doMySearch(query);
+
 
         }
     }

@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        final ImageButton button = findViewById(R.id.searchButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        final ImageButton mainSearchButton = findViewById(R.id.searchButton);
+        mainSearchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
 //                //activity shit
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 searchTransaction = fragmentManager.beginTransaction();
                 searchTransaction.addToBackStack(null);
                 searchTransaction.add(R.id.search_frag, searchFrag).commit();
+
             }
         });
     }
