@@ -8,24 +8,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true">
+
     <LinearLayout
         android:id="@+id/search_linear_layout"
-        android:background="#ba375c"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:background="#ba375c"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <SearchView
-            android:background="#FFF"
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:layout_marginEnd="50dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="50dp"
             android:layout_marginBottom="9dp"
+            android:background="#FFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_settings">Settings</string>
     <string name="title">The Blank Dictionary</string>
     <string name="search_hint">Enter your search term here!</string>
+    <string name="language_button">Language Packs</string>
+    <string name="default_button">Current Dictionary</string>
+    <string name="interface_button">App Language</string>
+    <string name="help_button">Help</string>
+    <string name="feedback_button">Feedback</string>
+    <string name="donate_button">Donate</string>
+
+
 
     <string-array name="planets_array">
         <item>Mercury</item>

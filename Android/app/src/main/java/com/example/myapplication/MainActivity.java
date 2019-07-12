@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     FragmentTransaction searchTransaction;
+    FragmentTransaction settingsTransaction;
+    FragmentTransaction favoritesTransaction;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -27,15 +29,28 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 //                    mTextMessage.setText(R.string.title_home);
-                    System.out.println(getSupportFragmentManager().getFragments());
-
+                    System.out.println("HERE ARE THE FRAGMENTS: " + getSupportFragmentManager().getFragments());
                     fragmentManager.popBackStack();
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_favorites:
+                    fragmentManager.popBackStack();
+                    FavoritesFrag favoritesFrag = new FavoritesFrag();
+//                    fragmentManager = getSupportFragmentManager();
+                    favoritesTransaction = fragmentManager.beginTransaction();
+                    favoritesTransaction.addToBackStack(null);
+                    favoritesTransaction.add(R.id.frag_container, favoritesFrag).commit();
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_settings:
+                    fragmentManager.popBackStack();
+
+//                    mTextMessage.setText(R.string.title_notifications);
+//                    System.out.println(getSupportFragmentManager().getFragments());
+                    SettingsFrag settingsFrag = new SettingsFrag();
+//                    fragmentManager = getSupportFragmentManager();
+                    settingsTransaction = fragmentManager.beginTransaction();
+                    settingsTransaction.addToBackStack(null);
+                    settingsTransaction.add(R.id.frag_container, settingsFrag).commit();
+
                     return true;
             }
             return false;
@@ -50,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         final ImageButton mainSearchButton = findViewById(R.id.searchButton);
+        fragmentManager = getSupportFragmentManager();
+
+
         mainSearchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -60,10 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
                 //fragment shit
                 SearchFrag searchFrag = new SearchFrag();
-                fragmentManager = getSupportFragmentManager();
                 searchTransaction = fragmentManager.beginTransaction();
                 searchTransaction.addToBackStack(null);
-                searchTransaction.add(R.id.search_frag, searchFrag).commit();
+                searchTransaction.add(R.id.frag_container, searchFrag).commit();
 
             }
         });

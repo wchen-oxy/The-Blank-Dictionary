@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
@@ -62,6 +64,19 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                 return true;
             }
         });
+
+// //USE THIS to measure height/width of wrap content
+//        final LinearLayout below= (LinearLayout) rootView.findViewById(R.id.search_linear_layout);
+//        below.post(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                Log.i("TAG", "Layout width :"+ below.getWidth());
+//                Log.i("TAG", "Layout height :"+ below.getHeight());
+//            }
+//        });
+
         return rootView;
     }
 
