@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.example.myapplication.SearchAdaptor;
 
+import org.json.JSONArray;
+
 public class SearchActivity extends AppCompatActivity {
 
     @Override
@@ -26,4 +28,11 @@ public class SearchActivity extends AppCompatActivity {
 
         }
     }
+
+    public JSONArray search(String query) {
+        JSONArray result = new JSONArray();
+        //FIXME
+        return result;
+    }
+
 }
