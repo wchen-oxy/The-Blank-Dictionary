@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.SearchView;
@@ -68,24 +69,9 @@ public class MainActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         final SearchView mainSearchBar = findViewById(R.id.searchView);
         fragmentManager = getSupportFragmentManager();
+        final String TAG = "MyActivity";
 
 
-//        mainSearchButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-////                //activity shit
-////                Intent myIntent = new Intent(MainActivity.this,SearchActivity.class);
-//////                myIntent.putExtra("key", value); //Optional parameters
-////                MainActivity.this.startActivity(myIntent);
-//
-//                //fragment shit
-//                SearchFrag searchFrag = new SearchFrag();
-//                searchTransaction = fragmentManager.beginTransaction();
-//                searchTransaction.addToBackStack(null);
-//                searchTransaction.add(R.id.frag_container, searchFrag).commit();
-//
-//            }
-//        });
         mainSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             //            @Override
 //            public boolean onQueryTextSubmitted(String query) {
@@ -109,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 searchFrag.setArguments(arguments);
                 searchTransaction = fragmentManager.beginTransaction();
                 searchTransaction.addToBackStack(null);
-                searchTransaction.add(R.id.frag_container, searchFrag).commit();
-
+                searchTransaction.replace(R.id.frag_container, searchFrag).commit();
                 return false;
             }
 
