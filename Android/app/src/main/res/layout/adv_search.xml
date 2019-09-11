@@ -19,14 +19,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.v7.widget.ActionMenuView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:menu="@menu/dictionary_pack_menu"
-
-        >
-
-        </android.support.v7.widget.ActionMenuView>
+        <!--<android.support.v7.widget.ActionMenuView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:menu="@menu/dictionary_pack_menu"-->
+        <!--&gt;-->
+        <!--</android.support.v7.widget.ActionMenuView>-->
 
         <SearchView
             android:id="@+id/searchView"

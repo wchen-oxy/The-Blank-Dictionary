@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.view.View;
 
@@ -64,26 +66,62 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        final ImageButton mainSearchButton = findViewById(R.id.searchButton);
+        final SearchView mainSearchBar = findViewById(R.id.searchView);
         fragmentManager = getSupportFragmentManager();
 
 
-        mainSearchButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+//        mainSearchButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+////                //activity shit
+////                Intent myIntent = new Intent(MainActivity.this,SearchActivity.class);
+//////                myIntent.putExtra("key", value); //Optional parameters
+////                MainActivity.this.startActivity(myIntent);
+//
+//                //fragment shit
+//                SearchFrag searchFrag = new SearchFrag();
+//                searchTransaction = fragmentManager.beginTransaction();
+//                searchTransaction.addToBackStack(null);
+//                searchTransaction.add(R.id.frag_container, searchFrag).commit();
+//
+//            }
+//        });
+        mainSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            //            @Override
+//            public boolean onQueryTextSubmitted(String query) {
+//                // Called when the user submits the query.
+//                return true;
+//            }
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+//                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+//                System.out.println(s);
+//                intent.setAction(Intent.ACTION_SEARCH);
+//                intent.putExtra(SearchManager.QUERY, s);
+//                startActivity(intent);
 
-//                //activity shit
-//                Intent myIntent = new Intent(MainActivity.this,SearchActivity.class);
-////                myIntent.putExtra("key", value); //Optional parameters
-//                MainActivity.this.startActivity(myIntent);
+
 
                 //fragment shit
                 SearchFrag searchFrag = new SearchFrag();
+                Bundle arguments = new Bundle();
+                arguments.putString( "query", s);
+                searchFrag.setArguments(arguments);
                 searchTransaction = fragmentManager.beginTransaction();
                 searchTransaction.addToBackStack(null);
                 searchTransaction.add(R.id.frag_container, searchFrag).commit();
 
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Called when the query text is changed by the user.
+                return true;
             }
         });
+
+
     }
 
 }

@@ -25,11 +25,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          intent = new Intent(getActivity(),SearchActivity.class);
-
-
     }
-
-
 
     @Nullable
     @Override
@@ -37,18 +33,21 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         View rootView = inflater.inflate(R.layout.adv_search, container,false);
         //You need to inflate the Fragment's view and call findViewById() on the View it returns.
         final SearchView searchView = (SearchView) rootView.findViewById(R.id.searchView);
+        final Bundle args = getArguments();
+        //Any query text is cleared when iconified. So setIconified to false.
+        searchView.setIconified(false);
+        searchView.setFocusable(false);
+        searchView.clearFocus();
+        searchView.setQuery(args.getString("query"), false);
+
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchView.setIconified(false);
             }
+
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmitted(String query) {
-//                // Called when the user submits the query.
-//                return true;
-//            }
             @Override
             public boolean onQueryTextSubmit(String s) {
                 System.out.println(s);
