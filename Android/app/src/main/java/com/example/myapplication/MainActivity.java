@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
 
     FragmentManager fragmentManager;
+    FragmentTransaction homeTransaction;
     FragmentTransaction searchTransaction;
     FragmentTransaction settingsTransaction;
     FragmentTransaction favoritesTransaction;
@@ -34,25 +35,28 @@ public class MainActivity extends AppCompatActivity {
 //                    mTextMessage.setText(R.string.title_home);
                     System.out.println("HERE ARE THE FRAGMENTS: " + getSupportFragmentManager().getFragments());
                     fragmentManager.popBackStack();
+                    HomeFrag homeFrag = new HomeFrag();
+                    homeTransaction = fragmentManager.beginTransaction();
+                    homeTransaction.replace(R.id.frag_container, homeFrag).commit();
                     return true;
                 case R.id.navigation_favorites:
-                    fragmentManager.popBackStack();
+//                    fragmentManager.popBackStack();
                     FavoritesFrag favoritesFrag = new FavoritesFrag();
 //                    fragmentManager = getSupportFragmentManager();
                     favoritesTransaction = fragmentManager.beginTransaction();
-                    favoritesTransaction.addToBackStack(null);
-                    favoritesTransaction.add(R.id.frag_container, favoritesFrag).commit();
+//                    favoritesTransaction.addToBackStack(null);
+                    favoritesTransaction.replace(R.id.frag_container, favoritesFrag).commit();
                     return true;
                 case R.id.navigation_settings:
-                    fragmentManager.popBackStack();
+//                    fragmentManager.popBackStack();
 
 //                    mTextMessage.setText(R.string.title_notifications);
 //                    System.out.println(getSupportFragmentManager().getFragments());
                     SettingsFrag settingsFrag = new SettingsFrag();
 //                    fragmentManager = getSupportFragmentManager();
                     settingsTransaction = fragmentManager.beginTransaction();
-                    settingsTransaction.addToBackStack(null);
-                    settingsTransaction.add(R.id.frag_container, settingsFrag).commit();
+//                    settingsTransaction.addToBackStack(null);
+                    settingsTransaction.replace(R.id.frag_container, settingsFrag).commit();
 
                     return true;
             }
@@ -65,48 +69,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_frame);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        final SearchView mainSearchBar = findViewById(R.id.searchView);
+//        mTextMessage = findViewById(R.id.message);
         fragmentManager = getSupportFragmentManager();
-        final String TAG = "MyActivity";
+        Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
 
-
-        mainSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            //            @Override
-//            public boolean onQueryTextSubmitted(String query) {
-//                // Called when the user submits the query.
-//                return true;
-//            }
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-//                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-//                System.out.println(s);
-//                intent.setAction(Intent.ACTION_SEARCH);
-//                intent.putExtra(SearchManager.QUERY, s);
-//                startActivity(intent);
-
-
-
-                //fragment shit
-                SearchFrag searchFrag = new SearchFrag();
-                Bundle arguments = new Bundle();
-                arguments.putString( "query", s);
-                searchFrag.setArguments(arguments);
-                searchTransaction = fragmentManager.beginTransaction();
-                searchTransaction.addToBackStack(null);
-                searchTransaction.replace(R.id.frag_container, searchFrag).commit();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // Called when the query text is changed by the user.
-                return true;
-            }
-        });
+        //fragment shit
+        HomeFrag homeFrag = new HomeFrag();
+        homeTransaction = fragmentManager.beginTransaction();
+//        homeTransaction.addToBackStack(null);
+        homeTransaction.add(R.id.frag_container, homeFrag, "HOME_FRAG").commit();
 
 
     }
+
+
+
+//    @Override
+//    public void onBackPressed() {
+//
+//        int count = getSupportFragmentManager().getBackStackEntryCount();
+//
+//        if (count == 0) {
+//            super.onBackPressed();
+//            //additional code
+//        } else {
+//            getSupportFragmentManager().popBackStack();
+//        }
+//
+//    }
 
 }

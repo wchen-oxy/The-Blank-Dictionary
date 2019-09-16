@@ -27,6 +27,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
          intent = new Intent(getActivity(),SearchActivity.class);
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,6 +40,9 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         searchView.setFocusable(false);
         searchView.clearFocus();
         searchView.setQuery(args.getString("query"), false);
+        Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
+
+
 
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,9 +55,9 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             @Override
             public boolean onQueryTextSubmit(String s) {
                 System.out.println(s);
-                intent.setAction(Intent.ACTION_SEARCH);
-                intent.putExtra(SearchManager.QUERY, s);
-                startActivity(intent);
+//                intent.setAction(Intent.ACTION_SEARCH);
+//                intent.putExtra(SearchManager.QUERY, s);
+//                startActivity(intent);
                 return false;
             }
 
@@ -122,8 +126,9 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-
     }
+
+
 
     //Click Listeners for the Translation Option
 
