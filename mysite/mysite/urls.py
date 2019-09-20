@@ -23,9 +23,10 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
-    path('entry/', include('mainapp.urls')),
+    path('d/', include('dictionaries.urls')),
     path('test/', views.test),
     # url('download/', views.download, name="download"),
     path('download/<slug:pack>', views.download),
+    re_path('api/', include('dictionaries.urls'))
 
 ]

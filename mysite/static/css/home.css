@@ -1,9 +1,8 @@
 /*---Home Page Stuff---*/
-.header {
+body {
   background-color: #ba375c;
-  background-size: cover;
   
-  position: fixed;
+  
 }
 
 .container{

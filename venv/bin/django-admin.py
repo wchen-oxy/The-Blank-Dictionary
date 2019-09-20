@@ -1,4 +1,4 @@
-#!/Users/Work/Documents/Coding/Ongoing/LanguageFlow/venv/bin/python3
+#!/Users/Work/Documents/Coding/Ongoing/BlankDictionary/venv/bin/python3
 from django.core import management
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ catch(e) {
 }
 
 if ((store.getItem('todoData')) == undefined) {
-	document.myform.setAttribute("action", "/entry/bhutia_english/");
+	document.myform.setAttribute("action", "/d/Bhutia/bhutia_english/");
 	store.setItem('todoData', 'bhutToEng');
 }
 
@@ -36,21 +36,21 @@ $(document).ready(function(){
 
 $("select").change(function(event){
     if (event.target.value == "bhutToEng") {
-	    	document.myform.setAttribute("action", "/entry/bhutia_english/");
+	    	document.myform.setAttribute("action", "/d/Bhutia/bhutia_english/");
 	    	// alert('bhutToEng');
 	    	store.setItem("storageName", "be");
 
         }
         if(event.target.value == "engToBhut") {
-        	document.myform.setAttribute("action", "/entry/english_bhutia/");
+        	document.myform.setAttribute("action", "/d/Bhutia/english_bhutia/");
         		    	// alert('engToEng');
 
           	store.setItem("storageName", "eb");
 
         }
 
-        if (event.target.value == "tibToBhut")  { 
-	        document.myform.setAttribute("action", "/entry/tibetan_bhutia/");
+        if (event.target.value == "tibToBhut")  {
+	        document.myform.setAttribute("action", "/d/Bhutia/tibetan_bhutia/");
 	        store.setItem("storageName", "tb");
       }
 });
