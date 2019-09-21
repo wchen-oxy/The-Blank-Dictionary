@@ -16,17 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.conf.urls import url
+from .views import AllBhutia
 
 
 from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name="home"),
+    path('', views.test),
+
+    # path('', views.home, name="home"),
     path('d/', include('dictionaries.urls')),
-    path('test/', views.test),
     # url('download/', views.download, name="download"),
     path('download/<slug:pack>', views.download),
-    re_path('api/', include('dictionaries.urls'))
+    path('api/<slug:lang>/', AllBhutia.as_view(), name="all-words")
+
+   
+
 
 ]

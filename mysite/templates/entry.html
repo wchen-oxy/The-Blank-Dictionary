@@ -19,30 +19,30 @@
 {% endif %}
 
 <main role="main" class="container">
-	
+
 	<!-- Begin eng to bhut translation -->
 	{% if bhut_eng_exact %}
 	{% with word=bhut_eng_exact.0 %}
 	{% include "definition.html" %}
 	{% endwith %}
-	{% endif %}	
+	{% endif %}
 
 	{% if eng_bhut_exact %}
 	{% with word=eng_bhut_exact.0 %}
 	{% include "definition.html" %}
 	{% endwith %}
-	{% endif %}	
+	{% endif %}
 
 	{% if tib_bhut_exact %}
 	{% with word=tib_bhut_exact.0 %}
 	{% include "definition.html" %}
 	{% endwith %}
-	{% endif %}	
-	
+	{% endif %}
+
 	{% if be_possible %}
 	<div class="row">
 		<h4 class="col-2-3">Did you mean?</h4>
-	</div>			
+	</div>
 	{% for match in be_possible %}
 	{% if match.romanization != bhut_eng_exact.0.romanization %}
 	<div class="row">
@@ -55,7 +55,7 @@
 	{% if eb_possible %}
 	<div class="row">
 		<h4 class="col-2-3">Did you mean?</h4>
-	</div>			
+	</div>
 	{% for match in eb_possible %}
 	{% if match.romanization != eng_bhut_exact.0.romanization %}
 	<div class="row">
@@ -69,7 +69,7 @@
 	{% if tb_possible %}
 	<div class="row">
 		<h4 class="col-2-3">Did you mean?</h4>
-	</div>			
+	</div>
 	{% for match in tb_possible %}
 	{% if match.tib_script != tib_bhut_exact.0.tib_script %}
 	<div class="row">
