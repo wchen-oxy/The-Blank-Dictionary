@@ -1,29 +1,45 @@
-// var a = window.location.pathname;
-// var b = a[0];
-// var c = window.location.pathname.split( '/' );
+//set logo redirect
+var url = window.location.pathname.split('/');
+// window.location.hostname + '/' + url[1] + '/' + url[2];
+var final_url = window.location.protocol + "//" +window.location.hostname + ':'+ window.location.port+ '/' + url[1] + '/' + url[2];
+var isHome = false;
+
+//IMPORTANT WHEN DEPLOYING MAKE SURE TO GET RID OF THE PORT NUMBER BELOW window.location.port;
+//FIX ME
+document.getElementById('home').href = final_url;
 
 //if at home page, set default selected to bhutia_english
+console.log(window.location.pathname);
 if (window.location.pathname == "/d/Bhutia") {
+	isHome = true;
 	document.myform.setAttribute("action", "/d/Bhutia/bhutia_english/");
-	document.getElementById('translation').value = "bhutia_english"
-
+	document.getElementById('translation').selected = 'bhutia_english';
+}
 // get the inital translation direction and set the forms correct
-const translation = window.location.pathname;
-console.log(translation);
+var translation = window.location.pathname;
+// console.log(translation);
+if (translation != "/d/Bhutia"){
 document.myform.setAttribute("action", translation);
-document.getElementById('translation').value = translation.split('/')[3];
+document.getElementById('translation').value = translation.split('/')[3];}
 
 //changing select
 document
   .getElementById('translation')
   .addEventListener('change',  (event) => {
-		const newURL = event.target.value;
-		console.log(newURL);
+		var newURL = event.target.value;
+		// console.log(newURL);
 		//change the form action on click
 		document.myform.setAttribute("action", "/d/Bhutia/" + newURL);
 		// window.history.replaceState("/d/Bhutia/", "trans", translation.split('/')[3]);
 		//change the url on select/option change
-		window.history.replaceState("http://example.ca", "Sample Title", "/d/Bhutia/" + newURL);
+		console.log(final_url);
+		// if (isHome === true ){
+		// 	console.log("HOME");
+		// 	window.history.pushState(final_url, "", "/d/Bhutia/" + newURL);
+		// }
+		// else{
+		// 	console.log("NOPE");
+		// 	window.history.replaceState(final_url, "", "/d/Bhutia/" + newURL);}
 	});
 
 
