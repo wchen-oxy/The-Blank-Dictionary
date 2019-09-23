@@ -42,8 +42,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         searchView.setQuery(args.getString("query"), false);
         Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
 
-
-
+        //prevent automatically bringing up the keyboard when you move to the fragment
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +50,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             }
 
         });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {

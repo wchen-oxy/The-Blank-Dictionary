@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class SettingsFrag extends Fragment {
-
+public class LanguagePackFrag extends Fragment {
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,24 +18,25 @@ public class SettingsFrag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View rootView = inflater.inflate(R.layout.settings_frag, container,false);
-        Button languagePack = rootView.findViewById(R.id.language_button);
+        View rootView = inflater.inflate(R.layout.lang_pack_list, container,false);
+        Button languagePack = rootView.findViewById(R.id.dictionary_selected);
 
-        final FragmentManager fragmentManager = getFragmentManager();
-        final FragmentTransaction langFragTransaction;
-        langFragTransaction = fragmentManager.beginTransaction();
 
         languagePack.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        langFragTransaction.addToBackStack(null);
-                        LanguagePackFrag languagePackFrag = new LanguagePackFrag();
-                        langFragTransaction.replace(R.id.frag_container, languagePackFrag).commit();
+//                        Toast test = new Toast();
+                        Toast.makeText(getActivity(),"Selected",Toast.LENGTH_SHORT).show();
+                        dataDownload();
 
                     }
                 });
 
         return rootView;
+    }
+
+    private void dataDownload(){
+        
     }
 
 
