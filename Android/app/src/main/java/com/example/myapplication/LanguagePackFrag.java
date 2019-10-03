@@ -39,5 +39,13 @@ public class LanguagePackFrag extends Fragment {
         
     }
 
+//    @Override
+//    public void onDestroyView( ){
+//        super.onDestroyView();
+//        Toast.makeText(getActivity(),"LEAVE",Toast.LENGTH_SHORT).show();
+//
+//
+//    }
+
 
 }

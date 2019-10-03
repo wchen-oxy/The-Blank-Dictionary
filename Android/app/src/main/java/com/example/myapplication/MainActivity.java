@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.view.View;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
 //                    mTextMessage.setText(R.string.title_home);
                     System.out.println("HERE ARE THE FRAGMENTS: " + getSupportFragmentManager().getFragments());
-                    fragmentManager.popBackStack();
+//                    fragmentManager.popBackStack();
                     HomeFrag homeFrag = new HomeFrag();
                     homeTransaction = fragmentManager.beginTransaction();
                     homeTransaction.replace(R.id.frag_container, homeFrag).commit();
@@ -64,15 +66,87 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    //code for selecting correct menu item on backstack press
+    public Fragment getCurrentFragment() {
+        return this.getSupportFragmentManager().findFragmentById(R.id.frag_container);
+    }
+
+    @Override
+    public void onBackPressed(){
+        SearchView mainSearch = findViewById(R.id.searchView);
+        Log.d("TAG", getCurrentFragment().toString());
+
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.frag_container);
+        if (!(f instanceof HomeFrag) && !(f instanceof SearchFrag)){
+                Log.d("THIS CLASS IS", f.toString());
+            super.onBackPressed();
+
+        }
+
+        else if (!mainSearch.getQuery().toString().isEmpty()) {
+        Log.d("ceck", mainSearch.getQuery().toString());
+
+        Log.d("ceck", "clear text");
+        mainSearch.setQuery("",false);
+
+        }
+
+        else {
+            Log.d("ceck", mainSearch.getQuery().toString());
+            Log.d("ceck", "backpress");
+            super.onBackPressed();}
+//        super.onBackPressed();
+    }
+
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        handleIntent(intent);
+//    }
+//
+//    private void handleIntent(Intent intent) {
+//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+//            String query = intent.getStringExtra(SearchManager.QUERY);
+//            Toast.makeText(getApplicationContext(), "Searching for " + query, Toast.LENGTH_LONG).show();
+//
+//            //fragment shit
+//            SearchFrag searchFrag = new SearchFrag();
+//
+//            searchTransaction = fragmentManager.beginTransaction();
+//            searchTransaction.addToBackStack(null);
+//            searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
+//
+////            updateEntriesView(dbHelper.queryEntriesByName(query));
+//        }
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_frame);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        final BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
 //        mTextMessage = findViewById(R.id.message);
         fragmentManager = getSupportFragmentManager();
         Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
+//        fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+//            @Override
+//            public void onBackStackChanged() {
+//                Fragment current = getCurrentFragment();
+//                if (current instanceof HomeFrag) {
+//                    navView.setSelectedItemId(R.id.navigation_home);
+//                }
+//                if(current instanceof FavoritesFrag) {
+//                    navView.setSelectedItemId(R.id.navigation_favorites);
+//                }
+//                if (current instanceof SettingsFrag) {
+//                    navView.setSelectedItemId(R.id.navigation_settings);
+//                }
+//            }
+//        });
+
+
 
         //fragment shit
         HomeFrag homeFrag = new HomeFrag();

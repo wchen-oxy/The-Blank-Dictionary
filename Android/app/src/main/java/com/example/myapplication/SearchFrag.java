@@ -25,7 +25,11 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          intent = new Intent(getActivity(),SearchActivity.class);
+
+
     }
+
+
 
 
     @Nullable
@@ -36,13 +40,13 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         final SearchView searchView = (SearchView) rootView.findViewById(R.id.searchView);
         final Bundle args = getArguments();
         //Any query text is cleared when iconified. So setIconified to false.
-        searchView.setIconified(false);
-        searchView.setFocusable(false);
-        searchView.clearFocus();
+
         searchView.setQuery(args.getString("query"), false);
         Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
 
         //prevent automatically bringing up the keyboard when you move to the fragment
+//        searchView.setIconifiedByDefault(false);
+//        searchView.setIconified(true);
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +72,15 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             }
         });
 
+        //onbackpress
+
+        searchView.setFocusable(false);
+        searchView.setIconified(false);
+        searchView.clearFocus();
+
+
+
+
 // //USE THIS to measure height/width of wrap content
 //        final LinearLayout below= (LinearLayout) rootView.findViewById(R.id.search_linear_layout);
 //        below.post(new Runnable()
@@ -82,6 +95,8 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
         return rootView;
     }
+
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

@@ -1,10 +1,13 @@
 package com.example.myapplication;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.support.v4.app.FragmentTransaction;
 public class HomeFrag extends Fragment {
     FragmentManager fragmentManager;
     FragmentTransaction searchTransaction;
+    SearchView mainSearchBar;
 
 
 
@@ -35,11 +39,27 @@ public class HomeFrag extends Fragment {
     return inflater.inflate(R.layout.home_frag, container,false);
     }
 
+
+
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final SearchView mainSearchBar = view.findViewById(R.id.searchView);
-        mainSearchBar.setEnabled(false);
+        mainSearchBar = view.findViewById(R.id.searchView);
+//        mainSearchBar.clearFocus();
+//        mainSearchBar.setFocusable(false);
+//        mainSearchBar.setIconified(false);
+
+//        mainSearchBar.setEnabled(false);
+//        System.out.println("IS IT ICONIFIED 2" + mainSearchBar.isIconified());
+//        mainSearchBar.setIconifiedByDefault(false);
+//
+
+//        IN CASE YOU WANT TO USE SEARCHMANAGER AND USE ANOTHER ACTIVITY, UNCOMMENT THIS AND
+//        ALSO UNCOMMENT SEARCHABLE STUFF IN ANDROID MANIFEST
+//        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+//        mainSearchBar.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
         mainSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             //            @Override
 //            public boolean onQueryTextSubmitted(String query) {
@@ -64,6 +84,7 @@ public class HomeFrag extends Fragment {
                 searchTransaction = fragmentManager.beginTransaction();
                 searchTransaction.addToBackStack(null);
                 searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
+
                 return false;
             }
 
@@ -74,7 +95,34 @@ public class HomeFrag extends Fragment {
             }
         });
 
+        Log.d("checker", "FINISHED");
+        Log.d("second", mainSearchBar.getQuery().toString());
+
+
+
     }
+
+    @Override
+    public void onResume() {
+       mainSearchBar.setQuery("", false);
+
+        mainSearchBar.setFocusable(true);
+        mainSearchBar.setIconified(true);
+//        System.out.println("IS IT ICONIFIED 1 " + mainSearchBar.isIconified());
+        mainSearchBar.clearFocus();
+       super.onResume();
+    }
+
+
+//    @Override
+//    public void onDestroyView(){
+//        super.onDestroyView();
+//        Log.d("thing", "destroyed");
+//        SearchView mainSearchBar = viewGrab.findViewById(R.id.searchView);
+//        mainSearchBar.setQuery("", false);
+//        mainSearchBar.clearFocus();
+//
+//    }
 
 
     }

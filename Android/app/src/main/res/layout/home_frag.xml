@@ -7,7 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:background="#ba375c"
+    >
 
     <View
         android:id="@+id/anchor"
@@ -27,6 +29,7 @@
         android:textColor="#FFFFFF"
         android:textSize="36sp" />
 
+
     <LinearLayout
         android:id="@+id/outer_search_linear_layout"
         android:background="#FFF"
@@ -42,6 +45,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+
             />
         <RelativeLayout
             android:id="@+id/search_bar_container"
