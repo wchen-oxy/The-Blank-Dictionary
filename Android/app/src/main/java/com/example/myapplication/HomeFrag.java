@@ -84,6 +84,8 @@ public class HomeFrag extends Fragment {
                 searchTransaction = fragmentManager.beginTransaction();
                 searchTransaction.addToBackStack(null);
                 searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
+                MainActivity setter = (MainActivity)getActivity();
+                setter.isAdvSearch = true;
 
                 return false;
             }

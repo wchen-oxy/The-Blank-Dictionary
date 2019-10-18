@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction searchTransaction;
     FragmentTransaction settingsTransaction;
     FragmentTransaction favoritesTransaction;
+    BottomNavigationView navViewBack;
+    SearchView secSearch;
+    String query;
+
+    Boolean isAdvSearch = false;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -37,6 +42,18 @@ public class MainActivity extends AppCompatActivity {
 //                    mTextMessage.setText(R.string.title_home);
                     System.out.println("HERE ARE THE FRAGMENTS: " + getSupportFragmentManager().getFragments());
 //                    fragmentManager.popBackStack();
+                    if (isAdvSearch) {
+                        SearchFrag searchFrag = new SearchFrag();
+                        Bundle arguments = new Bundle();
+                        arguments.putString( "query", query);
+                        searchFrag.setArguments(arguments);
+                        searchTransaction = fragmentManager.beginTransaction();
+                        searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
+
+                        return true;
+                    }
+
+
                     HomeFrag homeFrag = new HomeFrag();
                     homeTransaction = fragmentManager.beginTransaction();
                     homeTransaction.replace(R.id.frag_container, homeFrag).commit();
@@ -47,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 //                    fragmentManager = getSupportFragmentManager();
                     favoritesTransaction = fragmentManager.beginTransaction();
 //                    favoritesTransaction.addToBackStack(null);
+
                     favoritesTransaction.replace(R.id.frag_container, favoritesFrag).commit();
                     return true;
                 case R.id.navigation_settings:
@@ -78,11 +96,18 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frag_container);
         if (!(f instanceof HomeFrag) && !(f instanceof SearchFrag)){
+            //favorites or settings
                 Log.d("THIS CLASS IS", f.toString());
+            navViewBack.setSelectedItemId(R.id.navigation_home);
+            Log.d("TAG", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
+
+            getSupportFragmentManager().popBackStackImmediate();
+            Log.d("TAG", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
+
             super.onBackPressed();
 
         }
-
+        //clear text
         else if (!mainSearch.getQuery().toString().isEmpty()) {
         Log.d("ceck", mainSearch.getQuery().toString());
 
@@ -90,10 +115,15 @@ public class MainActivity extends AppCompatActivity {
         mainSearch.setQuery("",false);
 
         }
+        //return to main page
 
         else {
             Log.d("ceck", mainSearch.getQuery().toString());
             Log.d("ceck", "backpress");
+            //add clear
+            isAdvSearch = false;
+
+
             super.onBackPressed();}
 //        super.onBackPressed();
     }
@@ -126,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.base_frame);
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navViewBack = navView;
 
 //        mTextMessage = findViewById(R.id.message);
         fragmentManager = getSupportFragmentManager();

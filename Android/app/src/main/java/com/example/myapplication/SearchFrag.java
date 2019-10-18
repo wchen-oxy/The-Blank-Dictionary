@@ -20,11 +20,19 @@ import android.widget.Spinner;
 
 public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedListener {
     Intent intent;
+    String text = null;
+    SearchView searchView;
+//    private static final String PERSISTENT_VARIABLE_BUNDLE_KEY = "persistentVariable";
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         intent = new Intent(getActivity(),SearchActivity.class);
+        intent = new Intent(getActivity(),SearchActivity.class);
+        if (savedInstanceState != null) text = (String) savedInstanceState.getSerializable("query");
+        Log.d("SavedState", "AAA" + text);
+
+
 
 
     }
@@ -35,13 +43,24 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+
+
         View rootView = inflater.inflate(R.layout.adv_search, container,false);
         //You need to inflate the Fragment's view and call findViewById() on the View it returns.
-        final SearchView searchView = (SearchView) rootView.findViewById(R.id.searchView);
+        searchView = (SearchView) rootView.findViewById(R.id.searchView);
         final Bundle args = getArguments();
         //Any query text is cleared when iconified. So setIconified to false.
 
-        searchView.setQuery(args.getString("query"), false);
+
+//        if (args == null)  {
+//            String persistentVariable = savedInstanceState.getString(PERSISTENT_VARIABLE_BUNDLE_KEY);
+//
+//            searchView.setQuery(persistentVariable, false);}
+//        else {
+            searchView.setQuery(args.getString("query"), false);
+//        }
         Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
 
         //prevent automatically bringing up the keyboard when you move to the fragment
@@ -62,12 +81,14 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 //                intent.setAction(Intent.ACTION_SEARCH);
 //                intent.putExtra(SearchManager.QUERY, s);
 //                startActivity(intent);
+//                text = s;
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 // Called when the query text is changed by the user.
+
                 return true;
             }
         });
@@ -143,9 +164,29 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
     }
 
+    @Override
+    public void onPause() {
+        Log.d("d", "HEY");
+
+        super.onPause();
+        String query = searchView.getQuery().toString();
+        Log.d("d", "QUERY: " + query);
+        MainActivity setter = (MainActivity) getActivity();
+        setter.query = query;
 
 
+
+//        getArguments().putString(PERSISTENT_VARIABLE_BUNDLE_KEY, query);
+    }
     //Click Listeners for the Translation Option
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable("query", text);
+    }
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
