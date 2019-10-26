@@ -7,8 +7,7 @@
     android:background="#FFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:focusable="true"
+
     >
 
     <LinearLayout
@@ -29,7 +28,7 @@
         <!--</android.support.v7.widget.ActionMenuView>-->
 
         <SearchView
-            android:id="@+id/searchView"
+            android:id="@+id/searchAdvView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -43,7 +42,7 @@
 
     </LinearLayout>
     <Spinner
-        android:id="@+id/planets_spinner"
+        android:id="@+id/adv_trans_spinner"
         android:layout_width="wrap_content"
         android:layout_height="@+id/adv_search_linear_layout"
         app:layout_constraintEnd_toEndOf="parent"

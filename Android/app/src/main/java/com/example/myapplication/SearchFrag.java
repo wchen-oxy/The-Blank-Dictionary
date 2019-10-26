@@ -28,29 +28,30 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        intent = new Intent(getActivity(),SearchActivity.class);
+//        intent = new Intent(getActivity(), SearchActivity.class);
         if (savedInstanceState != null) text = (String) savedInstanceState.getSerializable("query");
         Log.d("SavedState", "AAA" + text);
 
-
-
-
     }
-
-
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
-
-
         View rootView = inflater.inflate(R.layout.adv_search, container,false);
+
+        return rootView;
+    }
+
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         //You need to inflate the Fragment's view and call findViewById() on the View it returns.
-        searchView = (SearchView) rootView.findViewById(R.id.searchView);
-        final Bundle args = getArguments();
+        searchView = view.findViewById(R.id.searchAdvView);
+        Bundle args = getArguments();
         //Any query text is cleared when iconified. So setIconified to false.
 
 
@@ -59,17 +60,23 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 //
 //            searchView.setQuery(persistentVariable, false);}
 //        else {
-            searchView.setQuery(args.getString("query"), false);
+        searchView.setQuery(args.getString("query"), false);
 //        }
         Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
+        Log.d("tag", "QUERY: " + args.getString("query"));
 
         //prevent automatically bringing up the keyboard when you move to the fragment
 //        searchView.setIconifiedByDefault(false);
-//        searchView.setIconified(true);
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchView.setIconified(false);
+                Log.d("d", "CLEARED");
+
+//                searchView.setIconified(true);
+//                searchView.setFocusable(true);
+//                searchView.setIconified(false);
+//                searchView.clearFocus();
+//                searchView.requestFocus();
             }
 
         });
@@ -82,12 +89,14 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 //                intent.putExtra(SearchManager.QUERY, s);
 //                startActivity(intent);
 //                text = s;
-                return false;
+                searchView.clearFocus();
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 // Called when the query text is changed by the user.
+
 
                 return true;
             }
@@ -95,33 +104,16 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
         //onbackpress
 
-        searchView.setFocusable(false);
-        searchView.setIconified(false);
+
+        searchView.setIconifiedByDefault(false);
         searchView.clearFocus();
+//
 
 
 
+        //second part
 
-// //USE THIS to measure height/width of wrap content
-//        final LinearLayout below= (LinearLayout) rootView.findViewById(R.id.search_linear_layout);
-//        below.post(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                Log.i("TAG", "Layout width :"+ below.getWidth());
-//                Log.i("TAG", "Layout height :"+ below.getHeight());
-//            }
-//        });
-
-        return rootView;
-    }
-
-
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Spinner spinner = (Spinner) getView().findViewById(R.id.planets_spinner);
+        Spinner spinner = getView().findViewById(R.id.adv_trans_spinner);
 
 //// Create an ArrayAdapter using the string array and a default spinner layout
 //        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),

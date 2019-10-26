@@ -46,6 +46,15 @@ public class HomeFrag extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mainSearchBar = view.findViewById(R.id.searchView);
+
+        mainSearchBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainSearchBar.setIconified(false);
+                Log.d("d", "CLEARED");
+
+            }
+        });
 //        mainSearchBar.clearFocus();
 //        mainSearchBar.setFocusable(false);
 //        mainSearchBar.setIconified(false);
@@ -66,14 +75,9 @@ public class HomeFrag extends Fragment {
 //                // Called when the user submits the query.
 //                return true;
 //            }
+
             @Override
             public boolean onQueryTextSubmit(String s) {
-//                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-//                System.out.println(s);
-//                intent.setAction(Intent.ACTION_SEARCH);
-//                intent.putExtra(SearchManager.QUERY, s);
-//                startActivity(intent);
-
 
 
                 //fragment shit

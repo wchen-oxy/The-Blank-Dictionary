@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.SearchManager;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView navViewBack;
     SearchView secSearch;
     String query;
+    BroadcastReceiver br;
 
     Boolean isAdvSearch = false;
 
@@ -39,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-//                    mTextMessage.setText(R.string.title_home);
                     System.out.println("HERE ARE THE FRAGMENTS: " + getSupportFragmentManager().getFragments());
-//                    fragmentManager.popBackStack();
                     if (isAdvSearch) {
                         SearchFrag searchFrag = new SearchFrag();
                         Bundle arguments = new Bundle();
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
                         searchFrag.setArguments(arguments);
                         searchTransaction = fragmentManager.beginTransaction();
                         searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
-
                         return true;
                     }
 
@@ -59,23 +58,13 @@ public class MainActivity extends AppCompatActivity {
                     homeTransaction.replace(R.id.frag_container, homeFrag).commit();
                     return true;
                 case R.id.navigation_favorites:
-//                    fragmentManager.popBackStack();
                     FavoritesFrag favoritesFrag = new FavoritesFrag();
-//                    fragmentManager = getSupportFragmentManager();
                     favoritesTransaction = fragmentManager.beginTransaction();
-//                    favoritesTransaction.addToBackStack(null);
-
                     favoritesTransaction.replace(R.id.frag_container, favoritesFrag).commit();
                     return true;
                 case R.id.navigation_settings:
-//                    fragmentManager.popBackStack();
-
-//                    mTextMessage.setText(R.string.title_notifications);
-//                    System.out.println(getSupportFragmentManager().getFragments());
                     SettingsFrag settingsFrag = new SettingsFrag();
-//                    fragmentManager = getSupportFragmentManager();
                     settingsTransaction = fragmentManager.beginTransaction();
-//                    settingsTransaction.addToBackStack(null);
                     settingsTransaction.replace(R.id.frag_container, settingsFrag).commit();
 
                     return true;
@@ -91,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        SearchView mainSearch = findViewById(R.id.searchView);
+        SearchView mainSearch = findViewById(R.id.searchAdvView);
         Log.d("TAG", getCurrentFragment().toString());
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frag_container);
@@ -107,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
 
         }
-        //clear text
-        else if (!mainSearch.getQuery().toString().isEmpty()) {
+        //clear text in adv
+        else if (mainSearch != null && !mainSearch.getQuery().toString().isEmpty()) {
         Log.d("ceck", mainSearch.getQuery().toString());
 
         Log.d("ceck", "clear text");
@@ -118,37 +107,12 @@ public class MainActivity extends AppCompatActivity {
         //return to main page
 
         else {
-            Log.d("ceck", mainSearch.getQuery().toString());
             Log.d("ceck", "backpress");
             //add clear
             isAdvSearch = false;
-
-
             super.onBackPressed();}
-//        super.onBackPressed();
     }
 
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        handleIntent(intent);
-//    }
-//
-//    private void handleIntent(Intent intent) {
-//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//            String query = intent.getStringExtra(SearchManager.QUERY);
-//            Toast.makeText(getApplicationContext(), "Searching for " + query, Toast.LENGTH_LONG).show();
-//
-//            //fragment shit
-//            SearchFrag searchFrag = new SearchFrag();
-//
-//            searchTransaction = fragmentManager.beginTransaction();
-//            searchTransaction.addToBackStack(null);
-//            searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
-//
-////            updateEntriesView(dbHelper.queryEntriesByName(query));
-//        }
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,27 +121,8 @@ public class MainActivity extends AppCompatActivity {
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navViewBack = navView;
-
-//        mTextMessage = findViewById(R.id.message);
         fragmentManager = getSupportFragmentManager();
         Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
-//        fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//            @Override
-//            public void onBackStackChanged() {
-//                Fragment current = getCurrentFragment();
-//                if (current instanceof HomeFrag) {
-//                    navView.setSelectedItemId(R.id.navigation_home);
-//                }
-//                if(current instanceof FavoritesFrag) {
-//                    navView.setSelectedItemId(R.id.navigation_favorites);
-//                }
-//                if (current instanceof SettingsFrag) {
-//                    navView.setSelectedItemId(R.id.navigation_settings);
-//                }
-//            }
-//        });
-
-
 
         //fragment shit
         HomeFrag homeFrag = new HomeFrag();
@@ -186,22 +131,18 @@ public class MainActivity extends AppCompatActivity {
         homeTransaction.add(R.id.frag_container, homeFrag, "HOME_FRAG").commit();
 
 
+
+
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(br);
     }
 
 
 
-//    @Override
-//    public void onBackPressed() {
-//
-//        int count = getSupportFragmentManager().getBackStackEntryCount();
-//
-//        if (count == 0) {
-//            super.onBackPressed();
-//            //additional code
-//        } else {
-//            getSupportFragmentManager().popBackStack();
-//        }
-//
-//    }
+
 
 }

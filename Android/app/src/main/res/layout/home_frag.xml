@@ -46,6 +46,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
 
+
             />
         <RelativeLayout
             android:id="@+id/search_bar_container"
