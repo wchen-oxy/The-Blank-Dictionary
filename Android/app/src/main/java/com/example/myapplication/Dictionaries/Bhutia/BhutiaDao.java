@@ -4,6 +4,7 @@ package com.example.myapplication.Dictionaries.Bhutia;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -20,10 +21,13 @@ public interface BhutiaDao {
 //    @Query("SELECT * FROM bhutiaWords WHERE first_name LIKE :first AND " +
 //            "last_name LIKE :last LIMIT 1")
 //    BhutiaWord findByName(String first, String last);
-
+    //FIXME figure out why you need onConflict, what is it replacing?
     @Insert
     void insertAll(List<BhutiaWord> words);
 
-    @Delete
-    void delete(BhutiaWord words);
+    @Query("DELETE FROM BhutiaWords")
+    void deleteAll();
+
+//    @Delete
+//    void deleteAll(BhutiaWord... words);
 }

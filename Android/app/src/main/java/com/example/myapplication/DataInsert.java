@@ -68,7 +68,10 @@ public class DataInsert {
         for (BhutiaWord b:words){
             System.out.println(b.romanization);
         }
-//        bhutiaDao.insertAll(words);
+        bhutiaDao.deleteAll();
+        bhutiaDao.insertAll(words);
+        for (BhutiaWord b: bhutiaDao.getAll())
+        {Log.d("PR3", b.romanization);}
 
 
 
