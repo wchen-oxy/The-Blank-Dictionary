@@ -1,8 +1,6 @@
 package com.example.myapplication;
 
-import android.app.SearchManager;
 import android.content.BroadcastReceiver;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -12,11 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.view.View;
-import android.widget.Toast;
+
+import com.example.myapplication.Fragments.FavoritesFrag;
+import com.example.myapplication.Fragments.HomeFrag;
+import com.example.myapplication.Fragments.SearchFrag;
+import com.example.myapplication.Fragments.SettingsFrag;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction favoritesTransaction;
     BottomNavigationView navViewBack;
     SearchView secSearch;
-    String query;
-    BroadcastReceiver br;
+    public String query;
+    public BroadcastReceiver br;
 
-    Boolean isAdvSearch = false;
+    public Boolean isAdvSearch = false;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

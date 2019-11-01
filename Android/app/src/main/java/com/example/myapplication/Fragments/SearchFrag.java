@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Fragments;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -15,6 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
+
+import com.example.myapplication.CustomTransSpinAdaptor;
+import com.example.myapplication.MainActivity;
+import com.example.myapplication.R;
 
 //external package
 
@@ -184,7 +188,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                                int pos, long id) {
         // An item was selected. You can retrieve the selected item using
          System.out.println(parent.getItemAtPosition(pos));
-         intent.putExtra("Translation", (parent.getItemAtPosition(pos).toString()));
+//         intent.putExtra("Translation", (parent.getItemAtPosition(pos).toString()));
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
