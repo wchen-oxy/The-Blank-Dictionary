@@ -15,6 +15,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract BhutiaDao getBhutiaDao();
     public abstract EnglishDao getEnglishDao();
 
+
 }
 
 

@@ -91,6 +91,7 @@ public class myReceiver extends BroadcastReceiver {
             switch (type) {
                 case "Bhutia": {
                     BhutiaDao bhutiaDao = db.getBhutiaDao();
+//                    BhutiaDao bhutiaDao = db.getDao();
                     DataInsert.BhuInsert(bhutiaDao, file);
 
                 }

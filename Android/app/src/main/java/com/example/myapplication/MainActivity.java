@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         //fragment shit
         HomeFrag homeFrag = new HomeFrag();
         homeTransaction = fragmentManager.beginTransaction();
-//        homeTransaction.addToBackStack(null);
         homeTransaction.add(R.id.frag_container, homeFrag, "HOME_FRAG").commit();
 
 

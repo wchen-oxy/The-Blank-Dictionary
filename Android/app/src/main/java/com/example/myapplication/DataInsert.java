@@ -70,6 +70,8 @@ public class DataInsert {
         }
         bhutiaDao.deleteAll();
         bhutiaDao.insertAll(words);
+
+        //test code
         for (BhutiaWord b: bhutiaDao.getAll())
         {Log.d("PR3", b.romanization);}
 

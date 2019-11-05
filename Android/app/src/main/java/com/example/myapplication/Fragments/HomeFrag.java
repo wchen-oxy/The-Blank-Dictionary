@@ -8,19 +8,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.SearchView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.Spinner;
 
+import com.example.myapplication.CustomTransSpinAdaptor;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
 //note that this uses fragmentManager and not the SupportFragmentManager
 
-public class HomeFrag extends Fragment {
+public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedListener {
     FragmentManager fragmentManager;
     FragmentTransaction searchTransaction;
     SearchView mainSearchBar;
+    String TRANSLATION = null;
 
 
 
@@ -55,14 +59,6 @@ public class HomeFrag extends Fragment {
 
             }
         });
-//        mainSearchBar.clearFocus();
-//        mainSearchBar.setFocusable(false);
-//        mainSearchBar.setIconified(false);
-
-//        mainSearchBar.setEnabled(false);
-//        System.out.println("IS IT ICONIFIED 2" + mainSearchBar.isIconified());
-//        mainSearchBar.setIconifiedByDefault(false);
-//
 
 //        IN CASE YOU WANT TO USE SEARCHMANAGER AND USE ANOTHER ACTIVITY, UNCOMMENT THIS AND
 //        ALSO UNCOMMENT SEARCHABLE STUFF IN ANDROID MANIFEST
@@ -84,6 +80,7 @@ public class HomeFrag extends Fragment {
                 SearchFrag searchFrag = new SearchFrag();
                 Bundle arguments = new Bundle();
                 arguments.putString( "query", s);
+                arguments.putString("TRANSLATION", TRANSLATION);
                 searchFrag.setArguments(arguments);
                 searchTransaction = fragmentManager.beginTransaction();
                 searchTransaction.addToBackStack(null);
@@ -101,10 +98,20 @@ public class HomeFrag extends Fragment {
             }
         });
 
-        Log.d("checker", "FINISHED");
-        Log.d("second", mainSearchBar.getQuery().toString());
 
 
+        //Spinner
+
+        Spinner spinner = getView().findViewById(R.id.home_trans_spinner);
+
+//Begin third
+        CustomTransSpinAdaptor<String> dadapter = new CustomTransSpinAdaptor<String>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, new String[] {"Bhutia to English", "Tibetan to Bhutia"});
+        TRANSLATION = dadapter.getItem(0).toString();
+        Log.d("TAG1", TRANSLATION);
+        dadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dadapter);
+        spinner.setOnItemSelectedListener(this);
 
     }
 
@@ -130,5 +137,20 @@ public class HomeFrag extends Fragment {
 //
 //    }
 
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        //         intent.putExtra("Translation", (parent.getItemAtPosition(pos).toString()));
+        Log.d("SELECT THIS", String.valueOf(pos));
+        Log.d("SELECT THIS", parent.getItemAtPosition(pos).toString());
+
 
     }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
+}

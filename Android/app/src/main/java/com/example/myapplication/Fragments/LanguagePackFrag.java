@@ -160,9 +160,12 @@ public class LanguagePackFrag extends Fragment {
         setter.br = br;
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 //        filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-        HandlerThread handlerThread = new HandlerThread("ht");
+        HandlerThread handlerThread = new HandlerThread("LANGUAGE_DOWNLOAD");
         handlerThread.start();
         Looper looper = handlerThread.getLooper();
+        //use looper for the remaining tasks, like convet to json and SQL insert and Delete
+        //https://stackoverflow.com/questions/7597742/what-is-the-purpose-of-looper-and-how-to-use-it
+        //https://stackoverflow.com/questions/5674518/does-broadcastreceiver-onreceive-always-run-in-the-ui-thread
         Handler handler = new Handler(looper);
         mContext.registerReceiver(br, filter, null, handler);
         Log.d("I HAVE THIS MANY", String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).list().length));
