@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.room.Room;
 
@@ -31,7 +31,7 @@ import com.example.myapplication.Fragments.dummy.DummyContent;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.Query;
 import com.example.myapplication.R;
-
+import com.example.myapplication.MyAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -50,20 +50,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-
-    //    private static final String PERSISTENT_VARIABLE_BUNDLE_KEY = "persistentVariable";
-private static class QueryParam{
-    QueryParam(){
-
-    }
-
-}
-
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyContent.DummyItem item);
-    }
-
+    private MyAdapter.OnItemClickListener listener;
 
 
     @Override
@@ -71,7 +58,6 @@ private static class QueryParam{
         super.onCreate(savedInstanceState);
 //        intent = new Intent(getActivity(), SearchActivity.class);
         if (savedInstanceState != null) text = (String) savedInstanceState.getSerializable("query");
-        Log.d("SavedState", "AAA" + text);
 
 
 //        //create db connection
@@ -79,7 +65,12 @@ private static class QueryParam{
         //new thread for a query
         //query consists of search term, translation direction,
         args = getArguments();
-        Log.d("Rez", args.get("query").toString());
+        listener = new MyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BhutiaWord item) {
+                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
+            }
+        };
 
 
 
@@ -90,13 +81,6 @@ private static class QueryParam{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//            results = new Query().execute(full_query).get();
-        for (Object bw:results){
-            BhutiaWord b = (BhutiaWord) bw;
-            Log.d("RESUKTS", b.romanization);
-        }
-
-
 
     }
 
@@ -114,11 +98,14 @@ private static class QueryParam{
         recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
 
+        //specify new click listener
+
+
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
+        mAdapter = new MyAdapter(results, listener);
         recyclerView.setAdapter(mAdapter);
 
         return rootView;
@@ -143,44 +130,35 @@ private static class QueryParam{
 //        else {
         searchView.setQuery(args.getString("query"), true);
 //        }
-        Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
-        Log.d("tag", "QUERY: " + args.getString("query"));
 
-        //prevent automatically bringing up the keyboard when you move to the fragment
-//        searchView.setIconifiedByDefault(false);
-        searchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("d", "CLEARED");
 
-//                searchView.setIconified(true);
-//                searchView.setFocusable(true);
-//                searchView.setIconified(false);
-//                searchView.clearFocus();
-//                searchView.requestFocus();
-            }
 
-        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                System.out.println(s);
-
-//                intent.setAction(Intent.ACTION_SEARCH);
-//                intent.putExtra(SearchManager.QUERY, s);
-//                startActivity(intent);
-//                text = s;
                 searchView.clearFocus();
-                return true;
+                return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 // Called when the query text is changed by the user.
+                //create new thread that runs simultaneously
+                args.putString("query", newText);
 
+                //pass in newText paramater into thread
 
-                return true;
+                try {
+                    results = new Query(getContext()).execute(args).get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                mAdapter = new MyAdapter(results, listener);
+                recyclerView.setAdapter(mAdapter);
+                recyclerView.setAdapter(new MyAdapter(results, listener));
+                return false;
             }
         });
 
@@ -207,30 +185,13 @@ private static class QueryParam{
 
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof BhutiaWordFragment.OnListFragmentInteractionListener) {
-            mListener = (BhutiaWordFragment.OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     @Override
     public void onPause() {
-        Log.d("d", "HEY");
+
 
         super.onPause();
         String query = searchView.getQuery().toString();
-        Log.d("d", "QUERY: " + query);
         MainActivity setter = (MainActivity) getActivity();
         setter.query = query;
 
@@ -252,6 +213,7 @@ private static class QueryParam{
                                int pos, long id) {
         // An item was selected. You can retrieve the selected item using
          System.out.println(parent.getItemAtPosition(pos));
+         args.putString("TRANSLATION", parent.getItemAtPosition(pos).toString());
 //         intent.putExtra("Translation", (parent.getItemAtPosition(pos).toString()));
     }
 

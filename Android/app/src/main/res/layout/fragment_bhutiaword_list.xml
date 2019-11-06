@@ -8,4 +8,4 @@
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
     tools:context=".Fragments.BhutiaWordFragment"
-    tools:listitem="@layout/fragment_bhutiaword" />
+    tools:listitem="@layout/query_result" />

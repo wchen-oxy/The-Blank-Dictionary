@@ -18,8 +18,8 @@ public interface BhutiaDao {
     @Query("SELECT * FROM BhutiaWords WHERE romanization LIKE :query")
     List<BhutiaWord> EngSearch(String query);
 
-    @Query("SELECT romanization FROM BhutiaWords WHERE romanization like 'Chi%'")
-    List<BhutiaWord> TSearch();
+//    @Query("SELECT romanization FROM BhutiaWords WHERE romanization like 'Chi%'")
+//    List<BhutiaWord> TSearch();
 
 
 //    @Query("SELECT * FROM word WHERE uid IN (:userIds)")

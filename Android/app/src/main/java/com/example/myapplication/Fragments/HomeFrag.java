@@ -13,6 +13,7 @@ import android.widget.SearchView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.myapplication.CustomTransSpinAdaptor;
 import com.example.myapplication.MainActivity;
@@ -94,7 +95,7 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
             @Override
             public boolean onQueryTextChange(String newText) {
                 // Called when the query text is changed by the user.
-                return true;
+                return false;
             }
         });
 
