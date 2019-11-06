@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frag_container);
         if (!(f instanceof HomeFrag) && !(f instanceof SearchFrag)){
-            //favorites or settings
                 Log.d("THIS CLASS IS", f.toString());
             navViewBack.setSelectedItemId(R.id.navigation_home);
             Log.d("TAG", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
@@ -104,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
         mainSearch.setQuery("",false);
 
         }
-        //return to main page
-
         else {
             Log.d("ceck", "backpress");
             //add clear
@@ -123,14 +120,9 @@ public class MainActivity extends AppCompatActivity {
         navViewBack = navView;
         fragmentManager = getSupportFragmentManager();
         Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
-
-        //fragment shit
         HomeFrag homeFrag = new HomeFrag();
         homeTransaction = fragmentManager.beginTransaction();
         homeTransaction.add(R.id.frag_container, homeFrag, "HOME_FRAG").commit();
-
-
-
 
     }
 
@@ -138,9 +130,4 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
     }
-
-
-
-
-
 }

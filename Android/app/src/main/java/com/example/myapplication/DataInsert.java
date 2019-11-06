@@ -74,46 +74,5 @@ public class DataInsert {
         //test code
         for (BhutiaWord b: bhutiaDao.getAll())
         {Log.d("PR3", b.romanization);}
-
-
-
-
-
-//        try {
-//
-//            JsonReader reader = new JsonReader(new FileReader(file));
-//            reader.beginArray();
-////            reader.beginObject();
-//            while (reader.hasNext()) {
-//                JsonToken nextToken = reader.peek();
-//                System.out.println(nextToken);
-//
-//                if(JsonToken.BEGIN_OBJECT.equals(nextToken)){
-//
-//                    reader.beginObject();
-//
-//                } else if(JsonToken.NAME.equals(nextToken)){
-//
-//                    String name  =  reader.nextName();
-//                    System.out.println(name);
-//
-//                } else if(JsonToken.STRING.equals(nextToken)){
-//
-//                    String value =  reader.nextString();
-//                    System.out.println(value);
-//
-//                } else if(JsonToken.NUMBER.equals(nextToken)){
-//
-//                    long value =  reader.nextLong();
-//                    System.out.println(value);
-//
-//                }
-//            }
-//        }
-//        catch (IOException io) {
-//            io.printStackTrace();
-//        }
-
     }
-
 }

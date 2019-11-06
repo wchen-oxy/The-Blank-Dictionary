@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import com.example.myapplication.Dictionaries.Bhutia.BhutiaDao;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Query extends AsyncTask<Bundle, Void, List<BhutiaWord>> {
