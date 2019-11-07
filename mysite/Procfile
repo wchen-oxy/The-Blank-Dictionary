@@ -1,1 +1,1 @@
-web: gunicorn BlankDictionary.wsgi
+web: gunicorn mysite.wsgi
