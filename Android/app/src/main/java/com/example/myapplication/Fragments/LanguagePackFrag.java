@@ -37,6 +37,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
@@ -141,9 +145,12 @@ public class LanguagePackFrag extends Fragment {
                 System.out.println("file not deleted");
             }
         }
+
+
         request.setDescription("Your Dictionary is now downloading.")
                 .setTitle("Dictionay Download Started.")
-                .setDestinationUri(Uri.fromFile(file));
+                .setDestinationUri(Uri.fromFile(file))
+                .addRequestHeader("Authorization", authDigest());
         Log.d("CHECK2", Environment.getExternalStorageDirectory().toString());
 
 
@@ -172,12 +179,24 @@ public class LanguagePackFrag extends Fragment {
 
 
     }
-    private void fakeDownload(String url) {
-        String json = "[{\"romanization\": \"Chik\", \"ipa\": \"Chi-ih-yak\", \"category\": \"example\", \"eng_trans\": \"1\", \"tib_script\": \"1\", \"example\": \"there is Chik car here.\"}, {\"romanization\": \"Chikia\", \"ipa\": \"Ch-kik-ya\", \"category\": \"imaginary\", \"eng_trans\": \"adslfa\", \"tib_script\": \"\\u4e2d\\u6587\", \"example\": null}, {\"romanization\": \"Kuzu\", \"ipa\": \"Coo-Hazoo\", \"category\": \"Another Example\", \"eng_trans\": \"English\", \"tib_script\": \"adfadf\", \"example\": \"this makes no sense.\"}, {\"romanization\": \"lol\", \"ipa\": \"f\", \"category\": \"ads\", \"eng_trans\": \"df\", \"tib_script\": \"asdf\", \"example\": \"asdf\"}]";
-        Gson gson = new Gson();
-        gson.toJson(json);
+    private String authDigest() {
+        final String CODE = "Az39dB0n!23";
+        byte[] data1 = CODE.getBytes();
+        String output = "";
 
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            data1 = md.digest(data1);
+
+            output = String.format("%02x", new BigInteger(1, data1));
+
+        }  catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return output;
     }
+
+
     //data download shit
 //    private static class dataDownload extends AsyncTask<String, Void, Void> {
 //        String TEMP_URL = "https://jsonplaceholder.typicode.com/todos/1";

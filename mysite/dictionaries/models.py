@@ -7,6 +7,10 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
+def getter(lang):
+    if lang == 'bhutia': 
+        return Bhutia()
+
 
 class Bhutia(models.Model):
     romanization = models.CharField(primary_key=True, max_length=100)

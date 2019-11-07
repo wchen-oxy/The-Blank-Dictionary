@@ -12,7 +12,7 @@
     <string name="feedback_button">Feedback</string>
     <string name="donate_button">Donate</string>
     <string name="test_dictionary">Bhutia</string>
-
+    <string name="test_definition">The definition for Bhutia is this. They are used in lol 中文</string>
 
 
     <string-array name="planets_array">
@@ -25,4 +25,7 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

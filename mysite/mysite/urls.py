@@ -29,9 +29,9 @@ urlpatterns = [
     path('d/', include('dictionaries.urls')),
     # url('download/', views.download, name="download"),
     path('download/<slug:pack>', views.download),
-    path('api/<slug:lang>/', AllBhutia.as_view(), name="all-words")
-
-   
+    path('api/<slug:lang>/', AllBhutia.as_view(), name="all-words"),
+    path('apitest/<slug:lang>/', views.test, name="test-words"),
+    path('apitest/<slug:lang>/<slug:word', views.test, name="test-words"),
 
 
 ]

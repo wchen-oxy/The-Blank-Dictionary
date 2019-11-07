@@ -37,7 +37,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     AppDatabase db;
     Bundle args;
     List results;
-    private BhutiaWordFragment.OnListFragmentInteractionListener mListener;
+//    private BhutiaWordFragment.OnListFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
