@@ -80,7 +80,7 @@ tornado==5.0.1
 tqdm==4.26.0
 traitlets==4.3.2
 ujson==1.35
-urllib3==1.22
+urllib3==1.24.2
 URLReader==0.0a1
 virtualenv==16.0.0
 virtualenv-clone==0.5.3
