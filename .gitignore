@@ -1,7 +1,6 @@
 venv/
-.DS_Store
 Android/.idea
 Android/.gradle
 mysite/.env
-documents/.DS_Store
+*.DS_Store
 
