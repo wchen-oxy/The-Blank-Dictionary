@@ -3,16 +3,12 @@ Project funded by "Davis Projects for Peace" that promotes endangered minority l
 
 For the webapp and Android app, users will be able to quickly toggle between different dictionaries. On the Android app, a user will also be able to download dictionary data for offline use. 
 
-An example dictionary homepage:
+An Example Dictionary homepage:
 <img width="1279" alt="Screen Shot 2019-11-08 at 12 26 59 PM" src="https://user-images.githubusercontent.com/21160570/68508377-19e88080-0223-11ea-9b69-b92ccf878ce8.png">
 
-
-
-
-A sample entry:
+A Sample Entry:
 
 <img width="584" alt="Screen Shot 2019-11-08 at 12 28 43 PM" src="https://user-images.githubusercontent.com/21160570/68508455-51efc380-0223-11ea-8b37-08aa47e52ed0.png">
-
 
 The Android Component Home Page:
 
@@ -20,12 +16,7 @@ The Android Component Home Page:
 
 The Android Component Query Page:
 
-<img width="307" alt="Screen Shot 2019-11-08 at 12 37 17 PM" src="https://user-images.githubusercontent.com/21160570/68508952-a34c8280-0224-11ea-9695-89d27caa5a26.png">
-
-
-
-
-
+<img width="307" alt="Screen Shot 2019-11-08 at 12 40 31 PM" src="https://user-images.githubusercontent.com/21160570/68509085-fcb4b180-0224-11ea-92d2-bbe1a13dea0d.png">
 
 # Usage
 Notes for MySQL setup on Mac
