@@ -9,11 +9,20 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-import django_heroku
 import os
+
+import django_heroku
+# import dj_database_url
+# import dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# ## This is new:
+# dotenv_file = os.path.join(BASE_DIR, ".env")
+# if os.path.isfile(dotenv_file):
+#     print("IS LOCAL")
+#     dotenv.load_dotenv(dotenv_file)
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,9 +32,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'y)i1bq+nsu0377az=6+4eq5utii#bn$$9ywc)t!q1ypa@d%e@i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.heroku.com', '.herokuapp.com']
+ALLOWED_HOSTS = ['thawing-cove-17871.herokuapp.com/', 'herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -77,7 +86,9 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+OLD ONE
 DATABASES = {
+    
      'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BlankDictionary',
@@ -87,6 +98,10 @@ DATABASES = {
         # 'PORT': '5432',
     }
 }
+
+# NEW ONE FOR HEROKU
+# DATABASES = {}
+# DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
 # Password validation
@@ -130,5 +145,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-# Activate Django-Heroku.
+
+# # Activate Django-Heroku.
 django_heroku.settings(locals())
+# #Connector
+# DATABASES['default'] = dj_database_url.parse('mysql://bdab75aaa678e7:28d42f26@us-cdbr-iron-east-05.cleardb.net/heroku_fe23a254118fb4c', conn_max_age=0)
+
