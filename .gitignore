@@ -3,4 +3,5 @@ venv/
 Android/.idea
 Android/.gradle
 mysite/.env
+documents/.DS_Store
 
