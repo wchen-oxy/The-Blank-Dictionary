@@ -11,7 +11,18 @@ A sample entry:
 
 <img width="584" alt="Screen Shot 2019-11-08 at 12 28 43 PM" src="https://user-images.githubusercontent.com/21160570/68508455-51efc380-0223-11ea-8b37-08aa47e52ed0.png">
 
-The Android Component
+
+The Android Component Home Page:
+
+<img width="306" alt="Screen Shot 2019-11-08 at 12 36 45 PM" src="https://user-images.githubusercontent.com/21160570/68508916-8dd75880-0224-11ea-8331-5f2b0a952cee.png">
+
+The Android Component Query Page:
+
+<img width="307" alt="Screen Shot 2019-11-08 at 12 37 17 PM" src="https://user-images.githubusercontent.com/21160570/68508952-a34c8280-0224-11ea-9695-89d27caa5a26.png">
+
+
+
+
 
 
 # Usage
