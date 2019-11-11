@@ -12,17 +12,13 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 import django_heroku
-# import dj_database_url
-# import dotenv
+import urllib.parse as urlparse
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# ## This is new:
-# dotenv_file = os.path.join(BASE_DIR, ".env")
-# if os.path.isfile(dotenv_file):
-#     print("IS LOCAL")
-#     dotenv.load_dotenv(dotenv_file)
+#HEROKU SPECIFIC
+urlparse.uses_netloc.append('mysql')
 
 
 # Quick-start development settings - unsuitable for production
@@ -151,3 +147,31 @@ django_heroku.settings(locals())
 # #Connector
 # DATABASES['default'] = dj_database_url.parse('mysql://bdab75aaa678e7:28d42f26@us-cdbr-iron-east-05.cleardb.net/heroku_fe23a254118fb4c', conn_max_age=0)
 
+try:
+
+    # Check to make sure DATABASES is set in settings.py file.
+    # If not default to {}
+
+    if 'DATABASES' not in locals():
+        DATABASES = {}
+
+    if 'DATABASE_URL' in os.environ:
+        url = urlparse.urlparse(os.environ['DATABASE_URL'])
+
+        # Ensure default database exists.
+        DATABASES['default'] = DATABASES.get('default', {})
+
+        # Update with environment configuration.
+        DATABASES['default'].update({
+            'NAME': url.path[1:],
+            'USER': url.username,
+            'PASSWORD': url.password,
+            'HOST': url.hostname,
+            'PORT': url.port,
+        })
+
+
+        if url.scheme == 'mysql':
+            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+except Exception:
+    print('Unexpected error:', sys.exc_info())
