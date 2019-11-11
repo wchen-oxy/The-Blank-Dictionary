@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 import os
 
-# import urllib.parse as urlparse
+import urllib3.parse as urlparse
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -141,31 +141,31 @@ STATICFILES_DIRS = [
 ]
 
 
-# try:
+try:
 
-#     # Check to make sure DATABASES is set in settings.py file.
-#     # If not default to {}
+    # Check to make sure DATABASES is set in settings.py file.
+    # If not default to {}
 
-#     if 'DATABASES' not in locals():
-#         DATABASES = {}
+    if 'DATABASES' not in locals():
+        DATABASES = {}
 
-#     if 'DATABASE_URL' in os.environ:
-#         url = urlparse.urlparse(os.environ['DATABASE_URL'])
+    if 'DATABASE_URL' in os.environ:
+        url = urlparse.urlparse(os.environ['DATABASE_URL'])
 
-#         # Ensure default database exists.
-#         DATABASES['default'] = DATABASES.get('default', {})
+        # Ensure default database exists.
+        DATABASES['default'] = DATABASES.get('default', {})
 
-#         # Update with environment configuration.
-#         DATABASES['default'].update({
-#             'NAME': url.path[1:],
-#             'USER': url.username,
-#             'PASSWORD': url.password,
-#             'HOST': url.hostname,
-#             'PORT': url.port,
-#         })
+        # Update with environment configuration.
+        DATABASES['default'].update({
+            'NAME': url.path[1:],
+            'USER': url.username,
+            'PASSWORD': url.password,
+            'HOST': url.hostname,
+            'PORT': url.port,
+        })
 
 
-#         if url.scheme == 'mysql':
-#             DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
-# except Exception:
-#     print('Unexpected error:', sys.exc_info())
+        if url.scheme == 'mysql':
+            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+except Exception:
+    print('Unexpected error:', sys.exc_info())
