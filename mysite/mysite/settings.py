@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -143,8 +144,7 @@ STATICFILES_DIRS = [
 ]
 
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+
 
 #ClearDB specific code
 #HEROKU SPECIFIC
@@ -178,3 +178,7 @@ try:
             DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
 except Exception:
     print('Unexpected error:', sys.exc_info())
+
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
