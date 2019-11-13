@@ -5,6 +5,6 @@ import android.support.v4.app.Fragment;
 
 public interface FragmentCommunicator {
     void textPass(String string);
-    void bundPass(String fragment, Bundle args);
+    void bundPass(Bundle args);
 
 }

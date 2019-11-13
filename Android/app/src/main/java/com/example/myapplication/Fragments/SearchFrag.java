@@ -65,6 +65,9 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         listener = new MyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BhutiaWord item) {
+                Bundle args = new Bundle();
+                args.putString("NEW_FRAGMENT", "RESULT_FRAGMENT");
+
                 Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
                 setFragment(new ResultFragment());
                 recyclerView.setAdapter(null);

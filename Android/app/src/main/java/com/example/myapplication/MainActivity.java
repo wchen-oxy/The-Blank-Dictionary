@@ -44,18 +44,32 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
     }
 
     @Override
-    public void bundPass(String fragment, Bundle args) {
-        fragController(fragment, args);
+    public void bundPass(Bundle args) {
+        fragController(args);
     }
 
-    private void fragController(String fragment, Bundle args){
-        switch (fragment){
+
+    private void fragController(Bundle args){
+        switch (args.getString("NEW_FRAGMENT")){
             case "HOME_FRAGMENT":
-                System.out.println();
+                HomeFrag homeFrag = new HomeFrag();
+                homeTransaction = fragmentManager.beginTransaction();
+                homeTransaction.add(R.id.frag_container, homeFrag, "HOME_FRAG").commit();
+                break;
+
             case "SEARCH_FRAGMENT":
                 System.out.println();
+                SearchFrag searchFrag = new SearchFrag();
+                searchFrag.setArguments(args);
+                searchTransaction = fragmentManager.beginTransaction();
+                searchTransaction.addToBackStack(null);
+                searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
+                isAdvSearch = true;
+                break;
+
             case "RESULT_FRAGMENT":
-                System.out.println();
+                break;
+
 
         }
 
@@ -149,10 +163,9 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
         navViewBack = navView;
         fragmentManager = getSupportFragmentManager();
         Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
-        HomeFrag homeFrag = new HomeFrag();
-        homeTransaction = fragmentManager.beginTransaction();
-        homeTransaction.add(R.id.frag_container, homeFrag, "HOME_FRAG").commit();
-
+        Bundle args = new Bundle();
+        args.putString("NEW_FRAGMENT", "HOME_FRAGMENT");
+        fragController(args);
     }
 
     @Override

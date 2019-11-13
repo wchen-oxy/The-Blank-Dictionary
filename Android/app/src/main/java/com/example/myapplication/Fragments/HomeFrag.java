@@ -88,17 +88,12 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
 
 
                 //fragment shit
-                SearchFrag searchFrag = new SearchFrag();
-                Bundle arguments = new Bundle();
-                arguments.putString( "query", s);
-                arguments.putString("TRANSLATION", TRANSLATION);
 
-                searchFrag.setArguments(arguments);
-                searchTransaction = fragmentManager.beginTransaction();
-                searchTransaction.addToBackStack(null);
-                searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
-                MainActivity setter = (MainActivity)getActivity();
-                setter.isAdvSearch = true;
+                Bundle args = new Bundle();
+                args.putString( "query", s);
+                args.putString("TRANSLATION", TRANSLATION);
+                args.putString("NEW_FRAGMENT", "SEARCH_FRAGMENT");
+                fragmentCommunicator.bundPass(args);
 
                 return false;
             }
