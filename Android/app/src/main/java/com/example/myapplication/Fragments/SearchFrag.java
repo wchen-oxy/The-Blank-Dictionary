@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     AppDatabase db;
     Bundle args;
     List results;
+
 //    private BhutiaWordFragment.OnListFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -54,6 +57,8 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             @Override
             public void onItemClick(BhutiaWord item) {
                 Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
+                setFragment(new ResultFragment());
+                recyclerView.setAdapter(null);
             }
         };
 
@@ -86,6 +91,8 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         //You need to inflate the Fragment's view and call findViewById() on the View it returns.
         searchView = view.findViewById(R.id.searchAdvView);
         //Any query text is cleared when iconified. So setIconified to false.
@@ -125,6 +132,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
     }
 
 
@@ -152,5 +160,15 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
+    protected void setFragment(Fragment fragment) {
+        FragmentTransaction t = getFragmentManager().beginTransaction();
+        t.addToBackStack(null);
+        t.replace(R.id.results_frag, fragment);
+        t.commit();
+    }
+
+    public void setmAdapter() {
+        recyclerView.setAdapter(mAdapter);
+    }
 }
 

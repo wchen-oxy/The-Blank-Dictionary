@@ -50,7 +50,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/adv_search_linear_layout">
     </Spinner>
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
         android:id="@+id/results_frag"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -71,6 +71,6 @@
                 android:layout_height="match_parent"/>
             
         </ScrollView>
-    </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

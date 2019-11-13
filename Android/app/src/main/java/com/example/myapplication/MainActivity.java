@@ -104,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
         else {
+            if (f instanceof SearchFrag) ((SearchFrag) f).setmAdapter();
+
             Log.d("ceck", "backpress");
             //add clear
             isAdvSearch = false;

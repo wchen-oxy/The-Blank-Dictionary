@@ -8,23 +8,23 @@
         android:orientation="vertical"
         android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
-    android:layout_marginTop="150dp"
+    android:layout_marginTop="50dp"
         >
 
     <TextView
         android:id="@+id/title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title"
+        android:text="@string/word_placeholder"
         android:textSize="36sp"
         android:layout_marginBottom="20dp"
         />
         <TextView
+            android:id="@+id/word_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/test_definition"
             android:textSize="18sp"
-
             />
 
     </LinearLayout>
