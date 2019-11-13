@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.Fragments.FavoritesFrag;
 import com.example.myapplication.Fragments.HomeFrag;
@@ -19,7 +20,7 @@ import com.example.myapplication.Fragments.SearchFrag;
 import com.example.myapplication.Fragments.SettingsFrag;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentCommunicator{
     private TextView mTextMessage;
 
     FragmentManager fragmentManager;
@@ -31,8 +32,34 @@ public class MainActivity extends AppCompatActivity {
     SearchView secSearch;
     public String query;
     public BroadcastReceiver br;
-
     public Boolean isAdvSearch = false;
+    public FragmentCommunicator fragmentCommunicator;
+
+    //TODO implement these
+    @Override
+    public void textPass(String string) {
+        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
+        Log.d("RECIEVED", "TEXT");
+
+    }
+
+    @Override
+    public void bundPass(String fragment, Bundle args) {
+        fragController(fragment, args);
+    }
+
+    private void fragController(String fragment, Bundle args){
+        switch (fragment){
+            case "HOME_FRAGMENT":
+                System.out.println();
+            case "SEARCH_FRAGMENT":
+                System.out.println();
+            case "RESULT_FRAGMENT":
+                System.out.println();
+
+        }
+
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -132,4 +159,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
     }
+
+
+
 }

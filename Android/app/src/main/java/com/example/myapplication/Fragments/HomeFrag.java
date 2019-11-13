@@ -1,5 +1,6 @@
 package com.example.myapplication.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,23 +17,32 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.myapplication.CustomTransSpinAdaptor;
+import com.example.myapplication.FragmentCommunicator;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
 //note that this uses fragmentManager and not the SupportFragmentManager
 
-public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedListener {
+public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedListener{
     FragmentManager fragmentManager;
     FragmentTransaction searchTransaction;
     SearchView mainSearchBar;
     String TRANSLATION = null;
+    FragmentCommunicator fragmentCommunicator;
 
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        fragmentCommunicator = (FragmentCommunicator) context;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentManager = getFragmentManager();
+
 
 
 
@@ -82,6 +92,7 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
                 Bundle arguments = new Bundle();
                 arguments.putString( "query", s);
                 arguments.putString("TRANSLATION", TRANSLATION);
+
                 searchFrag.setArguments(arguments);
                 searchTransaction = fragmentManager.beginTransaction();
                 searchTransaction.addToBackStack(null);

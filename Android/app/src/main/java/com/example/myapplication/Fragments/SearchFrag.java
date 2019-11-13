@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.myapplication.CustomTransSpinAdaptor;
 import com.example.myapplication.Dictionaries.AppDatabase;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
+import com.example.myapplication.FragmentCommunicator;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.Query;
 import com.example.myapplication.R;
@@ -40,18 +41,26 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     Bundle args;
     List results;
 
-//    private BhutiaWordFragment.OnListFragmentInteractionListener mListener;
+    FragmentCommunicator fragmentCommunicator;
+
+
+    //    private BhutiaWordFragment.OnListFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private MyAdapter.OnItemClickListener listener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        fragmentCommunicator = (FragmentCommunicator) context;
+    }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) text = (String) savedInstanceState.getSerializable("query");
-
         args = getArguments();
         listener = new MyAdapter.OnItemClickListener() {
             @Override
@@ -69,6 +78,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 
     @Nullable
@@ -133,7 +143,10 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        fragmentCommunicator.textPass( "LOLWUT");
+
     }
+
 
 
     @Override
