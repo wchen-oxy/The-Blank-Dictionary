@@ -29,7 +29,7 @@ public class ResultFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+
 
     public ResultFragment() {
         // Required empty public constructor
@@ -71,12 +71,6 @@ public class ResultFragment extends Fragment {
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -92,7 +86,6 @@ public class ResultFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
 
     }
 

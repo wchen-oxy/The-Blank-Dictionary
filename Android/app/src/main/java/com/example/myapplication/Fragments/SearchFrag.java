@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,8 @@ import com.example.myapplication.MainActivity;
 import com.example.myapplication.Query;
 import com.example.myapplication.R;
 import com.example.myapplication.MyAdapter;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -67,10 +70,12 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             public void onItemClick(BhutiaWord item) {
                 Bundle args = new Bundle();
                 args.putString("NEW_FRAGMENT", "RESULT_FRAGMENT");
-
-                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
-                setFragment(new ResultFragment());
+                fragmentCommunicator.bundPass(args);
                 recyclerView.setAdapter(null);
+                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
+//
+//                setFragment(new ResultFragment());
+//                recyclerView.setAdapter(null);
             }
         };
 
@@ -104,8 +109,6 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         //You need to inflate the Fragment's view and call findViewById() on the View it returns.
         searchView = view.findViewById(R.id.searchAdvView);
         //Any query text is cleared when iconified. So setIconified to false.
@@ -120,25 +123,49 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             public boolean onQueryTextChange(String newText) {
                 // Called when the query text is changed by the user.
                 //create new thread that runs simultaneously
-                args.putString("query", newText);
+//                getFragmentManager().popBackStack("RESULT_FRAG", 0);
+                FragmentManager fm = getActivity()
+                        .getSupportFragmentManager();
+                fm.popBackStack ("RESULT_FRAG", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-                //pass in newText paramater into thread
+//                List<Fragment> fragentList = getFragmentManager().getFragments();
+//                for (Fragment f:fragentList) Log.d("FRAGS", f.toString());
+//                Fragment frag = getFragmentManager().findFragmentByTag("RESULT_FRAG");
 
-                try {
-                    results = new Query(getContext()).execute(args).get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (!newText.isEmpty()) {
+                    args.putString("query", newText);
+                    //pass in newText paramater into thread
+
+                    try {
+                        results = new Query(getContext()).execute(args).get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    mAdapter = new MyAdapter(results, listener);
+                    recyclerView.setAdapter(mAdapter);
                 }
-                mAdapter = new MyAdapter(results, listener);
-                recyclerView.setAdapter(mAdapter);
-                recyclerView.setAdapter(new MyAdapter(results, listener));
+                else{
+//                    Toast.makeText(getContext(), "invalid", Toast.LENGTH_LONG).show();
+
+                  results.clear();
+                    recyclerView.setAdapter(mAdapter);
+
+                }
+//                recyclerView.setAdapter(new MyAdapter(results, listener));
+
+                //if the fragment is not currently on the results, change to results
+
                 return false;
             }
         });
+
+        
+
         searchView.setIconifiedByDefault(false);
         searchView.clearFocus();
+
         Spinner spinner = getView().findViewById(R.id.adv_trans_spinner);
         CustomTransSpinAdaptor<String> adapter = new CustomTransSpinAdaptor<String>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, new String[] {"Bhutia to English", "Tibetan to Bhutia"});
@@ -146,7 +173,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        fragmentCommunicator.textPass( "LOLWUT");
+        fragmentCommunicator.textPass( "Text Successfully Passed");
 
     }
 

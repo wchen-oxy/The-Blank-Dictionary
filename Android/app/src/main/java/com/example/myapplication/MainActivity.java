@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.Fragments.FavoritesFrag;
 import com.example.myapplication.Fragments.HomeFrag;
+import com.example.myapplication.Fragments.ResultFragment;
 import com.example.myapplication.Fragments.SearchFrag;
 import com.example.myapplication.Fragments.SettingsFrag;
 
@@ -62,12 +63,18 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
                 SearchFrag searchFrag = new SearchFrag();
                 searchFrag.setArguments(args);
                 searchTransaction = fragmentManager.beginTransaction();
-                searchTransaction.addToBackStack(null);
-                searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
+//                searchTransaction.addToBackStack(null);
+                searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").addToBackStack(null).commit();
                 isAdvSearch = true;
                 break;
 
             case "RESULT_FRAGMENT":
+                ResultFragment resultFragment = new ResultFragment();
+                resultFragment.setArguments(args);
+                FragmentTransaction t = fragmentManager.beginTransaction();
+                t.replace(R.id.results_frag, resultFragment);
+                t.addToBackStack("RESULT_FRAG");
+                t.commit();
                 break;
 
 
@@ -144,13 +151,29 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
         mainSearch.setQuery("",false);
 
         }
+//        else if( f instanceof ResultFragment) {
+//            fragmentManager.popBackStack();
+//            super.onBackPressed();
+//        }
+
         else {
             if (f instanceof SearchFrag) ((SearchFrag) f).setmAdapter();
+
 
             Log.d("ceck", "backpress");
             //add clear
             isAdvSearch = false;
-            super.onBackPressed();}
+//            super.onBackPressed();
+
+            final Fragment fragment = fragmentManager.findFragmentById(R.id.results_frag);
+            if (fragment != null) {
+                fragmentManager.popBackStack();
+            } else {
+                super.onBackPressed();
+            }
+
+
+        }
     }
 
 

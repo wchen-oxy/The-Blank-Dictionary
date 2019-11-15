@@ -71,6 +71,7 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
             }
         });
 
+
 //        IN CASE YOU WANT TO USE SEARCHMANAGER AND USE ANOTHER ACTIVITY, UNCOMMENT THIS AND
 //        ALSO UNCOMMENT SEARCHABLE STUFF IN ANDROID MANIFEST
 //        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
@@ -85,16 +86,12 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
 
             @Override
             public boolean onQueryTextSubmit(String s) {
-
-
                 //fragment shit
-
                 Bundle args = new Bundle();
                 args.putString( "query", s);
                 args.putString("TRANSLATION", TRANSLATION);
                 args.putString("NEW_FRAGMENT", "SEARCH_FRAGMENT");
                 fragmentCommunicator.bundPass(args);
-
                 return false;
             }
 
