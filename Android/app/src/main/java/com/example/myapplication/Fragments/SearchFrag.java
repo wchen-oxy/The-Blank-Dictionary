@@ -21,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.myapplication.CustomTransSpinAdaptor;
-import com.example.myapplication.Dictionaries.AppDatabase;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
 import com.example.myapplication.FragmentCommunicator;
 import com.example.myapplication.MainActivity;
@@ -40,11 +39,12 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     Intent intent;
     String text = null;
     SearchView searchView;
-    AppDatabase db;
     Bundle args;
     List results;
+    String translation;
 
     FragmentCommunicator fragmentCommunicator;
+    CustomTransSpinAdaptor<String> adapter;
 
 
     //    private BhutiaWordFragment.OnListFragmentInteractionListener mListener;
@@ -65,12 +65,14 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) text = (String) savedInstanceState.getSerializable("query");
         args = getArguments();
+        translation = args.getString("TRANSLATION");
+
         listener = new MyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BhutiaWord item) {
                 Bundle args = new Bundle();
                 args.putString("NEW_FRAGMENT", "RESULT_FRAGMENT");
-                fragmentCommunicator.bundPass(args);
+                fragmentCommunicator.bundPass(args, false);
                 recyclerView.setAdapter(null);
                 Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
 //
@@ -101,6 +103,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new MyAdapter(results, listener);
         recyclerView.setAdapter(mAdapter);
+
         return rootView;
     }
 
@@ -121,6 +124,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             }
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 // Called when the query text is changed by the user.
                 //create new thread that runs simultaneously
 //                getFragmentManager().popBackStack("RESULT_FRAG", 0);
@@ -145,18 +149,17 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                     }
                     mAdapter = new MyAdapter(results, listener);
                     recyclerView.setAdapter(mAdapter);
+
                 }
                 else{
 //                    Toast.makeText(getContext(), "invalid", Toast.LENGTH_LONG).show();
-
-                  results.clear();
+                    if (results != null) results.clear();
                     recyclerView.setAdapter(mAdapter);
 
                 }
+                fragmentCommunicator.bundPass(args, true);
 //                recyclerView.setAdapter(new MyAdapter(results, listener));
-
                 //if the fragment is not currently on the results, change to results
-
                 return false;
             }
         });
@@ -167,11 +170,12 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         searchView.clearFocus();
 
         Spinner spinner = getView().findViewById(R.id.adv_trans_spinner);
-        CustomTransSpinAdaptor<String> adapter = new CustomTransSpinAdaptor<String>(getActivity(),
+        adapter = new CustomTransSpinAdaptor<String>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, new String[] {"Bhutia to English", "Tibetan to Bhutia"});
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
 
         fragmentCommunicator.textPass( "Text Successfully Passed");
 
@@ -179,13 +183,26 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        String query = searchView.getQuery().toString();
-        MainActivity setter = (MainActivity) getActivity();
-        setter.query = query;
-    }
+//    @Override
+//    public void onPause() {
+//        fragmentCommunicator.bundPass(args, true);
+//        Log.d("PAUSE HIT", "");
+////        String query = searchView.getQuery().toString();
+////        MainActivity setter = (MainActivity) getActivity();
+////        setter.query = query;
+//        super.onPause();
+//
+//
+//    }
+//    @Override
+//    public void onStop() {
+//        fragmentCommunicator.bundPass(args, true);
+//        Log.d("PAUSE HIT", "");
+////        String query = searchView.getQuery().toString();
+////        MainActivity setter = (MainActivity) getActivity();
+////        setter.query = query;
+//        super.onStop();
+//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -198,6 +215,8 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                                int pos, long id) {
          System.out.println(parent.getItemAtPosition(pos));
          args.putString("TRANSLATION", parent.getItemAtPosition(pos).toString());
+
+         adapter.itemSelect(pos);
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -213,5 +232,9 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     public void setmAdapter() {
         recyclerView.setAdapter(mAdapter);
     }
+
+
 }
+
+
 

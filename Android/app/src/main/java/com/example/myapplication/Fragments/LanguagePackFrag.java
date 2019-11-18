@@ -128,7 +128,7 @@ public class LanguagePackFrag extends Fragment {
         if (file.exists()) {
             MainActivity getter = (MainActivity) getActivity();
             Log.d("File", file.getAbsolutePath() );
-            if (getter.br != null) {getter.unregisterReceiver(getter.br); getter.br = null;}
+//            if (getter.br != null) {getter.unregisterReceiver(getter.br); getter.br = null;}
             try {
 
                 Log.v("PERMISSION", Boolean.toString(ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
@@ -161,7 +161,6 @@ public class LanguagePackFrag extends Fragment {
         myReceiver.downloadId = downloadID;
         // enqueue puts the download request in the queue.
 //        downloadManager.enqueue(request);
-        //FIXME PUT ON SEPARATE THREAD
         BroadcastReceiver br = new myReceiver(buttonText);
         MainActivity setter = (MainActivity) getActivity();
         setter.br = br;

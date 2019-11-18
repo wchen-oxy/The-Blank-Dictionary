@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.BroadcastReceiver;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -31,10 +32,11 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
     FragmentTransaction favoritesTransaction;
     BottomNavigationView navViewBack;
     SearchView secSearch;
-    public String query;
+//    public String query;
     public BroadcastReceiver br;
     public Boolean isAdvSearch = false;
     public FragmentCommunicator fragmentCommunicator;
+    private Bundle args;
 
     //TODO implement these
     @Override
@@ -45,8 +47,11 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
     }
 
     @Override
-    public void bundPass(Bundle args) {
-        fragController(args);
+    public void bundPass(Bundle args, boolean isPause) {
+        if (isPause) this.args = args;
+        else {
+            fragController(args);
+        }
     }
 
 
@@ -92,14 +97,17 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
                     System.out.println("HERE ARE THE FRAGMENTS: " + getSupportFragmentManager().getFragments());
                     if (isAdvSearch) {
                         SearchFrag searchFrag = new SearchFrag();
-                        Bundle arguments = new Bundle();
-                        arguments.putString( "query", query);
-                        searchFrag.setArguments(arguments);
+
+
+//                        Bundle args = getArguments();
+                        searchFrag.setArguments(args);
+                        Log.d("arguments", args.getString("TRANSLATION"));
+                        Log.d("arguments", args.getString("query"));
+
                         searchTransaction = fragmentManager.beginTransaction();
                         searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
                         return true;
                     }
-
 
                     HomeFrag homeFrag = new HomeFrag();
                     homeTransaction = fragmentManager.beginTransaction();
@@ -146,8 +154,6 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
         //clear text in adv
         else if (mainSearch != null && !mainSearch.getQuery().toString().isEmpty()) {
         Log.d("ceck", mainSearch.getQuery().toString());
-
-        Log.d("ceck", "clear text");
         mainSearch.setQuery("",false);
 
         }
@@ -155,7 +161,11 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
 //            fragmentManager.popBackStack();
 //            super.onBackPressed();
 //        }
+        else if (f instanceof SettingsFrag){
+            Log.d("Settings", "RETURNED");
 
+            super.onBackPressed();
+        }
         else {
             if (f instanceof SearchFrag) ((SearchFrag) f).setmAdapter();
 
@@ -189,6 +199,13 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
         Bundle args = new Bundle();
         args.putString("NEW_FRAGMENT", "HOME_FRAGMENT");
         fragController(args);
+
+//        //setup for shared pref
+//        //FIXME CHANGE SO THAT APP ON STARTUP DYNAMICALLY CHANGES TO DICTIONARY
+//        SharedPreferences pref = getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
+//        SharedPreferences.Editor editor = pref.edit();
+//        editor.putString("CurDict", "BHUTIA"); // Storing boolean - true/false
+//        editor.commit(); // commit changes
     }
 
     @Override

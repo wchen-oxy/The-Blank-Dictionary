@@ -33,6 +33,7 @@ public class myReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        context.unregisterReceiver(this);
         StringBuilder sb = new StringBuilder();
         sb.append("Action: " + intent.getAction() + "\n");
         sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");

@@ -1,7 +1,9 @@
 package com.example.myapplication.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,8 @@ import com.example.myapplication.FragmentCommunicator;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
+import java.io.File;
+
 //note that this uses fragmentManager and not the SupportFragmentManager
 
 public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedListener{
@@ -29,6 +33,11 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
     SearchView mainSearchBar;
     String TRANSLATION = null;
     FragmentCommunicator fragmentCommunicator;
+    Bundle args;
+    CustomTransSpinAdaptor<String> dadapter;
+    private SharedPreferences pref;
+    private boolean DictionaryInstalled = true;
+
 
 
 
@@ -42,6 +51,10 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentManager = getFragmentManager();
+        args = new Bundle();
+        pref = getContext().getSharedPreferences("BlankDictPref", 0);
+        if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory())) DictionaryInstalled = false;
+        Log.d("DICT DETECT", Boolean.toString(DictionaryInstalled));
 
 
 
@@ -77,45 +90,66 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
 //        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 //        mainSearchBar.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-        mainSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            //            @Override
+        if (DictionaryInstalled && pref.getString("CurDict", null) != null) {
+            mainSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                //            @Override
 //            public boolean onQueryTextSubmitted(String query) {
 //                // Called when the user submits the query.
 //                return true;
 //            }
 
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                //fragment shit
-                Bundle args = new Bundle();
-                args.putString( "query", s);
-                args.putString("TRANSLATION", TRANSLATION);
-                args.putString("NEW_FRAGMENT", "SEARCH_FRAGMENT");
-                fragmentCommunicator.bundPass(args);
-                return false;
-            }
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    //fragment shit
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // Called when the query text is changed by the user.
-                return false;
-            }
-        });
+                    args.putString("query", s);
+                    args.putString("TRANSLATION", TRANSLATION);
+                    args.putString("NEW_FRAGMENT", "SEARCH_FRAGMENT");
+                    Log.d("HOMEFRAG", args.toString());
+                    fragmentCommunicator.bundPass(args, false);
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    // Called when the query text is changed by the user.
+                    return false;
+                }
+            });
+
+            //Spinner
+
+            Spinner spinner = getView().findViewById(R.id.home_trans_spinner);
+
+            //Begin third
+            dadapter = new CustomTransSpinAdaptor<String>(getActivity(),
+                    android.R.layout.simple_spinner_dropdown_item, new String[] {"Bhutia to English", "Tibetan to Bhutia"});
+            dadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            TRANSLATION = dadapter.getItem(0);
+            Log.d("Translation", TRANSLATION);
+            spinner.setAdapter(dadapter);
+            spinner.setOnItemSelectedListener(this);
 
 
 
-        //Spinner
+        }
+        else{
+            mainSearchBar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!DictionaryInstalled) {
+                        Toast.makeText(getActivity(), "Please Download a Dictionary from Settings First", Toast.LENGTH_LONG).show();
+                    }
+                    if (DictionaryInstalled && pref.getString("CurDict", null) == null){
+                        Toast.makeText(getActivity(), "Choose your current dictionary in Settings.", Toast.LENGTH_LONG).show();
 
-        Spinner spinner = getView().findViewById(R.id.home_trans_spinner);
+                    }
+                }
+            });
+        }
 
-//Begin third
-        CustomTransSpinAdaptor<String> dadapter = new CustomTransSpinAdaptor<String>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, new String[] {"Bhutia to English", "Tibetan to Bhutia"});
-        TRANSLATION = dadapter.getItem(0).toString();
-        Log.d("TAG1", TRANSLATION);
-        dadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dadapter);
-        spinner.setOnItemSelectedListener(this);
+
 
     }
 
@@ -144,15 +178,16 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         // An item was selected. You can retrieve the selected item using
-        //         intent.putExtra("Translation", (parent.getItemAtPosition(pos).toString()));
-        Log.d("SELECT THIS", String.valueOf(pos));
+        Log.d("SELECTED ID", String.valueOf(pos));
         Log.d("SELECT THIS", parent.getItemAtPosition(pos).toString());
-
+        args.putString("TRANSLATION",  parent.getItemAtPosition(pos).toString());
+        dadapter.itemSelect(pos);
 
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
 
     }
 
