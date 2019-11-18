@@ -82,6 +82,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         };
 
         try {
+            if (!args.getString("query").isEmpty())
             results = new Query(getContext()).execute(args).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -153,6 +154,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                 }
                 else{
 //                    Toast.makeText(getContext(), "invalid", Toast.LENGTH_LONG).show();
+                    args.putString("query", "");
                     if (results != null) results.clear();
                     recyclerView.setAdapter(mAdapter);
 
