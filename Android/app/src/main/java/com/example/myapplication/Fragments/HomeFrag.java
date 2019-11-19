@@ -7,27 +7,27 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.SearchView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.myapplication.CustomTransSpinAdaptor;
 import com.example.myapplication.FragmentCommunicator;
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
 import java.io.File;
 
+//TODO implement the bundle intialization as found in searchfrag in case user presses back from searchfrag
 //note that this uses fragmentManager and not the SupportFragmentManager
 
-public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedListener{
+public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedListener {
     FragmentManager fragmentManager;
     FragmentTransaction searchTransaction;
     SearchView mainSearchBar;
@@ -37,7 +37,6 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
     CustomTransSpinAdaptor<String> dadapter;
     private SharedPreferences pref;
     private boolean DictionaryInstalled = true;
-
 
 
 
@@ -53,21 +52,17 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
         fragmentManager = getFragmentManager();
         args = new Bundle();
         pref = getContext().getSharedPreferences("BlankDictPref", 0);
-        if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory())) DictionaryInstalled = false;
+        if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory()))
+            DictionaryInstalled = false;
         Log.d("DICT DETECT", Boolean.toString(DictionaryInstalled));
-
-
-
 
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-    return inflater.inflate(R.layout.home_frag, container,false);
+        return inflater.inflate(R.layout.home_frag, container, false);
     }
-
-
 
 
     @Override
@@ -92,16 +87,11 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
 
         if (DictionaryInstalled && pref.getString("CurDict", null) != null) {
             mainSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                //            @Override
-//            public boolean onQueryTextSubmitted(String query) {
-//                // Called when the user submits the query.
-//                return true;
-//            }
+
 
                 @Override
                 public boolean onQueryTextSubmit(String s) {
-                    //fragment shit
-
+                    if (TRANSLATION == null) TRANSLATION = dadapter.getItem(0);
                     args.putString("query", s);
                     args.putString("TRANSLATION", TRANSLATION);
                     args.putString("NEW_FRAGMENT", "SEARCH_FRAGMENT");
@@ -112,75 +102,62 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    // Called when the query text is changed by the user.
                     return false;
                 }
             });
 
-            //Spinner
 
             Spinner spinner = getView().findViewById(R.id.home_trans_spinner);
 
-            //Begin third
+            String[] stringArray = getResources().getStringArray(R.array.bhutia_array);
+//            tranlationSet();
             dadapter = new CustomTransSpinAdaptor<String>(getActivity(),
-                    android.R.layout.simple_spinner_dropdown_item, new String[] {"Bhutia to English", "Tibetan to Bhutia"});
+                    android.R.layout.simple_spinner_dropdown_item, stringArray);
             dadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-            TRANSLATION = dadapter.getItem(0);
-            Log.d("Translation", TRANSLATION);
             spinner.setAdapter(dadapter);
             spinner.setOnItemSelectedListener(this);
 
-
-
-        }
-        else{
+        } else {
             mainSearchBar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (!DictionaryInstalled) {
                         Toast.makeText(getActivity(), "Please Download a Dictionary from Settings First", Toast.LENGTH_LONG).show();
                     }
-                    if (DictionaryInstalled && pref.getString("CurDict", null) == null){
+                    if (DictionaryInstalled && pref.getString("CurDict", null) == null) {
                         Toast.makeText(getActivity(), "Choose your current dictionary in Settings.", Toast.LENGTH_LONG).show();
 
                     }
                 }
             });
         }
+    }
 
+    private String[] tranlationSet(){
+        String[] result = null;
+        switch (pref.getString("CurDict", null)) {
+            case ("BHUTIA"):
+                result = getResources().getStringArray(R.array.bhutia_array);
 
-
+        }
+        return result;
     }
 
     @Override
     public void onResume() {
-       mainSearchBar.setQuery("", false);
+        mainSearchBar.setQuery("", false);
 
         mainSearchBar.setFocusable(true);
         mainSearchBar.setIconified(true);
-//        System.out.println("IS IT ICONIFIED 1 " + mainSearchBar.isIconified());
         mainSearchBar.clearFocus();
-       super.onResume();
+        super.onResume();
     }
 
 
-//    @Override
-//    public void onDestroyView(){
-//        super.onDestroyView();
-//        Log.d("thing", "destroyed");
-//        SearchView mainSearchBar = viewGrab.findViewById(R.id.searchView);
-//        mainSearchBar.setQuery("", false);
-//        mainSearchBar.clearFocus();
-//
-//    }
-
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        Log.d("SELECTED ID", String.valueOf(pos));
-        Log.d("SELECT THIS", parent.getItemAtPosition(pos).toString());
-        args.putString("TRANSLATION",  parent.getItemAtPosition(pos).toString());
+        TRANSLATION = parent.getItemAtPosition(pos).toString();
+        args.putInt("TRANSLATION_ID", pos);
         dadapter.itemSelect(pos);
 
     }

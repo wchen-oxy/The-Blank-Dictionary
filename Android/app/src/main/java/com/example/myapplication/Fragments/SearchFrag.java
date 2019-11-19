@@ -3,7 +3,6 @@ package com.example.myapplication.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,16 +22,15 @@ import android.widget.Toast;
 import com.example.myapplication.CustomTransSpinAdaptor;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
 import com.example.myapplication.FragmentCommunicator;
-import com.example.myapplication.MainActivity;
+import com.example.myapplication.MyAdapter;
 import com.example.myapplication.Query;
 import com.example.myapplication.R;
-import com.example.myapplication.MyAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 //FIXME ADD ENUM FOR THE LANGAUGE TYPES IN SEPARATE FILE
+//TODO AUTOQUERY WORDS WHEN TRANSLATION IS CHANGED?
 //external package
 
 public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -41,13 +39,13 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     SearchView searchView;
     Bundle args;
     List results;
-    String translation;
+    String TRANSLATION;
+    int TRANSLATION_ID;
+    boolean INITIAL = true;
 
     FragmentCommunicator fragmentCommunicator;
     CustomTransSpinAdaptor<String> adapter;
 
-
-    //    private BhutiaWordFragment.OnListFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -65,7 +63,10 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) text = (String) savedInstanceState.getSerializable("query");
         args = getArguments();
-        translation = args.getString("TRANSLATION");
+        TRANSLATION = args.getString("TRANSLATION");
+        TRANSLATION_ID = args.getInt("TRANSLATION_ID");
+        Log.d("SELECTS", String.valueOf(args.getInt("TRANSLATION_ID")));
+        Log.d("SELECTS", args.getString("TRANSLATION"));
 
         listener = new MyAdapter.OnItemClickListener() {
             @Override
@@ -75,15 +76,13 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                 fragmentCommunicator.bundPass(args, false);
                 recyclerView.setAdapter(null);
                 Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
-//
-//                setFragment(new ResultFragment());
-//                recyclerView.setAdapter(null);
+
             }
         };
 
         try {
             if (!args.getString("query").isEmpty())
-            results = new Query(getContext()).execute(args).get();
+                results = new Query(getContext()).execute(args).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -95,7 +94,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.adv_search, container,false);
+        View rootView = inflater.inflate(R.layout.adv_search, container, false);
         Context context = rootView.getContext();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
@@ -107,7 +106,6 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
         return rootView;
     }
-
 
 
     @Override
@@ -123,23 +121,18 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                 searchView.clearFocus();
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
-
-                // Called when the query text is changed by the user.
-                //create new thread that runs simultaneously
-//                getFragmentManager().popBackStack("RESULT_FRAG", 0);
                 FragmentManager fm = getActivity()
                         .getSupportFragmentManager();
-                fm.popBackStack ("RESULT_FRAG", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fm.popBackStack("RESULT_FRAG", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-//                List<Fragment> fragentList = getFragmentManager().getFragments();
-//                for (Fragment f:fragentList) Log.d("FRAGS", f.toString());
-//                Fragment frag = getFragmentManager().findFragmentByTag("RESULT_FRAG");
 
                 if (!newText.isEmpty()) {
                     args.putString("query", newText);
-                    //pass in newText paramater into thread
+                    args.putString("TRANSLATION", TRANSLATION);
+                    //pass in newText parameter into thread
 
                     try {
                         results = new Query(getContext()).execute(args).get();
@@ -151,60 +144,28 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                     mAdapter = new MyAdapter(results, listener);
                     recyclerView.setAdapter(mAdapter);
 
-                }
-                else{
-//                    Toast.makeText(getContext(), "invalid", Toast.LENGTH_LONG).show();
+                } else {
                     args.putString("query", "");
                     if (results != null) results.clear();
                     recyclerView.setAdapter(mAdapter);
 
                 }
                 fragmentCommunicator.bundPass(args, true);
-//                recyclerView.setAdapter(new MyAdapter(results, listener));
-                //if the fragment is not currently on the results, change to results
                 return false;
             }
         });
 
-        
-
         searchView.setIconifiedByDefault(false);
         searchView.clearFocus();
-
+        String[] stringArray = getResources().getStringArray(R.array.bhutia_array);
         Spinner spinner = getView().findViewById(R.id.adv_trans_spinner);
         adapter = new CustomTransSpinAdaptor<String>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, new String[] {"Bhutia to English", "Tibetan to Bhutia"});
+                android.R.layout.simple_spinner_dropdown_item, stringArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-
-
-        fragmentCommunicator.textPass( "Text Successfully Passed");
-
+        fragmentCommunicator.textPass("Text Successfully Passed");
     }
-
-
-
-//    @Override
-//    public void onPause() {
-//        fragmentCommunicator.bundPass(args, true);
-//        Log.d("PAUSE HIT", "");
-////        String query = searchView.getQuery().toString();
-////        MainActivity setter = (MainActivity) getActivity();
-////        setter.query = query;
-//        super.onPause();
-//
-//
-//    }
-//    @Override
-//    public void onStop() {
-//        fragmentCommunicator.bundPass(args, true);
-//        Log.d("PAUSE HIT", "");
-////        String query = searchView.getQuery().toString();
-////        MainActivity setter = (MainActivity) getActivity();
-////        setter.query = query;
-//        super.onStop();
-//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -215,10 +176,17 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-         System.out.println(parent.getItemAtPosition(pos));
-         args.putString("TRANSLATION", parent.getItemAtPosition(pos).toString());
+        if (INITIAL) {
+            System.out.println("INITIAL: " + parent.getItemAtPosition(pos));
 
-         adapter.itemSelect(pos);
+            adapter.itemSelect(TRANSLATION_ID);
+            INITIAL = false;
+        } else {
+            System.out.println("CUR ITEM IS " + parent.getItemAtPosition(pos));
+            adapter.itemSelect(pos);
+            args.putInt("TRANSLATION_ID", pos);
+            TRANSLATION = parent.getItemAtPosition(pos).toString();
+        }
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

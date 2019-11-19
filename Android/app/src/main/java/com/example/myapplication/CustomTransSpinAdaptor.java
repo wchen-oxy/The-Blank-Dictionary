@@ -8,16 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class CustomTransSpinAdaptor<T> extends ArrayAdapter<String> {
-    int selectedItem;
+    private int selectedItem;
 
     public CustomTransSpinAdaptor(Context context, int textViewResourceId, String[] objects) {
         super(context, textViewResourceId, objects);
     }
-    public void itemSelect(int selectedItem){
+
+    public void itemSelect(int selectedItem) {
         this.selectedItem = selectedItem;
     }
-
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -28,16 +27,12 @@ public class CustomTransSpinAdaptor<T> extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent)
-    {
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
         View v = null;
         v = super.getDropDownView(position, null, parent);
-        // If this is the selected item position
         if (position == selectedItem) {
             v.setBackgroundColor(Color.rgb(235, 235, 235));
-        }
-        else {
-            // for other views
+        } else {
             v.setBackgroundColor(Color.WHITE);
 
         }
