@@ -23,7 +23,7 @@
         android:id="@+id/dictionary_selected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/test_dictionary"
+        android:text="@string/bhutia_dictionary"
         android:fontFamily="@font/alegreya_sans"
         android:textSize="16dp"
         android:gravity="left|center_vertical"

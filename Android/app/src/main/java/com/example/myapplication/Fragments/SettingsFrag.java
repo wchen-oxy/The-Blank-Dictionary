@@ -43,6 +43,8 @@ public class SettingsFrag extends Fragment {
         currentDictionary.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View v) {
+                        DictionarySelectionFrag dictionarySelectionFrag = DictionarySelectionFrag.newInstance();
+                        langFragTransaction.replace(R.id.frag_container, dictionarySelectionFrag).addToBackStack(null).commit();
                         Toast.makeText(getActivity(), "Dict Changed", Toast.LENGTH_SHORT).show();
                         SharedPreferences pref = getActivity().getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
                         SharedPreferences.Editor editor = pref.edit();
