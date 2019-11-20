@@ -109,8 +109,8 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
 
             Spinner spinner = getView().findViewById(R.id.home_trans_spinner);
 
-            String[] stringArray = getResources().getStringArray(R.array.bhutia_array);
-//            tranlationSet();
+//            String[] stringArray = getResources().getStringArray(R.array.bhutia_array);
+            String[] stringArray = tranlationSet();
             dadapter = new CustomTransSpinAdaptor<String>(getActivity(),
                     android.R.layout.simple_spinner_dropdown_item, stringArray);
             dadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

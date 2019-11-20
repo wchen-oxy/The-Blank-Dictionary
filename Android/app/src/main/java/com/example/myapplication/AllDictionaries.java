@@ -17,15 +17,21 @@ abstract class AllDictionaries {
 class Bhutia extends AllDictionaries{
     List returnDictionary(Bundle args, AppDatabase db) {
         BhutiaDao bhutiaDao = db.getBhutiaDao();
+        List<BhutiaWord> words = null;
         switch (args.getString("TRANSLATION")){
             case ("Bhutia to English"):
                 Log.d("BHUTIA FOUND", "BHUTIA!!");
-                List<BhutiaWord> words = bhutiaDao.EngSearch( args.getString("query")+"%");
+                words = bhutiaDao.BhutiaSearch( args.getString("query")+"%");
+                return words;
+            case ("English to Bhutia"):
+                words = bhutiaDao.EnglishSearch(args.getString("query")+"%");
                 return words;
             case ("Tibetan to Bhutia"):
-                Log.d("Tibet not done", "Tibetan");
-                return null;
+                Log.d("Tibetan to Bhutia", "Tibetan");
+                words = bhutiaDao.TibetanSearch(args.getString("query")+"%");
+                return words;
         }
+
         //shouldn't reach here
         //assert
         return null;

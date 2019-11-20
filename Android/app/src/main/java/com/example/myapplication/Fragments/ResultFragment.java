@@ -1,6 +1,7 @@
 package com.example.myapplication.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.myapplication.Dictionaries.Bhutia.BhutiaLayout;
+import com.example.myapplication.Dictionaries.English.EnglishLayout;
+import com.example.myapplication.DictionaryLayout;
+import com.example.myapplication.LayoutSetter;
 import com.example.myapplication.R;
 
 /**
@@ -28,6 +33,8 @@ public class ResultFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String curDict;
+    private Bundle args;
 
 
 
@@ -46,6 +53,7 @@ public class ResultFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static ResultFragment newInstance(String param1, String param2) {
         ResultFragment fragment = new ResultFragment();
+        //TODO good way to refactor code, take a look
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -53,9 +61,15 @@ public class ResultFragment extends Fragment {
         return fragment;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        args = getArguments();
+        SharedPreferences pref = getContext().getSharedPreferences("BlankDictPref", 0);
+        curDict = pref.getString("CurDict", null);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -65,23 +79,29 @@ public class ResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.bhutia_final_result, container,false);
+//        View rootView = inflater.inflate(R.layout.bhutia_final_result, container,false);
 //        TextView textView = new TextView(getActivity());
 //        textView.setText(R.string.hello_blank_fragment);
-        return rootView;
+        //add switch cases
+        View rootView;
+        DictionaryLayout dictionaryLayout;
+        LayoutSetter layoutSetter = null;
+        switch (curDict){
+            case ("BHUTIA"):
+                layoutSetter = new BhutiaLayout(inflater,container, args);
+                break;
+            case ("ENGLISH"):
+                layoutSetter = new EnglishLayout(inflater,container, args);
+                break;
+
+        }
+        assert layoutSetter != null;
+        dictionaryLayout = layoutSetter.getDictionaryLayout();
+        return  dictionaryLayout.returnView();
     }
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-    }
+
 
     @Override
     public void onDetach() {

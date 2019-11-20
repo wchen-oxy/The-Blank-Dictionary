@@ -12,13 +12,14 @@ import androidx.room.Room;
 import com.example.myapplication.Dictionaries.AppDatabase;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaDao;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
+import com.example.myapplication.Dictionaries.English.EnglishDao;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class Query extends AsyncTask<Bundle, Void, List<BhutiaWord>> {
     private final WeakReference<Context> weakContext;
-    private DictionaryStrategy dictionaryStrategy;
+//    private DictionaryStrategy dictionaryStrategy;
     private SharedPreferences pref;
 
     public Query(Context context){
@@ -49,6 +50,9 @@ public class Query extends AsyncTask<Bundle, Void, List<BhutiaWord>> {
 //                return ad.returnDictionary(args);
                 return new Bhutia().returnDictionary(args, db);
                 //do list stuff here
+            case("ENGLISH"):
+                EnglishDao englishDao  = db.getEnglishDao();
+                return new English().returnDictionary(args, db);
         }
 
 
