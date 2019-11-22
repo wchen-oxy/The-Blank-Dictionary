@@ -1,0 +1,57 @@
+body {
+  background: white;
+}
+
+#title{
+	color: black;
+  font-size: 4em;
+
+}
+
+#title-container{
+  position: relative;
+  float: left;
+  top:220px;
+}
+
+#desc{
+  color:#828282;
+}
+
+.btn, .btn:hover, .btn:active, .btn:visited {
+  background-color: #ba375c !important;
+  border-radius: 10px;
+  padding: 15px 30px;
+ 
+  text-decoration: none;
+}
+.btn:hover, .btn:active {
+  color: #cfcfcf;
+}
+
+#dictionaries{
+  display: none;
+  top:220px;
+}
+
+/*--- navigation bar ---*/
+.navbar {
+  background:#ba375c;
+
+}
+.nav-link,
+.navbar-brand {
+  color: #fff;
+  cursor: pointer;
+}
+.nav-link {
+  margin-right: 1em !important;
+}
+.nav-link:hover {
+  color: #000;
+}
+.navbar-collapse {
+  justify-content: flex-end;
+}
+
+

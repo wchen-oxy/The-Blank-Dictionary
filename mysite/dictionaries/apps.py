@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class BhutiaConfig(AppConfig):
+class DictionaryConfig(AppConfig):
     name = 'dictionaries'

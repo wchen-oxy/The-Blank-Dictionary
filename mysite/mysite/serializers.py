@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from dictionaries.models import Bhutia
+from dictionaries.models import Bhutia, English
 
 class BhutiaSerializer(serializers.Serializer):
     # id = serializers.IntegerField(read_only=True)
@@ -10,3 +10,9 @@ class BhutiaSerializer(serializers.Serializer):
     tib_script = serializers.CharField(read_only=True, allow_null=True)
     example = serializers.CharField(read_only=True, allow_null=True)
 
+
+class EnglishSerializer(serializers.Serializer):
+    word = serializers.CharField(read_only=True, allow_null=True)
+    ipa =  serializers.CharField(read_only=True, allow_null=True)
+    definition = serializers.CharField(read_only=True, allow_null=True)
+    example = serializers.CharField(read_only=True, allow_null=True)

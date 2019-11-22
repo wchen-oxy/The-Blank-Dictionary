@@ -23,11 +23,8 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.test),
-
-    # path('', views.home, name="home"),
+    path('', views.home),
     path('d/', include('dictionaries.urls')),
-    # url('download/', views.download, name="download"),
     path('download/<slug:pack>', views.download),
     path('api/<slug:lang>/', AllBhutia.as_view(), name="all-words"),
     path('apitest/<slug:lang>/', views.test, name="test-words"),

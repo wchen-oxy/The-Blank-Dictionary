@@ -8,6 +8,11 @@ from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 # from .serializers import BhutiaSerializer
 # from rest_framework import generics
 
+# from .routing.strategy import Strategy
+# from .routing.context import SearchContext
+
+
+
 
 
 
@@ -51,13 +56,17 @@ def index(request):
 def home(request, lang):
         # return HttpResponse("Hello, world. You're at the home index.")
     home = True
-    return render(request, 'home.html', {'home': home})
+    if lang.lower() == 'bhutia':
+        return render(request, 'bhutia/home_bhutia.html', {'home': home})
+    if lang.lower() == 'english':
+        return HttpResponse("Hello, world. You're at the english index.")
 
 
 def search(request, lang, translation):
     print(translation)
     print(lang)
     error = False
+    
     if 'query' in request.GET:
         query = request.GET['query']
         #get dictionary pack
@@ -114,13 +123,12 @@ def search(request, lang, translation):
         #         error = True
         #         return render(request, 'entry.html', {'error': error})
         #     return render(request, 'entry.html', {'tb_possible': entries, 'tib_bhut_exact': exact_entry})
+    
+    #begin strategy call
+    # if 'query' in request.GET:
+    #     if lang.lower == 'bhutia':
+    #         context = SearchContext(Strategy.BhutiaStrategy)
+        
 
     return render(request, 'entry.html', {'error': error})
-
-# def bhutia_download(request):
-#         if request.method == 'GET':
-#             words = Bhutia.objects.all()
-#             serializer = BhutiaSerializer(words, many=True)
-#             return JsonResponse(serializer.data, safe=False)
-
 

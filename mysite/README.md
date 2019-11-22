@@ -6,3 +6,6 @@ Notes for MySQL setup on Mac
 
 -> to start mysql, cd to /usr/local/mysql/bin
 -> type mysql -u root -p
+
+
+.git needs to be initialized in root directory

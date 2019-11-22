@@ -13,7 +13,7 @@ import os
 
 #heroku import
 import django_heroku
-import urllib.parse as urlparse
+# import urllib.parse as urlparse
 import sys
 
 
@@ -31,13 +31,13 @@ SECRET_KEY = 'y)i1bq+nsu0377az=6+4eq5utii#bn$$9ywc)t!q1ypa@d%e@i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['thawing-cove-17871.herokuapp.com/', 'herokuapp.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['heroku.com', 'herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'dictionaries.apps.BhutiaConfig',
+    'dictionaries.apps.DictionaryConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -148,37 +148,40 @@ STATICFILES_DIRS = [
 
 #ClearDB specific code
 #HEROKU SPECIFIC
-urlparse.uses_netloc.append('mysql')
+# urlparse.uses_netloc.append('mysql')
 
-try:
+# try:
 
-    # Check to make sure DATABASES is set in settings.py file.
-    # If not default to {}
+#     # Check to make sure DATABASES is set in settings.py file.
+#     # If not default to {}
 
-    if 'DATABASES' not in locals():
-        DATABASES = {}
+#     if 'DATABASES' not in locals():
+#         DATABASES = {}
 
-    if 'DATABASE_URL' in os.environ:
-        url = urlparse.urlparse(os.environ['DATABASE_URL'])
+#     if 'DATABASE_URL' in os.environ:
+#         url = urlparse.urlparse(os.environ['DATABASE_URL'])
 
-        # Ensure default database exists.
-        DATABASES['default'] = DATABASES.get('default', {})
+#         # Ensure default database exists.
+#         DATABASES['default'] = DATABASES.get('default', {})
 
-        # Update with environment configuration.
-        DATABASES['default'].update({
-            'NAME': url.path[1:],
-            'USER': url.username,
-            'PASSWORD': url.password,
-            'HOST': url.hostname,
-            'PORT': url.port,
-        })
+#         # Update with environment configuration.
+#         DATABASES['default'].update({
+#             'NAME': url.path[1:],
+#             'USER': url.username,
+#             'PASSWORD': url.password,
+#             'HOST': url.hostname,
+#             'PORT': url.port,
+#         })
 
 
-        if url.scheme == 'mysql':
-            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
-except Exception:
-    print('Unexpected error:', sys.exc_info())
+#         if url.scheme == 'mysql':
+#             DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+# except Exception:
+#     print('Unexpected error:', sys.exc_info())
 
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+#workaround for sslmode not supported when accessing admin on heroku
+# del DATABASES['default']['OPTIONS']['sslmode']
+

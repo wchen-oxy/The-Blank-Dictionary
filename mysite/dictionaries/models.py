@@ -10,6 +10,8 @@ from django.db import models
 def getter(lang):
     if lang == 'bhutia': 
         return Bhutia()
+    if lang == "english":
+        return English()
 
 
 class Bhutia(models.Model):
@@ -39,3 +41,21 @@ class Bhutia(models.Model):
     def __str__(self):
         template = '{0.romanization}'
         return template.format(self)
+
+class English(models.Model):
+    word = models.CharField(primary_key=True, max_length=50)
+    ipa =  models.CharField(max_length=100, blank=True, null=True)
+    definition = models.CharField(max_length=200, blank=True, null=True)
+    example = models.CharField(max_length=400, blank = True, null= True)
+
+    class Meta:
+        managed = False
+        db_table = 'English'
+        verbose_name = 'English Entry'
+        verbose_name_plural = 'English'
+
+    def __str__(self):
+        template = '{0.word}'
+        return template.format(self)
+
+
