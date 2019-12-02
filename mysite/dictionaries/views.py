@@ -8,16 +8,15 @@ from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 # from .serializers import BhutiaSerializer
 # from rest_framework import generics
 
-# from .routing.strategy import Strategy
-# from .routing.context import SearchContext
-
-
-
-
+##for some reason django crashes with multiple relative imports... Below might be the reason
+# http://python-notes.curiousefficiency.org/en/latest/python_concepts/import_traps.html
+from .routing.strategy import *
+from .routing.context import *
 
 
 # Create your views here.
-def index(request):
+def index(request, lang):
+    test()
     return HttpResponse("Hello, world. You're at the Word index.")
 
 # def entry(request, lang):
@@ -67,36 +66,36 @@ def search(request, lang, translation):
     print(lang)
     error = False
     
-    if 'query' in request.GET:
-        query = request.GET['query']
-        #get dictionary pack
-        target = apps.get_model('dictionaries', lang) 
-        all_tran = {
-        "bhutia_english": ["be_possible", "bhut_eng_exact"],
-        "english_bhutia": ["eb_possible", "eng_bhut_exact"],
-        "tibetan_bhutia": ["tb_possible", "tib_bhut_exact"]
-        }    
+    # if 'query' in request.GET:
+    #     query = request.GET['query']
+    #     #get dictionary pack
+    #     target = apps.get_model('dictionaries', lang) 
+    #     all_tran = {
+    #     "bhutia_english": ["be_possible", "bhut_eng_exact"],
+    #     "english_bhutia": ["eb_possible", "eng_bhut_exact"],
+    #     "tibetan_bhutia": ["tb_possible", "tib_bhut_exact"]
+    #     }    
 
-        params = {
-            "bhutia_english": [{"romanization__iexact": query}, {"romanization__icontains": query}],
-            "english_bhutia": [{"eng_trans__iexact": query}, {"eng_trans__icontains":query}],
-            "tibetan_bhutia": [{"tib_script__iexact":query}, {"tib_script__icontains":query}]
-        }
+    #     params = {
+    #         "bhutia_english": [{"romanization__iexact": query}, {"romanization__icontains": query}],
+    #         "english_bhutia": [{"eng_trans__iexact": query}, {"eng_trans__icontains":query}],
+    #         "tibetan_bhutia": [{"tib_script__iexact":query}, {"tib_script__icontains":query}]
+    #     }
        
 
-        if not query:
-            error = True
-            return render(request, 'entry.html', {'error': error})
+    #     if not query:
+    #         error = True
+    #         return render(request, 'entry.html', {'error': error})
 
-        # for trans in ['bhutia_english', 'english_bhutia', 'tibetan_bhutia']:
-        if translation in all_tran:
+    #     # for trans in ['bhutia_english', 'english_bhutia', 'tibetan_bhutia']:
+    #     if translation in all_tran:
             
-            exact_entry = target.objects.filter(**params.get(translation)[0])
-            entries = target.objects.filter(**params.get(translation)[1])
-            if not exact_entry and not entries:
-                error = True
-                return render(request, 'entry.html', {'error': error})
-            return render(request, 'entry.html', {all_tran.get(translation)[0]: entries, all_tran.get(translation)[1]: exact_entry})
+    #         exact_entry = target.objects.filter(**params.get(translation)[0])
+    #         entries = target.objects.filter(**params.get(translation)[1])
+    #         if not exact_entry and not entries:
+    #             error = True
+    #             return render(request, 'entry.html', {'error': error})
+    #         return render(request, 'entry.html', {all_tran.get(translation)[0]: entries, all_tran.get(translation)[1]: exact_entry})
 
 
         # elif translation == "bhutia_english":
@@ -124,11 +123,14 @@ def search(request, lang, translation):
         #         return render(request, 'entry.html', {'error': error})
         #     return render(request, 'entry.html', {'tb_possible': entries, 'tib_bhut_exact': exact_entry})
     
-    #begin strategy call
-    # if 'query' in request.GET:
-    #     if lang.lower == 'bhutia':
-    #         context = SearchContext(Strategy.BhutiaStrategy)
+    #FIXME 
+    if 'query' in request.GET:
+        context = None
+        if lang.lower() == 'bhutia':
+            context = SearchContext(BhutiaStrategy())
+        if lang.lower() == "english":
+            context = SearchContext(EnglishStrategy())
+        return context.execute_strategy(request, lang, translation)
         
-
     return render(request, 'entry.html', {'error': error})
 
