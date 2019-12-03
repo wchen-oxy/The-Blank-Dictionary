@@ -14,14 +14,13 @@
         {% endblock %}
 
         {% block translation_options%}    
-          <option id="be" value="bhutia_english" selected>Bhutia to English</option>
+          <option id="be" value="bhutia_english" selected="selected">Bhutia to English</option>
           <option id="eb" value="english_bhutia">English to Bhutia</option>
           <option id="tb" value="tibetan_bhutia">Tibetan to Bhutia</option>
           {% endblock %}
 
 
-{% block script%}<script src="{% static 'js/bhutia.js' %}"></script>
-{% endblock %}
+{% block script%}<script src="{% static 'js/bhutia.js' %}"></script>{% endblock %}
 
 
 </html>

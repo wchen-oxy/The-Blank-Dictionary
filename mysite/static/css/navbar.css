@@ -21,3 +21,10 @@ body {
 .navbar-collapse {
   justify-content: flex-end;
 }
+
+.space{
+	margin: 50px;
+}
+form-inline > * {
+   margin:5px 3px;
+}
