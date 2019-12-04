@@ -58,7 +58,7 @@ def home(request, lang):
     if lang.lower() == 'bhutia':
         return render(request, 'languages/bhutia/home_bhutia.html', {'home': home})
     if lang.lower() == 'english':
-        return HttpResponse("Hello, world. You're at the english index.")
+        return render(request, 'languages/english/home_english.html', {'home': home})
 
 
 def search(request, lang, translation):
@@ -132,5 +132,5 @@ def search(request, lang, translation):
             context = SearchContext(EnglishStrategy())
         return context.execute_strategy(request, lang, translation)
         
-    return render(request, 'languages/bhutia/entry_bhutia.html', {'error': error})
+    return HttpResponse("An unknown error occured.")
 

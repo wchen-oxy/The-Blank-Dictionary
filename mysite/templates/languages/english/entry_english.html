@@ -21,63 +21,44 @@
 <main role="main" class="container">
 
 	<!-- Begin eng to bhut translation -->
-	{% if be_exact %}
-	{% with word=be_exact.0 %}
-	{% include "languages/bhutia/definition_bhutia.html" %}
+	{% if ee_exact %}
+	{% with word=ee_exact.0 %}
+	{% include "languages/english/definition_english.html" %}
 	{% endwith %}
 	{% endif %}
 
-	{% if eb_exact %}
-	{% with word=eb_exact.0 %}
-	{% include "languages/bhutia/definition_bhutia.html" %}
+	{% if ce_exact %}
+	{% with word=ce_exact.0 %}
+	{% include "languages/english/definition_english.html" %}
 	{% endwith %}
 	{% endif %}
 
-	{% if tb_exact %}
-	{% with word=tb_exact.0 %}
-	{% include "languages/bhutia/definition_bhutia.html" %}
-	{% endwith %}
-	{% endif %}
-
-	{% if be_possible %}
+	
+	{% if ee_possible %}
 	<div class="row">
 		<h4 class="col-2-3">Did you mean?</h4>
 	</div>
-	{% for match in be_possible %}
-	{% if match.romanization != be_exact.0.romanization %}
+	{% for match in ee_possible %}
+	{% if match.word != ee_exact.0.word %}
 	<div class="row">
-		<p> {{match.romanization}} </p>
+		<p> {{match.word}} </p>
 			</div>
 		{% endif %}
 		{% endfor %}
 	{% endif %}
 
-	{% if eb_possible %}
+	<!-- {% if ce_possible %}
 	<div class="row">
 		<h4 class="col-2-3">Did you mean?</h4>
 	</div>
-	{% for match in eb_possible %}
-	{% if match.romanization != eb_exact.0.romanization %}
-	<div class="row">
-		<p> {{match.romanization}} </p>
-			</div>
-
-		{% endif %}
-		{% endfor %}
-	{% endif %}
-
-	{% if tb_possible %}
-	<div class="row">
-		<h4 class="col-2-3">Did you mean?</h4>
-	</div>
-	{% for match in tb_possible %}
-	{% if match.tib_script != tb_exact.0.tib_script %}
+	{% for match in ce_possible %}
+	{% if match.tib_script != tib_bhut_exact.0.tib_script %}
 	<div class="row">
 		<p> {{match.tib_script}} </p>
 			</div>
 		{% endif %}
 		{% endfor %}
-	{% endif %}
+	{% endif %} -->
 
 </main>
 

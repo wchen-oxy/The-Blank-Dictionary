@@ -1,0 +1,25 @@
+{% extends "base/home_base.html" %}
+{% load staticfiles %}
+{% include "base/navbar.html" %}
+
+        {% block title %}The English Dictionary{% endblock %}
+        
+        {% block search_form %}
+         <form name="myform" method="get" action="/d/english/english_english/" method="get">
+          <div class="form-inline justify-content-center">
+            <input class="form-control col-md-6 col-8" type="text" placeholder="Search" aria-label="Search" name="query">
+            <button class="btn btn-outline-light" type="submit" action="/d/english/" method="get">Search</button>
+          </div>
+        </form>
+        {% endblock %}
+
+        {% block translation_options%}    
+          <option id="ee" value="english_english" selected="selected">English to English</option>
+          <!-- <option id="ce" value="chinese_english">Chinese to English</option> -->
+          
+          {% endblock %}
+
+
+{% block script%}<script src="{% static 'js/english.js' %}"></script>{% endblock %}
+
+</html>

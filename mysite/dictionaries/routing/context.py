@@ -34,10 +34,7 @@ class SearchContext(ABC):
         self._strategy = strategy
 
     def execute_strategy(self, request, lang, translation):
-        if not request.GET['query']:
-            error = True
-            return render(request, 'entry.html', {'error': error})
-        
+      
         return self._strategy.execute(request, lang, translation)
 
                 
