@@ -43,8 +43,8 @@ class BhutiaStrategy(Strategy):
             #Checker for no matching
             if not exact_entry and not entries:
                 error = True
-                return render(request, 'entry.html', {'error': error})
-            return render(request, 'entry.html', {all_tran.get(translation)[0]: entries, all_tran.get(translation)[1]: exact_entry})
+                return render(request, 'languages/bhutia/entry_bhutia.html', {'error': error})
+            return render(request, 'languages/bhutia/entry_bhutia.html', {all_tran.get(translation)[0]: entries, all_tran.get(translation)[1]: exact_entry})
 
       
 class EnglishStrategy(Strategy):

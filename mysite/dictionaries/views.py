@@ -56,7 +56,7 @@ def home(request, lang):
         # return HttpResponse("Hello, world. You're at the home index.")
     home = True
     if lang.lower() == 'bhutia':
-        return render(request, 'bhutia/home_bhutia.html', {'home': home})
+        return render(request, 'languages/bhutia/home_bhutia.html', {'home': home})
     if lang.lower() == 'english':
         return HttpResponse("Hello, world. You're at the english index.")
 
@@ -132,5 +132,5 @@ def search(request, lang, translation):
             context = SearchContext(EnglishStrategy())
         return context.execute_strategy(request, lang, translation)
         
-    return render(request, 'entry.html', {'error': error})
+    return render(request, 'languages/bhutia/entry_bhutia.html', {'error': error})
 
