@@ -21,15 +21,32 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
+        {% if bhutia %}
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home<span class="sr-only">
+          <a class="nav-link" href="/d/bhutia/">Home<span class="sr-only">
           (current)</span>
           </a>
         </li>
+        {% endif %}
+        {% if english %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/d/english/">Home<span class="sr-only">
+          (current)</span>
+          </a>
+        </li>
+        {% endif %}
+
+        {% if bhutia %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/d/bhutia/master/">Master List of Words<span class="sr-only">
+          (current)</span>
+          </a>
+        </li>
+        {% endif %}
+
       </ul>
 
-      {% if not home %}
-
+      {% if not home and not master %}
     <ul class="navbar-nav mr-sm-2">
 
       {% if bhutia %}

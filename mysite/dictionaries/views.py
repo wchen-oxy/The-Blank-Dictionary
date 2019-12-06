@@ -60,6 +60,12 @@ def home(request, lang):
     if lang.lower() == 'english':
         return render(request, 'languages/english/home_english.html', {'home': home, 'english': True})
 
+def master_list(request, lang):
+    #get dictionary pack
+    target = apps.get_model('dictionaries', lang) 
+    master = target.objects.all()
+    return render(request,'languages/bhutia/master_list.html', {'master':master, 'bhutia': True})
+
 
 def search(request, lang, translation):
     print(translation)
