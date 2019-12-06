@@ -1,0 +1,56 @@
+
+    <div class="row">
+      <h1 class="col-2-3">{{word.eng_trans}}</h1>
+    </div>
+    {% if word.spoken_b %}
+      <div class="row">
+
+ <p class="col-2-3">Bhutia Pronounciation:</p>
+</div>
+    <div class="row">
+     <iframe
+   frameborder="0"
+   width="500"
+   height="60"
+   src="{{word.spoken_b}}">
+</iframe>
+    </div>
+  
+    {% endif %}
+     {% if word.spoken_e %}
+    <div class="row">
+
+ <p class="col-2-3">English Pronounciation:</p>
+</div>
+    <div class="row">
+     <iframe
+   frameborder="0"
+   width="500"
+   height="60"
+   src="{{word.spoken_e}}">
+</iframe>
+    </div>
+    {% endif %}
+
+    <div class="row">
+      <p class="col-2-3">Bhutia (formal): {{word.bhut_rom_formal}}</p>
+    </div>
+    <div class="row">
+      <p class="col-2-3">Bhutia (informal): {{word.bhut_rom_informal}}</p>
+    </div>
+    <div class="row">
+      <p class="col-2-3"> Pronounciation: {{word.ipa}}</p>
+    </div>
+    <div class="row">
+    <p class="col-2-3"> English Translation: {{word.eng_trans}}</p>
+  </div>
+    <div class="row">
+    <p class="col-2-3">Bhutia Script (formal): {{word.bhut_script_formal}}</p>
+  </div>
+  </div>
+    <div class="row">
+    <p class="col-2-3">Bhutia Script (informal): {{word.bhut_script_informal}}</p>
+  </div>
+    <div class="row">
+      <p class="col-2-3"> Example: {{word.example}}</p>
+    </div>

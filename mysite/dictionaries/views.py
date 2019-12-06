@@ -56,9 +56,9 @@ def home(request, lang):
         # return HttpResponse("Hello, world. You're at the home index.")
     home = True
     if lang.lower() == 'bhutia':
-        return render(request, 'languages/bhutia/home_bhutia.html', {'home': home})
+        return render(request, 'languages/bhutia/home_bhutia.html', {'home': home, 'bhutia': True})
     if lang.lower() == 'english':
-        return render(request, 'languages/english/home_english.html', {'home': home})
+        return render(request, 'languages/english/home_english.html', {'home': home, 'english': True})
 
 
 def search(request, lang, translation):

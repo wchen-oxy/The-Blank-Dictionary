@@ -21,22 +21,29 @@ class BhutiaStrategy(Strategy):
     def execute(self, request, lang, translation) -> HttpResponse:
         if not request.GET['query']:
             error = True
-            return render(request, 'languages/bhutia/entry_bhutia.html', {'error': error})
+            return render(request, 'languages/bhutia/entry_bhutia.html', {'error': error, 'bhutia': True})
         query = request.GET['query']
        
         #get dictionary pack
         target = apps.get_model('dictionaries', lang) 
        
         all_tran = {
-        "bhutia_english": ["be_possible", "be_exact"],
-        "english_bhutia": ["eb_possible", "eb_exact"],
-        "tibetan_bhutia": ["tb_possible", "tb_exact"]
+        "bhutia_english_formal": ["be_f_possible", "be_f_exact"],
+        "bhutia_english_informal": ["be_i_possible", "be_i_exact"],
+        "english_bhutia_formal": ["eb_f_possible", "eb_f_exact"],
+        "english_bhutia_informal": ["eb_i_possible", "eb_i_exact"],
+        "bhutiascript_english_formal": ["bse_f_possible", "bse_f_exact"],
+        "bhutiascript_english_informal": ["bse_i_possible", "bse_i_exact"]
+
         }    
 
         params = {
-            "bhutia_english": [{"romanization__iexact": query}, {"romanization__icontains": query}],
-            "english_bhutia": [{"eng_trans__iexact": query}, {"eng_trans__icontains":query}],
-            "tibetan_bhutia": [{"tib_script__iexact":query}, {"tib_script__icontains":query}]
+            "bhutia_english_formal": [{"bhut_rom_formal__iexact": query}, {"bhut_rom_formal__icontains": query}],
+            "bhutia_english_informal": [{"bhut_rom_informal__iexact": query}, {"bhut_rom_informal__icontains": query}],
+            "english_bhutia_formal": [{"eng_trans__iexact": query}, {"eng_trans__icontains":query}],
+            "english_bhutia_informal": [{"eng_trans__iexact": query}, {"eng_trans__icontains":query}],
+            "bhutiascript_english_formal": [{"bhut_script_formal__iexact":query}, {"bhut_script_formal__icontains":query}],
+            "bhutiascript_english_informal": [{"bhut_script_informal__iexact":query}, {"bhut_script_informal__icontains":query}]
         }
         
         # for trans in ['bhutia_english', 'english_bhutia', 'tibetan_bhutia']:
@@ -48,8 +55,8 @@ class BhutiaStrategy(Strategy):
                 entries = None
             if not exact_entry and not entries:
                 error = True
-                return render(request, 'languages/bhutia/entry_bhutia.html', {'error': error})
-            return render(request, 'languages/bhutia/entry_bhutia.html', {all_tran.get(translation)[0]: entries, all_tran.get(translation)[1]: exact_entry})
+                return render(request, 'languages/bhutia/entry_bhutia.html', {'error': error, 'bhutia': True})
+            return render(request, 'languages/bhutia/entry_bhutia.html', {all_tran.get(translation)[0]: entries, all_tran.get(translation)[1]: exact_entry, 'bhutia': True})
 
       
 class EnglishStrategy(Strategy):
@@ -80,8 +87,8 @@ class EnglishStrategy(Strategy):
             #Checker for no matching
             if not exact_entry and not entries:
                 error = True
-                return render(request, 'languages/english/entry_english.html', {'error': error})
-            return render(request, 'languages/english/entry_english.html', {all_tran.get(translation)[0]: entries, all_tran.get(translation)[1]: exact_entry})
+                return render(request, 'languages/english/entry_english.html', {'error': error, 'english': True})
+            return render(request, 'languages/english/entry_english.html', {all_tran.get(translation)[0]: entries, all_tran.get(translation)[1]: exact_entry, 'english': True})
 
       
 

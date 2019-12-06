@@ -1,19 +1,16 @@
-1. Romanization
-2. IPA Pronunciation
-3. Category
-4. English Translation
-5. Tibetan Script Translation
-6. Bhutia Translation
-7. Example
-
 CREATE TABLE Bhutia(
-romanization varchar(100),
-ipa varchar(100),
-category varchar (100),
-eng_trans varchar (100),
-tib_script varchar (100),
-example varchar (100),
-PRIMARY KEY (romanization)
+
+ipa varchar(50),
+category varchar (50),
+eng_trans varchar (50),
+bhut_rom_formal varchar (50),
+bhut_rom_informal varchar (50),
+bhut_script_formal varchar (50),
+bhut_script_informal varchar (50),
+example varchar (200),
+spoken_b varchar (150),
+spoken_e varchar (150),
+PRIMARY KEY (eng_trans)
 );
 
 

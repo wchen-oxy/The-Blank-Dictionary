@@ -21,21 +21,49 @@
 <main role="main" class="container">
 
 	<!-- Begin eng to bhut translation -->
-	{% if be_exact %}
-	{% with word=be_exact.0 %}
-	{% include "languages/bhutia/definition_bhutia.html" %}
+	<!-- bhutia (formal) to english -->
+	{% if be_f_exact %}
+	{% with word=be_f_exact.0 %}
+	{% include "languages/bhutia/definition/english.html" %}
 	{% endwith %}
 	{% endif %}
 
-	{% if eb_exact %}
-	{% with word=eb_exact.0 %}
-	{% include "languages/bhutia/definition_bhutia.html" %}
+	<!-- bhutia (informal) to english -->
+
+	{% if be_i_exact %}
+	{% with word=be_i_exact.0 %}
+	{% include "languages/bhutia/definition/english.html" %}
 	{% endwith %}
 	{% endif %}
 
-	{% if tb_exact %}
-	{% with word=tb_exact.0 %}
-	{% include "languages/bhutia/definition_bhutia.html" %}
+	<!-- english to bhutia (formal) -->
+	{% if eb_f_exact %}
+	{% with word=eb_f_exact.0 %}
+	{% include "languages/bhutia/definition/bhutia_formal.html" %}
+	{% endwith %}
+	{% endif %}
+
+
+	<!-- english to bhutia (informal) -->
+	{% if eb_i_exact %}
+	{% with word=eb_i_exact.0 %}
+	{% include "languages/bhutia/definition/bhutia_informal.html" %}
+	{% endwith %}
+	{% endif %}
+
+	<!-- Bhutia script (formal) to english -->
+
+	{% if bse_f_exact %}
+	{% with word=bse_f_exact.0 %}
+	{% include "languages/bhutia/definition/english.html" %}
+	{% endwith %}
+	{% endif %}
+
+	<!-- Bhutia script (informal) to english -->
+
+	{% if bse_i_exact %}
+	{% with word=bse_i_exact.0 %}
+	{% include "languages/bhutia/definition/english.html" %}
 	{% endwith %}
 	{% endif %}
 
@@ -86,7 +114,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="{% static 'js/bhutia.js' %}"></script>
+<script src="{% static 'js/lang/bhutia.js' %}"></script>
 </body>
 
 </html>

@@ -15,12 +15,17 @@ def getter(lang):
 
 
 class Bhutia(models.Model):
-    romanization = models.CharField(primary_key=True, max_length=100)
-    ipa = models.CharField(max_length=100, blank=True, null=True)
-    category = models.CharField(max_length=100, blank=True, null=True)
-    eng_trans = models.CharField(max_length=100, blank=True, null=True)
-    tib_script = models.CharField(max_length=100, blank=True, null=True)
-    example = models.CharField(max_length=100, blank=True, null=True)
+   
+    ipa = models.CharField(max_length=50, blank=True, null=True)
+    category = models.CharField(max_length=50, blank=True, null=True)
+    eng_trans = models.CharField(primary_key=True, max_length=50, blank=False, null=False)
+    bhut_rom_formal = models.CharField(max_length=50, blank=True, null=True)
+    bhut_rom_informal =  models.CharField(max_length=50, blank=True, null=True)
+    bhut_script_formal = models.CharField(max_length=50, blank=True, null=True)
+    bhut_script_informal = models.CharField(max_length=50, blank=True, null=True)
+    example = models.CharField(max_length=200, blank=True, null=True)
+    spoken_b = models.CharField(max_length=150, blank=True, null=True)
+    spoken_e = models.CharField(max_length=150, blank=True, null=True)
 
     #use this only for testing the Python Shell!! Django recommends against overriding __init__
     # def __init__(self, romanization, ipa=None, category=None, eng_trans=None, tib_script=None, example=None):
