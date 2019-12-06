@@ -67,19 +67,99 @@
 	{% endwith %}
 	{% endif %}
 
-	{% if be_possible %}
+<!-- BEGIN SUGGESTIONS -->
+
+	{% if be_f_possible %}
 	<div class="row">
 		<h4 class="col-2-3">Did you mean?</h4>
 	</div>
-	{% for match in be_possible %}
-	{% if match.romanization != be_exact.0.romanization %}
+	{% for match in be_f_possible %}
+	<!--skip the exact match query-->
+	{% if match.bhut_rom_formal != be_f_exact.0.bhut_rom_formal %}
 	<div class="row">
-		<p> {{match.romanization}} </p>
+		<p> {{match.bhut_rom_formal}} </p>
 			</div>
 		{% endif %}
 		{% endfor %}
 	{% endif %}
 
+
+	{% if be_i_possible %}
+	<div class="row">
+		<h4 class="col-2-3">Did you mean?</h4>
+	</div>
+	{% for match in be_i_possible %}
+	<!--skip the exact match query-->
+	{% if match.bhut_rom_informal != be_f_exact.0.bhut_rom_informal %}
+	<div class="row">
+		<p> {{match.bhut_rom_informal}} </p>
+			</div>
+		{% endif %}
+		{% endfor %}
+	{% endif %}
+
+		{% if eb_f_possible %}
+	<div class="row">
+		<h4 class="col-2-3">Did you mean?</h4>
+	</div>
+	{% for match in eb_f_possible %}
+	<!--skip the exact match query-->
+	{% if match.eng_trans != be_f_exact.0.eng_trans %}
+	<div class="row">
+		<p> {{match.eng_trans}} </p>
+			</div>
+		{% endif %}
+		{% endfor %}
+	{% endif %}
+
+	{% if eb_i_possible %}
+	<div class="row">
+		<h4 class="col-2-3">Did you mean?</h4>
+	</div>
+	{% for match in eb_i_possible %}
+	<!--skip the exact match query-->
+	{% if match.eng_trans != be_f_exact.0.eng_trans %}
+	<div class="row">
+		<p> {{match.eng_trans}} </p>
+			</div>
+		{% endif %}
+		{% endfor %}
+	{% endif %}
+
+	{% if bse_f_possible %}
+	<div class="row">
+		<h4 class="col-2-3">Did you mean?</h4>
+	</div>
+	{% for match in bse_f_possible %}
+	<!--skip the exact match query-->
+	{% if match.bhut_script_formal != be_f_exact.0.bhut_script_formal %}
+	<div class="row">
+		<p> {{match.bhut_script_formal}} </p>
+			</div>
+		{% endif %}
+		{% endfor %}
+	{% endif %}
+
+
+	{% if bse_i_possible %}
+	<div class="row">
+		<h4 class="col-2-3">Did you mean?</h4>
+	</div>
+	{% for match in bse_i_possible %}
+	<!--skip the exact match query-->
+	{% if bhut_script_informal != be_f_exact.0.bhut_script_informal  %}
+	<div class="row">
+		<p> {{match.bhut_script_informal}} </p>
+			</div>
+		{% endif %}
+		{% endfor %}
+	{% endif %}
+
+
+
+
+
+<!-- 
 	{% if eb_possible %}
 	<div class="row">
 		<h4 class="col-2-3">Did you mean?</h4>
@@ -105,7 +185,7 @@
 			</div>
 		{% endif %}
 		{% endfor %}
-	{% endif %}
+	{% endif %} -->
 
 </main>
 

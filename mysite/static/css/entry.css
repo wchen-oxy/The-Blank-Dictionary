@@ -1,3 +1,13 @@
 .container{
 	margin-top: 15%;
 }
+
+
+/* @media only screen and (max-width: 600px) {
+  /* p {
+    color: blue;
+  } */
+	.container{
+		padding-left: : 5%;
+	}
+} */
