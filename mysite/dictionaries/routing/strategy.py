@@ -71,7 +71,6 @@ class EnglishStrategy(Strategy):
 
         all_tran = {
         "english_english": ["ee_possible", "ee_exact"],
-        "chinese_bhutia": ["ce_possible", "ce_exact"]
         }    
 
         params = {

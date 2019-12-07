@@ -15,7 +15,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg fixed-top">
-    <a id="home" class="navbar-brand" href="http://127.0.0.1:8000">The Blank Dictionary</a>
+    <a id="home" class="navbar-brand" href="/">The Blank Dictionary</a>
     <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -28,6 +28,7 @@
           </a>
         </li>
         {% endif %}
+
         {% if english %}
         <li class="nav-item active">
           <a class="nav-link" href="/d/english/">Home<span class="sr-only">
@@ -35,6 +36,8 @@
           </a>
         </li>
         {% endif %}
+
+        <!-- MASTER LIST OF WORDS -->
 
         {% if bhutia %}
         <li class="nav-item active">
@@ -44,7 +47,17 @@
         </li>
         {% endif %}
 
+            {% if english %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/d/english/master/">Master List of Words<span class="sr-only">
+          (current)</span>
+          </a>
+        </li>
+        {% endif %}
+
       </ul>
+
+      <!-- SEARCH AND TRANSLATION -->
 
       {% if not home and not master %}
     <ul class="navbar-nav mr-sm-2">

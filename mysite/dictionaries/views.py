@@ -64,7 +64,11 @@ def master_list(request, lang):
     #get dictionary pack
     target = apps.get_model('dictionaries', lang) 
     master = target.objects.all()
-    return render(request,'languages/bhutia/master_list.html', {'master':master, 'bhutia': True})
+    if lang == 'bhutia':
+        return render(request,'languages/bhutia/master_list.html', {'master':master, 'bhutia': True})
+    if lang == 'english':
+        return render(request,'languages/english/master_list.html', {'master':master, 'english': True})
+    
 
 
 def search(request, lang, translation):

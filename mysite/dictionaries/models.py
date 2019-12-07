@@ -44,7 +44,7 @@ class Bhutia(models.Model):
         verbose_name_plural = 'Bhutia'
 
     def __str__(self):
-        template = '{0.romanization}'
+        template = '{0.eng_trans}'
         return template.format(self)
 
 class English(models.Model):

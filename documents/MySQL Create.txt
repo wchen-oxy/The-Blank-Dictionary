@@ -14,3 +14,15 @@ PRIMARY KEY (eng_trans)
 );
 
 
+CREATE TABLE English(
+
+word varchar (50),
+ipa varchar(100),
+eng_trans varchar (50),
+definition varchar (150),
+example varchar (200),
+PRIMARY KEY (word)
+);
+
+
+
