@@ -182,6 +182,6 @@ STATICFILES_DIRS = [
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
-#workaround for sslmode not supported when accessing admin on heroku
-del DATABASES['default']['OPTIONS']['sslmode']
+#workaround for sslmode not supported when accessing admin on heroku (disable when running locally)
+# del DATABASES['default']['OPTIONS']['sslmode']
 
