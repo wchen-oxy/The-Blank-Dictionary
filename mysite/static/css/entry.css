@@ -3,11 +3,9 @@
 }
 
 
-/* @media only screen and (max-width: 600px) {
-  /* p {
-    color: blue;
-  } */
+ @media only screen and (max-width: 600px) {
 	.container{
-		padding-left: : 5%;
+		padding-left: 15%;
+		padding-top: 15%;
 	}
-} */
+} 
