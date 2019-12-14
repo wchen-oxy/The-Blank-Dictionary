@@ -1,5 +1,10 @@
 # The Blank Dictionary
+
 Project funded by "Davis Projects for Peace" that promotes endangered minority languages in India. "The Blank Dictionary" is a Django webapp and an Android app that bootstraps the creation of accessible digital dictionaries. This platform will host dictionaries for different endangered languages and allow dictionary editors to create, manage and delete content on a single platform. End users can then view dictionary content on the webapp or Android app.
+
+See the beta here! (May take 5 seconds to load if it hasn't been used in awhile)
+
+http://blank-dictionary.herokuapp.com/
 
 For the webapp and Android app, users will be able to quickly toggle between different dictionaries. On the Android app, a user will also be able to download dictionary data for offline use. 
 

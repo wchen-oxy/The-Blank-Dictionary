@@ -50,9 +50,9 @@ def test(request, lang, word=None):
              print(dictionary)
              dic = dictionary.objects.all()
              serializer = None
-             if lang=="Bhutia":
+             if lang.lower() =="bhutia":
                 serializer = BhutiaSerializer(dic, many=True)
-             if lang == "English":
+             if lang.lower() == "english":
                 serializer = EnglishSerializer(dic, many=True)
              return JsonResponse(serializer.data, safe=False)
 
