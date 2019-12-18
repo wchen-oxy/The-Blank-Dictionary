@@ -53,6 +53,10 @@ public class LanguagePackFrag extends Fragment {
 
     public static Boolean DOWNLOAD_IN_PROGRSS = false;
 
+    public static LanguagePackFrag newInstance(){
+       return new LanguagePackFrag();
+    }
+
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);activtiy = getActivity();

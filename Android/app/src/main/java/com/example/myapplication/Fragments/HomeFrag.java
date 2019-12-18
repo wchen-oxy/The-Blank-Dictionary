@@ -24,7 +24,6 @@ import com.example.myapplication.R;
 
 import java.io.File;
 
-//TODO implement the bundle intialization as found in searchfrag in case user presses back from searchfrag
 //note that this uses fragmentManager and not the SupportFragmentManager
 
 public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -38,9 +37,9 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
     private SharedPreferences pref;
     private boolean DictionaryInstalled = true;
 
-//    public static HomeFrag newInstance(){
-//        return new HomeFrag();
-//    }
+    public static HomeFrag newInstance(){
+        return new HomeFrag();
+    }
 
 
 

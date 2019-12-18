@@ -27,12 +27,9 @@ import com.example.myapplication.Fragments.SettingsFrag;
 public class MainActivity extends AppCompatActivity implements FragmentCommunicator{
     private TextView mTextMessage;
 
+
     FragmentManager fragmentManager;
-    FragmentTransaction homeTransaction;
-    FragmentTransaction searchTransaction;
-    FragmentTransaction settingsTransaction;
-    FragmentTransaction favoritesTransaction;
-    FragmentTransaction langFragTransaction;
+    FragmentTransaction fragmentTransaction;
     BottomNavigationView navViewBack;
     SearchView secSearch;
 //    public String query;
@@ -63,38 +60,32 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
     private void fragController(Bundle args){
         switch (args.getString("NEW_FRAGMENT")){
             case "HOME_FRAGMENT":
-                HomeFrag homeFrag = new HomeFrag();
-                homeTransaction = fragmentManager.beginTransaction();
-                homeTransaction.add(R.id.frag_container, homeFrag, "HOME_FRAG").commit();
+                HomeFrag homeFrag = HomeFrag.newInstance();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.frag_container, homeFrag, "HOME_FRAG").commit();
                 break;
 
             case "SEARCH_FRAGMENT":
-                System.out.println();
-                SearchFrag searchFrag = new SearchFrag();
-                searchFrag.setArguments(args);
-                searchTransaction = fragmentManager.beginTransaction();
-//                searchTransaction.addToBackStack(null);
-                searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").addToBackStack(null).commit();
+                SearchFrag searchFrag = SearchFrag.newInstance(args);
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").addToBackStack(null).commit();
                 isAdvSearch = true;
                 break;
 
             case "RESULT_FRAGMENT":
-                ResultFragment resultFragment = new ResultFragment();
-                resultFragment.setArguments(args);
-                FragmentTransaction t = fragmentManager.beginTransaction();
-                t.replace(R.id.results_frag, resultFragment);
-                t.addToBackStack("RESULT_FRAG");
-                t.commit();
+                ResultFragment resultFragment = ResultFragment.newInstance(args);
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.results_frag, resultFragment).addToBackStack(null).commit();
                 break;
             case "LANG_DOWNLOAD_FRAGMENT":
-                LanguagePackFrag languagePackFrag = new LanguagePackFrag();
-                langFragTransaction = fragmentManager.beginTransaction();
-                langFragTransaction.replace(R.id.frag_container, languagePackFrag).addToBackStack(null).commit();
+                LanguagePackFrag languagePackFrag = LanguagePackFrag.newInstance();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frag_container, languagePackFrag).addToBackStack(null).commit();
                 break;
             case "DICT_SELECT_FRAGMENT":
                 DictionarySelectionFrag dictionarySelectionFrag = DictionarySelectionFrag.newInstance();
-                langFragTransaction = fragmentManager.beginTransaction();
-                langFragTransaction.replace(R.id.frag_container, dictionarySelectionFrag).addToBackStack(null).commit();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frag_container, dictionarySelectionFrag).addToBackStack(null).commit();
                 Toast.makeText(this, "Dict Changed", Toast.LENGTH_SHORT).show();
                 SharedPreferences pref = this.getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
                 SharedPreferences.Editor editor = pref.edit();
@@ -125,26 +116,26 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
 //                        Log.d("arguments", args.getString("query"));
 
 
-                        searchTransaction = fragmentManager.beginTransaction();
-                        searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
                         return true;
                     }
 
 
 
                     HomeFrag homeFrag = new HomeFrag();
-                    homeTransaction = fragmentManager.beginTransaction();
-                    homeTransaction.replace(R.id.frag_container, homeFrag).commit();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frag_container, homeFrag).commit();
                     return true;
                 case R.id.navigation_favorites:
                     FavoritesFrag favoritesFrag = new FavoritesFrag();
-                    favoritesTransaction = fragmentManager.beginTransaction();
-                    favoritesTransaction.replace(R.id.frag_container, favoritesFrag).commit();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frag_container, favoritesFrag).commit();
                     return true;
                 case R.id.navigation_settings:
                     SettingsFrag settingsFrag = new SettingsFrag();
-                    settingsTransaction = fragmentManager.beginTransaction();
-                    settingsTransaction.replace(R.id.frag_container, settingsFrag).commit();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frag_container, settingsFrag).commit();
 
                     return true;
             }
@@ -157,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
         return this.getSupportFragmentManager().findFragmentById(R.id.frag_container);
     }
 
+    //FIXME simplify and remove bug that presses back twice
     @Override
     public void onBackPressed(){
         SearchView mainSearch = findViewById(R.id.searchAdvView);
@@ -189,6 +181,9 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
 
             super.onBackPressed();
         }
+
+        else if(f instanceof LanguagePackFrag) super.onBackPressed();
+        else if(f instanceof DictionarySelectionFrag) super.onBackPressed();
         else {
             if (f instanceof SearchFrag) ((SearchFrag) f).setmAdapter();
 

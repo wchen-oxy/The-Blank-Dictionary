@@ -51,14 +51,10 @@ public class ResultFragment extends Fragment {
      * @return A new instance of fragment ResultFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ResultFragment newInstance(String param1, String param2) {
-        ResultFragment fragment = new ResultFragment();
-        //TODO good way to refactor code, take a look
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static ResultFragment newInstance(Bundle args) {
+        ResultFragment resultFragment = new ResultFragment();
+        resultFragment.setArguments(args);
+        return resultFragment;
     }
 
 

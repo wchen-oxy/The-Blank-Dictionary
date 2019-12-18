@@ -53,6 +53,13 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     private MyAdapter.OnItemClickListener listener;
     private SharedPreferences pref;
 
+    public static SearchFrag newInstance(Bundle args){
+        SearchFrag searchFrag = new SearchFrag();
+        searchFrag.setArguments(args);
+        return searchFrag;
+
+    }
+
 
     @Override
     public void onAttach(Context context) {
