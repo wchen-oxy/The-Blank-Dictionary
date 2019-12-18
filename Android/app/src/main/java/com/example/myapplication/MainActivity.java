@@ -15,8 +15,10 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Fragments.DictionarySelectionFrag;
 import com.example.myapplication.Fragments.FavoritesFrag;
 import com.example.myapplication.Fragments.HomeFrag;
+import com.example.myapplication.Fragments.LanguagePackFrag;
 import com.example.myapplication.Fragments.ResultFragment;
 import com.example.myapplication.Fragments.SearchFrag;
 import com.example.myapplication.Fragments.SettingsFrag;
@@ -30,13 +32,14 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
     FragmentTransaction searchTransaction;
     FragmentTransaction settingsTransaction;
     FragmentTransaction favoritesTransaction;
+    FragmentTransaction langFragTransaction;
     BottomNavigationView navViewBack;
     SearchView secSearch;
 //    public String query;
     public BroadcastReceiver br;
     public Boolean isAdvSearch = false;
     public FragmentCommunicator fragmentCommunicator;
-    private Bundle args;
+    Bundle args;
 
     //TODO implement these
     @Override
@@ -48,7 +51,9 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
 
     @Override
     public void bundPass(Bundle args, boolean isPause) {
-        if (isPause) this.args = args;
+        if (isPause) {this.args = args;
+        Log.d("BUND", "PASSEd");
+        }
         else {
             fragController(args);
         }
@@ -81,6 +86,20 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
                 t.addToBackStack("RESULT_FRAG");
                 t.commit();
                 break;
+            case "LANG_DOWNLOAD_FRAGMENT":
+                LanguagePackFrag languagePackFrag = new LanguagePackFrag();
+                langFragTransaction = fragmentManager.beginTransaction();
+                langFragTransaction.replace(R.id.frag_container, languagePackFrag).addToBackStack(null).commit();
+                break;
+            case "DICT_SELECT_FRAGMENT":
+                DictionarySelectionFrag dictionarySelectionFrag = DictionarySelectionFrag.newInstance();
+                langFragTransaction = fragmentManager.beginTransaction();
+                langFragTransaction.replace(R.id.frag_container, dictionarySelectionFrag).addToBackStack(null).commit();
+                Toast.makeText(this, "Dict Changed", Toast.LENGTH_SHORT).show();
+                SharedPreferences pref = this.getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("CurDict", "BHUTIA"); // Storing boolean - true/false
+                editor.commit(); // commit changes
 
 
         }
@@ -97,17 +116,21 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
                     System.out.println("HERE ARE THE FRAGMENTS: " + getSupportFragmentManager().getFragments());
                     if (isAdvSearch) {
                         SearchFrag searchFrag = new SearchFrag();
-
-
 //                        Bundle args = getArguments();
-                        searchFrag.setArguments(args);
-                        Log.d("arguments", args.getString("TRANSLATION"));
-                        Log.d("arguments", args.getString("query"));
+
+                            searchFrag.setArguments(args);
+                            Log.d("Args", "is null");
+
+//                        Log.d("arguments", args.getString("TRANSLATION"));
+//                        Log.d("arguments", args.getString("query"));
+
 
                         searchTransaction = fragmentManager.beginTransaction();
                         searchTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
                         return true;
                     }
+
+
 
                     HomeFrag homeFrag = new HomeFrag();
                     homeTransaction = fragmentManager.beginTransaction();

@@ -38,6 +38,10 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
     private SharedPreferences pref;
     private boolean DictionaryInstalled = true;
 
+//    public static HomeFrag newInstance(){
+//        return new HomeFrag();
+//    }
+
 
 
     @Override
@@ -138,8 +142,10 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
         switch (pref.getString("CurDict", null)) {
             case ("BHUTIA"):
                 result = getResources().getStringArray(R.array.bhutia_array);
+                break;
             case("ENGLISH"):
                 result = getResources().getStringArray(R.array.english_array);
+                break;
 
         }
         return result;

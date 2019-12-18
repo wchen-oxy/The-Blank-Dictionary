@@ -2,6 +2,7 @@ package com.example.myapplication.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,6 +51,8 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private MyAdapter.OnItemClickListener listener;
+    private SharedPreferences pref;
+
 
     @Override
     public void onAttach(Context context) {
@@ -63,6 +66,8 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) text = (String) savedInstanceState.getSerializable("query");
         args = getArguments();
+        pref = getContext().getSharedPreferences("BlankDictPref", 0);
+
         TRANSLATION = args.getString("TRANSLATION");
         TRANSLATION_ID = args.getInt("TRANSLATION_ID");
         Log.d("SELECTS", String.valueOf(args.getInt("TRANSLATION_ID")));
@@ -111,10 +116,17 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //pass info to activity in case user switches out by bottom nav
+        fragmentCommunicator.bundPass(args, true);
+
         //You need to inflate the Fragment's view and call findViewById() on the View it returns.
         searchView = view.findViewById(R.id.searchAdvView);
         //Any query text is cleared when iconified. So setIconified to false.
         searchView.setQuery(args.getString("query"), true);
+
+
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -133,9 +145,13 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                     args.putString("query", newText);
                     args.putString("TRANSLATION", TRANSLATION);
                     //pass in newText parameter into thread
+                    Toast.makeText(getActivity(), "text changed", Toast.LENGTH_SHORT).show();
+
 
                     try {
                         results = new Query(getContext()).execute(args).get();
+
+                        System.out.println( results);
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -146,6 +162,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
                 } else {
                     args.putString("query", "");
+                    args.putString("TRANSLATION", TRANSLATION);
                     if (results != null) results.clear();
                     recyclerView.setAdapter(mAdapter);
 
@@ -157,7 +174,9 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
         searchView.setIconifiedByDefault(false);
         searchView.clearFocus();
-        String[] stringArray = getResources().getStringArray(R.array.bhutia_array);
+
+
+        String[] stringArray = tranlationSet();
         Spinner spinner = getView().findViewById(R.id.adv_trans_spinner);
         adapter = new CustomTransSpinAdaptor<String>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, stringArray);
@@ -201,6 +220,20 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
     public void setmAdapter() {
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private String[] tranlationSet(){
+        String[] result = null;
+        switch (pref.getString("CurDict", null)) {
+            case ("BHUTIA"):
+                result = getResources().getStringArray(R.array.bhutia_array);
+                break;
+            case("ENGLISH"):
+                result = getResources().getStringArray(R.array.english_array);
+                break;
+
+        }
+        return result;
     }
 
 

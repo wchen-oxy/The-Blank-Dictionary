@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 
 public class DictionarySelectionFrag extends Fragment {
-    Bundle args;
 
     public static DictionarySelectionFrag newInstance() {
 

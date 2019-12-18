@@ -49,6 +49,8 @@ public class LanguagePackFrag extends Fragment {
     Context mContext;
     String TEMP_URL = "https://jsonplaceholder.typicode.com/todos/1";
     String TEMP_REAL_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/db.json";
+    String TEMP_ENG_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/db.json";
+
     public static Boolean DOWNLOAD_IN_PROGRSS = false;
 
     @Override
@@ -69,10 +71,12 @@ public class LanguagePackFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.lang_pack_list, container,false);
-        Button languagePack = rootView.findViewById(R.id.dictionary_selected);
-        final String buttonText = languagePack.getText().toString();
+        Button bhutiaButton = rootView.findViewById(R.id.bhutia_dictionary);
+        Button englishButton = rootView.findViewById(R.id.english_dictionary);
+
+        final String buttonText = bhutiaButton.getText().toString();
         Log.d("TEXT", buttonText);
-        languagePack.setOnClickListener(
+        bhutiaButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         if (!DOWNLOAD_IN_PROGRSS){
