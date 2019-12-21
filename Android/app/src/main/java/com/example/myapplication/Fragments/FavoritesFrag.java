@@ -10,6 +10,10 @@ import com.example.myapplication.R;
 
 public class FavoritesFrag extends Fragment {
 
+    public static FavoritesFrag newInstance(){
+        return new FavoritesFrag();
+    }
+
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

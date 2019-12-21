@@ -22,13 +22,18 @@ import android.widget.Toast;
 
 import com.example.myapplication.CustomTransSpinAdaptor;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
+import com.example.myapplication.Dictionaries.ResultWrapper;
 import com.example.myapplication.FragmentCommunicator;
 import com.example.myapplication.MyAdapter;
 import com.example.myapplication.Query;
 import com.example.myapplication.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import androidx.room.Entity;
+
 
 //FIXME ADD ENUM FOR THE LANGAUGE TYPES IN SEPARATE FILE
 //TODO AUTOQUERY WORDS WHEN TRANSLATION IS CHANGED?
@@ -40,6 +45,8 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     SearchView searchView;
     Bundle args;
     List results;
+    ResultWrapper resultWrapper;
+    ArrayList passResults;
     String TRANSLATION;
     int TRANSLATION_ID;
     boolean INITIAL = true;
@@ -71,30 +78,42 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        resultWrapper = new ResultWrapper();
         if (savedInstanceState != null) text = (String) savedInstanceState.getSerializable("query");
         args = getArguments();
         pref = getContext().getSharedPreferences("BlankDictPref", 0);
-
         TRANSLATION = args.getString("TRANSLATION");
         TRANSLATION_ID = args.getInt("TRANSLATION_ID");
         Log.d("SELECTS", String.valueOf(args.getInt("TRANSLATION_ID")));
         Log.d("SELECTS", args.getString("TRANSLATION"));
 
+        //create a listener
         listener = new MyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BhutiaWord item) {
                 Bundle args = new Bundle();
                 args.putString("NEW_FRAGMENT", "RESULT_FRAGMENT");
+//                args.putStringArrayList("DATA", passResults);
+//                Log.d("RESULTS", passResults.toString());
+
                 fragmentCommunicator.bundPass(args, false);
-                recyclerView.setAdapter(null);
                 Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
 
             }
         };
+//        Toast.makeText(getContext(), "Called again", Toast.LENGTH_LONG).show();
 
         try {
             if (!args.getString("query").isEmpty())
-                results = new Query(getContext()).execute(args).get();
+                resultWrapper = new Query(getContext()).execute(args).get();
+
+//                results = new Query(getContext()).execute(args).get();
+
+                //insert your method for setting the class attribute per your result
+//                setResultWrapper(results);
+//                passResults = (ArrayList) results;
+
+
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -113,7 +132,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new MyAdapter(results, listener);
+        mAdapter = new MyAdapter(resultWrapper, listener, pref.getString("CurDict", null));
         recyclerView.setAdapter(mAdapter);
 
         return rootView;
@@ -123,6 +142,8 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         //pass info to activity in case user switches out by bottom nav
         fragmentCommunicator.bundPass(args, true);
 
@@ -148,15 +169,21 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                 fm.popBackStack("RESULT_FRAG", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
 
+
                 if (!newText.isEmpty()) {
                     args.putString("query", newText);
                     args.putString("TRANSLATION", TRANSLATION);
                     //pass in newText parameter into thread
-                    Toast.makeText(getActivity(), "text changed", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "text changed", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(),newText, Toast.LENGTH_SHORT).show();
+
+
 
 
                     try {
-                        results = new Query(getContext()).execute(args).get();
+                        resultWrapper = new Query(getContext()).execute(args).get();
+//                        results = new Query(getContext()).execute(args).get();
+//                        setResultWrapper(results);
 
                         System.out.println( results);
                     } catch (ExecutionException e) {
@@ -164,7 +191,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    mAdapter = new MyAdapter(results, listener);
+                    mAdapter = new MyAdapter(resultWrapper, listener, pref.getString("CurDict", null));
                     recyclerView.setAdapter(mAdapter);
 
                 } else {
@@ -193,6 +220,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         fragmentCommunicator.textPass("Text Successfully Passed");
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -218,30 +246,44 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-    protected void setFragment(Fragment fragment) {
-        FragmentTransaction t = getFragmentManager().beginTransaction();
-        t.addToBackStack(null);
-        t.replace(R.id.results_frag, fragment);
-        t.commit();
-    }
+//    protected void setFragment(Fragment fragment) {
+//        FragmentTransaction t = getFragmentManager().beginTransaction();
+//        t.addToBackStack(null);
+//        t.replace(R.id.results_frag, fragment);
+//        t.commit();
+//    }
+
 
     public void setmAdapter() {
         recyclerView.setAdapter(mAdapter);
     }
 
     private String[] tranlationSet(){
-        String[] result = null;
+        String[] tranSet = null;
         switch (pref.getString("CurDict", null)) {
             case ("BHUTIA"):
-                result = getResources().getStringArray(R.array.bhutia_array);
+                tranSet = getResources().getStringArray(R.array.bhutia_array);
                 break;
             case("ENGLISH"):
-                result = getResources().getStringArray(R.array.english_array);
+                tranSet = getResources().getStringArray(R.array.english_array);
                 break;
 
         }
-        return result;
+        return tranSet;
     }
+
+//    private void setResultWrapper(List queryResult){
+//        switch (pref.getString("CurDict", null)) {
+//            case ("BHUTIA"):
+//                resultWrapper.setBhutiaWordList(queryResult);
+//                break;
+//            case("ENGLISH"):
+//                resultWrapper.setEnglishWordList(queryResult);
+//                break;
+//        }
+//
+//    }
+
 
 
 }

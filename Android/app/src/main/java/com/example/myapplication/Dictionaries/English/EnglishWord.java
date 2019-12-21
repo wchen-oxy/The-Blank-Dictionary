@@ -8,17 +8,14 @@ import androidx.room.PrimaryKey;
 @Entity
 public class EnglishWord {
     @PrimaryKey
-    public int romanization;
+    public int word;
 
-    @ColumnInfo(name = "Word")
-    public String word;
-
-    @ColumnInfo(name = "Ipa")
+    @ColumnInfo(name = "ipa")
     public String ipa;
 
-    @ColumnInfo(name = "Definition")
+    @ColumnInfo(name = "definition")
     public String def;
 
-    @ColumnInfo(name = "Example")
+    @ColumnInfo(name = "example")
     public String example;
 }

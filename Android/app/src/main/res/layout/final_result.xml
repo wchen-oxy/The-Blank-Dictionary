@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_frag"
+    android:background="#FFF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/result_linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="#ba375c"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!--<android.support.v7.widget.ActionMenuView-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:menu="@menu/dictionary_pack_menu"-->
+        <!--&gt;-->
+        <!--</android.support.v7.widget.ActionMenuView>-->
+
+        <SearchView
+            android:id="@+id/searchAdvView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="9dp"
+            android:background="#FFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+    <Spinner
+        android:id="@+id/adv_trans_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="@+id/adv_search_linear_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/result_linear_layout">
+    </Spinner>
+
+
+
+    <FrameLayout
+        android:id="@+id/results_frag"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="68dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_linear_layout"
+        app:layout_constraintBottom_toBottomOf="parent" >
+        <ScrollView
+            android:id="@+id/dict_info_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+        </ScrollView>
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
+
+
+
+

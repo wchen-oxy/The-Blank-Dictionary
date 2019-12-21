@@ -10,14 +10,16 @@ import android.widget.Toast;
 import androidx.room.Room;
 
 import com.example.myapplication.Dictionaries.AppDatabase;
+import com.example.myapplication.Dictionaries.Bhutia.Bhutia;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaDao;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
 import com.example.myapplication.Dictionaries.English.EnglishDao;
+import com.example.myapplication.Dictionaries.ResultWrapper;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class Query extends AsyncTask<Bundle, Void, List<BhutiaWord>> {
+public class Query extends AsyncTask<Bundle, Void, ResultWrapper> {
     private final WeakReference<Context> weakContext;
 //    private DictionaryStrategy dictionaryStrategy;
     private SharedPreferences pref;
@@ -31,8 +33,8 @@ public class Query extends AsyncTask<Bundle, Void, List<BhutiaWord>> {
 
 
     @Override
-    protected List doInBackground(Bundle... full_query) {
-        List list = null;
+    protected ResultWrapper doInBackground(Bundle... full_query) {
+        ResultWrapper resultWrapper = new ResultWrapper();
 
         //implemented the Bhutia version only
 
@@ -45,14 +47,15 @@ public class Query extends AsyncTask<Bundle, Void, List<BhutiaWord>> {
 //        Log.d("PREF", pref.getString("CurDict", null).toString());
         switch (pref.getString("CurDict", null)) {
             case("BHUTIA"):
-                  BhutiaDao bhutiaDao = db.getBhutiaDao();
+//                BhutiaDao bhutiaDao = db.getBhutiaDao();
 //                Bhutia ad = new Bhutia();
 //                return ad.returnDictionary(args);
-                return new Bhutia().returnDictionary(args, db);
+                resultWrapper.setBhutiaWordList(new Bhutia().returnDictionary(args, db));
+                Log.d("THING", new Bhutia().returnDictionary(args, db).toString());
                 //do list stuff here
             case("ENGLISH"):
-                EnglishDao englishDao  = db.getEnglishDao();
-                return new English().returnDictionary(args, db);
+//                EnglishDao englishDao  = db.getEnglishDao();
+                resultWrapper.setEnglishWordList(new English().returnDictionary(args, db));
         }
 
 
@@ -72,8 +75,8 @@ public class Query extends AsyncTask<Bundle, Void, List<BhutiaWord>> {
 //        Log.d("dict found?", Boolean.toString(pref.getBoolean("Bhutia",false)));
 //        if (pref.getBoolean("Bhutia",false) != false ) Log.d("BHUTIA FOUND", "BHUTIA!!");
 //        List<BhutiaWord> words = bhutiaDao.TSearch( );
-        if (list == null) throw new NullPointerException();
-        return list;
+        if (resultWrapper == null) throw new NullPointerException();
+        return resultWrapper;
         }
 
 

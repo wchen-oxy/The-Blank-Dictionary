@@ -11,15 +11,14 @@ import com.example.myapplication.R;
 
 public class EnglishLayout implements LayoutSetter {
     private DictionaryLayout dictionaryLayout;
-    private View view;
 
 
 
     //constructor call from ResultFrag
-    public EnglishLayout(LayoutInflater inflater, ViewGroup container, Bundle args) {
+    public EnglishLayout(LayoutInflater inflater, Bundle args) {
         //create your layout here.
         //once created, set dictionary layout to resulting view
-        view = inflater.inflate(R.layout.english_final_result, container,false);
+        View view = inflater.inflate(R.layout.z_final_bhutia, null);
         this.dictionaryLayout = new DictionaryLayout(view);
 
     }

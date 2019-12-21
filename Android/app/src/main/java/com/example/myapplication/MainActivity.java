@@ -68,31 +68,25 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
             case "SEARCH_FRAGMENT":
                 SearchFrag searchFrag = SearchFrag.newInstance(args);
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").addToBackStack("SEARCH_FRAGMENT").commit();
                 isAdvSearch = true;
                 break;
 
             case "RESULT_FRAGMENT":
                 ResultFragment resultFragment = ResultFragment.newInstance(args);
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.results_frag, resultFragment).addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.frag_container, resultFragment).addToBackStack("RESULT_FRAGMENT").commit();
                 break;
             case "LANG_DOWNLOAD_FRAGMENT":
                 LanguagePackFrag languagePackFrag = LanguagePackFrag.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, languagePackFrag).addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.frag_container, languagePackFrag).addToBackStack("LANG_DOWNLOAD_FRAGMENT").commit();
                 break;
             case "DICT_SELECT_FRAGMENT":
                 DictionarySelectionFrag dictionarySelectionFrag = DictionarySelectionFrag.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, dictionarySelectionFrag).addToBackStack(null).commit();
-                Toast.makeText(this, "Dict Changed", Toast.LENGTH_SHORT).show();
-                SharedPreferences pref = this.getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putString("CurDict", "BHUTIA"); // Storing boolean - true/false
-                editor.commit(); // commit changes
-
-
+                fragmentTransaction.replace(R.id.frag_container, dictionarySelectionFrag).addToBackStack("DICT_SELECT_FRAGMENT").commit();
+                break;
         }
 
     }
@@ -106,36 +100,25 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
                 case R.id.navigation_home:
                     System.out.println("HERE ARE THE FRAGMENTS: " + getSupportFragmentManager().getFragments());
                     if (isAdvSearch) {
-                        SearchFrag searchFrag = new SearchFrag();
-//                        Bundle args = getArguments();
-
-                            searchFrag.setArguments(args);
-                            Log.d("Args", "is null");
-
-//                        Log.d("arguments", args.getString("TRANSLATION"));
-//                        Log.d("arguments", args.getString("query"));
-
-
+                        Log.d("Args", "is null");
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").commit();
+                        fragmentTransaction.replace(R.id.frag_container, SearchFrag.newInstance(args), "ADV_SEARCH_FRAG").commit();
                         return true;
                     }
-
-
-
-                    HomeFrag homeFrag = new HomeFrag();
+                    clearBackStack();
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, homeFrag).commit();
+                    fragmentTransaction.replace(R.id.frag_container, HomeFrag.newInstance()).commit();
                     return true;
+
                 case R.id.navigation_favorites:
-                    FavoritesFrag favoritesFrag = new FavoritesFrag();
+                    clearBackStack();
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, favoritesFrag).commit();
+                    fragmentTransaction.replace(R.id.frag_container, FavoritesFrag.newInstance()).commit();
                     return true;
                 case R.id.navigation_settings:
-                    SettingsFrag settingsFrag = new SettingsFrag();
+                    clearBackStack();
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, settingsFrag).commit();
+                    fragmentTransaction.replace(R.id.frag_container, SettingsFrag.newInstance()).commit();
 
                     return true;
             }
@@ -143,65 +126,77 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
         }
     };
 
+    private void clearBackStack() {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            FragmentManager.BackStackEntry first = fragmentManager.getBackStackEntryAt(0);
+            fragmentManager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
+
     //code for selecting correct menu item on backstack press
     public Fragment getCurrentFragment() {
         return this.getSupportFragmentManager().findFragmentById(R.id.frag_container);
     }
 
     //FIXME simplify and remove bug that presses back twice
-    @Override
-    public void onBackPressed(){
-        SearchView mainSearch = findViewById(R.id.searchAdvView);
-        Log.d("TAG", getCurrentFragment().toString());
-
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.frag_container);
-        if (!(f instanceof HomeFrag) && !(f instanceof SearchFrag)){
-                Log.d("THIS CLASS IS", f.toString());
-            navViewBack.setSelectedItemId(R.id.navigation_home);
-            Log.d("TAG", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
-
-            getSupportFragmentManager().popBackStackImmediate();
-            Log.d("TAG", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
-
-            super.onBackPressed();
-
-        }
-        //clear text in adv
-        else if (mainSearch != null && !mainSearch.getQuery().toString().isEmpty()) {
-        Log.d("ceck", mainSearch.getQuery().toString());
-        mainSearch.setQuery("",false);
-
-        }
-//        else if( f instanceof ResultFragment) {
-//            fragmentManager.popBackStack();
+//    @Override
+//    public void onBackPressed(){
+//        SearchView mainSearch = findViewById(R.id.searchAdvView);
+//        Log.d("TAG", getCurrentFragment().toString());
+//
+//        Fragment f = getSupportFragmentManager().findFragmentById(R.id.frag_container);
+//        if (!(f instanceof HomeFrag) && !(f instanceof SearchFrag)){
+//                Log.d("THIS CLASS IS", f.toString());
+//            navViewBack.setSelectedItemId(R.id.navigation_home);
+//            Log.d("TAG", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
+//
+//            getSupportFragmentManager().popBackStackImmediate();
+//            Log.d("TAG", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
+//
+//            super.onBackPressed();
+//
+//        }
+//        //clear text in adv
+//        else if (mainSearch != null && !mainSearch.getQuery().toString().isEmpty()) {
+//        Log.d("ceck", mainSearch.getQuery().toString());
+//        mainSearch.setQuery("",false);
+//
+//        }
+////        else if( f instanceof ResultFragment) {
+////            fragmentManager.popBackStack();
+////            super.onBackPressed();
+////        }
+//        else if (f instanceof SettingsFrag){
+//            Log.d("Settings", "RETURNED");
+//
 //            super.onBackPressed();
 //        }
-        else if (f instanceof SettingsFrag){
-            Log.d("Settings", "RETURNED");
+//
+//        else if(f instanceof LanguagePackFrag) super.onBackPressed();
+//        else if(f instanceof DictionarySelectionFrag) super.onBackPressed();
+//        else {
+//            if (f instanceof SearchFrag) ((SearchFrag) f).setmAdapter();
+//
+//
+//            Log.d("ceck", "backpress");
+//            //add clear
+//            isAdvSearch = false;
+////            super.onBackPressed();
+//
+//            final Fragment fragment = fragmentManager.findFragmentById(R.id.results_frag);
+//            if (fragment != null) {
+//                fragmentManager.popBackStack();
+//            } else {
+//                super.onBackPressed();
+//            }
+//
+//
+//        }
+//    }
 
-            super.onBackPressed();
-        }
-
-        else if(f instanceof LanguagePackFrag) super.onBackPressed();
-        else if(f instanceof DictionarySelectionFrag) super.onBackPressed();
-        else {
-            if (f instanceof SearchFrag) ((SearchFrag) f).setmAdapter();
-
-
-            Log.d("ceck", "backpress");
-            //add clear
-            isAdvSearch = false;
-//            super.onBackPressed();
-
-            final Fragment fragment = fragmentManager.findFragmentById(R.id.results_frag);
-            if (fragment != null) {
-                fragmentManager.popBackStack();
-            } else {
-                super.onBackPressed();
-            }
-
-
-        }
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
     }
 
 

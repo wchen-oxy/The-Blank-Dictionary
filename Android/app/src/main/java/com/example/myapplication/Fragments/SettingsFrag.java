@@ -19,6 +19,10 @@ import com.example.myapplication.R;
 public class SettingsFrag extends Fragment {
     FragmentCommunicator fragmentCommunicator;
 
+    public static SettingsFrag newInstance(){
+        return new SettingsFrag();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -37,9 +41,9 @@ public class SettingsFrag extends Fragment {
         Button languagePack = rootView.findViewById(R.id.language_button);
         Button currentDictionary = rootView.findViewById(R.id.current_dictionary);
 
-        final FragmentManager fragmentManager = getFragmentManager();
-        final FragmentTransaction langFragTransaction;
-        langFragTransaction = fragmentManager.beginTransaction();
+//        final FragmentManager fragmentManager = getFragmentManager();
+//        final FragmentTransaction langFragTransaction;
+//        langFragTransaction = fragmentManager.beginTransaction();
 
         languagePack.setOnClickListener(
                 new View.OnClickListener() {
