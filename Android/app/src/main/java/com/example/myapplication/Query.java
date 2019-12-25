@@ -5,19 +5,16 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.room.Room;
 
 import com.example.myapplication.Dictionaries.AppDatabase;
 import com.example.myapplication.Dictionaries.Bhutia.Bhutia;
-import com.example.myapplication.Dictionaries.Bhutia.BhutiaDao;
-import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
+import com.example.myapplication.Dictionaries.English.English;
 import com.example.myapplication.Dictionaries.English.EnglishDao;
 import com.example.myapplication.Dictionaries.ResultWrapper;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 public class Query extends AsyncTask<Bundle, Void, ResultWrapper> {
     private final WeakReference<Context> weakContext;
@@ -34,7 +31,7 @@ public class Query extends AsyncTask<Bundle, Void, ResultWrapper> {
 
     @Override
     protected ResultWrapper doInBackground(Bundle... full_query) {
-        ResultWrapper resultWrapper = new ResultWrapper();
+        ResultWrapper resultWrapper = null;
 
         //implemented the Bhutia version only
 
@@ -47,15 +44,21 @@ public class Query extends AsyncTask<Bundle, Void, ResultWrapper> {
 //        Log.d("PREF", pref.getString("CurDict", null).toString());
         switch (pref.getString("CurDict", null)) {
             case("BHUTIA"):
+                Log.d("Check", "Inner");
+                resultWrapper = new Bhutia(args, db);
 //                BhutiaDao bhutiaDao = db.getBhutiaDao();
 //                Bhutia ad = new Bhutia();
 //                return ad.returnDictionary(args);
-                resultWrapper.setBhutiaWordList(new Bhutia().returnDictionary(args, db));
-                Log.d("THING", new Bhutia().returnDictionary(args, db).toString());
+//                resultWrapper.setBhutiaWordList(new Bhutia().returnDictionary(args, db));
+//                Log.d("THING", new Bhutia().returnDictionary(args, db).toString());
                 //do list stuff here
+                break;
             case("ENGLISH"):
+                resultWrapper = new English(args, db);
+
+//                resultWrapper = new ResultWrapper("ENGLISH");
 //                EnglishDao englishDao  = db.getEnglishDao();
-                resultWrapper.setEnglishWordList(new English().returnDictionary(args, db));
+//                resultWrapper.setEnglishWordList(new English().returnDictionary(args, db));
         }
 
 

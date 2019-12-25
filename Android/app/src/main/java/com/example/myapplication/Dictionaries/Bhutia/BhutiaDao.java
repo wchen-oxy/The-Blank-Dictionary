@@ -16,13 +16,13 @@ public interface BhutiaDao {
     List<BhutiaWord> getAll();
 
     @Query("SELECT * FROM BhutiaWords WHERE romanization LIKE :query")
-    List<BhutiaWord> BhutiaSearch(String query);
+    List<BhutiaWord> bhutiaSearch(String query);
 
     @Query("SELECT * FROM BhutiaWords WHERE eng_trans LIKE :query")
-    List<BhutiaWord> EnglishSearch(String query);
+    List<BhutiaWord> englishSearch(String query);
 
     @Query("SELECT * FROM BhutiaWords WHERE tib_script LIKE :query")
-    List<BhutiaWord> TibetanSearch(String query);
+    List<BhutiaWord> tibetanSearch(String query);
 
 
 //    @Query("SELECT romanization FROM BhutiaWords WHERE romanization like 'Chi%'")

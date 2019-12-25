@@ -1,4 +1,5 @@
-package com.example.myapplication.Dictionaries.Bhutia;
+package com.example.myapplication.Dictionaries.English;
+
 
 
 import android.os.Bundle;
@@ -11,29 +12,24 @@ import com.example.myapplication.Dictionaries.ResultWrapper;
 
 import java.util.List;
 
-public class Bhutia implements ResultWrapper {
+public class English implements ResultWrapper {
     private Result result;
 
-    public Bhutia(Bundle args, AppDatabase db) {
-        BhutiaDao bhutiaDao = db.getBhutiaDao();
+    public English(Bundle args, AppDatabase db) {
+        EnglishDao EnglishDao = db.getEnglishDao();
         List words = null;
 
         switch (args.getString("TRANSLATION")){
-            case ("Bhutia to English"):
+            case ("English to English"):
                 Log.d("BHUTIA FOUND", "BHUTIA!!");
-                words = bhutiaDao.bhutiaSearch( args.getString("query")+"%");
-                break;
-
-            case ("English to Bhutia"):
-                words = bhutiaDao.englishSearch(args.getString("query")+"%");
-                break;
-
-
-            case ("Tibetan to Bhutia"):
-                Log.d("Tibetan to Bhutia", "Tibetan");
-                words = bhutiaDao.tibetanSearch(args.getString("query")+"%");
-                break;
-
+                words = EnglishDao.englishSearch(args.getString("query"));
+//
+//            case ("English to Bhutia"):
+//                words = bhutiaDao.EnglishSearch(args.getString("query")+"%");
+//
+//            case ("Tibetan to Bhutia"):
+//                Log.d("Tibetan to Bhutia", "Tibetan");
+//                words = bhutiaDao.TibetanSearch(args.getString("query")+"%");
         }
         this.result = new Result(words);
 
@@ -44,7 +40,7 @@ public class Bhutia implements ResultWrapper {
 
     }
 
-//    public List returnDictionary(Bundle args, AppDatabase db) {
+    //    public List returnDictionary(Bundle args, AppDatabase db) {
 //        BhutiaDao bhutiaDao = db.getBhutiaDao();
 //
 //        switch (args.getString("TRANSLATION")){

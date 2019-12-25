@@ -15,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Dictionaries.ResultWrapper;
 import com.example.myapplication.Fragments.DictionarySelectionFrag;
 import com.example.myapplication.Fragments.FavoritesFrag;
 import com.example.myapplication.Fragments.HomeFrag;
@@ -39,13 +40,15 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
     Bundle args;
 
     //TODO implement these
-    @Override
-    public void textPass(String string) {
-        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
-        Log.d("RECIEVED", "TEXT");
+//    @Override
+//    public void textPass(String string) {
+//        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
+//        Log.d("RECIEVED", "TEXT");
+//
+//    }
 
-    }
 
+    //to create all fragments
     @Override
     public void bundPass(Bundle args, boolean isPause) {
         if (isPause) {this.args = args;
@@ -71,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
                 fragmentTransaction.replace(R.id.frag_container, searchFrag, "ADV_SEARCH_FRAG").addToBackStack("SEARCH_FRAGMENT").commit();
                 isAdvSearch = true;
                 break;
-
             case "RESULT_FRAGMENT":
                 ResultFragment resultFragment = ResultFragment.newInstance(args);
                 fragmentTransaction = fragmentManager.beginTransaction();

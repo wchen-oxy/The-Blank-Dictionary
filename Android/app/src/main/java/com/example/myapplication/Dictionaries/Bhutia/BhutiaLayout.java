@@ -9,6 +9,7 @@ import com.example.myapplication.DictionaryLayout;
 import com.example.myapplication.LayoutSetter;
 import com.example.myapplication.R;
 
+//sets the layout for the results fragment
 public class BhutiaLayout implements LayoutSetter {
     private DictionaryLayout dictionaryLayout;
 

@@ -164,7 +164,7 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         TRANSLATION = parent.getItemAtPosition(pos).toString();
-        args.putInt("TRANSLATION_ID", pos);
+        args.putInt("TRANSLATION_DIRECTION", pos);
         dadapter.itemSelect(pos);
 
     }

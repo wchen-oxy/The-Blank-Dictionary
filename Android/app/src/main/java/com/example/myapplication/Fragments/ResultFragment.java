@@ -1,6 +1,5 @@
 package com.example.myapplication.Fragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,13 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaLayout;
 import com.example.myapplication.Dictionaries.English.EnglishLayout;
-import com.example.myapplication.DictionaryLayout;
 import com.example.myapplication.LayoutSetter;
 import com.example.myapplication.R;
 

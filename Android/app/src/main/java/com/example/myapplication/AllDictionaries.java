@@ -11,6 +11,7 @@ import java.util.List;
 
 public abstract class AllDictionaries {
     public abstract List returnDictionary(Bundle args, AppDatabase db);
+    public abstract List returnList();
 }
 //TODO use polymorphism by putting in a DAO
 
