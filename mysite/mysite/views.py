@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.core import serializers
 from django.apps import apps
 from django.urls import reverse
@@ -64,6 +64,29 @@ def test(request, lang, word=None):
          return HttpResponse("Site works, but no lang matched")
      else:
         return HttpResponse("Site works, but you have no auth key.")
+
+@csrf_exempt
+def returnAll(request):
+    models = []
+    if request.method == 'GET' and 'Authorization' in request.headers:
+        if request.headers['Authorization'] != encrypt_string("Az39dB0n!23"):
+            for model in apps.all_models['dictionaries']:
+                models.append(model)
+            return  JsonResponse(models, safe=False)
+        return HttpResponseBadRequest()
+    return HttpResponseBadRequest()
+
+@csrf_exempt
+def status(request):
+    if request.method == 'GET' and 'Authorization' in request.headers:
+        return HttpResponse()
+    return HttpResponseBadRequest()
+
+# def checkConnection(request):
+#     if request.method == 'GET' and 'Authorization' in request.headers:
+#          if request.headers['Authorization'] != encrypt_string("Az39dB0n!23"):
+#              return HttpResponse("Auth Key is Wrong.")
+
 
 def encrypt_string(hash_string):
     sha_signature = \

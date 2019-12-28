@@ -29,6 +29,10 @@ urlpatterns = [
     path('api/<slug:lang>/', AllBhutia.as_view(), name="all-words"),
     path('apitest/<slug:lang>/', views.test, name="test-words"),
     path('apitest/<slug:lang>/<slug:word', views.test, name="test-words"),
+    path('all/', views.returnAll, name="return-all"),
+    path('status/', views.status, name="status"),
+
+
 
 
 ]
