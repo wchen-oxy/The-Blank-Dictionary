@@ -78,7 +78,7 @@ def returnAll(request):
 
 @csrf_exempt
 def status(request):
-    if request.method == 'GET' and 'Authorization' in request.headers:
+    if request.method == 'GET' and request.headers['Authorization'] == encrypt_string("Az39dB0n!23"):
         return HttpResponse()
     return HttpResponseBadRequest()
 
