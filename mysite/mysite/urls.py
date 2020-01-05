@@ -31,6 +31,7 @@ urlpatterns = [
     path('apitest/<slug:lang>/<slug:word', views.test, name="test-words"),
     path('all/', views.returnAll, name="return-all"),
     path('status/', views.status, name="status"),
+    path('updates/', views.updates, name="updates"),
 
 
 

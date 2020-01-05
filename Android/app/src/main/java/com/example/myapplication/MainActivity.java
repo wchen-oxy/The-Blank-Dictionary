@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
     SearchView secSearch;
 //    public String query;
     public BroadcastReceiver br;
+    public BroadcastReceiver myListBroadcastReciever;
     public Boolean isAdvSearch = false;
     public FragmentCommunicator fragmentCommunicator;
     Bundle args;

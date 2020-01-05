@@ -11,6 +11,7 @@ from rest_framework import generics
 import dictionaries 
 from django.views.decorators.csrf import csrf_exempt
 import hashlib
+import json
 
 #API TEST STUFF
 # def home(request):
@@ -69,7 +70,7 @@ def test(request, lang, word=None):
 def returnAll(request):
     models = []
     if request.method == 'GET' and 'Authorization' in request.headers:
-        if request.headers['Authorization'] != encrypt_string("Az39dB0n!23"):
+        if request.headers['Authorization'] == encrypt_string("Az39dB0n!23"):
             for model in apps.all_models['dictionaries']:
                 models.append(model)
             return  JsonResponse(models, safe=False)
@@ -87,6 +88,11 @@ def status(request):
 #          if request.headers['Authorization'] != encrypt_string("Az39dB0n!23"):
 #              return HttpResponse("Auth Key is Wrong.")
 
+@csrf_exempt
+def updates(request):
+    if request.method == 'GET' and request.headers['Authorization'] == encrypt_string("Az39dB0n!23"):
+        return JsonResponse(len(apps.all_models['dictionaries']), safe=False)
+    return HttpResponseBadRequest()
 
 def encrypt_string(hash_string):
     sha_signature = \

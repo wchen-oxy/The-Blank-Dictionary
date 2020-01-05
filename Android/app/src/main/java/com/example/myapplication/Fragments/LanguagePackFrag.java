@@ -21,6 +21,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +29,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.myapplication.DataDownload.DictionaryClientCallback;
+import com.example.myapplication.DataDownload.DictionaryClientUsage;
+import com.example.myapplication.DataDownload.HttpBadRequestException;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.myListBroadcastReciever;
 import com.example.myapplication.myReceiver;
-import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -50,6 +57,9 @@ public class LanguagePackFrag extends Fragment {
     String TEMP_URL = "https://jsonplaceholder.typicode.com/todos/1";
     String TEMP_REAL_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/db.json";
     String TEMP_ENG_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/db.json";
+    private static final String BASE_URL = "http://10.0.2.2:8000/";
+
+    JSONArray list = null;
 
     public static Boolean DOWNLOAD_IN_PROGRSS = false;
 
@@ -57,19 +67,89 @@ public class LanguagePackFrag extends Fragment {
        return new LanguagePackFrag();
     }
 
-    @Override
-    public void onCreate (Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);activtiy = getActivity();
-        if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory())){
-            new File(Environment.getExternalStorageDirectory(), "BlankDictionary").mkdir();
+    public boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int     exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
         }
+        catch (IOException e)          { e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
 
+        return false;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        activtiy = getActivity();
+
+    }
+
+
+    @Override
+    public void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory())){
+            new File(Environment.getExternalStorageDirectory(), "BlankDictionary").mkdir();
+        }
+//
+//        try {
+//            Log.d("thing", "adfasef");
+//            //check internet connection
+//            if (!isOnline()) Toast.makeText(mContext, "No Internet Connection!", Toast.LENGTH_SHORT).show();
+//            //check if connection to server is possible
+//            if (!new DictionaryClientUsage().checkStatus()) Toast.makeText(mContext, "Could Not Reach Server!", Toast.LENGTH_SHORT).show();
+//
+////            new DictionaryClientUsage().check();
+//
+//            //download current list of available dictionaries
+//            new DictionaryClientUsage().getAvailableDic(mContext);
+//            //register reciever
+//
+//            BroadcastReceiver myListBroadcastReciever = new myListBroadcastReciever();
+////            MainActivity setter = (MainActivity) getActivity();
+////            setter.myListBroadcastReciever = myListBroadcastReciever;
+//            IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+//            filter.addAction("LIST_DOWNLOAD_COMPLETE");
+//            mContext.registerReceiver(myListBroadcastReciever, filter);
+////            HandlerThread handlerThread = new HandlerThread("LIST_DOWNLOAD");
+////            handlerThread.start();
+////            Looper looper = handlerThread.getLooper();
+////            Handler handler = new Handler(looper);
+////            mContext.registerReceiver(myListBroadcastReciever, filter, null, handler);
+//
+//
+////            DictionaryClientUsage dictionaryClientUsage = new DictionaryClientUsage();
+////            dictionaryClientUsage.getAvailableDic(new DictionaryClientCallback() {
+////                @Override
+////                public void onDictionaryClientResponse(boolean success, JSONArray response) {
+////                    list = response;
+////                }
+////            }
+////
+////            );
+//
+//            //if the list was incorrectly downloaded, thorw an exception
+//            Log.d("thread", "failed");
+//            if (list == null) throw new HttpBadRequestException();
+//            Log.d("Results", list.toString());
+//            //otherwise read from json
+//            Log.d("JSON PARSE", "OK");
+//
+//
+//        }
+//        catch (JSONException e){
+//            //if it at any point fails, go with the previous
+//            Log.d("LANG_DOWNLOAD", "Something went wrong during JSON processing.");
+//
+//        }
+//        catch (HttpBadRequestException br) {
+//            Log.d("LANG_DOWNLOAD", "Connected to server but could not download.");
+//
+//        }
     }
 
     @Override
@@ -171,6 +251,7 @@ public class LanguagePackFrag extends Fragment {
 //        downloadManager.enqueue(request);
         BroadcastReceiver br = new myReceiver(buttonText);
         MainActivity setter = (MainActivity) getActivity();
+
         setter.br = br;
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 //        filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
@@ -203,28 +284,6 @@ public class LanguagePackFrag extends Fragment {
         return output;
     }
 
-
-    //data download shit
-//    private static class dataDownload extends AsyncTask<String, Void, Void> {
-//        String TEMP_URL = "https://jsonplaceholder.typicode.com/todos/1";
-//
-//
-//        @Override
-//        protected Void doInBackground(String... URL) {
-//
-//            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(TEMP_URL));
-//            File file = new File(Environment.DIRECTORY_DOWNLOADS, "Bhutia");
-//            request.setDescription("Your Dictionary is now downloading.")
-//                    .setTitle("Dictionay Download Started.")
-//                    .setDestinationUri(Uri.fromFile(file));
-//
-////            DownloadManager downloadManager= (DownloadManager) super.getSystemService(DOWNLOAD_SERVICE);
-////            long downloadID = downloadManager.enqueue(request);// enqueue puts the download request in the queue.
-////
-////            dm.enqueue(request);
-//            return null;
-//        }
-//    }
 
 
 
