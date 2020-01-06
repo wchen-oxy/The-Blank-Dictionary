@@ -34,6 +34,7 @@ import com.example.myapplication.DataDownload.DictionaryClientUsage;
 import com.example.myapplication.DataDownload.HttpBadRequestException;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.Serialization;
 import com.example.myapplication.myListBroadcastReciever;
 import com.example.myapplication.myReceiver;
 import com.google.gson.JsonArray;
@@ -42,12 +43,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
@@ -56,7 +63,7 @@ public class LanguagePackFrag extends Fragment {
     Context mContext;
     String TEMP_URL = "https://jsonplaceholder.typicode.com/todos/1";
     String TEMP_REAL_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/db.json";
-    String TEMP_ENG_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/db.json";
+    String TEMP_ENG_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/eng.json";
     private static final String BASE_URL = "http://10.0.2.2:8000/";
 
     JSONArray list = null;
@@ -67,18 +74,6 @@ public class LanguagePackFrag extends Fragment {
        return new LanguagePackFrag();
     }
 
-    public boolean isOnline() {
-        Runtime runtime = Runtime.getRuntime();
-        try {
-            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
-            int     exitValue = ipProcess.waitFor();
-            return (exitValue == 0);
-        }
-        catch (IOException e)          { e.printStackTrace(); }
-        catch (InterruptedException e) { e.printStackTrace(); }
-
-        return false;
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -92,9 +87,9 @@ public class LanguagePackFrag extends Fragment {
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory())){
-            new File(Environment.getExternalStorageDirectory(), "BlankDictionary").mkdir();
-        }
+
+
+
 //
 //        try {
 //            Log.d("thing", "adfasef");
@@ -154,12 +149,20 @@ public class LanguagePackFrag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View rootView = inflater.inflate(R.layout.lang_pack_list, container,false);
-        Button bhutiaButton = rootView.findViewById(R.id.bhutia_dictionary);
-        Button englishButton = rootView.findViewById(R.id.english_dictionary);
+        final View rootView = inflater.inflate(R.layout.lang_pack_list, container,false);
 
-        final String buttonText = bhutiaButton.getText().toString();
-        Log.d("TEXT", buttonText);
+        
+        final Button bhutiaButton = rootView.findViewById(R.id.bhutia_dictionary);
+        final Button englishButton = rootView.findViewById(R.id.english_dictionary);
+
+//            ArrayList<String> lists = loadJSONFromAsset();
+            ArrayList<String> lists = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
+            Log.d("download", lists.toString());
+            Log.d("Download,specific", lists.get(0));
+
+
+
+//        Log.d("TEXT", buttonText);
         bhutiaButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -186,9 +189,48 @@ public class LanguagePackFrag extends Fragment {
                             }
                         } else {
                             // Permission has already been granted
-                            dataDownload2(TEMP_REAL_URL, buttonText);
+                            dataDownload2(TEMP_REAL_URL, bhutiaButton.getText().toString());
                             DOWNLOAD_IN_PROGRSS = true;
                         }
+                        }
+                        else {
+                            Toast.makeText(getActivity(), "A dictionary is already downloading.", Toast.LENGTH_SHORT).show();
+                        }
+
+//
+
+                    }
+                });
+
+        englishButton.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (!DOWNLOAD_IN_PROGRSS){
+//                        Toast test = new Toast();
+                            Toast.makeText(getActivity(),"Selected",Toast.LENGTH_SHORT).show();
+                            if (ContextCompat.checkSelfPermission(activtiy, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                    != PackageManager.PERMISSION_GRANTED) {
+                                // Permission is not granted
+                                if (ActivityCompat.shouldShowRequestPermissionRationale(activtiy,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                    // Show an explanation to the user *asynchronously* -- don't block
+                                    // this thread waiting for the user's response! After the user
+                                    // sees the explanation, try again to request the permission.
+                                } else {
+                                    // No explanation needed; request the permission
+                                    ActivityCompat.requestPermissions(activtiy,
+                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
+                                            ,101);
+
+                                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                                    // app-defined int constant. The callback method gets the
+                                    // result of the request.
+                                }
+                            } else {
+                                // Permission has already been granted
+                                dataDownload2(TEMP_ENG_URL, englishButton.getText().toString());
+                                DOWNLOAD_IN_PROGRSS = true;
+                            }
                         }
                         else {
                             Toast.makeText(getActivity(), "A dictionary is already downloading.", Toast.LENGTH_SHORT).show();
@@ -246,24 +288,33 @@ public class LanguagePackFrag extends Fragment {
 
         DownloadManager downloadManager= (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
         long downloadID = downloadManager.enqueue(request);
-        myReceiver.downloadId = downloadID;
-        // enqueue puts the download request in the queue.
-//        downloadManager.enqueue(request);
-        BroadcastReceiver br = new myReceiver(buttonText);
-        MainActivity setter = (MainActivity) getActivity();
 
-        setter.br = br;
+        BroadcastReceiver broadcastReceiver = new myReceiver(buttonText);
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-//        filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
         HandlerThread handlerThread = new HandlerThread("LANGUAGE_DOWNLOAD");
         handlerThread.start();
         Looper looper = handlerThread.getLooper();
-        //use looper for the remaining tasks, like convet to json and SQL insert and Delete
-        //https://stackoverflow.com/questions/7597742/what-is-the-purpose-of-looper-and-how-to-use-it
-        //https://stackoverflow.com/questions/5674518/does-broadcastreceiver-onreceive-always-run-in-the-ui-thread
         Handler handler = new Handler(looper);
-        mContext.registerReceiver(br, filter, null, handler);
-        Log.d("I HAVE THIS MANY", String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).list().length));
+        mContext.registerReceiver(broadcastReceiver, filter, null, handler);
+
+//        myReceiver.downloadId = downloadID;
+//        // enqueue puts the download request in the queue.
+////        downloadManager.enqueue(request);
+//        BroadcastReceiver br = new myReceiver(buttonText);
+//        MainActivity setter = (MainActivity) getActivity();
+//
+//        setter.br = br;
+//        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+////        filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+//        HandlerThread handlerThread = new HandlerThread("LANGUAGE_DOWNLOAD");
+//        handlerThread.start();
+//        Looper looper = handlerThread.getLooper();
+//        //use looper for the remaining tasks, like convet to json and SQL insert and Delete
+//        //https://stackoverflow.com/questions/7597742/what-is-the-purpose-of-looper-and-how-to-use-it
+//        //https://stackoverflow.com/questions/5674518/does-broadcastreceiver-onreceive-always-run-in-the-ui-thread
+//        Handler handler = new Handler(looper);
+//        mContext.registerReceiver(br, filter, null, handler);
+//        Log.d("I HAVE THIS MANY", String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).list().length));
 
 
     }
@@ -282,6 +333,43 @@ public class LanguagePackFrag extends Fragment {
             e.printStackTrace();
         }
         return output;
+    }
+
+    public ArrayList<String> loadJSONFromAsset() throws FileNotFoundException {
+        ArrayList<String> json = new ArrayList<>();
+
+//        Scanner s = new Scanner(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
+//        ArrayList<String> list = new ArrayList<String>();
+//        while (s.hasNext()){
+//            list.add(s.next());
+//        }
+//        s.close();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"))) {
+            while (br.ready()) {
+                json.add(br.readLine());
+            }
+        }
+        catch (IOException io){
+
+        }
+
+        Log.d("Pre-list",  json.get(0).toString());
+
+
+//        try {
+//
+//            InputStream is = getActivity().getAssets().open();
+//            int size = is.available();
+//            byte[] buffer = new byte[size];
+//            is.read(buffer);
+//            is.close();
+//            json = new String(buffer, "UTF-8");
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//            return null;
+//        }
+        return json;
     }
 
 

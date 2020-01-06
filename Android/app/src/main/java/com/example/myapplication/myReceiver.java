@@ -41,7 +41,7 @@ public class myReceiver extends BroadcastReceiver {
 
         long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
         //Checking if the received broadcast is for our enqueued download by matching download id
-        if (downloadId == id) {
+//        if (downloadId == id) {
             LanguagePackFrag.DOWNLOAD_IN_PROGRSS = false;
             Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
 
@@ -86,7 +86,7 @@ public class myReceiver extends BroadcastReceiver {
                 io.printStackTrace();
             }
 
-        }
+//        }
 
     }
 

@@ -1,8 +1,14 @@
 package com.example.myapplication;
 
+import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +21,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.DataDownload.DictionaryClientUsage;
+import com.example.myapplication.DataDownload.HttpBadRequestException;
 import com.example.myapplication.Dictionaries.ResultWrapper;
 import com.example.myapplication.Fragments.DictionarySelectionFrag;
 import com.example.myapplication.Fragments.FavoritesFrag;
@@ -23,6 +31,11 @@ import com.example.myapplication.Fragments.LanguagePackFrag;
 import com.example.myapplication.Fragments.ResultFragment;
 import com.example.myapplication.Fragments.SearchFrag;
 import com.example.myapplication.Fragments.SettingsFrag;
+
+import org.json.JSONException;
+
+import java.io.File;
+import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentCommunicator{
@@ -136,6 +149,20 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
         }
     }
 
+    public boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int     exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        }
+        catch (IOException e)          { e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+
+        return false;
+    }
+
+
     //code for selecting correct menu item on backstack press
     public Fragment getCurrentFragment() {
         return this.getSupportFragmentManager().findFragmentById(R.id.frag_container);
@@ -222,6 +249,31 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
 //        SharedPreferences.Editor editor = pref.edit();
 //        editor.putString("CurDict", "BHUTIA"); // Storing boolean - true/false
 //        editor.commit(); // commit changes
+
+        //SECTION FOR GETTING AVAILABLE DICTIONARIES AHEAD OF TIME
+        if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory())){
+            new File(Environment.getExternalStorageDirectory(), "BlankDictionary").mkdir();
+        }
+        try{
+            //check internet connection
+            if (!isOnline()) Toast.makeText(this, "No Internet Connection!", Toast.LENGTH_SHORT).show();
+
+            //check if connection to server is possible
+            BroadcastReceiver broadcastReceiver = new myServerReciever();
+            IntentFilter filter = new IntentFilter("SERVER_REACHED");
+            HandlerThread handlerThread = new HandlerThread("SERVER_STATUS");
+            handlerThread.start();
+            Looper looper = handlerThread.getLooper();
+            Handler handler = new Handler(looper);
+            this.registerReceiver(broadcastReceiver, filter, null, handler);
+
+            new DictionaryClientUsage().checkStatus(this);
+
+
+
+        } catch (HttpBadRequestException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
