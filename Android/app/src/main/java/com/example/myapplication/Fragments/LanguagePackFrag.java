@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -23,10 +24,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.JsonReader;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.myapplication.DataDownload.DictionaryClientCallback;
@@ -150,96 +153,157 @@ public class LanguagePackFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         final View rootView = inflater.inflate(R.layout.lang_pack_list, container,false);
+        ArrayList<String> lists = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
 
-        
-        final Button bhutiaButton = rootView.findViewById(R.id.bhutia_dictionary);
-        final Button englishButton = rootView.findViewById(R.id.english_dictionary);
+
+        LinearLayout linearLayout = rootView.findViewById(R.id.lang_pack_root_layout);
+
+        for (String s:lists) {
+            Button button = new Button(mContext);
+            button.setTypeface(Typeface.create("alegreya_sans", Typeface.NORMAL));
+            button.setText(s);
+            button.getBackground().setAlpha(0);
+            button.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.resize_arrow, 0);
+            button.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+
+            button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            button.setOnClickListener(
+                    new View.OnClickListener() {
+                        public void onClick(View v) {
+                            if (!DOWNLOAD_IN_PROGRSS){
+//                        Toast test = new Toast();
+                                Toast.makeText(getActivity(),"Selected",Toast.LENGTH_SHORT).show();
+                                if (ContextCompat.checkSelfPermission(activtiy, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                        != PackageManager.PERMISSION_GRANTED) {
+                                    // Permission is not granted
+                                    if (ActivityCompat.shouldShowRequestPermissionRationale(activtiy,
+                                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                        // Show an explanation to the user *asynchronously* -- don't block
+                                        // this thread waiting for the user's response! After the user
+                                        // sees the explanation, try again to request the permission.
+                                    } else {
+                                        // No explanation needed; request the permission
+                                        ActivityCompat.requestPermissions(activtiy,
+                                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
+                                                ,101);
+
+                                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                                        // app-defined int constant. The callback method gets the
+                                        // result of the request.
+                                    }
+                                } else {
+                                    // Permission has already been granted
+                                    Button b = (Button) v;
+                                    dataDownload2(TEMP_REAL_URL,b.getText().toString());
+                                    DOWNLOAD_IN_PROGRSS = true;
+                                }
+                            }
+                            else {
+                                Toast.makeText(getActivity(), "A dictionary is already downloading.", Toast.LENGTH_SHORT).show();
+                            }
+
+//
+
+                        }
+                    });
+
+
+            if (linearLayout != null) {
+                linearLayout.addView(button);
+            }
+
+
+        }
+
+
 
 //            ArrayList<String> lists = loadJSONFromAsset();
-            ArrayList<String> lists = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
             Log.d("download", lists.toString());
             Log.d("Download,specific", lists.get(0));
-
-
-
-//        Log.d("TEXT", buttonText);
-        bhutiaButton.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        if (!DOWNLOAD_IN_PROGRSS){
-//                        Toast test = new Toast();
-                        Toast.makeText(getActivity(),"Selected",Toast.LENGTH_SHORT).show();
-                        if (ContextCompat.checkSelfPermission(activtiy, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                != PackageManager.PERMISSION_GRANTED) {
-                            // Permission is not granted
-                            if (ActivityCompat.shouldShowRequestPermissionRationale(activtiy,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                                // Show an explanation to the user *asynchronously* -- don't block
-                                // this thread waiting for the user's response! After the user
-                                // sees the explanation, try again to request the permission.
-                            } else {
-                                // No explanation needed; request the permission
-                                ActivityCompat.requestPermissions(activtiy,
-                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-                                        ,101);
-
-                                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                                // app-defined int constant. The callback method gets the
-                                // result of the request.
-                            }
-                        } else {
-                            // Permission has already been granted
-                            dataDownload2(TEMP_REAL_URL, bhutiaButton.getText().toString());
-                            DOWNLOAD_IN_PROGRSS = true;
-                        }
-                        }
-                        else {
-                            Toast.makeText(getActivity(), "A dictionary is already downloading.", Toast.LENGTH_SHORT).show();
-                        }
-
 //
-
-                    }
-                });
-
-        englishButton.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        if (!DOWNLOAD_IN_PROGRSS){
-//                        Toast test = new Toast();
-                            Toast.makeText(getActivity(),"Selected",Toast.LENGTH_SHORT).show();
-                            if (ContextCompat.checkSelfPermission(activtiy, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                    != PackageManager.PERMISSION_GRANTED) {
-                                // Permission is not granted
-                                if (ActivityCompat.shouldShowRequestPermissionRationale(activtiy,
-                                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                                    // Show an explanation to the user *asynchronously* -- don't block
-                                    // this thread waiting for the user's response! After the user
-                                    // sees the explanation, try again to request the permission.
-                                } else {
-                                    // No explanation needed; request the permission
-                                    ActivityCompat.requestPermissions(activtiy,
-                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-                                            ,101);
-
-                                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                                    // app-defined int constant. The callback method gets the
-                                    // result of the request.
-                                }
-                            } else {
-                                // Permission has already been granted
-                                dataDownload2(TEMP_ENG_URL, englishButton.getText().toString());
-                                DOWNLOAD_IN_PROGRSS = true;
-                            }
-                        }
-                        else {
-                            Toast.makeText(getActivity(), "A dictionary is already downloading.", Toast.LENGTH_SHORT).show();
-                        }
-
 //
-
-                    }
-                });
+//        final Button bhutiaButton = rootView.findViewById(R.id.bhutia_dictionary);
+//        final Button englishButton = rootView.findViewById(R.id.english_dictionary);
+//
+//
+////        Log.d("TEXT", buttonText);
+//        bhutiaButton.setOnClickListener(
+//                new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        if (!DOWNLOAD_IN_PROGRSS){
+////                        Toast test = new Toast();
+//                        Toast.makeText(getActivity(),"Selected",Toast.LENGTH_SHORT).show();
+//                        if (ContextCompat.checkSelfPermission(activtiy, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                                != PackageManager.PERMISSION_GRANTED) {
+//                            // Permission is not granted
+//                            if (ActivityCompat.shouldShowRequestPermissionRationale(activtiy,
+//                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                                // Show an explanation to the user *asynchronously* -- don't block
+//                                // this thread waiting for the user's response! After the user
+//                                // sees the explanation, try again to request the permission.
+//                            } else {
+//                                // No explanation needed; request the permission
+//                                ActivityCompat.requestPermissions(activtiy,
+//                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
+//                                        ,101);
+//
+//                                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+//                                // app-defined int constant. The callback method gets the
+//                                // result of the request.
+//                            }
+//                        } else {
+//                            // Permission has already been granted
+//                            dataDownload2(TEMP_REAL_URL, bhutiaButton.getText().toString());
+//                            DOWNLOAD_IN_PROGRSS = true;
+//                        }
+//                        }
+//                        else {
+//                            Toast.makeText(getActivity(), "A dictionary is already downloading.", Toast.LENGTH_SHORT).show();
+//                        }
+//
+////
+//
+//                    }
+//                });
+//
+//        englishButton.setOnClickListener(
+//                new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        if (!DOWNLOAD_IN_PROGRSS){
+////                        Toast test = new Toast();
+//                            Toast.makeText(getActivity(),"Selected",Toast.LENGTH_SHORT).show();
+//                            if (ContextCompat.checkSelfPermission(activtiy, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                                    != PackageManager.PERMISSION_GRANTED) {
+//                                // Permission is not granted
+//                                if (ActivityCompat.shouldShowRequestPermissionRationale(activtiy,
+//                                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                                    // Show an explanation to the user *asynchronously* -- don't block
+//                                    // this thread waiting for the user's response! After the user
+//                                    // sees the explanation, try again to request the permission.
+//                                } else {
+//                                    // No explanation needed; request the permission
+//                                    ActivityCompat.requestPermissions(activtiy,
+//                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
+//                                            ,101);
+//
+//                                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+//                                    // app-defined int constant. The callback method gets the
+//                                    // result of the request.
+//                                }
+//                            } else {
+//                                // Permission has already been granted
+//                                dataDownload2(TEMP_ENG_URL, englishButton.getText().toString());
+//                                DOWNLOAD_IN_PROGRSS = true;
+//                            }
+//                        }
+//                        else {
+//                            Toast.makeText(getActivity(), "A dictionary is already downloading.", Toast.LENGTH_SHORT).show();
+//                        }
+//
+////
+//
+//                    }
+//                });
 
         return rootView;
     }
