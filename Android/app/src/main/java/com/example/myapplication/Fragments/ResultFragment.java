@@ -1,9 +1,12 @@
 package com.example.myapplication.Fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,30 +76,8 @@ public class ResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        View rootView = inflater.inflate(R.layout.final_result, container,false);
-//        TextView textView = new TextView(getActivity());
-//        textView.setText(R.string.hello_blank_fragment);
-        //add switch cases
-//        View rootView;
 
 
-
-//        DictionaryLayout dictionaryLayout;
-//        LayoutSetter layoutSetter = null;
-//        switch (curDict){
-//            case ("BHUTIA"):
-//                layoutSetter = new BhutiaLayout(inflater,container, args);
-//                break;
-//            case ("ENGLISH"):
-//                layoutSetter = new EnglishLayout(inflater,container, args);
-//                break;
-//
-//        }
-//        assert layoutSetter != null;
-//        dictionaryLayout = layoutSetter.getDictionaryLayout();
-//        return  dictionaryLayout.returnView();
-
-        //second attempt
         View rootView = inflater.inflate(R.layout.final_result, container,false);
         ScrollView dictInfoContainer = rootView.findViewById(R.id.dict_info_container);
 

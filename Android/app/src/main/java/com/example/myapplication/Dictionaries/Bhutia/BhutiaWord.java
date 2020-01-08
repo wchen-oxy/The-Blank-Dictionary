@@ -18,7 +18,7 @@ public class BhutiaWord {
         this.bhut_rom_formal = bhut_rom_formal;
         this.bhut_rom_informal = bhut_rom_informal;
         this.bhut_script_formal = bhut_script_formal;
-        this.bhut_rom_informal = bhut_script_informal;
+        this.bhut_script_informal = bhut_script_informal;
         this.example = example;
         this.spoken_b = spoken_b;
         this.spoken_e = spoken_e;

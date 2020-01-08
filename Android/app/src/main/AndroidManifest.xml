@@ -20,6 +20,8 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+
+
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"
@@ -31,6 +33,7 @@
             <!--<meta-data-->
                 <!--android:name="android.app.default_searchable"-->
                 <!--android:value=".SearchActivity" />-->
+
 
 
         </activity>

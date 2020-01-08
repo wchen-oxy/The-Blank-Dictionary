@@ -45,7 +45,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     Result result;
     ArrayList passResults;
     String TRANSLATION;
-    int TRANSLATION_ID;
+    int TRANSLATION_DIRECTION;
     boolean INITIAL = true;
     String queryKey = null;
 
@@ -70,6 +70,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 //                Log.d("RESULTS", passResults.toString());
                int position = ((RecyclerView.ViewHolder) item.getTag()).getAdapterPosition();
                args.putString("TRANSLATION", TRANSLATION);
+               args.putInt("TRANSLATION_DIRECTION", TRANSLATION_DIRECTION);
 
 //               Log.d("QUERY!", ());
 //               args.putString("QUERY_ID", resultWrapper.getList().getResult().toString());
@@ -92,6 +93,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 //                }
 //                fragmentCommunicator.resultWrapPass(resultWrapper);
                 args.putString("QUERY_ID", getQueryKey(resultWrapper, position));
+                Log.d("TRANSLATION DIRECTION", String.valueOf(TRANSLATION_DIRECTION));
                 Log.d("TRANSLATION", TRANSLATION);
                 Log.d("QUERY_KEY", queryKey);
 
@@ -127,7 +129,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         pref = getContext().getSharedPreferences("BlankDictPref", 0);
 
         TRANSLATION = args.getString("TRANSLATION");
-        TRANSLATION_ID = args.getInt("TRANSLATION_DIRECTION");
+        TRANSLATION_DIRECTION = args.getInt("TRANSLATION_DIRECTION");
 //        Log.d("SELECTS", String.valueOf(args.getInt("TRANSLATION_ID")));
 //        Log.d("SELECTS", args.getString("TRANSLATION"));
 
@@ -259,12 +261,13 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         if (INITIAL) {
             System.out.println("INITIAL: " + parent.getItemAtPosition(pos));
 
-            adapter.itemSelect(TRANSLATION_ID);
+            adapter.itemSelect(TRANSLATION_DIRECTION);
             INITIAL = false;
         } else {
             System.out.println("CUR ITEM IS " + parent.getItemAtPosition(pos));
             adapter.itemSelect(pos);
-            args.putInt("TRANSLATION_ID", pos);
+            args.putInt("TRANSLATION_DIRECTION", pos);
+            TRANSLATION_DIRECTION = pos;
             TRANSLATION = parent.getItemAtPosition(pos).toString();
             Log.d("TRANSLATION IS", TRANSLATION);
         }

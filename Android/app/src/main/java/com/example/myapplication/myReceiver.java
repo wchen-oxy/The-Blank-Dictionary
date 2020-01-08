@@ -67,22 +67,16 @@ public class myReceiver extends BroadcastReceiver {
             catch (IOException io) {
                 io.printStackTrace();
             }
-            Log.d("myReciever", "reacjed");
             //builds database upon completion of download
             AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").fallbackToDestructiveMigration().enableMultiInstanceInvalidation().build();
             //build an abstract factory
             switch (type) {
                 case "bhutia": {
-                    Log.d("myReciever", "Bhutia");
-
                     BhutiaDao bhutiaDao = db.getBhutiaDao();
-//                    BhutiaDao bhutiaDao = db.getDao();
                     BhutiaDataInsert.BhuInsert(bhutiaDao, file);
 
                 }
                 case "english": {
-                    Log.d("myReciever", "English");
-
                     EnglishDao englishDao = db.getEnglishDao();
 
                 }

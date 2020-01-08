@@ -4,59 +4,50 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/bhutia_result_linear_layout"
-    >
+    android:id="@+id/bhutia_result_linear_layout">
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        />
+
 
     <TextView
         android:id="@+id/bhutia_title_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/word_placeholder"
-        android:textSize="36sp"
-        android:layout_marginBottom="20dp"
+        style="@style/Title"
         />
     <TextView
         android:id="@+id/bhutia_ipa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
+        style="@style/SubTitles"
+
         />
     <TextView
         android:id="@+id/bhutia_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
+        style="@style/SubTitles"
+
         />
     <TextView
         android:id="@+id/bhutia_sub_title_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
+        style="@style/SubTitles"
         />
     <TextView
         android:id="@+id/bhutia_sub_title_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
+        style="@style/SubTitles"
+
         />
     <TextView
         android:id="@+id/bhutia_sub_title_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
+        style="@style/SubTitles"
+
         />
     <TextView
         android:id="@+id/bhutia_sub_title_4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
+        style="@style/SubTitles"
+
         />
 
     <TextView
         android:id="@+id/example"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
+        style="@style/SubTitles"
         />
 
 
