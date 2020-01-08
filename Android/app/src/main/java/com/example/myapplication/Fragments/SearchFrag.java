@@ -34,16 +34,17 @@ import java.util.concurrent.ExecutionException;
 
 //FIXME ADD ENUM FOR THE LANGAUGE TYPES IN SEPARATE FILE
 //TODO AUTOQUERY WORDS WHEN TRANSLATION IS CHANGED?
+
+//FIXME don't reinitialize the entire resultwrapper, just fix the stuff from inside
 //external package
 
 public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedListener {
     String text = null;
     SearchView searchView;
     Bundle args;
-    List results;
+//    List results;
     ResultWrapper resultWrapper;
     Result result;
-    ArrayList passResults;
     String TRANSLATION;
     int TRANSLATION_DIRECTION;
     boolean INITIAL = true;
@@ -65,41 +66,14 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             public void onClick(View item) {
                 Bundle args = new Bundle();
                 args.putString("NEW_FRAGMENT", "RESULT_FRAGMENT");
-//                args.putInt("TRANSLATION_DIRECTION", TRANSLATION_ID);
-//                args.putStringArrayList("DATA", passResults);
-//                Log.d("RESULTS", passResults.toString());
                int position = ((RecyclerView.ViewHolder) item.getTag()).getAdapterPosition();
                args.putString("TRANSLATION", TRANSLATION);
                args.putInt("TRANSLATION_DIRECTION", TRANSLATION_DIRECTION);
-
-//               Log.d("QUERY!", ());
-//               args.putString("QUERY_ID", resultWrapper.getList().getResult().toString());
-
-
-
-//                int position = viewHolder.getAdapterPosition();
-
-
-                //have a switch here
-                //have some type here
-                //List<T> final list
-//                AllDictionaries list;
-//                switch (pref.getString("CurDict", null)){
-//                    case("BHUTIA"):
-////                        list =
-//
-//
-//                    case("ENGLISH"):
-//                }
-//                fragmentCommunicator.resultWrapPass(resultWrapper);
                 args.putString("QUERY_ID", getQueryKey(resultWrapper, position));
                 Log.d("TRANSLATION DIRECTION", String.valueOf(TRANSLATION_DIRECTION));
                 Log.d("TRANSLATION", TRANSLATION);
                 Log.d("QUERY_KEY", queryKey);
-
                 fragmentCommunicator.bundPass(args, false);
-
-//                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
 
         }
     };
@@ -194,39 +168,36 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                FragmentManager fm = getActivity()
-                        .getSupportFragmentManager();
-                fm.popBackStack("RESULT_FRAG", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-
-
+//                FragmentManager fm = getActivity()
+//                        .getSupportFragmentManager();
+//                fm.popBackStack("RESULT_FRAG", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//
                 if (!newText.isEmpty()) {
                     args.putString("query", newText);
                     args.putString("TRANSLATION", TRANSLATION);
-                    //pass in newText parameter into thread
-//                    Toast.makeText(getActivity(), "text changed", Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(getActivity(),newText, Toast.LENGTH_SHORT).show();
-
-
                     try {
-                        resultWrapper = new Query(getContext()).execute(args).get();
-//                        results = new Query(getContext()).execute(args).get();
-//                        setResultWrapper(results);
+                        resultWrapper.getList().getResult().clear();
+                        //add back into existing ResultWrapper because the adapter needs the original reference to the ResultWrapper
+                        List<BhutiaWord> list = new Query(getContext()).execute(args).get().getList().getResult();
+                        for (BhutiaWord bhutiaWord: list){
+                            resultWrapper.getList().getResult().add(bhutiaWord);
+                        }
 
-                        System.out.println( results);
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    mAdapter = new MyAdapter(resultWrapper, listener, pref.getString("CurDict", null));
-                    recyclerView.setAdapter(mAdapter);
+                    Log.d("SEarchFrag", resultWrapper.getList().getResult().toString());
+                    mAdapter.notifyDataSetChanged();
 
                 } else {
                     args.putString("query", "");
                     args.putString("TRANSLATION", TRANSLATION);
-                    if (results != null) results.clear();
-                    recyclerView.setAdapter(mAdapter);
+                    resultWrapper.getList().getResult().clear();
+                    mAdapter.notifyDataSetChanged();
+//                    if (results != null) results.clear();
+//                    recyclerView.setAdapter(mAdapter);
 
                 }
                 fragmentCommunicator.bundPass(args, true);
@@ -269,6 +240,11 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             args.putInt("TRANSLATION_DIRECTION", pos);
             TRANSLATION_DIRECTION = pos;
             TRANSLATION = parent.getItemAtPosition(pos).toString();
+            //if new translation is selected, clear old irrelevant results
+            resultWrapper.getList().getResult().clear();
+            mAdapter.notifyDataSetChanged();
+
+
             Log.d("TRANSLATION IS", TRANSLATION);
         }
     }
@@ -284,9 +260,9 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 //    }
 
 
-    public void setmAdapter() {
-        recyclerView.setAdapter(mAdapter);
-    }
+//    public void setmAdapter() {
+//        recyclerView.setAdapter(mAdapter);
+//    }
 
     private String[] translationSet(){
         String[] tranSet = null;
