@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Environment;
+import android.util.Log;
 
 import org.json.JSONArray;
 
@@ -32,10 +33,10 @@ public class Serialization {
         ArrayList<String> arrayList = new ArrayList<>();
         try
         {
-            FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json");
+            FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
-
             arrayList = (ArrayList) ois.readObject();
+
 
             ois.close();
             fis.close();
@@ -51,7 +52,7 @@ public class Serialization {
             c.printStackTrace();
 
         }
-
+        Log.d("Object Read", arrayList.toString());
         return arrayList;
 
     }

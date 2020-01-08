@@ -1,19 +1,15 @@
 package com.example.myapplication.Fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.myapplication.FragmentCommunicator;
-import com.example.myapplication.Fragments.LanguagePackFrag;
 import com.example.myapplication.R;
 
 public class SettingsFrag extends Fragment {

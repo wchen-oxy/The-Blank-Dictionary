@@ -1,6 +1,6 @@
 package com.example.myapplication;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         switch (curDict) {
             case ("BHUTIA"):
                 List<BhutiaWord> bhutiaList = mDataset.getList().getResult();
-                holder.textView.setText(bhutiaList.get(position).romanization);
+                holder.textView.setText(bhutiaList.get(position).eng_trans);
 
 //                holder.bhutiaBind(position, mDataset, listener);
                 break;

@@ -14,15 +14,31 @@ import java.util.List;
 public interface BhutiaDao {
     @Query("SELECT * FROM BhutiaWords")
     List<BhutiaWord> getAll();
-
-    @Query("SELECT * FROM BhutiaWords WHERE romanization LIKE :query")
-    List<BhutiaWord> bhutiaSearch(String query);
+//
+//    @Query("SELECT * FROM BhutiaWords WHERE romanization LIKE :query")
+//    List<BhutiaWord> bhutiaSearch(String query);
+//
+//    @Query("SELECT * FROM BhutiaWords WHERE eng_trans LIKE :query")
+//    List<BhutiaWord> englishSearch(String query);
+//
+//    @Query("SELECT * FROM BhutiaWords WHERE tib_script LIKE :query")
+//    List<BhutiaWord> tibetanSearch(String query);
 
     @Query("SELECT * FROM BhutiaWords WHERE eng_trans LIKE :query")
-    List<BhutiaWord> englishSearch(String query);
+    List<BhutiaWord> engTranSearch(String query);
 
-    @Query("SELECT * FROM BhutiaWords WHERE tib_script LIKE :query")
-    List<BhutiaWord> tibetanSearch(String query);
+    @Query("SELECT * FROM BhutiaWords WHERE bhut_rom_formal LIKE :query")
+    List<BhutiaWord> bhutRomFormalSearch(String query);
+
+    @Query("SELECT * FROM BhutiaWords WHERE bhut_rom_informal LIKE :query")
+    List<BhutiaWord> bhutRomInformalSearch(String query);
+
+    @Query("SELECT * FROM BhutiaWords WHERE bhut_script_formal LIKE :query")
+    List<BhutiaWord> bhutScriptFormalSearch(String query);
+
+    @Query("SELECT * FROM BhutiaWords WHERE bhut_script_informal LIKE :query")
+    List<BhutiaWord> bhutScriptInformalSearch(String query);
+
 
 
 //    @Query("SELECT romanization FROM BhutiaWords WHERE romanization like 'Chi%'")

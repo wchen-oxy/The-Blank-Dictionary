@@ -1,20 +1,21 @@
 package com.example.myapplication;
 
-import android.app.DownloadManager;
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.support.annotation.NonNull;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.SearchView;
@@ -23,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.myapplication.DataDownload.DictionaryClientUsage;
 import com.example.myapplication.DataDownload.HttpBadRequestException;
-import com.example.myapplication.Dictionaries.ResultWrapper;
 import com.example.myapplication.Fragments.DictionarySelectionFrag;
 import com.example.myapplication.Fragments.FavoritesFrag;
 import com.example.myapplication.Fragments.HomeFrag;
@@ -31,8 +31,6 @@ import com.example.myapplication.Fragments.LanguagePackFrag;
 import com.example.myapplication.Fragments.ResultFragment;
 import com.example.myapplication.Fragments.SearchFrag;
 import com.example.myapplication.Fragments.SettingsFrag;
-
-import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     BottomNavigationView navViewBack;
+    myServerReciever myServerReciever;
+    LocalBroadcastManager localBroadcastManager;
     SearchView secSearch;
 //    public String query;
     public BroadcastReceiver br;
@@ -94,9 +94,32 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
                 fragmentTransaction.replace(R.id.frag_container, resultFragment).addToBackStack("RESULT_FRAGMENT").commit();
                 break;
             case "LANG_DOWNLOAD_FRAGMENT":
-                LanguagePackFrag languagePackFrag = LanguagePackFrag.newInstance();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, languagePackFrag).addToBackStack("LANG_DOWNLOAD_FRAGMENT").commit();
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // Permission is not granted
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+                    } else {
+                        // No explanation needed; request the permission
+                        ActivityCompat.requestPermissions(this,
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
+                                ,101);
+
+                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                        // app-defined int constant. The callback method gets the
+                        // result of the request.
+                    }
+                } else {
+                    // Permission has already been granted
+                    LanguagePackFrag languagePackFrag = LanguagePackFrag.newInstance();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frag_container, languagePackFrag).addToBackStack("LANG_DOWNLOAD_FRAGMENT").commit();
+                }
+
+
                 break;
             case "DICT_SELECT_FRAGMENT":
                 DictionarySelectionFrag dictionarySelectionFrag = DictionarySelectionFrag.newInstance();
@@ -259,13 +282,31 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
             if (!isOnline()) Toast.makeText(this, "No Internet Connection!", Toast.LENGTH_SHORT).show();
 
             //check if connection to server is possible
-            BroadcastReceiver broadcastReceiver = new myServerReciever();
-            IntentFilter filter = new IntentFilter("SERVER_REACHED");
-            HandlerThread handlerThread = new HandlerThread("SERVER_STATUS");
-            handlerThread.start();
-            Looper looper = handlerThread.getLooper();
-            Handler handler = new Handler(looper);
-            this.registerReceiver(broadcastReceiver, filter, null, handler);
+            myServerReciever = new myServerReciever();
+            localBroadcastManager = LocalBroadcastManager.getInstance(this);
+            localBroadcastManager.registerReceiver(myServerReciever, new IntentFilter("SERVER_REACHED"));
+
+            myListBroadcastReciever = new myListBroadcastReciever();
+            localBroadcastManager.registerReceiver(myListBroadcastReciever, new IntentFilter("DICTIONARY_LIST_DOWNLOADED"));
+//
+//            //check if connection to server is possible
+//            BroadcastReceiver serverReceiver = new myServerReciever();
+//            IntentFilter serverfilter = new IntentFilter("SERVER_REACHED");
+//            HandlerThread serverThread = new HandlerThread("SERVER_STATUS");
+//            serverThread.start();
+//            Looper looper = serverThread.getLooper();
+//            Handler handler = new Handler(looper);
+//            this.registerReceiver(serverReceiver, serverfilter, null, handler);
+//
+//            //begin reciever of new list
+//            BroadcastReceiver downloadReceiver = new myListBroadcastReciever();
+//            IntentFilter downloadFilter = new IntentFilter("DICTIONARY_LIST_DOWNLOADED");
+//            HandlerThread downloadThread = new HandlerThread("LANGUAGE_DOWNLOAD");
+//            downloadThread.start();
+//            looper = downloadThread.getLooper();
+//            handler = new Handler(looper);
+//            this.registerReceiver(downloadReceiver, downloadFilter, null, handler);
+
 
             new DictionaryClientUsage().checkStatus(this);
 
@@ -278,7 +319,11 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
 
     @Override
     protected void onDestroy(){
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(myServerReciever);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(myListBroadcastReciever);
+
         super.onDestroy();
+
     }
 
 

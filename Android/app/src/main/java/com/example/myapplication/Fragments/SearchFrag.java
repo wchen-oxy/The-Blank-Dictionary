@@ -1,15 +1,14 @@
 package com.example.myapplication.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.example.myapplication.AllDictionaries;
 import com.example.myapplication.CustomTransSpinAdaptor;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
 import com.example.myapplication.Dictionaries.Result;
@@ -33,8 +30,6 @@ import com.example.myapplication.ResultClickListeners;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import androidx.room.Entity;
 
 
 //FIXME ADD ENUM FOR THE LANGAUGE TYPES IN SEPARATE FILE
@@ -52,6 +47,8 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     String TRANSLATION;
     int TRANSLATION_ID;
     boolean INITIAL = true;
+    String queryKey = null;
+
 
     FragmentCommunicator fragmentCommunicator;
     CustomTransSpinAdaptor<String> adapter;
@@ -73,6 +70,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 //                Log.d("RESULTS", passResults.toString());
                int position = ((RecyclerView.ViewHolder) item.getTag()).getAdapterPosition();
                args.putString("TRANSLATION", TRANSLATION);
+
 //               Log.d("QUERY!", ());
 //               args.putString("QUERY_ID", resultWrapper.getList().getResult().toString());
 
@@ -94,6 +92,9 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 //                }
 //                fragmentCommunicator.resultWrapPass(resultWrapper);
                 args.putString("QUERY_ID", getQueryKey(resultWrapper, position));
+                Log.d("TRANSLATION", TRANSLATION);
+                Log.d("QUERY_KEY", queryKey);
+
                 fragmentCommunicator.bundPass(args, false);
 
 //                Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
@@ -205,8 +206,6 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 //                    Toast.makeText(getActivity(),newText, Toast.LENGTH_SHORT).show();
 
 
-
-
                     try {
                         resultWrapper = new Query(getContext()).execute(args).get();
 //                        results = new Query(getContext()).execute(args).get();
@@ -301,11 +300,10 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     }
 
     private String getQueryKey(ResultWrapper resultWrapper, int position){
-        String queryKey = null;
         switch (pref.getString("CurDict", null)) {
             case ("BHUTIA"):
                 BhutiaWord bhutiaWord = (BhutiaWord) resultWrapper.getList().getResult().get(position);
-                queryKey = bhutiaWord.romanization;
+                queryKey = bhutiaWord.eng_trans;
                 Log.d("QUERY ID", queryKey);
                 break;
             case ("ENGLISH"):

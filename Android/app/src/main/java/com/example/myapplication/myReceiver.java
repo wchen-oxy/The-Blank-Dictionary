@@ -5,12 +5,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.room.Room;
 
 import com.example.myapplication.Dictionaries.AppDatabase;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaDao;
+import com.example.myapplication.Dictionaries.Bhutia.BhutiaDataInsert;
 import com.example.myapplication.Dictionaries.English.EnglishDao;
 import com.example.myapplication.Fragments.LanguagePackFrag;
 
@@ -65,26 +67,30 @@ public class myReceiver extends BroadcastReceiver {
             catch (IOException io) {
                 io.printStackTrace();
             }
+            Log.d("myReciever", "reacjed");
             //builds database upon completion of download
-            AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").enableMultiInstanceInvalidation().build();
+            AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").fallbackToDestructiveMigration().enableMultiInstanceInvalidation().build();
             //build an abstract factory
-            try{
             switch (type) {
-                case "Bhutia": {
+                case "bhutia": {
+                    Log.d("myReciever", "Bhutia");
+
                     BhutiaDao bhutiaDao = db.getBhutiaDao();
 //                    BhutiaDao bhutiaDao = db.getDao();
-                    DataInsert.BhuInsert(bhutiaDao, file);
+                    BhutiaDataInsert.BhuInsert(bhutiaDao, file);
 
                 }
-                case "English": {
+                case "english": {
+                    Log.d("myReciever", "English");
+
                     EnglishDao englishDao = db.getEnglishDao();
 
                 }
+                default:
+                    Log.d("myReciever", "Something went wrong");
 
             }
-            } catch (IOException io){
-                io.printStackTrace();
-            }
+
 
 //        }
 

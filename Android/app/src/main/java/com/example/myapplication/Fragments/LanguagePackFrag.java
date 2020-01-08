@@ -5,24 +5,19 @@ import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.util.JsonReader;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,32 +27,17 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.myapplication.DataDownload.DictionaryClientCallback;
-import com.example.myapplication.DataDownload.DictionaryClientUsage;
-import com.example.myapplication.DataDownload.HttpBadRequestException;
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Serialization;
-import com.example.myapplication.myListBroadcastReciever;
 import com.example.myapplication.myReceiver;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
@@ -67,6 +47,8 @@ public class LanguagePackFrag extends Fragment {
     String TEMP_URL = "https://jsonplaceholder.typicode.com/todos/1";
     String TEMP_REAL_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/db.json";
     String TEMP_ENG_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/eng.json";
+    String TEMP_FAKE_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/test.json";
+
     private static final String BASE_URL = "http://10.0.2.2:8000/";
 
     JSONArray list = null;
@@ -153,6 +135,7 @@ public class LanguagePackFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         final View rootView = inflater.inflate(R.layout.lang_pack_list, container,false);
+
         ArrayList<String> lists = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
 
 
@@ -194,7 +177,7 @@ public class LanguagePackFrag extends Fragment {
                                 } else {
                                     // Permission has already been granted
                                     Button b = (Button) v;
-                                    dataDownload2(TEMP_REAL_URL,b.getText().toString());
+                                    dataDownload(TEMP_REAL_URL,b.getText().toString());
                                     DOWNLOAD_IN_PROGRSS = true;
                                 }
                             }
@@ -310,7 +293,7 @@ public class LanguagePackFrag extends Fragment {
 
     //need to convert into asynchtask
 
-    private void dataDownload2(String url, String buttonText){
+    private void dataDownload(String url, String buttonText){
         Toast.makeText(getActivity(),"DOWNLOADING",Toast.LENGTH_SHORT).show();
         Log.d("CHECK1", Environment.getExternalStorageDirectory().toString());
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
@@ -320,7 +303,6 @@ public class LanguagePackFrag extends Fragment {
         Log.d("noAbs", Environment.getExternalStorageDirectory().toString());
         file.setWritable(true);
         if (file.exists()) {
-            MainActivity getter = (MainActivity) getActivity();
             Log.d("File", file.getAbsolutePath() );
 //            if (getter.br != null) {getter.unregisterReceiver(getter.br); getter.br = null;}
             try {
@@ -332,7 +314,7 @@ public class LanguagePackFrag extends Fragment {
                 Log.d("Writable", Boolean.toString(file.canWrite()));
 
                 Log.d("DeleteStat", Boolean.toString(file.delete()));
-                Log.d("DeleteStat", Boolean.toString(file.exists()));
+                Log.d("does exist?", Boolean.toString(file.exists()));
 
 
             } catch(Exception e) {
@@ -399,43 +381,47 @@ public class LanguagePackFrag extends Fragment {
         return output;
     }
 
-    public ArrayList<String> loadJSONFromAsset() throws FileNotFoundException {
-        ArrayList<String> json = new ArrayList<>();
-
-//        Scanner s = new Scanner(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
-//        ArrayList<String> list = new ArrayList<String>();
-//        while (s.hasNext()){
-//            list.add(s.next());
-//        }
-//        s.close();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"))) {
-            while (br.ready()) {
-                json.add(br.readLine());
-            }
-        }
-        catch (IOException io){
-
-        }
-
-        Log.d("Pre-list",  json.get(0).toString());
-
-
-//        try {
+//    public ArrayList<String> loadJSONFromAsset() throws FileNotFoundException {
+//        ArrayList<String> json = new ArrayList<>();
 //
-//            InputStream is = getActivity().getAssets().open();
-//            int size = is.available();
-//            byte[] buffer = new byte[size];
-//            is.read(buffer);
-//            is.close();
-//            json = new String(buffer, "UTF-8");
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//            return null;
+////        Scanner s = new Scanner(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
+////        ArrayList<String> list = new ArrayList<String>();
+////        while (s.hasNext()){
+////            list.add(s.next());
+////        }
+////        s.close();
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"))) {
+//            while (br.ready()) {
+//                json.add(br.readLine());
+//            }
 //        }
-        return json;
-    }
-
+//        catch(FileNotFoundException fe) {
+//            fe.printStackTrace();
+//
+//        }
+//        catch (IOException ie){
+//            ie.printStackTrace();
+//        }
+//
+//        Log.d("Pre-list",  json.get(0).toString());
+//
+//
+////        try {
+////
+////            InputStream is = getActivity().getAssets().open();
+////            int size = is.available();
+////            byte[] buffer = new byte[size];
+////            is.read(buffer);
+////            is.close();
+////            json = new String(buffer, "UTF-8");
+////        } catch (IOException ex) {
+////            ex.printStackTrace();
+////            return null;
+////        }
+//        return json;
+//    }
+//
 
 
 

@@ -1,5 +1,6 @@
 package com.example.myapplication.Dictionaries.English;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,7 @@ public class EnglishLayout implements LayoutSetter {
 
 
     //constructor call from ResultFrag
-    public EnglishLayout(LayoutInflater inflater, Bundle args) {
+    public EnglishLayout(Context context, LayoutInflater inflater, Bundle args) {
         //create your layout here.
         //once created, set dictionary layout to resulting view
         View view = inflater.inflate(R.layout.z_final_bhutia, null);

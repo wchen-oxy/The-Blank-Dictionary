@@ -3,7 +3,7 @@ package com.example.myapplication.Fragments;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,10 +107,10 @@ public class ResultFragment extends Fragment {
         LayoutSetter layoutSetter = null;
         switch (curDict){
             case ("BHUTIA"):
-                layoutSetter = new BhutiaLayout(inflater, args);
+                layoutSetter = new BhutiaLayout(getContext(), inflater, args);
                 break;
             case ("ENGLISH"):
-                layoutSetter = new EnglishLayout(inflater, args);
+                layoutSetter = new EnglishLayout(getContext(),inflater, args);
                 break;
 
         }

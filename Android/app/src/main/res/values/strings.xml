@@ -38,9 +38,12 @@
 
     <!--BEGIN TRANSLATION DIRECTIONS USED FOR THE APP -->
     <string-array name="bhutia_array">
-        <item>Bhutia to English</item>
-        <item>English to Bhutia</item>
-        <item>Tibetan to Bhutia</item>
+        <item>English to Bhutia (Formal)</item>
+        <item>English to Bhutia (Informal)</item>
+        <item>Bhutia to English (Formal)</item>
+        <item>Bhutia to English (Informal)</item>
+        <item>Bhutia Script to English (Formal)</item>
+        <item>Bhutia Script to English (Informal)</item>
     </string-array>
 
     <string-array name="english_array">
