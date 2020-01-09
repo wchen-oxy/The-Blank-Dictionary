@@ -137,8 +137,6 @@ public class LanguagePackFrag extends Fragment {
         final View rootView = inflater.inflate(R.layout.lang_pack_list, container,false);
 
         ArrayList<String> lists = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
-
-
         LinearLayout linearLayout = rootView.findViewById(R.id.lang_pack_root_layout);
 
         for (String s:lists) {
@@ -201,8 +199,13 @@ public class LanguagePackFrag extends Fragment {
 
 
 //            ArrayList<String> lists = loadJSONFromAsset();
+        if (!lists.isEmpty()) {
             Log.d("download", lists.toString());
             Log.d("Download,specific", lists.get(0));
+        }
+        else{
+            Toast.makeText(mContext, "Can't Connect to server to download available dictionaries.", Toast.LENGTH_LONG).show();
+        }
 //
 //
 //        final Button bhutiaButton = rootView.findViewById(R.id.bhutia_dictionary);

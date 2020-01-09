@@ -123,5 +123,6 @@ public class BhutiaDataInsert {
         bhutiaDao.deleteAll();
         bhutiaDao.insertAll(words);
 
+
     }
 }

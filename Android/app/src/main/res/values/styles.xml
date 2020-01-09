@@ -19,6 +19,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">20dp</item>
         <item name="android:textSize">36sp</item>
+        <item name="android:paddingLeft">20sp</item>
     </style>
 
     <style name="SubTitles" parent="android:Widget.TextView">
@@ -26,6 +27,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:paddingLeft">20sp</item>
+
     </style>
 
 </resources>

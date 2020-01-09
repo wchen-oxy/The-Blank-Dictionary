@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -34,8 +33,6 @@ import java.util.concurrent.ExecutionException;
 
 //FIXME ADD ENUM FOR THE LANGAUGE TYPES IN SEPARATE FILE
 //TODO AUTOQUERY WORDS WHEN TRANSLATION IS CHANGED?
-
-//FIXME don't reinitialize the entire resultwrapper, just fix the stuff from inside
 //external package
 
 public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -49,6 +46,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     int TRANSLATION_DIRECTION;
     boolean INITIAL = true;
     String queryKey = null;
+    ArrayList<String> TranslationArrayList = new ArrayList<>();
 
 
     FragmentCommunicator fragmentCommunicator;
@@ -66,9 +64,9 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             public void onClick(View item) {
                 Bundle args = new Bundle();
                 args.putString("NEW_FRAGMENT", "RESULT_FRAGMENT");
-               int position = ((RecyclerView.ViewHolder) item.getTag()).getAdapterPosition();
-               args.putString("TRANSLATION", TRANSLATION);
-               args.putInt("TRANSLATION_DIRECTION", TRANSLATION_DIRECTION);
+                int position = ((RecyclerView.ViewHolder) item.getTag()).getAdapterPosition();
+                args.putString("TRANSLATION", TRANSLATION);
+                args.putInt("TRANSLATION_DIRECTION", TRANSLATION_DIRECTION);
                 args.putString("QUERY_ID", getQueryKey(resultWrapper, position));
                 Log.d("TRANSLATION DIRECTION", String.valueOf(TRANSLATION_DIRECTION));
                 Log.d("TRANSLATION", TRANSLATION);
@@ -103,6 +101,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         pref = getContext().getSharedPreferences("BlankDictPref", 0);
 
         TRANSLATION = args.getString("TRANSLATION");
+        TranslationArrayList.add(TRANSLATION);
         TRANSLATION_DIRECTION = args.getInt("TRANSLATION_DIRECTION");
 //        Log.d("SELECTS", String.valueOf(args.getInt("TRANSLATION_ID")));
 //        Log.d("SELECTS", args.getString("TRANSLATION"));
@@ -113,6 +112,8 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         try {
             if (!args.getString("query").isEmpty())
                 resultWrapper = new Query(getContext()).execute(args).get();
+
+//                resultWrapper.getList().getResult().add(Translation);
 
 //                results = new Query(getContext()).execute(args).get();
 
@@ -141,7 +142,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new MyAdapter(resultWrapper, listener, pref.getString("CurDict", null));
+        mAdapter = new MyAdapter(resultWrapper, TranslationArrayList, listener, pref.getString("CurDict", null));
         recyclerView.setAdapter(mAdapter);
 
 
@@ -174,22 +175,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 //
                 if (!newText.isEmpty()) {
                     args.putString("query", newText);
-                    args.putString("TRANSLATION", TRANSLATION);
-                    try {
-                        resultWrapper.getList().getResult().clear();
-                        //add back into existing ResultWrapper because the adapter needs the original reference to the ResultWrapper
-                        List<BhutiaWord> list = new Query(getContext()).execute(args).get().getList().getResult();
-                        for (BhutiaWord bhutiaWord: list){
-                            resultWrapper.getList().getResult().add(bhutiaWord);
-                        }
-
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Log.d("SEarchFrag", resultWrapper.getList().getResult().toString());
-                    mAdapter.notifyDataSetChanged();
+                    refreshResult();
 
                 } else {
                     args.putString("query", "");
@@ -242,10 +228,9 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             TRANSLATION = parent.getItemAtPosition(pos).toString();
             //if new translation is selected, clear old irrelevant results
             resultWrapper.getList().getResult().clear();
-            mAdapter.notifyDataSetChanged();
+            refreshResult();
 
 
-            Log.d("TRANSLATION IS", TRANSLATION);
         }
     }
 
@@ -293,19 +278,27 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
         return queryKey;
     }
 
+    private void refreshResult(){
+        args.putString("TRANSLATION", TRANSLATION);
+        try {
+            resultWrapper.getList().getResult().clear();
+            //add back into existing ResultWrapper because the adapter needs the original reference to the ResultWrapper
+            if (!(args.getString("query").isEmpty())) {
+                List<BhutiaWord> list = new Query(getContext()).execute(args).get().getList().getResult();
+                for (BhutiaWord bhutiaWord : list) {
+                    resultWrapper.getList().getResult().add(bhutiaWord);
+                }
+            }
 
-//    private void setResultWrapper(List queryResult){
-//        switch (pref.getString("CurDict", null)) {
-//            case ("BHUTIA"):
-//                resultWrapper.setBhutiaWordList(queryResult);
-//                break;
-//            case("ENGLISH"):
-//                resultWrapper.setEnglishWordList(queryResult);
-//                break;
-//        }
-//
-//    }
-
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        TranslationArrayList.clear();
+        TranslationArrayList.add(TRANSLATION);
+        mAdapter.notifyDataSetChanged();
+    }
 
 
 }

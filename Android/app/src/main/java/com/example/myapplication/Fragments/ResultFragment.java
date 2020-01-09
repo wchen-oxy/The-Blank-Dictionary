@@ -84,7 +84,6 @@ public class ResultFragment extends Fragment {
 //        View view = inflater.inflate(R.layout.z_final_bhutia, null);
 //        dictInfoContainer.addView(view);
 
-
         LayoutSetter layoutSetter = null;
         switch (curDict){
             case ("BHUTIA"):

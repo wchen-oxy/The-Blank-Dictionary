@@ -6,18 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.myapplication.Dictionaries.Bhutia.BhutiaTextSwitchboard;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
 import com.example.myapplication.Dictionaries.English.EnglishWord;
 import com.example.myapplication.Dictionaries.ResultWrapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private ResultWrapper mDataset;
     private View.OnClickListener listener;
     private String curDict;
+    private ArrayList<String> Translation;
 
-    public MyAdapter(ResultWrapper myDataset, View.OnClickListener listener, String curDict) {
+    public MyAdapter(ResultWrapper myDataset, ArrayList<String> Translation, View.OnClickListener listener, String curDict) {
+        this.Translation = Translation;
         this.mDataset = myDataset;
         this.listener = listener;
         this.curDict = curDict;
@@ -43,7 +47,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         switch (curDict) {
             case ("BHUTIA"):
                 List<BhutiaWord> bhutiaList = mDataset.getList().getResult();
-                holder.textView.setText(bhutiaList.get(position).eng_trans);
+                BhutiaTextSwitchboard.select(holder, Translation.get(0), bhutiaList.get(position));
+
+
+                //FIXME ADd a bunch of switch cases for displaying the differently selected translations
 
 //                holder.bhutiaBind(position, mDataset, listener);
                 break;

@@ -4,6 +4,7 @@ import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
@@ -67,16 +68,20 @@ public class myReceiver extends BroadcastReceiver {
             }
             //builds database upon completion of download
             AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").fallbackToDestructiveMigration().enableMultiInstanceInvalidation().build();
+            //create a value to store in shared preferences
+            SharedPreferences pref = context.getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
+            final SharedPreferences.Editor editor = pref.edit();
             //build an abstract factory
             switch (type) {
                 case "bhutia": {
                     BhutiaDao bhutiaDao = db.getBhutiaDao();
                     BhutiaDataInsert.BhuInsert(bhutiaDao, file);
+                    editor.putBoolean("BHUTIA", true);
 
                 }
                 case "english": {
                     EnglishDao englishDao = db.getEnglishDao();
-
+                    editor.putBoolean("ENGLISH", true);
                 }
                 default:
                     Log.d("myReciever", "Something went wrong");
