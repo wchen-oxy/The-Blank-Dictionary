@@ -68,7 +68,7 @@ def master_list(request, lang):
         return render(request,'languages/bhutia/master_list.html', {'master':master, 'bhutia': True})
     if lang == 'english':
         return render(request,'languages/english/master_list.html', {'master':master, 'english': True})
-    
+ 
 
 
 def search(request, lang, translation):

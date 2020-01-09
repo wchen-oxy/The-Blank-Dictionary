@@ -21,6 +21,12 @@ import json
 
 def home(request):
     return render(request, "main_home.html")
+   
+def about(request):
+    return render(request, 'main_about.html')
+
+def involve(request):
+    return render(request, 'main_involve.html')
 
 
 def download(request, pack):

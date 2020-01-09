@@ -23,7 +23,9 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home),
+    path('', views.home), 
+    path('about/', views.about, name="about"),
+    path('involvement/', views.involve, name="involve"),
     path('d/', include('dictionaries.urls')),
     path('download/<slug:pack>', views.download),
     path('apitest/<slug:lang>/', AllBhutia.as_view(), name="all-words"),
