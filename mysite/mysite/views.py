@@ -72,7 +72,7 @@ def returnAll(request):
     if request.method == 'GET' and 'Authorization' in request.headers:
         if request.headers['Authorization'] == encrypt_string("Az39dB0n!23"):
             for model in apps.all_models['dictionaries']:
-                models.append(model)
+                models.append(model.upper())
             return  JsonResponse(models, safe=False)
         return HttpResponseBadRequest()
     return HttpResponseBadRequest()

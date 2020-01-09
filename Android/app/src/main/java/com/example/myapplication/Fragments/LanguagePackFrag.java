@@ -73,63 +73,6 @@ public class LanguagePackFrag extends Fragment {
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-//
-//        try {
-//            Log.d("thing", "adfasef");
-//            //check internet connection
-//            if (!isOnline()) Toast.makeText(mContext, "No Internet Connection!", Toast.LENGTH_SHORT).show();
-//            //check if connection to server is possible
-//            if (!new DictionaryClientUsage().checkStatus()) Toast.makeText(mContext, "Could Not Reach Server!", Toast.LENGTH_SHORT).show();
-//
-////            new DictionaryClientUsage().check();
-//
-//            //download current list of available dictionaries
-//            new DictionaryClientUsage().getAvailableDic(mContext);
-//            //register reciever
-//
-//            BroadcastReceiver myListBroadcastReciever = new myListBroadcastReciever();
-////            MainActivity setter = (MainActivity) getActivity();
-////            setter.myListBroadcastReciever = myListBroadcastReciever;
-//            IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-//            filter.addAction("LIST_DOWNLOAD_COMPLETE");
-//            mContext.registerReceiver(myListBroadcastReciever, filter);
-////            HandlerThread handlerThread = new HandlerThread("LIST_DOWNLOAD");
-////            handlerThread.start();
-////            Looper looper = handlerThread.getLooper();
-////            Handler handler = new Handler(looper);
-////            mContext.registerReceiver(myListBroadcastReciever, filter, null, handler);
-//
-//
-////            DictionaryClientUsage dictionaryClientUsage = new DictionaryClientUsage();
-////            dictionaryClientUsage.getAvailableDic(new DictionaryClientCallback() {
-////                @Override
-////                public void onDictionaryClientResponse(boolean success, JSONArray response) {
-////                    list = response;
-////                }
-////            }
-////
-////            );
-//
-//            //if the list was incorrectly downloaded, thorw an exception
-//            Log.d("thread", "failed");
-//            if (list == null) throw new HttpBadRequestException();
-//            Log.d("Results", list.toString());
-//            //otherwise read from json
-//            Log.d("JSON PARSE", "OK");
-//
-//
-//        }
-//        catch (JSONException e){
-//            //if it at any point fails, go with the previous
-//            Log.d("LANG_DOWNLOAD", "Something went wrong during JSON processing.");
-//
-//        }
-//        catch (HttpBadRequestException br) {
-//            Log.d("LANG_DOWNLOAD", "Connected to server but could not download.");
-//
-//        }
     }
 
     @Override
@@ -175,7 +118,7 @@ public class LanguagePackFrag extends Fragment {
                                 } else {
                                     // Permission has already been granted
                                     Button b = (Button) v;
-                                    dataDownload(TEMP_REAL_URL,b.getText().toString());
+                                    dataDownload(TEMP_REAL_URL, b.getText().toString());
                                     DOWNLOAD_IN_PROGRSS = true;
                                 }
                             }
@@ -206,90 +149,6 @@ public class LanguagePackFrag extends Fragment {
         else{
             Toast.makeText(mContext, "Can't Connect to server to download available dictionaries.", Toast.LENGTH_LONG).show();
         }
-//
-//
-//        final Button bhutiaButton = rootView.findViewById(R.id.bhutia_dictionary);
-//        final Button englishButton = rootView.findViewById(R.id.english_dictionary);
-//
-//
-////        Log.d("TEXT", buttonText);
-//        bhutiaButton.setOnClickListener(
-//                new View.OnClickListener() {
-//                    public void onClick(View v) {
-//                        if (!DOWNLOAD_IN_PROGRSS){
-////                        Toast test = new Toast();
-//                        Toast.makeText(getActivity(),"Selected",Toast.LENGTH_SHORT).show();
-//                        if (ContextCompat.checkSelfPermission(activtiy, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                                != PackageManager.PERMISSION_GRANTED) {
-//                            // Permission is not granted
-//                            if (ActivityCompat.shouldShowRequestPermissionRationale(activtiy,
-//                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                                // Show an explanation to the user *asynchronously* -- don't block
-//                                // this thread waiting for the user's response! After the user
-//                                // sees the explanation, try again to request the permission.
-//                            } else {
-//                                // No explanation needed; request the permission
-//                                ActivityCompat.requestPermissions(activtiy,
-//                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-//                                        ,101);
-//
-//                                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-//                                // app-defined int constant. The callback method gets the
-//                                // result of the request.
-//                            }
-//                        } else {
-//                            // Permission has already been granted
-//                            dataDownload2(TEMP_REAL_URL, bhutiaButton.getText().toString());
-//                            DOWNLOAD_IN_PROGRSS = true;
-//                        }
-//                        }
-//                        else {
-//                            Toast.makeText(getActivity(), "A dictionary is already downloading.", Toast.LENGTH_SHORT).show();
-//                        }
-//
-////
-//
-//                    }
-//                });
-//
-//        englishButton.setOnClickListener(
-//                new View.OnClickListener() {
-//                    public void onClick(View v) {
-//                        if (!DOWNLOAD_IN_PROGRSS){
-////                        Toast test = new Toast();
-//                            Toast.makeText(getActivity(),"Selected",Toast.LENGTH_SHORT).show();
-//                            if (ContextCompat.checkSelfPermission(activtiy, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                                    != PackageManager.PERMISSION_GRANTED) {
-//                                // Permission is not granted
-//                                if (ActivityCompat.shouldShowRequestPermissionRationale(activtiy,
-//                                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                                    // Show an explanation to the user *asynchronously* -- don't block
-//                                    // this thread waiting for the user's response! After the user
-//                                    // sees the explanation, try again to request the permission.
-//                                } else {
-//                                    // No explanation needed; request the permission
-//                                    ActivityCompat.requestPermissions(activtiy,
-//                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-//                                            ,101);
-//
-//                                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-//                                    // app-defined int constant. The callback method gets the
-//                                    // result of the request.
-//                                }
-//                            } else {
-//                                // Permission has already been granted
-//                                dataDownload2(TEMP_ENG_URL, englishButton.getText().toString());
-//                                DOWNLOAD_IN_PROGRSS = true;
-//                            }
-//                        }
-//                        else {
-//                            Toast.makeText(getActivity(), "A dictionary is already downloading.", Toast.LENGTH_SHORT).show();
-//                        }
-//
-////
-//
-//                    }
-//                });
 
         return rootView;
     }
@@ -339,6 +198,7 @@ public class LanguagePackFrag extends Fragment {
         long downloadID = downloadManager.enqueue(request);
 
         BroadcastReceiver broadcastReceiver = new myReceiver(buttonText);
+
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         HandlerThread handlerThread = new HandlerThread("LANGUAGE_DOWNLOAD");
         handlerThread.start();

@@ -73,15 +73,20 @@ public class myReceiver extends BroadcastReceiver {
             final SharedPreferences.Editor editor = pref.edit();
             //build an abstract factory
             switch (type) {
-                case "bhutia": {
+                case "BHUTIA": {
                     BhutiaDao bhutiaDao = db.getBhutiaDao();
                     BhutiaDataInsert.BhuInsert(bhutiaDao, file);
                     editor.putBoolean("BHUTIA", true);
+                    editor.commit();
+                    break;
 
                 }
-                case "english": {
+                case "ENGLISH": {
                     EnglishDao englishDao = db.getEnglishDao();
                     editor.putBoolean("ENGLISH", true);
+                    editor.commit();
+                    break;
+
                 }
                 default:
                     Log.d("myReciever", "Something went wrong");
