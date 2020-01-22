@@ -3,12 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/search_frag"
+    android:id="@+id/final_result_frag"
     android:background="#FFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     >
+
+
 
     <LinearLayout
         android:id="@+id/result_linear_layout"
@@ -42,14 +44,15 @@
 
     </LinearLayout>
     <Spinner
-        android:id="@+id/adv_trans_spinner"
+        android:id="@+id/final_result_adv_trans_spinner"
         android:layout_width="wrap_content"
         android:layout_height="@+id/adv_search_linear_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/result_linear_layout">
+        app:layout_constraintBottom_toBottomOf="@+id/result_linear_layout"
+        android:clickable="false"
+        >
     </Spinner>
-
 
 
     <FrameLayout

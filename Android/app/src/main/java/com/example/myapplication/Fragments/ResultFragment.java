@@ -5,17 +5,24 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.example.myapplication.CustomTransSpinAdaptor;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaLayout;
 import com.example.myapplication.Dictionaries.English.EnglishLayout;
 import com.example.myapplication.LayoutSetter;
 import com.example.myapplication.R;
+import com.example.myapplication.DumbSpinnerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +43,25 @@ public class ResultFragment extends Fragment {
     private String mParam2;
     private String curDict;
     private Bundle args;
+    private View.OnTouchListener touchListener = new View.OnTouchListener(){
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Log.d("TOuch", "FIRES");
+                fragmentManager.popBackStack();
+
+            }
+            return false;
+        }
+    };
+    private View.OnClickListener myListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.popBackStack();
+        }
+    };
 
 
 
@@ -79,6 +105,24 @@ public class ResultFragment extends Fragment {
 
 
         View rootView = inflater.inflate(R.layout.final_result, container,false);
+
+        //initialize return listener
+        rootView.findViewById(R.id.final_result_frag).setOnClickListener(myListener);
+
+        //set spinner return listener
+        Spinner spinner = rootView.findViewById(R.id.final_result_adv_trans_spinner);
+        DumbSpinnerAdapter dumbSpinnerAdapter = new DumbSpinnerAdapter(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, myListener);
+        dumbSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setOnTouchListener(touchListener);
+
+//        TextView textView = rootView.findViewById(android.R.id.text1);
+//        textView.setOnClickListener(myListener);
+
+        spinner.setAdapter(dumbSpinnerAdapter);
+
+
+        //setting results
         ScrollView dictInfoContainer = rootView.findViewById(R.id.dict_info_container);
 
 //        View view = inflater.inflate(R.layout.z_final_bhutia, null);
