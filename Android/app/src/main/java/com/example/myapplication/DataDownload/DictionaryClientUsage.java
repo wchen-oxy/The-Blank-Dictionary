@@ -5,6 +5,7 @@ import android.content.Intent;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.example.myapplication.Constants;
 import com.example.myapplication.Serialization;
 import com.loopj.android.http.*;
 
@@ -33,7 +34,7 @@ public class DictionaryClientUsage {
 //        });
 //    }
     public void getAvailableDic(final Context context) throws JSONException {
-        DictionaryClient.get("all/", null, new JsonHttpResponseHandler() {
+        DictionaryClient.get(Constants.DICT_LIST_URL_PART, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 //                super.onSuccess(statusCode, headers, response);
@@ -99,7 +100,7 @@ public class DictionaryClientUsage {
     }
 
     public void checkStatus(final Context context) throws HttpBadRequestException {
-        DictionaryClient.get("status/", null, new AsyncHttpResponseHandler()
+        DictionaryClient.get(Constants.STATUS_URL_PART, null, new AsyncHttpResponseHandler()
                 {
 
                     @Override

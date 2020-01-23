@@ -9,4 +9,5 @@ public interface FragmentCommunicator {
 //    void bundPass(Bundle args, boolean isPause, ResultWrapper resultWrapper);
 //    void resultWrapPass(ResultWrapper resultWrapper);
 
+
 }

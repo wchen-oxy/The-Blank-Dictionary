@@ -1,6 +1,7 @@
 package com.example.myapplication.Fragments;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.Serialization;
@@ -27,6 +29,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class DictionarySelectionFrag extends Fragment {
+    Context mContext;
 
     public static DictionarySelectionFrag newInstance() {
 
@@ -34,6 +37,14 @@ public class DictionarySelectionFrag extends Fragment {
         DictionarySelectionFrag fragment = new DictionarySelectionFrag();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+
+
     }
 
     @Override
@@ -46,6 +57,7 @@ public class DictionarySelectionFrag extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.dictionary_selection, container,false);
+
 
         SharedPreferences pref = getActivity().getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
         final SharedPreferences.Editor editor = pref.edit();
@@ -71,10 +83,12 @@ public class DictionarySelectionFrag extends Fragment {
 //        });
 
         //new one
-        ArrayList<String> lists = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
+        ArrayList<String> list = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
         LinearLayout linearLayout = rootView.findViewById(R.id.dict_pack_list_linear_layout);
 
-        for (String s:lists) {
+
+
+        for (String s:list) {
             //if it doesn't exist, it will return false
             if (pref.getBoolean(s,false) == false) {
                 Log.d("DictSelect", "Inner");
@@ -96,6 +110,7 @@ public class DictionarySelectionFrag extends Fragment {
                             Button b = (Button) v;
                             editor.putString("CurDict", b.getText().toString()); // Storing String
                             editor.commit(); // commit changes
+                            Toast.makeText(mContext, "Dictionary Selected", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -106,6 +121,12 @@ public class DictionarySelectionFrag extends Fragment {
 
 
         }
+
+
+        //case where there is no downloaded languages
+        TextView noListTextView = new TextView(mContext);
+        noListTextView.setText(R.string.no_list_found);
+        if (linearLayout.getChildCount() == 0) linearLayout.addView(noListTextView);
 
         return rootView;
     }

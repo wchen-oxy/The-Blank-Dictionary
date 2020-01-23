@@ -25,8 +25,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Constants;
 import com.example.myapplication.R;
 import com.example.myapplication.Serialization;
 import com.example.myapplication.myReceiver;
@@ -41,6 +43,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
+//FIXME Add 404 reaction to download
 public class LanguagePackFrag extends Fragment {
     Activity activtiy;
     Context mContext;
@@ -49,7 +52,6 @@ public class LanguagePackFrag extends Fragment {
     String TEMP_ENG_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/eng.json";
     String TEMP_FAKE_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/test.json";
 
-    private static final String BASE_URL = "http://10.0.2.2:8000/";
 
     JSONArray list = null;
 
@@ -81,6 +83,8 @@ public class LanguagePackFrag extends Fragment {
 
         ArrayList<String> lists = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
         LinearLayout linearLayout = rootView.findViewById(R.id.lang_pack_root_layout);
+
+        //case where there are downloaded languages
 
         for (String s:lists) {
             Button button = new Button(mContext);
@@ -118,7 +122,7 @@ public class LanguagePackFrag extends Fragment {
                                 } else {
                                     // Permission has already been granted
                                     Button b = (Button) v;
-                                    dataDownload(TEMP_REAL_URL, b.getText().toString());
+                                    dataDownload(Constants.getAbsoluteUrl(Constants.DOWNLOAD_URL_PART) +  b.getText().toString(), b.getText().toString());
                                     DOWNLOAD_IN_PROGRSS = true;
                                 }
                             }
@@ -188,7 +192,7 @@ public class LanguagePackFrag extends Fragment {
         request.setDescription("Your Dictionary is now downloading.")
                 .setTitle("Dictionay Download Started.")
                 .setDestinationUri(Uri.fromFile(file))
-                .addRequestHeader("Authorization", authDigest());
+                .addRequestHeader("Authorization", Constants.authDigest(Constants.CODE));
         Log.d("CHECK2", Environment.getExternalStorageDirectory().toString());
 
 
@@ -227,22 +231,7 @@ public class LanguagePackFrag extends Fragment {
 
 
     }
-    private String authDigest() {
-        final String CODE = "Az39dB0n!23";
-        byte[] data1 = CODE.getBytes();
-        String output = "";
 
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            data1 = md.digest(data1);
-
-            output = String.format("%02x", new BigInteger(1, data1));
-
-        }  catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return output;
-    }
 
 //    public ArrayList<String> loadJSONFromAsset() throws FileNotFoundException {
 //        ArrayList<String> json = new ArrayList<>();

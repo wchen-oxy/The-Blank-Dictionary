@@ -21,6 +21,7 @@ import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
 import com.example.myapplication.Dictionaries.Result;
 import com.example.myapplication.Dictionaries.ResultWrapper;
 import com.example.myapplication.FragmentCommunicator;
+import com.example.myapplication.IOnBackPressed;
 import com.example.myapplication.MyAdapter;
 import com.example.myapplication.Query;
 import com.example.myapplication.R;
@@ -35,7 +36,7 @@ import java.util.concurrent.ExecutionException;
 //TODO AUTOQUERY WORDS WHEN TRANSLATION IS CHANGED?
 //external package
 
-public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedListener {
+public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedListener, IOnBackPressed {
     String text = null;
     SearchView searchView;
     Bundle args;
@@ -301,6 +302,20 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     }
 
 
+    @Override
+    public boolean clearText() {
+        if (!searchView.getQuery().toString().isEmpty()){
+            Log.d("Cleartext", "something here");
+            Log.d("Cleartext", searchView.getQuery().toString());
+
+            searchView.setQuery("", true);
+            return true;
+        }
+        Log.d("Cleartext", "nothing here");
+
+        return false;
+
+    }
 }
 
 

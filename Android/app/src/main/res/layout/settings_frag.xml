@@ -81,65 +81,65 @@
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <Button
-            android:id="@+id/interface_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/interface_button"
-            android:fontFamily="@font/alegreya_sans"
-            android:textSize="16dp"
-            android:gravity="left|center_vertical"
-            android:drawableRight="@drawable/resize_arrow"
-            android:background="@android:color/transparent"
-            />
+        <!--<Button-->
+            <!--android:id="@+id/interface_button"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/interface_button"-->
+            <!--android:fontFamily="@font/alegreya_sans"-->
+            <!--android:textSize="16dp"-->
+            <!--android:gravity="left|center_vertical"-->
+            <!--android:drawableRight="@drawable/resize_arrow"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--/>-->
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+        <!--<Space-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="10dp" />-->
 
-        <Button
-            android:id="@+id/help_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/help_button"
-            android:fontFamily="@font/alegreya_sans"
-            android:textSize="16dp"
-            android:gravity="left|center_vertical"
-            android:drawableRight="@drawable/resize_arrow"
-            android:background="@android:color/transparent"
-            />
+        <!--<Button-->
+            <!--android:id="@+id/help_button"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/help_button"-->
+            <!--android:fontFamily="@font/alegreya_sans"-->
+            <!--android:textSize="16dp"-->
+            <!--android:gravity="left|center_vertical"-->
+            <!--android:drawableRight="@drawable/resize_arrow"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--/>-->
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+        <!--<Space-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="10dp" />-->
 
-        <Button
-            android:id="@+id/feedback_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/feedback_button"
-            android:fontFamily="@font/alegreya_sans"
-            android:textSize="16dp"
-            android:gravity="left|center_vertical"
-            android:drawableRight="@drawable/resize_arrow"
-            android:background="@android:color/transparent"
-            />
+        <!--<Button-->
+            <!--android:id="@+id/feedback_button"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/feedback_button"-->
+            <!--android:fontFamily="@font/alegreya_sans"-->
+            <!--android:textSize="16dp"-->
+            <!--android:gravity="left|center_vertical"-->
+            <!--android:drawableRight="@drawable/resize_arrow"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--/>-->
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+        <!--<Space-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="10dp" />-->
 
-        <Button
-            android:id="@+id/donate_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/donate_button"
-            android:fontFamily="@font/alegreya_sans"
-            android:textSize="16dp"
-            android:gravity="left|center_vertical"
-            android:drawableRight="@drawable/resize_arrow"
-            android:background="@android:color/transparent"
-            />
+        <!--<Button-->
+            <!--android:id="@+id/donate_button"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/donate_button"-->
+            <!--android:fontFamily="@font/alegreya_sans"-->
+            <!--android:textSize="16dp"-->
+            <!--android:gravity="left|center_vertical"-->
+            <!--android:drawableRight="@drawable/resize_arrow"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--/>-->
     </LinearLayout>
 
 

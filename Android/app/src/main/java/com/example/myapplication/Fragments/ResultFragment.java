@@ -48,7 +48,6 @@ public class ResultFragment extends Fragment {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                Log.d("TOuch", "FIRES");
                 fragmentManager.popBackStack();
 
             }

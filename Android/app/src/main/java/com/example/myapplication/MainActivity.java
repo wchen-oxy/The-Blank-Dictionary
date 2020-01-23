@@ -2,11 +2,13 @@ package com.example.myapplication;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 
+import com.example.myapplication.DataDownload.Connectivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,9 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.SearchView;
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
     public BroadcastReceiver myListBroadcastReciever;
     public Boolean isAdvSearch = false;
     public FragmentCommunicator fragmentCommunicator;
+    final Context context = this;
+
     Bundle args;
 
     //TODO implement these
@@ -149,11 +156,12 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
                     fragmentTransaction.replace(R.id.frag_container, HomeFrag.newInstance()).commit();
                     return true;
 
-                case R.id.navigation_favorites:
-                    clearBackStack();
-                    fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, FavoritesFrag.newInstance()).commit();
-                    return true;
+//                case R.id.navigation_favorites:
+//                    clearBackStack();
+//                    fragmentTransaction = fragmentManager.beginTransaction();
+//                    fragmentTransaction.replace(R.id.frag_container, FavoritesFrag.newInstance()).commit();
+//                    return true;
+
                 case R.id.navigation_settings:
                     clearBackStack();
                     fragmentTransaction = fragmentManager.beginTransaction();
@@ -247,8 +255,17 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
 //        }
 //    }
 
+
+
+
     @Override
     public void onBackPressed(){
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container);
+
+        //if it is an instance, and if the instance returns true, do nothing
+        if (fragment instanceof IOnBackPressed && ((IOnBackPressed) fragment).clearText()) return;
+        //otherwise do something
+        Log.d("SUPER", "BACKPRESSEd");
         super.onBackPressed();
     }
 
@@ -277,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
         if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory())){
             new File(Environment.getExternalStorageDirectory(), "BlankDictionary").mkdir();
         }
-        try{
+
             //check internet connection
             if (!isOnline()) Toast.makeText(this, "No Internet Connection!", Toast.LENGTH_SHORT).show();
 
@@ -307,14 +324,30 @@ public class MainActivity extends AppCompatActivity implements FragmentCommunica
 //            handler = new Handler(looper);
 //            this.registerReceiver(downloadReceiver, downloadFilter, null, handler);
 
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        Runnable myRunnable = new Runnable(){
+            @Override
+            public void run() {
+                //Code that uses AsyncHttpClient
+                try {
+                    new DictionaryClientUsage().checkStatus(context);
+                } catch (HttpBadRequestException e) {
+                    e.printStackTrace();
+                }
 
-            new DictionaryClientUsage().checkStatus(this);
+            }
+
+        };
+        mainHandler.post(myRunnable);
+
+//
+//
+//        Connectivity connectivity = new Connectivity(this);
+//                connectivity.start();
 
 
 
-        } catch (HttpBadRequestException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
