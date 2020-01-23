@@ -62,26 +62,6 @@ public class DictionarySelectionFrag extends Fragment {
         SharedPreferences pref = getActivity().getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
         final SharedPreferences.Editor editor = pref.edit();
 
-//
-//        Bhutia.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity(), "Dict Changed to Bhu", Toast.LENGTH_SHORT).show();
-//                editor.putString("CurDict", "BHUTIA"); // Storing String
-//                editor.commit(); // commit changes
-//            }
-//        });
-//
-//        English.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity(), "Dict Changed to Eng", Toast.LENGTH_SHORT).show();
-//                editor.putString("CurDict", "ENGLISH"); // Storing String
-//                editor.commit(); // commit changes
-//
-//            }
-//        });
-
         //new one
         ArrayList<String> list = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
         LinearLayout linearLayout = rootView.findViewById(R.id.dict_pack_list_linear_layout);
