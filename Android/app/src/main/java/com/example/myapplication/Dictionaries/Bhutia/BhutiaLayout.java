@@ -1,32 +1,25 @@
 package com.example.myapplication.Dictionaries.Bhutia;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.room.Room;
 
 import com.example.myapplication.Dictionaries.AppDatabase;
-import com.example.myapplication.DictionaryLayout;
-import com.example.myapplication.LayoutSetter;
+import com.example.myapplication.DictionaryLayoutHelper;
+import com.example.myapplication.HelperInterfaces.ILayoutSetter;
 import com.example.myapplication.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 //sets the layout for the results fragment
-public class BhutiaLayout implements LayoutSetter {
-    private DictionaryLayout dictionaryLayout;
+public class BhutiaLayout implements ILayoutSetter {
+    private DictionaryLayoutHelper dictionaryLayout;
     private int TRANSLATION_DIRECTION;
 
 
@@ -141,11 +134,11 @@ public class BhutiaLayout implements LayoutSetter {
 //        linearLayout.addView(subTitle4);
 //        linearLayout.addView(example);
 
-        this.dictionaryLayout = new DictionaryLayout(view);
+        this.dictionaryLayout = new DictionaryLayoutHelper(view);
     }
 
     @Override
-    public DictionaryLayout getDictionaryLayout() {
+    public DictionaryLayoutHelper getDictionaryLayout() {
         //return the view back to the parent class
         return dictionaryLayout;
     }

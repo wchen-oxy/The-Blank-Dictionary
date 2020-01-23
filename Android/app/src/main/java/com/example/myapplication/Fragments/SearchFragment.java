@@ -16,16 +16,15 @@ import android.widget.AdapterView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
-import com.example.myapplication.CustomTransSpinAdaptor;
+import com.example.myapplication.Adapters.myTranslationSpinnerAdapter;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
 import com.example.myapplication.Dictionaries.Result;
 import com.example.myapplication.Dictionaries.ResultWrapper;
-import com.example.myapplication.FragmentCommunicator;
-import com.example.myapplication.IOnBackPressed;
-import com.example.myapplication.MyAdapter;
-import com.example.myapplication.Query;
+import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
+import com.example.myapplication.HelperInterfaces.IOnBackPressed;
+import com.example.myapplication.Adapters.MyAdapter;
+import com.example.myapplication.DatabaseQuery;
 import com.example.myapplication.R;
-import com.example.myapplication.ResultClickListeners;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ import java.util.concurrent.ExecutionException;
 //TODO AUTOQUERY WORDS WHEN TRANSLATION IS CHANGED?
 //external package
 
-public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedListener, IOnBackPressed {
+public class SearchFragment extends Fragment implements AdapterView.OnItemSelectedListener, IOnBackPressed {
     String text = null;
     SearchView searchView;
     Bundle args;
@@ -50,14 +49,13 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     ArrayList<String> TranslationArrayList = new ArrayList<>();
 
 
-    FragmentCommunicator fragmentCommunicator;
-    CustomTransSpinAdaptor<String> adapter;
+    IFragmentCommunicator fragmentCommunicator;
+    myTranslationSpinnerAdapter<String> adapter;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    private ResultClickListeners.OnItemClickListener onItemClickListener;
     private SharedPreferences pref;
     private View.OnClickListener listener = new View.OnClickListener() {
 
@@ -78,10 +76,10 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     };
 
 
-    public static SearchFrag newInstance(Bundle args){
-        SearchFrag searchFrag = new SearchFrag();
-        searchFrag.setArguments(args);
-        return searchFrag;
+    public static SearchFragment newInstance(Bundle args){
+        SearchFragment searchFragment = new SearchFragment();
+        searchFragment.setArguments(args);
+        return searchFragment;
 
     }
 
@@ -90,7 +88,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     public void onAttach(Context context) {
         super.onAttach(context);
         //to return args back to activity/start new fragment
-        fragmentCommunicator = (FragmentCommunicator) context;
+        fragmentCommunicator = (IFragmentCommunicator) context;
     }
 
 
@@ -112,7 +110,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
         try {
             if (!args.getString("query").isEmpty())
-                resultWrapper = new Query(getContext()).execute(args).get();
+                resultWrapper = new DatabaseQuery(getContext()).execute(args).get();
 
 //                resultWrapper.getList().getResult().add(Translation);
 
@@ -136,7 +134,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.adv_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
         Context context = rootView.getContext();
         recyclerView = rootView.findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
@@ -198,7 +196,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
 
         String[] stringArray = translationSet();
         Spinner spinner = getView().findViewById(R.id.adv_trans_spinner);
-        adapter = new CustomTransSpinAdaptor<String>(getActivity(),
+        adapter = new myTranslationSpinnerAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, stringArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -285,7 +283,7 @@ public class SearchFrag extends Fragment implements AdapterView.OnItemSelectedLi
             resultWrapper.getList().getResult().clear();
             //add back into existing ResultWrapper because the adapter needs the original reference to the ResultWrapper
             if (!(args.getString("query").isEmpty())) {
-                List<BhutiaWord> list = new Query(getContext()).execute(args).get().getList().getResult();
+                List<BhutiaWord> list = new DatabaseQuery(getContext()).execute(args).get().getList().getResult();
                 for (BhutiaWord bhutiaWord : list) {
                     resultWrapper.getList().getResult().add(bhutiaWord);
                 }

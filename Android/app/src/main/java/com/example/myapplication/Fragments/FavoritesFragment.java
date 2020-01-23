@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 
-public class FavoritesFrag extends Fragment {
+//Not used right now
+public class FavoritesFragment extends Fragment {
 
-    public static FavoritesFrag newInstance(){
-        return new FavoritesFrag();
+    public static FavoritesFragment newInstance(){
+        return new FavoritesFragment();
     }
 
     @Override
@@ -22,7 +23,7 @@ public class FavoritesFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
-        View rootView = inflater.inflate(R.layout.favorites_frag, container,false);
+        View rootView = inflater.inflate(R.layout.fragment_favorites, container,false);
         return rootView;
     }
 

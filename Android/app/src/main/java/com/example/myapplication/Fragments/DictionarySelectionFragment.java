@@ -1,15 +1,11 @@
 package com.example.myapplication.Fragments;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
@@ -23,18 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.myapplication.R;
-import com.example.myapplication.Serialization;
+import com.example.myapplication.DataSerialization;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class DictionarySelectionFrag extends Fragment {
+public class DictionarySelectionFragment extends Fragment {
     Context mContext;
 
-    public static DictionarySelectionFrag newInstance() {
+    public static DictionarySelectionFragment newInstance() {
 
         Bundle args = new Bundle();
-        DictionarySelectionFrag fragment = new DictionarySelectionFrag();
+        DictionarySelectionFragment fragment = new DictionarySelectionFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,14 +52,14 @@ public class DictionarySelectionFrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.dictionary_selection, container,false);
+        View rootView = inflater.inflate(R.layout.fragment_dictionary_selection, container,false);
 
 
         SharedPreferences pref = getActivity().getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
         final SharedPreferences.Editor editor = pref.edit();
 
         //new one
-        ArrayList<String> list = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
+        ArrayList<String> list = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
         LinearLayout linearLayout = rootView.findViewById(R.id.dict_pack_list_linear_layout);
 
 

@@ -13,7 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class Serialization {
+public class DataSerialization {
     public static void serializer(ArrayList arrayList){
         try
         {

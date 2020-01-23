@@ -11,8 +11,6 @@
         android:background="#FFF"
         >
 
-
-
         <LinearLayout
             android:id="@+id/dict_pack_list_linear_layout"
             android:layout_width="match_parent"

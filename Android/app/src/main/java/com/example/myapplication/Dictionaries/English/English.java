@@ -5,7 +5,6 @@ package com.example.myapplication.Dictionaries.English;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.myapplication.AllDictionaries;
 import com.example.myapplication.Dictionaries.AppDatabase;
 import com.example.myapplication.Dictionaries.Result;
 import com.example.myapplication.Dictionaries.ResultWrapper;

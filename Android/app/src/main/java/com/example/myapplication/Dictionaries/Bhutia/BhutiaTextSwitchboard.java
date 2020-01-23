@@ -1,6 +1,6 @@
 package com.example.myapplication.Dictionaries.Bhutia;
 
-import com.example.myapplication.MyAdapter;
+import com.example.myapplication.Adapters.MyAdapter;
 
 public class BhutiaTextSwitchboard {
     public static void select(MyAdapter.MyViewHolder myViewHolder, String string, BhutiaWord bhutiaWord){

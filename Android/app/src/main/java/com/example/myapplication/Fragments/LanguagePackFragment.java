@@ -25,26 +25,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Constants;
 import com.example.myapplication.R;
-import com.example.myapplication.Serialization;
-import com.example.myapplication.myReceiver;
+import com.example.myapplication.DataSerialization;
+import com.example.myapplication.BroadcastRecievers.myDictionaryDownloadReceiver;
 
 import org.json.JSONArray;
 
 import java.io.File;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
 //FIXME Add 404 reaction to download
-public class LanguagePackFrag extends Fragment {
+public class LanguagePackFragment extends Fragment {
     Activity activtiy;
     Context mContext;
     String TEMP_URL = "https://jsonplaceholder.typicode.com/todos/1";
@@ -57,8 +53,8 @@ public class LanguagePackFrag extends Fragment {
 
     public static Boolean DOWNLOAD_IN_PROGRSS = false;
 
-    public static LanguagePackFrag newInstance(){
-       return new LanguagePackFrag();
+    public static LanguagePackFragment newInstance(){
+       return new LanguagePackFragment();
     }
 
 
@@ -79,9 +75,9 @@ public class LanguagePackFrag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        final View rootView = inflater.inflate(R.layout.lang_pack_list, container,false);
+        final View rootView = inflater.inflate(R.layout.fragment_language_pack_list, container,false);
 
-        ArrayList<String> lists = Serialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
+        ArrayList<String> lists = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
         LinearLayout linearLayout = rootView.findViewById(R.id.lang_pack_root_layout);
 
         //case where there are downloaded languages
@@ -201,7 +197,7 @@ public class LanguagePackFrag extends Fragment {
         DownloadManager downloadManager= (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
         long downloadID = downloadManager.enqueue(request);
 
-        BroadcastReceiver broadcastReceiver = new myReceiver(buttonText);
+        BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(buttonText);
 
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         HandlerThread handlerThread = new HandlerThread("LANGUAGE_DOWNLOAD");

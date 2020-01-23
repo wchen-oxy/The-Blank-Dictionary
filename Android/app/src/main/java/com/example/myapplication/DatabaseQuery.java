@@ -16,12 +16,12 @@ import com.example.myapplication.Dictionaries.ResultWrapper;
 
 import java.lang.ref.WeakReference;
 
-public class Query extends AsyncTask<Bundle, Void, ResultWrapper> {
+public class DatabaseQuery extends AsyncTask<Bundle, Void, ResultWrapper> {
     private final WeakReference<Context> weakContext;
 //    private DictionaryStrategy dictionaryStrategy;
     private SharedPreferences pref;
 
-    public Query(Context context){
+    public DatabaseQuery(Context context){
         //look up what weak reference is
         this.weakContext = new WeakReference<>(context);
         pref = context.getSharedPreferences("BlankDictPref", 0);

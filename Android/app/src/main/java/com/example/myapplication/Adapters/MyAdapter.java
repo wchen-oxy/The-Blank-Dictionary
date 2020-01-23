@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Adapters;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import com.example.myapplication.Dictionaries.Bhutia.BhutiaTextSwitchboard;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
 import com.example.myapplication.Dictionaries.English.EnglishWord;
 import com.example.myapplication.Dictionaries.ResultWrapper;
+import com.example.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 //        LinearLayout l = LayoutInflater.from(parent.getContext()).inflate(R.layout.query_result, parent, false);
 //        MyViewHolder lh = new MyViewHolder(l);
 //        return lh;
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.query_result, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_result, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }

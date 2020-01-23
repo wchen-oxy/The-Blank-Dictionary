@@ -6,7 +6,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.example.myapplication.Constants;
-import com.example.myapplication.Serialization;
+import com.example.myapplication.DataSerialization;
 import com.loopj.android.http.*;
 
 import org.json.*;
@@ -47,7 +47,7 @@ public class DictionaryClientUsage {
                         e.printStackTrace();
                     }
                 }
-                Serialization.serializer(arrayListResponse);
+                DataSerialization.serializer(arrayListResponse);
 
 //                list = response;
 //                //store file

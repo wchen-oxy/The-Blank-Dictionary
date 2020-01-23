@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.BroadcastRecievers;
 
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
@@ -7,9 +7,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.myapplication.Fragments.LanguagePackFrag;
+import com.example.myapplication.Fragments.LanguagePackFragment;
 
-public class myListBroadcastReciever extends BroadcastReceiver {
+public class myAvailableDictionaryReciever extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();

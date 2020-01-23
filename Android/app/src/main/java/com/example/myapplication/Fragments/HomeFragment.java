@@ -18,27 +18,27 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.myapplication.CustomTransSpinAdaptor;
-import com.example.myapplication.FragmentCommunicator;
+import com.example.myapplication.Adapters.myTranslationSpinnerAdapter;
+import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.example.myapplication.R;
 
 import java.io.File;
 
 //note that this uses fragmentManager and not the SupportFragmentManager
 
-public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedListener {
+public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     FragmentManager fragmentManager;
     FragmentTransaction searchTransaction;
     SearchView mainSearchBar;
-    String TRANSLATION = null;
-    FragmentCommunicator fragmentCommunicator;
+    String translation = null;
+    IFragmentCommunicator fragmentCommunicator;
     Bundle args;
-    CustomTransSpinAdaptor<String> dadapter;
+    myTranslationSpinnerAdapter<String> translationSpinnerAdapter;
     private SharedPreferences pref;
-    private boolean DictionaryInstalled = true;
+    private boolean mDictionaryInstalled = true;
 
-    public static HomeFrag newInstance(){
-        return new HomeFrag();
+    public static HomeFragment newInstance(){
+        return new HomeFragment();
     }
 
 
@@ -46,7 +46,7 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        fragmentCommunicator = (FragmentCommunicator) context;
+        fragmentCommunicator = (IFragmentCommunicator) context;
     }
 
     @Override
@@ -56,15 +56,15 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
         args = new Bundle();
         pref = getContext().getSharedPreferences("BlankDictPref", 0);
         if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory()))
-            DictionaryInstalled = false;
-        Log.d("DICT DETECT", Boolean.toString(DictionaryInstalled));
+            mDictionaryInstalled = false;
+        Log.d("DICT DETECT", Boolean.toString(mDictionaryInstalled));
 
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.home_frag, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
 
@@ -88,15 +88,15 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
 //        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 //        mainSearchBar.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-        if (DictionaryInstalled && pref.getString("CurDict", null) != null) {
+        if (mDictionaryInstalled && pref.getString("CurDict", null) != null) {
             mainSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
 
                 @Override
                 public boolean onQueryTextSubmit(String s) {
-                    if (TRANSLATION == null) TRANSLATION = dadapter.getItem(0);
+                    if (translation == null) translation = translationSpinnerAdapter.getItem(0);
                     args.putString("query", s);
-                    args.putString("TRANSLATION", TRANSLATION);
+                    args.putString("translation", translation);
                     args.putString("NEW_FRAGMENT", "SEARCH_FRAGMENT");
                     Log.d("HOMEFRAG", args.toString());
                     fragmentCommunicator.bundPass(args, false);
@@ -114,20 +114,20 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
 
 //            String[] stringArray = getResources().getStringArray(R.array.bhutia_array);
             String[] stringArray = tranlationSet();
-            dadapter = new CustomTransSpinAdaptor<String>(getActivity(),
+            translationSpinnerAdapter = new myTranslationSpinnerAdapter<String>(getActivity(),
                     android.R.layout.simple_spinner_dropdown_item, stringArray);
-            dadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(dadapter);
+            translationSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(translationSpinnerAdapter);
             spinner.setOnItemSelectedListener(this);
 
         } else {
             mainSearchBar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!DictionaryInstalled) {
+                    if (!mDictionaryInstalled) {
                         Toast.makeText(getActivity(), "Please Download a Dictionary from Settings First", Toast.LENGTH_LONG).show();
                     }
-                    if (DictionaryInstalled && pref.getString("CurDict", null) == null) {
+                    if (mDictionaryInstalled && pref.getString("CurDict", null) == null) {
                         Toast.makeText(getActivity(), "Choose your current dictionary in Settings.", Toast.LENGTH_LONG).show();
 
                     }
@@ -163,9 +163,9 @@ public class HomeFrag extends Fragment implements AdapterView.OnItemSelectedList
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        TRANSLATION = parent.getItemAtPosition(pos).toString();
-        args.putInt("TRANSLATION_DIRECTION", pos);
-        dadapter.itemSelect(pos);
+        translation = parent.getItemAtPosition(pos).toString();
+        args.putInt("translation_DIRECTION", pos);
+        translationSpinnerAdapter.itemSelect(pos);
 
     }
 

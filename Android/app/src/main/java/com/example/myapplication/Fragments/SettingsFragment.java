@@ -9,20 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.myapplication.FragmentCommunicator;
+import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.example.myapplication.R;
 
-public class SettingsFrag extends Fragment {
-    FragmentCommunicator fragmentCommunicator;
+public class SettingsFragment extends Fragment {
+    IFragmentCommunicator fragmentCommunicator;
 
-    public static SettingsFrag newInstance(){
-        return new SettingsFrag();
+    public static SettingsFragment newInstance(){
+        return new SettingsFragment();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        fragmentCommunicator = (FragmentCommunicator) context;
+        fragmentCommunicator = (IFragmentCommunicator) context;
 
     }
 
@@ -33,7 +33,7 @@ public class SettingsFrag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View rootView = inflater.inflate(R.layout.settings_frag, container,false);
+        View rootView = inflater.inflate(R.layout.fragment_settings, container,false);
         Button languagePack = rootView.findViewById(R.id.language_button);
         Button currentDictionary = rootView.findViewById(R.id.current_dictionary);
 

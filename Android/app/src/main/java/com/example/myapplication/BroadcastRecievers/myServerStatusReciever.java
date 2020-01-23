@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.BroadcastRecievers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.DataDownload.DictionaryClientUsage;
 
-public class myServerReciever extends BroadcastReceiver{
+public class myServerStatusReciever extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
