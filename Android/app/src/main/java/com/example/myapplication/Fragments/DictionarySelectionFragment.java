@@ -24,6 +24,12 @@ import com.example.myapplication.DataSerialization;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.example.myapplication.Constants.System.APP_DICTIONARY_FILE;
+import static com.example.myapplication.Constants.System.APP_PREFERENCES;
+import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
+import static com.example.myapplication.Constants.System.FONT_STYLE;
+import static com.example.myapplication.Constants.Toast.DICTIONARY_SELECTED_TOAST;
+
 public class DictionarySelectionFragment extends Fragment {
     Context mContext;
 
@@ -55,11 +61,11 @@ public class DictionarySelectionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_dictionary_selection, container,false);
 
 
-        SharedPreferences pref = getActivity().getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
+        SharedPreferences pref = getActivity().getSharedPreferences(APP_PREFERENCES, 0); // 0 - for private mode
         final SharedPreferences.Editor editor = pref.edit();
 
         //new one
-        ArrayList<String> list = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
+        ArrayList<String> list = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory() + APP_DICTIONARY_FILE));
         LinearLayout linearLayout = rootView.findViewById(R.id.dict_pack_list_linear_layout);
 
 
@@ -74,7 +80,7 @@ public class DictionarySelectionFragment extends Fragment {
 
             //create new button
             Button button = new Button(getActivity());
-            button.setTypeface(Typeface.create("alegreya_sans", Typeface.NORMAL));
+            button.setTypeface(Typeface.create(FONT_STYLE, Typeface.NORMAL));
             button.setText(s);
             button.getBackground().setAlpha(0);
             button.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.resize_arrow, 0);
@@ -84,9 +90,9 @@ public class DictionarySelectionFragment extends Fragment {
                     new View.OnClickListener() {
                         public void onClick(View v) {
                             Button b = (Button) v;
-                            editor.putString("CurDict", b.getText().toString()); // Storing String
+                            editor.putString(CURRENTLY_SELECTED_DICTIONARY, b.getText().toString().toUpperCase()); // Storing String
                             editor.commit(); // commit changes
-                            Toast.makeText(mContext, "Dictionary Selected", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, DICTIONARY_SELECTED_TOAST, Toast.LENGTH_SHORT).show();
                         }
                     });
 

@@ -21,8 +21,24 @@ import android.widget.Toast;
 import com.example.myapplication.Adapters.myTranslationSpinnerAdapter;
 import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.example.myapplication.R;
+import com.example.myapplication.Translation;
 
 import java.io.File;
+
+
+import static com.example.myapplication.Constants.DictionaryData.QUERY;
+import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
+import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
+import static com.example.myapplication.Constants.Fragment.HOME_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
+import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
+import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
+import static com.example.myapplication.Constants.System.APP_PREFERENCES;
+import static com.example.myapplication.Constants.System.APP_NAME;
+import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
+import static com.example.myapplication.Constants.Toast.NO_DICT_INSTALLED_TOAST;
+import static com.example.myapplication.Constants.Toast.NO_DICT_SELECTED_TOAST;
 
 //note that this uses fragmentManager and not the SupportFragmentManager
 
@@ -30,7 +46,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     FragmentManager fragmentManager;
     FragmentTransaction searchTransaction;
     SearchView mainSearchBar;
-    String translation = null;
     IFragmentCommunicator fragmentCommunicator;
     Bundle args;
     myTranslationSpinnerAdapter<String> translationSpinnerAdapter;
@@ -54,8 +69,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         super.onCreate(savedInstanceState);
         fragmentManager = getFragmentManager();
         args = new Bundle();
-        pref = getContext().getSharedPreferences("BlankDictPref", 0);
-        if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory()))
+        pref = getContext().getSharedPreferences(APP_PREFERENCES, 0);
+        if (!(new File(Environment.getExternalStorageDirectory(), APP_NAME).isDirectory()))
             mDictionaryInstalled = false;
         Log.d("DICT DETECT", Boolean.toString(mDictionaryInstalled));
 
@@ -88,17 +103,18 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 //        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
 //        mainSearchBar.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-        if (mDictionaryInstalled && pref.getString("CurDict", null) != null) {
+        if (mDictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) != null) {
             mainSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
 
                 @Override
                 public boolean onQueryTextSubmit(String s) {
-                    if (translation == null) translation = translationSpinnerAdapter.getItem(0);
-                    args.putString("query", s);
-                    args.putString("translation", translation);
-                    args.putString("NEW_FRAGMENT", "SEARCH_FRAGMENT");
-                    Log.d("HOMEFRAG", args.toString());
+                    if (args.getString(TRANSLATION_STRING) == null)
+                        args.putString(TRANSLATION_STRING, translationSpinnerAdapter.getItem(0));
+                    args.putString(QUERY, s);
+//                    args.putString(TRANSLATION_TYPE, translation);
+                    args.putString(NEW_FRAGMENT, SEARCH_FRAGMENT);
+                    Log.d(HOME_FRAGMENT, args.toString());
                     fragmentCommunicator.bundPass(args, false);
                     return false;
                 }
@@ -113,9 +129,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             Spinner spinner = getView().findViewById(R.id.home_trans_spinner);
 
 //            String[] stringArray = getResources().getStringArray(R.array.bhutia_array);
-            String[] stringArray = tranlationSet();
+//            String[] stringArray = translationSet();
+            String[] translationTypesArray = Translation.getSet(getContext());
             translationSpinnerAdapter = new myTranslationSpinnerAdapter<String>(getActivity(),
-                    android.R.layout.simple_spinner_dropdown_item, stringArray);
+                    android.R.layout.simple_spinner_dropdown_item, translationTypesArray);
             translationSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(translationSpinnerAdapter);
             spinner.setOnItemSelectedListener(this);
@@ -125,10 +142,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 @Override
                 public void onClick(View view) {
                     if (!mDictionaryInstalled) {
-                        Toast.makeText(getActivity(), "Please Download a Dictionary from Settings First", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), NO_DICT_INSTALLED_TOAST, Toast.LENGTH_LONG).show();
                     }
-                    if (mDictionaryInstalled && pref.getString("CurDict", null) == null) {
-                        Toast.makeText(getActivity(), "Choose your current dictionary in Settings.", Toast.LENGTH_LONG).show();
+                    if (mDictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) == null) {
+                        Toast.makeText(getActivity(), NO_DICT_SELECTED_TOAST, Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -136,19 +153,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         }
     }
 
-    private String[] tranlationSet(){
-        String[] result = null;
-        switch (pref.getString("CurDict", null)) {
-            case ("BHUTIA"):
-                result = getResources().getStringArray(R.array.bhutia_array);
-                break;
-            case("ENGLISH"):
-                result = getResources().getStringArray(R.array.english_array);
-                break;
-
-        }
-        return result;
-    }
 
     @Override
     public void onResume() {
@@ -163,8 +167,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        translation = parent.getItemAtPosition(pos).toString();
-        args.putInt("translation_DIRECTION", pos);
+        args.putInt(TRANSLATION_TYPE, pos);
+        args.putString(TRANSLATION_STRING, parent.getItemAtPosition(pos).toString());
         translationSpinnerAdapter.itemSelect(pos);
 
     }

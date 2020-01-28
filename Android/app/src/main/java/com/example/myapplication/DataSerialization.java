@@ -13,11 +13,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import static com.example.myapplication.Constants.System.APP_DICTIONARY_FILE;
+
 public class DataSerialization {
     public static void serializer(ArrayList arrayList){
         try
         {
-            FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json");
+            FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory() + APP_DICTIONARY_FILE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(arrayList);
             oos.close();

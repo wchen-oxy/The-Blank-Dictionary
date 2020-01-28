@@ -16,6 +16,15 @@ import com.example.myapplication.Dictionaries.ResultWrapper;
 
 import java.lang.ref.WeakReference;
 
+import static com.example.myapplication.Constants.DictionaryData.DATABASE;
+import static com.example.myapplication.Constants.DictionaryData.QUERY;
+import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
+import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
+import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
+import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
+import static com.example.myapplication.Constants.System.APP_PREFERENCES;
+import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
+
 public class DatabaseQuery extends AsyncTask<Bundle, Void, ResultWrapper> {
     private final WeakReference<Context> weakContext;
 //    private DictionaryStrategy dictionaryStrategy;
@@ -24,7 +33,7 @@ public class DatabaseQuery extends AsyncTask<Bundle, Void, ResultWrapper> {
     public DatabaseQuery(Context context){
         //look up what weak reference is
         this.weakContext = new WeakReference<>(context);
-        pref = context.getSharedPreferences("BlankDictPref", 0);
+        pref = context.getSharedPreferences(APP_PREFERENCES, 0);
 
     }
 
@@ -33,19 +42,18 @@ public class DatabaseQuery extends AsyncTask<Bundle, Void, ResultWrapper> {
     protected ResultWrapper doInBackground(Bundle... full_query) {
         ResultWrapper resultWrapper = null;
 
+
         //implemented the Bhutia version only
 
-        AppDatabase db = Room.databaseBuilder(weakContext.get(), AppDatabase.class, "Database").enableMultiInstanceInvalidation().build();
-
+        AppDatabase db = Room.databaseBuilder(weakContext.get(), AppDatabase.class, DATABASE).enableMultiInstanceInvalidation().build();
         Bundle args = full_query[0];
-        Log.d("PREF", args.getString("TRANSLATION"));
 
         //TODO implement the strategy for different dictionary packs here, translation selection goes in the concrete implementations
 //        Log.d("PREF", pref.getString("CurDict", null).toString());
-        switch (pref.getString("CurDict", null)) {
-            case("BHUTIA"):
+        switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
+            case(BHUTIA):
                 Log.d("Check", "Inner");
-                resultWrapper = new Bhutia(args, db);
+                resultWrapper = new Bhutia(db, args.getString(QUERY), args.getString(TRANSLATION_STRING));
 //                BhutiaDao bhutiaDao = db.getBhutiaDao();
 //                Bhutia ad = new Bhutia();
 //                return ad.returnDictionary(args);
@@ -53,8 +61,8 @@ public class DatabaseQuery extends AsyncTask<Bundle, Void, ResultWrapper> {
 //                Log.d("THING", new Bhutia().returnDictionary(args, db).toString());
                 //do list stuff here
                 break;
-            case("ENGLISH"):
-                resultWrapper = new English(args, db);
+            case(ENGLISH):
+                resultWrapper = new English(db, args.getString(QUERY), args.getString(TRANSLATION_STRING));
 
 //                resultWrapper = new ResultWrapper("ENGLISH");
 //                EnglishDao englishDao  = db.getEnglishDao();

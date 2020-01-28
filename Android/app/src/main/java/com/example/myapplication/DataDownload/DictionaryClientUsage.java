@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
+import static com.example.myapplication.Constants.Network.DICT_LIST_URL_PART;
+import static com.example.myapplication.Constants.Network.STATUS_URL_PART;
+
 
 public class DictionaryClientUsage {
     private JSONArray list = null;
@@ -34,7 +37,7 @@ public class DictionaryClientUsage {
 //        });
 //    }
     public void getAvailableDic(final Context context) throws JSONException {
-        DictionaryClient.get(Constants.DICT_LIST_URL_PART, null, new JsonHttpResponseHandler() {
+        DictionaryClient.get(DICT_LIST_URL_PART, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 //                super.onSuccess(statusCode, headers, response);
@@ -100,7 +103,7 @@ public class DictionaryClientUsage {
     }
 
     public void checkStatus(final Context context) throws HttpBadRequestException {
-        DictionaryClient.get(Constants.STATUS_URL_PART, null, new AsyncHttpResponseHandler()
+        DictionaryClient.get(STATUS_URL_PART, null, new AsyncHttpResponseHandler()
                 {
 
                     @Override

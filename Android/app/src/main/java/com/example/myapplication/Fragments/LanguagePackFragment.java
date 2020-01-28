@@ -38,6 +38,20 @@ import java.io.File;
 import java.util.ArrayList;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
+import static com.example.myapplication.Constants.Network.DOWNLOAD_URL_PART;
+import static com.example.myapplication.Constants.Network.LANG_DOWNLOAD_HANDLER_THREAD_NAME;
+import static com.example.myapplication.Constants.Network.REQUEST_AUTH_HEADER;
+import static com.example.myapplication.Constants.Network.REQUEST_DESCRIPTION;
+import static com.example.myapplication.Constants.Network.REQUEST_TITLE;
+import static com.example.myapplication.Constants.Network.SECRET_CODE;
+import static com.example.myapplication.Constants.Network.authDigest;
+import static com.example.myapplication.Constants.Network.getAbsoluteUrl;
+import static com.example.myapplication.Constants.System.APP_NAME;
+import static com.example.myapplication.Constants.System.FONT_STYLE;
+import static com.example.myapplication.Constants.Toast.BAD_SERVER_CONNECTION_TOAST;
+import static com.example.myapplication.Constants.Toast.BUTTON_SELECTED_TOAST;
+import static com.example.myapplication.Constants.Toast.DICTIONARY_IS_DOWNLOADING_TOAST;
+import static com.example.myapplication.Constants.Toast.DICT_STILL_DOWNLOADING_TOAST;
 
 //FIXME Add 404 reaction to download
 public class LanguagePackFragment extends Fragment {
@@ -84,7 +98,7 @@ public class LanguagePackFragment extends Fragment {
 
         for (String s:lists) {
             Button button = new Button(mContext);
-            button.setTypeface(Typeface.create("alegreya_sans", Typeface.NORMAL));
+            button.setTypeface(Typeface.create(FONT_STYLE, Typeface.NORMAL));
             button.setText(s);
             button.getBackground().setAlpha(0);
             button.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.resize_arrow, 0);
@@ -96,7 +110,7 @@ public class LanguagePackFragment extends Fragment {
                         public void onClick(View v) {
                             if (!DOWNLOAD_IN_PROGRSS){
 //                        Toast test = new Toast();
-                                Toast.makeText(getActivity(),"Selected",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), BUTTON_SELECTED_TOAST,Toast.LENGTH_SHORT).show();
                                 if (ContextCompat.checkSelfPermission(activtiy, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                                         != PackageManager.PERMISSION_GRANTED) {
                                     // Permission is not granted
@@ -118,12 +132,12 @@ public class LanguagePackFragment extends Fragment {
                                 } else {
                                     // Permission has already been granted
                                     Button b = (Button) v;
-                                    dataDownload(Constants.getAbsoluteUrl(Constants.DOWNLOAD_URL_PART) +  b.getText().toString(), b.getText().toString());
+                                    dataDownload(getAbsoluteUrl(DOWNLOAD_URL_PART) +  b.getText().toString(), b.getText().toString());
                                     DOWNLOAD_IN_PROGRSS = true;
                                 }
                             }
                             else {
-                                Toast.makeText(getActivity(), "A dictionary is already downloading.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), DICT_STILL_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
                             }
 
 //
@@ -147,7 +161,7 @@ public class LanguagePackFragment extends Fragment {
             Log.d("Download,specific", lists.get(0));
         }
         else{
-            Toast.makeText(mContext, "Can't Connect to server to download available dictionaries.", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, BAD_SERVER_CONNECTION_TOAST, Toast.LENGTH_LONG).show();
         }
 
         return rootView;
@@ -156,10 +170,10 @@ public class LanguagePackFragment extends Fragment {
     //need to convert into asynchtask
 
     private void dataDownload(String url, String buttonText){
-        Toast.makeText(getActivity(),"DOWNLOADING",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),DICTIONARY_IS_DOWNLOADING_TOAST,Toast.LENGTH_SHORT).show();
         Log.d("CHECK1", Environment.getExternalStorageDirectory().toString());
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        File file = new File(Environment.getExternalStorageDirectory()+"/BlankDictionary", buttonText);
+        File file = new File(Environment.getExternalStorageDirectory()+"/"+ APP_NAME, buttonText);
 //        File file2 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + buttonText);
         Log.d("noAbs", file.getAbsolutePath().toString());
         Log.d("noAbs", Environment.getExternalStorageDirectory().toString());
@@ -185,10 +199,10 @@ public class LanguagePackFragment extends Fragment {
         }
 
 
-        request.setDescription("Your Dictionary is now downloading.")
-                .setTitle("Dictionay Download Started.")
+        request.setDescription(REQUEST_DESCRIPTION)
+                .setTitle(REQUEST_TITLE)
                 .setDestinationUri(Uri.fromFile(file))
-                .addRequestHeader("Authorization", Constants.authDigest(Constants.CODE));
+                .addRequestHeader(REQUEST_AUTH_HEADER, authDigest());
         Log.d("CHECK2", Environment.getExternalStorageDirectory().toString());
 
 
@@ -200,7 +214,8 @@ public class LanguagePackFragment extends Fragment {
         BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(buttonText);
 
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        HandlerThread handlerThread = new HandlerThread("LANGUAGE_DOWNLOAD");
+
+        HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
         handlerThread.start();
         Looper looper = handlerThread.getLooper();
         Handler handler = new Handler(looper);

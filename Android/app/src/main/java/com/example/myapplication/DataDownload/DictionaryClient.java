@@ -4,6 +4,10 @@ import android.util.Log;
 import com.example.myapplication.Constants;
 
 import com.loopj.android.http.*;
+import static com.example.myapplication.Constants.Network.getAbsoluteUrl;
+
+import static com.example.myapplication.Constants.Network.authDigest;
+
 
 
 public class DictionaryClient {
@@ -15,14 +19,14 @@ public class DictionaryClient {
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 //        RequestParams requestParams = new RequestParams();
 //        requestParams.put("Authorization", AUTH_KEY);
-        client.addHeader("Authorization", Constants.authDigest(Constants.CODE));
+        client.addHeader("Authorization", authDigest());
         Log.d("HEADER", "AUTH LOADED");
-        Log.d("URL", Constants.getAbsoluteUrl(url));
-        client.get(Constants.getAbsoluteUrl(url), params, responseHandler);
+        Log.d("URL", getAbsoluteUrl(url));
+        client.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.post(Constants.getAbsoluteUrl(url), params, responseHandler);
+        client.post(getAbsoluteUrl(url), params, responseHandler);
     }
 
 

@@ -17,17 +17,20 @@ import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
+import static com.example.myapplication.Constants.DictionaryData.QUERY_ID;
+import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
+
 //sets the layout for the results fragment
 public class BhutiaLayout implements ILayoutSetter {
     private DictionaryLayoutHelper dictionaryLayout;
-    private int TRANSLATION_DIRECTION;
+    private int selectedTranslationId;
 
 
     //constructor call from ResultFrag
     public BhutiaLayout(Context context,LayoutInflater inflater, Bundle args) {
         //create your layout here.
         //get translation direction
-        this.TRANSLATION_DIRECTION = args.getInt("TRANSLATION_DIRECTION");
+        this.selectedTranslationId = args.getInt(TRANSLATION_TYPE);
         //begin filling in text with args here
 
         //once created, set dictionary layout to resulting view
@@ -58,15 +61,15 @@ public class BhutiaLayout implements ILayoutSetter {
 
         //FIXME put on separate thread!
         AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").allowMainThreadQueries().enableMultiInstanceInvalidation().build();
-        BhutiaWord bhutiaWord = db.getBhutiaDao().engTranSearch(args.getString("QUERY_ID")).get(0);
+        BhutiaWord bhutiaWord = db.getBhutiaDao().engTranSearch(args.getString(QUERY_ID)).get(0);
 
 
-        Log.d("Translation num", String.valueOf(TRANSLATION_DIRECTION));
+        Log.d("Translation num", String.valueOf(selectedTranslationId));
         ipa.setText("Pronounciation: " + bhutiaWord.ipa);
         category.setText("Category: " + bhutiaWord.category);
         example.setText("Example: " + bhutiaWord.example);
 
-        switch (tranType[TRANSLATION_DIRECTION]) {
+        switch (tranType[selectedTranslationId]) {
             case ("English to Bhutia (Formal)"):
                 title.setText(bhutiaWord.bhut_rom_formal);
                 subTitle1.setText("English Translation: " + bhutiaWord.eng_trans);

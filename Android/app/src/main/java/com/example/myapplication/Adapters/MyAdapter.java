@@ -15,14 +15,17 @@ import com.example.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
+import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private ResultWrapper mDataset;
     private View.OnClickListener listener;
     private String curDict;
-    private ArrayList<String> Translation;
+    private String translation;
 
     public MyAdapter(ResultWrapper myDataset, ArrayList<String> Translation, View.OnClickListener listener, String curDict) {
-        this.Translation = Translation;
+        this.translation = Translation.get(0);
         this.mDataset = myDataset;
         this.listener = listener;
         this.curDict = curDict;
@@ -46,16 +49,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         //grab the specific list from mDataSet
 
         switch (curDict) {
-            case ("BHUTIA"):
+            case (BHUTIA):
                 List<BhutiaWord> bhutiaList = mDataset.getList().getResult();
-                BhutiaTextSwitchboard.select(holder, Translation.get(0), bhutiaList.get(position));
+                BhutiaTextSwitchboard.select(holder, translation, bhutiaList.get(position));
 
 
                 //FIXME ADd a bunch of switch cases for displaying the differently selected translations
 
 //                holder.bhutiaBind(position, mDataset, listener);
                 break;
-            case ("ENGLISH"):
+            case (ENGLISH):
                 List<EnglishWord> englishList = mDataset.getList().getResult();
                 holder.textView.setText(englishList.get(position).word);
 //                holder.englishBind(position, englishList.get(position), listener);
@@ -78,11 +81,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         if (mDataset == null) return size;
 
         switch (curDict) {
-            case ("BHUTIA"):
+            case (BHUTIA):
                 List<BhutiaWord> bhutiaList = mDataset.getList().getResult();
                 size = bhutiaList.size();
                 break;
-            case ("ENGLISH"):
+            case (ENGLISH):
                 List<EnglishWord> englishList = mDataset.getList().getResult();
                 size = englishList.size();
                 break;
@@ -111,7 +114,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.row_text);
+            textView = itemView.findViewById(R.id.row_text);
             itemView.setTag(this);
             itemView.setOnClickListener(listener);
 

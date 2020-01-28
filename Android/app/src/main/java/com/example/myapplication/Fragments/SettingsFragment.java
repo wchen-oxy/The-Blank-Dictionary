@@ -12,6 +12,10 @@ import android.widget.Button;
 import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.example.myapplication.R;
 
+import static com.example.myapplication.Constants.Fragment.DICTIONARY_SELECTION_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.LANGUAGE_DOWNLOAD_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
+
 public class SettingsFragment extends Fragment {
     IFragmentCommunicator fragmentCommunicator;
 
@@ -23,7 +27,6 @@ public class SettingsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentCommunicator = (IFragmentCommunicator) context;
-
     }
 
     @Override
@@ -37,18 +40,12 @@ public class SettingsFragment extends Fragment {
         Button languagePack = rootView.findViewById(R.id.language_button);
         Button currentDictionary = rootView.findViewById(R.id.current_dictionary);
 
-//        final FragmentManager fragmentManager = getFragmentManager();
-//        final FragmentTransaction langFragTransaction;
-//        langFragTransaction = fragmentManager.beginTransaction();
-
         languagePack.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-//                        langFragTransaction.addToBackStack(null);
-//                        LanguagePackFrag languagePackFrag = new LanguagePackFrag();
-//                        langFragTransaction.replace(R.id.frag_container, languagePackFrag).addToBackStack(null).commit();
+
                         Bundle args = new Bundle();
-                        args.putString("NEW_FRAGMENT", "LANG_DOWNLOAD_FRAGMENT");
+                        args.putString(NEW_FRAGMENT, LANGUAGE_DOWNLOAD_FRAGMENT);
                         fragmentCommunicator.bundPass(args, false);
 
                     }
@@ -57,20 +54,11 @@ public class SettingsFragment extends Fragment {
                 new View.OnClickListener(){
                     public void onClick(View v) {
                         Bundle args = new Bundle();
-                        args.putString("NEW_FRAGMENT", "DICT_SELECT_FRAGMENT");
+                        args.putString(NEW_FRAGMENT, DICTIONARY_SELECTION_FRAGMENT);
                         fragmentCommunicator.bundPass(args, false);
-//                        DictionarySelectionFrag dictionarySelectionFrag = DictionarySelectionFrag.newInstance();
-//                        langFragTransaction.replace(R.id.frag_container, dictionarySelectionFrag).addToBackStack(null).commit();
-//                        Toast.makeText(getActivity(), "Dict Changed", Toast.LENGTH_SHORT).show();
-//                        SharedPreferences pref = getActivity().getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
-//                        SharedPreferences.Editor editor = pref.edit();
-////                        editor.putString("CurDict", "BHUTIA"); // Storing boolean - true/false
-//                        editor.commit(); // commit changes
                     }
                 }
         );
-
-
         return rootView;
     }
 

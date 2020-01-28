@@ -42,6 +42,20 @@ import com.example.myapplication.Fragments.SettingsFragment;
 import java.io.File;
 import java.io.IOException;
 
+import static com.example.myapplication.Constants.Fragment.DICTIONARY_SELECTION_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.HOME_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.LANGUAGE_DOWNLOAD_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.RESULT_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.SETTINGS_FRAGMENT;
+import static com.example.myapplication.Constants.IntentFilters.DICTIONARY_LIST_DOWNLOADED;
+import static com.example.myapplication.Constants.IntentFilters.SERVER_REACHED;
+import static com.example.myapplication.Constants.Network.NO_INTERNET_ERROR;
+import static com.example.myapplication.Constants.System.APP_NAME;
+
+//import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
+
 
 public class MainActivity extends AppCompatActivity implements IFragmentCommunicator {
     private TextView mTextMessage;
@@ -84,25 +98,31 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
 
     private void fragController(Bundle args){
-        switch (args.getString("NEW_FRAGMENT")){
-            case "HOME_FRAGMENT":
+        switch (args.getString(NEW_FRAGMENT)){
+            case HOME_FRAGMENT:
                 HomeFragment homeFragment = HomeFragment.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.frag_container, homeFragment, "HOME_FRAG").commit();
+                fragmentTransaction.add(R.id.frag_container, homeFragment, HOME_FRAGMENT).commit();
                 break;
 
-            case "SEARCH_FRAGMENT":
+            case SEARCH_FRAGMENT:
                 SearchFragment searchFragment = SearchFragment.newInstance(args);
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, searchFragment, "ADV_SEARCH_FRAG").addToBackStack("SEARCH_FRAGMENT").commit();
+                fragmentTransaction.replace(R.id.frag_container, searchFragment, SEARCH_FRAGMENT).addToBackStack(SEARCH_FRAGMENT).commit();
                 isAdvSearch = true;
                 break;
-            case "RESULT_FRAGMENT":
+            case RESULT_FRAGMENT:
                 ResultFragment resultFragment = ResultFragment.newInstance(args);
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, resultFragment).addToBackStack("RESULT_FRAGMENT").commit();
+                fragmentTransaction.replace(R.id.frag_container, resultFragment).addToBackStack(RESULT_FRAGMENT).commit();
                 break;
-            case "LANG_DOWNLOAD_FRAGMENT":
+            case DICTIONARY_SELECTION_FRAGMENT:
+                DictionarySelectionFragment dictionarySelectionFragment = DictionarySelectionFragment.newInstance();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frag_container, dictionarySelectionFragment).addToBackStack(DICTIONARY_SELECTION_FRAGMENT).commit();
+                break;
+
+            case LANGUAGE_DOWNLOAD_FRAGMENT:
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
                     // Permission is not granted
@@ -125,16 +145,12 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                     // Permission has already been granted
                     LanguagePackFragment languagePackFragment = LanguagePackFragment.newInstance();
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, languagePackFragment).addToBackStack("LANG_DOWNLOAD_FRAGMENT").commit();
+                    fragmentTransaction.replace(R.id.frag_container, languagePackFragment).addToBackStack(LANGUAGE_DOWNLOAD_FRAGMENT).commit();
                 }
 
 
                 break;
-            case "DICT_SELECT_FRAGMENT":
-                DictionarySelectionFragment dictionarySelectionFragment = DictionarySelectionFragment.newInstance();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, dictionarySelectionFragment).addToBackStack("DICT_SELECT_FRAGMENT").commit();
-                break;
+
         }
 
     }
@@ -150,12 +166,12 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                     if (isAdvSearch) {
                         Log.d("Args", "is null");
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_container, SearchFragment.newInstance(args), "ADV_SEARCH_FRAG").commit();
+                        fragmentTransaction.replace(R.id.frag_container, SearchFragment.newInstance(args), SEARCH_FRAGMENT).commit();
                         return true;
                     }
                     clearBackStack();
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, HomeFragment.newInstance()).commit();
+                    fragmentTransaction.replace(R.id.frag_container, HomeFragment.newInstance(), HOME_FRAGMENT).commit();
                     return true;
 
 //                case R.id.navigation_favorites:
@@ -167,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 case R.id.navigation_settings:
                     clearBackStack();
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, SettingsFragment.newInstance()).commit();
+                    fragmentTransaction.replace(R.id.frag_container, SettingsFragment.newInstance(), SETTINGS_FRAGMENT).commit();
 
                     return true;
             }
@@ -282,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         fragmentManager = getSupportFragmentManager();
         Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
         Bundle args = new Bundle();
-        args.putString("NEW_FRAGMENT", "HOME_FRAGMENT");
+        args.putString(NEW_FRAGMENT, HOME_FRAGMENT);
         fragController(args);
 
 //        //setup for shared pref
@@ -293,20 +309,20 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 //        editor.commit(); // commit changes
 
         //SECTION FOR GETTING AVAILABLE DICTIONARIES AHEAD OF TIME
-        if (!(new File(Environment.getExternalStorageDirectory(), "BlankDictionary").isDirectory())){
-            new File(Environment.getExternalStorageDirectory(), "BlankDictionary").mkdir();
+        if (!(new File(Environment.getExternalStorageDirectory(), APP_NAME).isDirectory())){
+            new File(Environment.getExternalStorageDirectory(),APP_NAME).mkdir();
         }
 
             //check internet connection
-            if (!isOnline()) Toast.makeText(this, "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            if (!isOnline()) Toast.makeText(this, NO_INTERNET_ERROR, Toast.LENGTH_SHORT).show();
 
             //check if connection to server is possible
             myServerStatusReciever = new myServerStatusReciever();
             localBroadcastManager = LocalBroadcastManager.getInstance(this);
-            localBroadcastManager.registerReceiver(myServerStatusReciever, new IntentFilter("SERVER_REACHED"));
+            localBroadcastManager.registerReceiver(myServerStatusReciever, new IntentFilter(SERVER_REACHED));
 
             myAvailableDictionaryReciever = new myAvailableDictionaryReciever();
-            localBroadcastManager.registerReceiver(myAvailableDictionaryReciever, new IntentFilter("DICTIONARY_LIST_DOWNLOADED"));
+            localBroadcastManager.registerReceiver(myAvailableDictionaryReciever, new IntentFilter(DICTIONARY_LIST_DOWNLOADED));
 //
 //            //check if connection to server is possible
 //            BroadcastReceiver serverReceiver = new myServerReciever();

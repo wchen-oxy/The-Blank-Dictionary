@@ -11,17 +11,19 @@ import com.example.myapplication.Dictionaries.ResultWrapper;
 
 import java.util.List;
 
+import static com.example.myapplication.Constants.DictionaryData.QUERY;
+import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
+
 public class English implements ResultWrapper {
     private Result result;
 
-    public English(Bundle args, AppDatabase db) {
+    public English(AppDatabase db, String query, String currentTranslationString) {
         EnglishDao EnglishDao = db.getEnglishDao();
         List words = null;
 
-        switch (args.getString("TRANSLATION")){
+        switch (currentTranslationString){
             case ("English to English"):
-                Log.d("BHUTIA FOUND", "BHUTIA!!");
-                words = EnglishDao.englishSearch(args.getString("query"));
+                words = EnglishDao.englishSearch(query+"%");
 //
 //            case ("English to Bhutia"):
 //                words = bhutiaDao.EnglishSearch(args.getString("query")+"%");

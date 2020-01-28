@@ -25,10 +25,22 @@ import com.example.myapplication.HelperInterfaces.IOnBackPressed;
 import com.example.myapplication.Adapters.MyAdapter;
 import com.example.myapplication.DatabaseQuery;
 import com.example.myapplication.R;
+import com.example.myapplication.Translation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import static com.example.myapplication.Constants.DictionaryData.QUERY;
+import static com.example.myapplication.Constants.DictionaryData.QUERY_ID;
+import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
+import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
+import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
+import static com.example.myapplication.Constants.Fragment.RESULT_FRAGMENT;
+import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
+import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
+import static com.example.myapplication.Constants.System.APP_PREFERENCES;
+import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 
 
 //FIXME ADD ENUM FOR THE LANGAUGE TYPES IN SEPARATE FILE
@@ -42,11 +54,11 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 //    List results;
     ResultWrapper resultWrapper;
     Result result;
-    String TRANSLATION;
-    int TRANSLATION_DIRECTION;
-    boolean INITIAL = true;
-    String queryKey = null;
-    ArrayList<String> TranslationArrayList = new ArrayList<>();
+    String currentTranslationString;
+    int selectedTranslationNumber;
+    boolean initial = true;
+
+    ArrayList<String> translationHolder = new ArrayList<>();
 
 
     IFragmentCommunicator fragmentCommunicator;
@@ -62,14 +74,14 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             @Override
             public void onClick(View item) {
                 Bundle args = new Bundle();
-                args.putString("NEW_FRAGMENT", "RESULT_FRAGMENT");
+                args.putString(NEW_FRAGMENT, RESULT_FRAGMENT);
                 int position = ((RecyclerView.ViewHolder) item.getTag()).getAdapterPosition();
-                args.putString("TRANSLATION", TRANSLATION);
-                args.putInt("TRANSLATION_DIRECTION", TRANSLATION_DIRECTION);
-                args.putString("QUERY_ID", getQueryKey(resultWrapper, position));
-                Log.d("TRANSLATION DIRECTION", String.valueOf(TRANSLATION_DIRECTION));
-                Log.d("TRANSLATION", TRANSLATION);
-                Log.d("QUERY_KEY", queryKey);
+                args.putString(TRANSLATION_STRING, currentTranslationString);
+//                args.putInt(TRANSLATION_TYPE, selectedTranslationNumber);
+                args.putString(QUERY_ID, getQueryKey(resultWrapper, position));
+                Log.d(TRANSLATION_TYPE, String.valueOf(selectedTranslationNumber));
+//                Log.d("Translation", TRANSLATION);
+//                Log.d("QueryKey", queryKey);
                 fragmentCommunicator.bundPass(args, false);
 
         }
@@ -87,7 +99,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        //to return args back to activity/start new fragment
+        //initialize to return args back to activity/start new fragment
         fragmentCommunicator = (IFragmentCommunicator) context;
     }
 
@@ -95,13 +107,16 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) text = (String) savedInstanceState.getSerializable("query");
+//        if (savedInstanceState != null) text = (String) savedInstanceState.getSerializable("query");
         args = getArguments();
-        pref = getContext().getSharedPreferences("BlankDictPref", 0);
+        pref = getContext().getSharedPreferences(APP_PREFERENCES, 0);
 
-        TRANSLATION = args.getString("TRANSLATION");
-        TranslationArrayList.add(TRANSLATION);
-        TRANSLATION_DIRECTION = args.getInt("TRANSLATION_DIRECTION");
+
+//        TRANSLATION = args.getString("Translation");
+//        String[] translaltionTypesArray = translationSet();
+
+
+//        selectedTranslationNumber = args.getInt(TRANSLATION_TYPE);
 //        Log.d("SELECTS", String.valueOf(args.getInt("TRANSLATION_ID")));
 //        Log.d("SELECTS", args.getString("TRANSLATION"));
 
@@ -109,7 +124,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
 
         try {
-            if (!args.getString("query").isEmpty())
+            if (!args.getString(QUERY).isEmpty())
                 resultWrapper = new DatabaseQuery(getContext()).execute(args).get();
 
 //                resultWrapper.getList().getResult().add(Translation);
@@ -127,6 +142,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             e.printStackTrace();
         }
 
+
     }
 
 
@@ -134,14 +150,24 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
         Context context = rootView.getContext();
+
+        //we need to add translation data inside ArrayList because we need a reference to the
+        //container object
+        String[] translaltionTypesArray = Translation.getSet(context);
+        if (!translationHolder.isEmpty()) translationHolder.clear();
+        translationHolder.add(translaltionTypesArray[args.getInt(TRANSLATION_TYPE)]);
+
+
         recyclerView = rootView.findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new MyAdapter(resultWrapper, TranslationArrayList, listener, pref.getString("CurDict", null));
+        mAdapter = new MyAdapter(resultWrapper, translationHolder, listener, pref.getString(CURRENTLY_SELECTED_DICTIONARY, null));
         recyclerView.setAdapter(mAdapter);
 
 
@@ -158,7 +184,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         //You need to inflate the Fragment's view and call findViewById() on the View it returns.
         searchView = view.findViewById(R.id.searchAdvView);
         //Any query text is cleared when iconified. So setIconified to false.
-        searchView.setQuery(args.getString("query"), true);
+        searchView.setQuery(args.getString(QUERY), true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -173,12 +199,12 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 //                fm.popBackStack("RESULT_FRAG", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 //
                 if (!newText.isEmpty()) {
-                    args.putString("query", newText);
+                    args.putString(QUERY, newText);
                     refreshResult();
 
                 } else {
-                    args.putString("query", "");
-                    args.putString("TRANSLATION", TRANSLATION);
+                    args.putString(QUERY, "");
+//                    args.putString(TRANSLATION_TYPE, TRANSLATION);
                     resultWrapper.getList().getResult().clear();
                     mAdapter.notifyDataSetChanged();
 //                    if (results != null) results.clear();
@@ -209,23 +235,25 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putSerializable("query", text);
+//        outState.putSerializable("Query", text);
     }
 
+    //item selected for avail. translations
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        if (INITIAL) {
-            System.out.println("INITIAL: " + parent.getItemAtPosition(pos));
-
-            adapter.itemSelect(TRANSLATION_DIRECTION);
-            INITIAL = false;
+        if (initial) {
+            //initial selection
+            System.out.println("Initial: " + parent.getItemAtPosition(pos));
+            adapter.itemSelect(selectedTranslationNumber);
+            initial = false;
         } else {
-            System.out.println("CUR ITEM IS " + parent.getItemAtPosition(pos));
+            System.out.println("Current item is:  " + parent.getItemAtPosition(pos));
             adapter.itemSelect(pos);
-            args.putInt("TRANSLATION_DIRECTION", pos);
-            TRANSLATION_DIRECTION = pos;
-            TRANSLATION = parent.getItemAtPosition(pos).toString();
-            //if new translation is selected, clear old irrelevant results
+            args.putInt(TRANSLATION_TYPE, pos);
+            args.putString(TRANSLATION_STRING, parent.getItemAtPosition(pos).toString());
+//            selectedTranslationNumber = pos;
+//            TRANSLATION = parent.getItemAtPosition(pos).toString();
+            //since new translation is selected, clear old irrelevant results
             resultWrapper.getList().getResult().clear();
             refreshResult();
 
@@ -250,11 +278,11 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
     private String[] translationSet(){
         String[] tranSet = null;
-        switch (pref.getString("CurDict", null)) {
-            case ("BHUTIA"):
+        switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
+            case (BHUTIA):
                 tranSet = getResources().getStringArray(R.array.bhutia_array);
                 break;
-            case("ENGLISH"):
+            case(ENGLISH):
                 tranSet = getResources().getStringArray(R.array.english_array);
                 break;
 
@@ -263,13 +291,14 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     private String getQueryKey(ResultWrapper resultWrapper, int position){
-        switch (pref.getString("CurDict", null)) {
-            case ("BHUTIA"):
+        String queryKey = null;
+        switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
+            case (BHUTIA):
                 BhutiaWord bhutiaWord = (BhutiaWord) resultWrapper.getList().getResult().get(position);
                 queryKey = bhutiaWord.eng_trans;
-                Log.d("QUERY ID", queryKey);
+                Log.d("Query Id", queryKey);
                 break;
-            case ("ENGLISH"):
+            case (ENGLISH):
 
 
                 break;
@@ -278,11 +307,11 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     private void refreshResult(){
-        args.putString("TRANSLATION", TRANSLATION);
+//        args.putString(TRANSLATION_TYPE, currentTranslationString);
         try {
             resultWrapper.getList().getResult().clear();
             //add back into existing ResultWrapper because the adapter needs the original reference to the ResultWrapper
-            if (!(args.getString("query").isEmpty())) {
+            if (!(args.getString(QUERY).isEmpty())) {
                 List<BhutiaWord> list = new DatabaseQuery(getContext()).execute(args).get().getList().getResult();
                 for (BhutiaWord bhutiaWord : list) {
                     resultWrapper.getList().getResult().add(bhutiaWord);
@@ -294,8 +323,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        TranslationArrayList.clear();
-        TranslationArrayList.add(TRANSLATION);
+        translationHolder.clear();
+        translationHolder.add(currentTranslationString);
         mAdapter.notifyDataSetChanged();
     }
 

@@ -19,6 +19,11 @@ import com.example.myapplication.HelperInterfaces.ILayoutSetter;
 import com.example.myapplication.R;
 import com.example.myapplication.Adapters.DumbSpinnerAdapter;
 
+import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
+import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
+import static com.example.myapplication.Constants.System.APP_PREFERENCES;
+import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -84,8 +89,8 @@ public class ResultFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         args = getArguments();
-        SharedPreferences pref = getContext().getSharedPreferences("BlankDictPref", 0);
-        curDict = pref.getString("CurDict", null);
+        SharedPreferences pref = getContext().getSharedPreferences(APP_PREFERENCES, 0);
+        curDict = pref.getString(CURRENTLY_SELECTED_DICTIONARY, null);
 
 //        if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
@@ -124,10 +129,10 @@ public class ResultFragment extends Fragment {
 
         ILayoutSetter layoutSetter = null;
         switch (curDict){
-            case ("BHUTIA"):
+            case (BHUTIA):
                 layoutSetter = new BhutiaLayout(getContext(), inflater, args);
                 break;
-            case ("ENGLISH"):
+            case (ENGLISH):
                 layoutSetter = new EnglishLayout(getContext(),inflater, args);
                 break;
 
