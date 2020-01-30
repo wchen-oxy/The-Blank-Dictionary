@@ -2,19 +2,19 @@ package com.example.myapplication.Dictionaries.English;
 
 import androidx.room.Dao;
 
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+
 
 import java.util.List;
 
 //FIXME change the SQL commands
 @Dao
 public interface EnglishDao {
-    @Query("SELECT * FROM EnglishWord")
+    @Query("SELECT * FROM EnglishWords")
     List<EnglishWord> getAll();
 
-    @Query("SELECT * FROM EnglishWord WHERE word LIKE :query")
+    @Query("SELECT * FROM EnglishWords WHERE word LIKE :query")
     List<EnglishWord> englishSearch(String query);
 
 
@@ -25,9 +25,9 @@ public interface EnglishDao {
 //            "last_name LIKE :last LIMIT 1")
 //    List<EnglishWord> findByName(String first, String last);
 //
-//    @Insert
-//    void insertAll(Word... words);
-//
-//    @Delete
-//    void delete(Word user);
+    @Insert
+    void insertAll(List<EnglishWord> words);
+
+    @Query("DELETE FROM EnglishWords")
+    void deleteAll();
 }

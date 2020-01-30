@@ -1,10 +1,6 @@
 package com.example.myapplication;
 
 import android.os.Environment;
-import android.util.Log;
-
-import org.json.JSONArray;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -50,11 +46,9 @@ public class DataSerialization {
         }
         catch (ClassNotFoundException c)
         {
-            System.out.println("Class not found");
             c.printStackTrace();
 
         }
-        Log.d("Object Read", arrayList.toString());
         return arrayList;
 
     }

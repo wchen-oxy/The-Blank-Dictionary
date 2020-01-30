@@ -18,13 +18,13 @@ import java.util.List;
 import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyQueryResultAdapter extends RecyclerView.Adapter<MyQueryResultAdapter.MyViewHolder> {
     private ResultWrapper mDataset;
     private View.OnClickListener listener;
     private String curDict;
     private String translation;
 
-    public MyAdapter(ResultWrapper myDataset, ArrayList<String> Translation, View.OnClickListener listener, String curDict) {
+    public MyQueryResultAdapter(ResultWrapper myDataset, ArrayList<String> Translation, View.OnClickListener listener, String curDict) {
         this.translation = Translation.get(0);
         this.mDataset = myDataset;
         this.listener = listener;
@@ -33,10 +33,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     //method needs to construct a RecyclerView.ViewHolder and set the view it uses to display its contents.
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        LinearLayout l = LayoutInflater.from(parent.getContext()).inflate(R.layout.query_result, parent, false);
-//        MyViewHolder lh = new MyViewHolder(l);
-//        return lh;
+    public MyQueryResultAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_result, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
@@ -45,33 +43,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     //method needs to fetch the appropriate data, and use it to fill in the view holder's (text) layout on creation
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
         //grab the specific list from mDataSet
-
         switch (curDict) {
             case (BHUTIA):
                 List<BhutiaWord> bhutiaList = mDataset.getList().getResult();
                 BhutiaTextSwitchboard.select(holder, translation, bhutiaList.get(position));
-
-
-                //FIXME ADd a bunch of switch cases for displaying the differently selected translations
-
-//                holder.bhutiaBind(position, mDataset, listener);
                 break;
             case (ENGLISH):
                 List<EnglishWord> englishList = mDataset.getList().getResult();
                 holder.textView.setText(englishList.get(position).word);
-//                holder.englishBind(position, englishList.get(position), listener);
                 break;
         }
-
-
-        //determine which dictionary it is
-        //bind each one accordingly
-
-
-//        holder.textView.setText(mDataset.get(position).romanization);
-//        holder.bind(mDataset.get(position), listener);
 
     }
 
@@ -91,57 +73,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 break;
         }
         return size;
-
     }
 
-
-
-    //    private List getResultWrapper(ResultWrapper resultWrapper){
-//        List resultList = null;
-//        switch (curDict) {
-//            case ("BHUTIA"):
-//                resultList = resultWrapper.getBhutiaWordList();
-//                break;
-//            case("ENGLISH"):
-//                resultList = resultWrapper.getEnglishWordList();
-//                break;
-//        }
-//        return resultList;
-//    }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
-
-
         public MyViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.row_text);
             itemView.setTag(this);
             itemView.setOnClickListener(listener);
-
-//            row = (LinearLayout) v.findViewById(query_row);
-
         }
-
-        //TODO: MARKED FOR REMOVAL
-//        //helper function for onBindViewHolder
-//        public void bhutiaBind(final int position, final ResultWrapper item, final View.OnClickListener listener) {
-//            Log.d("Item", item.getBhutiaWordList().get(position).romanization);
-//
-////        textView.setOnClickListener(new View.OnClickListener() {
-////            @Override public void onClick(View v) {
-////                listener.onClick(v);
-////            }
-////        });
-//        }
-//
-//        public void englishBind(final ResultWrapper item, final ResultClickListeners.OnItemClickListener listener) {
-//            textView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                    listener.onItemClick(item);
-//                }
-//            });
-//        }
     }
-
 }

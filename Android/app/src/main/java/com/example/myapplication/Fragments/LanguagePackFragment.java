@@ -26,14 +26,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.example.myapplication.Constants;
 import com.example.myapplication.R;
 import com.example.myapplication.DataSerialization;
 import com.example.myapplication.BroadcastRecievers.myDictionaryDownloadReceiver;
-
-import org.json.JSONArray;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -43,7 +38,6 @@ import static com.example.myapplication.Constants.Network.LANG_DOWNLOAD_HANDLER_
 import static com.example.myapplication.Constants.Network.REQUEST_AUTH_HEADER;
 import static com.example.myapplication.Constants.Network.REQUEST_DESCRIPTION;
 import static com.example.myapplication.Constants.Network.REQUEST_TITLE;
-import static com.example.myapplication.Constants.Network.SECRET_CODE;
 import static com.example.myapplication.Constants.Network.authDigest;
 import static com.example.myapplication.Constants.Network.getAbsoluteUrl;
 import static com.example.myapplication.Constants.System.APP_NAME;
@@ -57,16 +51,8 @@ import static com.example.myapplication.Constants.Toast.DICT_STILL_DOWNLOADING_T
 public class LanguagePackFragment extends Fragment {
     Activity activtiy;
     Context mContext;
-    String TEMP_URL = "https://jsonplaceholder.typicode.com/todos/1";
-    String TEMP_REAL_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/db.json";
-    String TEMP_ENG_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/eng.json";
-    String TEMP_FAKE_URL = "https://raw.githubusercontent.com/wchen-oxy/Json/master/test.json";
-
-
-    JSONArray list = null;
 
     public static Boolean DOWNLOAD_IN_PROGRSS = false;
-
     public static LanguagePackFragment newInstance(){
        return new LanguagePackFragment();
     }
@@ -77,9 +63,7 @@ public class LanguagePackFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
         activtiy = getActivity();
-
     }
-
 
     @Override
     public void onCreate (Bundle savedInstanceState) {
@@ -95,7 +79,6 @@ public class LanguagePackFragment extends Fragment {
         LinearLayout linearLayout = rootView.findViewById(R.id.lang_pack_root_layout);
 
         //case where there are downloaded languages
-
         for (String s:lists) {
             Button button = new Button(mContext);
             button.setTypeface(Typeface.create(FONT_STYLE, Typeface.NORMAL));
@@ -139,23 +122,13 @@ public class LanguagePackFragment extends Fragment {
                             else {
                                 Toast.makeText(getActivity(), DICT_STILL_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
                             }
-
-//
-
                         }
                     });
-
-
             if (linearLayout != null) {
                 linearLayout.addView(button);
             }
-
-
         }
 
-
-
-//            ArrayList<String> lists = loadJSONFromAsset();
         if (!lists.isEmpty()) {
             Log.d("download", lists.toString());
             Log.d("Download,specific", lists.get(0));
@@ -167,128 +140,44 @@ public class LanguagePackFragment extends Fragment {
         return rootView;
     }
 
-    //need to convert into asynchtask
-
     private void dataDownload(String url, String buttonText){
+        Log.d("Download URL: ", url);
         Toast.makeText(getActivity(),DICTIONARY_IS_DOWNLOADING_TOAST,Toast.LENGTH_SHORT).show();
-        Log.d("CHECK1", Environment.getExternalStorageDirectory().toString());
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         File file = new File(Environment.getExternalStorageDirectory()+"/"+ APP_NAME, buttonText);
-//        File file2 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + buttonText);
-        Log.d("noAbs", file.getAbsolutePath().toString());
-        Log.d("noAbs", Environment.getExternalStorageDirectory().toString());
         file.setWritable(true);
         if (file.exists()) {
             Log.d("File", file.getAbsolutePath() );
-//            if (getter.br != null) {getter.unregisterReceiver(getter.br); getter.br = null;}
             try {
 
-                Log.v("PERMISSION", Boolean.toString(ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
-                System.out.println("file delete!");
-
-                Log.d("REadable", Boolean.toString(file.canRead()));
-                Log.d("Writable", Boolean.toString(file.canWrite()));
-
-                Log.d("DeleteStat", Boolean.toString(file.delete()));
-                Log.d("does exist?", Boolean.toString(file.exists()));
+                Log.v("Write Permission", Boolean.toString(ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
+                Log.d("Is Readable", Boolean.toString(file.canRead()));
+                Log.d("Is Writable", Boolean.toString(file.canWrite()));
+                Log.d("Prev. File Deleted", Boolean.toString(file.delete()));
+                Log.d("Pref. File Exists", Boolean.toString(file.exists()));
 
 
             } catch(Exception e) {
-                System.out.println("file not deleted");
+                Log.d("File", "Not Deleted");
             }
         }
-
 
         request.setDescription(REQUEST_DESCRIPTION)
                 .setTitle(REQUEST_TITLE)
                 .setDestinationUri(Uri.fromFile(file))
                 .addRequestHeader(REQUEST_AUTH_HEADER, authDigest());
         Log.d("CHECK2", Environment.getExternalStorageDirectory().toString());
-
-
-
-
         DownloadManager downloadManager= (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
-        long downloadID = downloadManager.enqueue(request);
+        downloadManager.enqueue(request);
 
         BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(buttonText);
-
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-
         HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
         handlerThread.start();
         Looper looper = handlerThread.getLooper();
         Handler handler = new Handler(looper);
         mContext.registerReceiver(broadcastReceiver, filter, null, handler);
-
-//        myReceiver.downloadId = downloadID;
-//        // enqueue puts the download request in the queue.
-////        downloadManager.enqueue(request);
-//        BroadcastReceiver br = new myReceiver(buttonText);
-//        MainActivity setter = (MainActivity) getActivity();
-//
-//        setter.br = br;
-//        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-////        filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-//        HandlerThread handlerThread = new HandlerThread("LANGUAGE_DOWNLOAD");
-//        handlerThread.start();
-//        Looper looper = handlerThread.getLooper();
-//        //use looper for the remaining tasks, like convet to json and SQL insert and Delete
-//        //https://stackoverflow.com/questions/7597742/what-is-the-purpose-of-looper-and-how-to-use-it
-//        //https://stackoverflow.com/questions/5674518/does-broadcastreceiver-onreceive-always-run-in-the-ui-thread
-//        Handler handler = new Handler(looper);
-//        mContext.registerReceiver(br, filter, null, handler);
-//        Log.d("I HAVE THIS MANY", String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).list().length));
-
-
     }
-
-
-//    public ArrayList<String> loadJSONFromAsset() throws FileNotFoundException {
-//        ArrayList<String> json = new ArrayList<>();
-//
-////        Scanner s = new Scanner(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
-////        ArrayList<String> list = new ArrayList<String>();
-////        while (s.hasNext()){
-////            list.add(s.next());
-////        }
-////        s.close();
-//
-//        try (BufferedReader br = new BufferedReader(new FileReader(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"))) {
-//            while (br.ready()) {
-//                json.add(br.readLine());
-//            }
-//        }
-//        catch(FileNotFoundException fe) {
-//            fe.printStackTrace();
-//
-//        }
-//        catch (IOException ie){
-//            ie.printStackTrace();
-//        }
-//
-//        Log.d("Pre-list",  json.get(0).toString());
-//
-//
-////        try {
-////
-////            InputStream is = getActivity().getAssets().open();
-////            int size = is.available();
-////            byte[] buffer = new byte[size];
-////            is.read(buffer);
-////            is.close();
-////            json = new String(buffer, "UTF-8");
-////        } catch (IOException ex) {
-////            ex.printStackTrace();
-////            return null;
-////        }
-//        return json;
-//    }
-//
-
-
-
-
 }
 
 

@@ -91,51 +91,9 @@ public class BhutiaLayout implements ILayoutSetter {
                 subTitle2.setText("Bhutia (Informal): " + bhutiaWord.bhut_rom_informal);
                 subTitle3.setText("Bhutia Script (Formal): " + bhutiaWord.bhut_script_formal);
                 subTitle4.setText("Bhutia Script (Informal): " + bhutiaWord.bhut_rom_informal);
-//            case ("Bhutia to English (Formal)"):
-//                title.setText(bhutiaWord.eng_trans);
-//                subTitle1.setText("Bhutia (Formal): " + bhutiaWord.bhut_rom_formal);
-//                subTitle2.setText("Bhutia (Informal): " + bhutiaWord.bhut_rom_informal);
-//                subTitle3.setText("Bhutia Script (Formal): " + bhutiaWord.bhut_script_formal);
-//                subTitle4.setText("Bhutia Script (Informal): " + bhutiaWord.bhut_rom_informal);
-//                break;
-//            case ("Bhutia to English (Informal)"):
-//                title.setText(bhutiaWord.eng_trans);
-//                subTitle1.setText("Bhutia (Formal): " + bhutiaWord.bhut_rom_formal);
-//                subTitle2.setText("Bhutia (Informal): " + bhutiaWord.bhut_rom_informal);
-//                subTitle3.setText("Bhutia Script (Formal): " + bhutiaWord.bhut_script_formal);
-//                subTitle4.setText("Bhutia Script (Informal): " + bhutiaWord.bhut_rom_informal);
-//                break;
-//            case ("Bhutia Script to English (Formal)"):
-//                title.setText(bhutiaWord.eng_trans);
-//                subTitle1.setText("Bhutia (Formal): " + bhutiaWord.bhut_rom_formal);
-//                subTitle2.setText("Bhutia (Informal): " + bhutiaWord.bhut_rom_informal);
-//                subTitle3.setText("Bhutia Script (Formal): " + bhutiaWord.bhut_script_formal);
-//                subTitle4.setText("Bhutia Script (Informal): " + bhutiaWord.bhut_rom_informal);
-//                break;
-//            case ("Bhutia Script to English (Informal)"):
-//                title.setText(bhutiaWord.eng_trans);
-//                subTitle1.setText("Bhutia (Formal): " + bhutiaWord.bhut_rom_formal);
-//                subTitle2.setText("Bhutia (Informal): " + bhutiaWord.bhut_rom_informal);
-//                subTitle3.setText("Bhutia Script (Formal): " + bhutiaWord.bhut_script_formal);
-//                subTitle4.setText("Bhutia Script (Informal): " + bhutiaWord.bhut_rom_informal);
-//                break;
+
         }
 
-//        for (TextView textView:textViewArrayList){
-////            textView.setTypeface(Typeface.create("alegreya_sans", Typeface.NORMAL));
-////            textView.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
-////            textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//            linearLayout.addView(textView);
-//        }
-
-//        linearLayout.addView(title);
-//        linearLayout.addView(ipa);
-//        linearLayout.addView(category);
-//        linearLayout.addView(subTitle1);
-//        linearLayout.addView(subTitle2);
-//        linearLayout.addView(subTitle3);
-//        linearLayout.addView(subTitle4);
-//        linearLayout.addView(example);
 
         this.dictionaryLayout = new DictionaryLayoutHelper(view);
     }

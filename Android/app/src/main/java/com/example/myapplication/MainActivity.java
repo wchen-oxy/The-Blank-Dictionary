@@ -54,42 +54,22 @@ import static com.example.myapplication.Constants.IntentFilters.SERVER_REACHED;
 import static com.example.myapplication.Constants.Network.NO_INTERNET_ERROR;
 import static com.example.myapplication.Constants.System.APP_NAME;
 
-//import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
-
-
 public class MainActivity extends AppCompatActivity implements IFragmentCommunicator {
-    private TextView mTextMessage;
-
-
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     BottomNavigationView navViewBack;
     com.example.myapplication.BroadcastRecievers.myServerStatusReciever myServerStatusReciever;
     LocalBroadcastManager localBroadcastManager;
-    SearchView secSearch;
-//    public String query;
-    public BroadcastReceiver br;
     public BroadcastReceiver myAvailableDictionaryReciever;
     public Boolean isAdvSearch = false;
-    public IFragmentCommunicator fragmentCommunicator;
     final Context context = this;
-
     Bundle args;
-
-    //TODO implement these
-//    @Override
-//    public void textPass(String string) {
-//        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
-//        Log.d("RECIEVED", "TEXT");
-//
-//    }
 
 
     //to create all fragments
     @Override
     public void bundPass(Bundle args, boolean isPause) {
         if (isPause) {this.args = args;
-        Log.d("BUND", "PASSEd");
         }
         else {
             fragController(args);
@@ -162,9 +142,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    System.out.println("HERE ARE THE FRAGMENTS: " + getSupportFragmentManager().getFragments());
                     if (isAdvSearch) {
-                        Log.d("Args", "is null");
                         fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.frag_container, SearchFragment.newInstance(args), SEARCH_FRAGMENT).commit();
                         return true;
@@ -174,11 +152,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                     fragmentTransaction.replace(R.id.frag_container, HomeFragment.newInstance(), HOME_FRAGMENT).commit();
                     return true;
 
-//                case R.id.navigation_favorites:
-//                    clearBackStack();
-//                    fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.frag_container, FavoritesFrag.newInstance()).commit();
-//                    return true;
 
                 case R.id.navigation_settings:
                     clearBackStack();
@@ -207,83 +180,16 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         }
         catch (IOException e)          { e.printStackTrace(); }
         catch (InterruptedException e) { e.printStackTrace(); }
-
         return false;
     }
-
-
-    //code for selecting correct menu item on backstack press
-    public Fragment getCurrentFragment() {
-        return this.getSupportFragmentManager().findFragmentById(R.id.frag_container);
-    }
-
-    //FIXME simplify and remove bug that presses back twice
-//    @Override
-//    public void onBackPressed(){
-//        SearchView mainSearch = findViewById(R.id.searchAdvView);
-//        Log.d("TAG", getCurrentFragment().toString());
-//
-//        Fragment f = getSupportFragmentManager().findFragmentById(R.id.frag_container);
-//        if (!(f instanceof HomeFrag) && !(f instanceof SearchFrag)){
-//                Log.d("THIS CLASS IS", f.toString());
-//            navViewBack.setSelectedItemId(R.id.navigation_home);
-//            Log.d("TAG", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
-//
-//            getSupportFragmentManager().popBackStackImmediate();
-//            Log.d("TAG", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
-//
-//            super.onBackPressed();
-//
-//        }
-//        //clear text in adv
-//        else if (mainSearch != null && !mainSearch.getQuery().toString().isEmpty()) {
-//        Log.d("ceck", mainSearch.getQuery().toString());
-//        mainSearch.setQuery("",false);
-//
-//        }
-////        else if( f instanceof ResultFragment) {
-////            fragmentManager.popBackStack();
-////            super.onBackPressed();
-////        }
-//        else if (f instanceof SettingsFrag){
-//            Log.d("Settings", "RETURNED");
-//
-//            super.onBackPressed();
-//        }
-//
-//        else if(f instanceof LanguagePackFrag) super.onBackPressed();
-//        else if(f instanceof DictionarySelectionFrag) super.onBackPressed();
-//        else {
-//            if (f instanceof SearchFrag) ((SearchFrag) f).setmAdapter();
-//
-//
-//            Log.d("ceck", "backpress");
-//            //add clear
-//            isAdvSearch = false;
-////            super.onBackPressed();
-//
-//            final Fragment fragment = fragmentManager.findFragmentById(R.id.results_frag);
-//            if (fragment != null) {
-//                fragmentManager.popBackStack();
-//            } else {
-//                super.onBackPressed();
-//            }
-//
-//
-//        }
-//    }
-
-
 
 
     @Override
     public void onBackPressed(){
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container);
-
         //if it is an instance, and if the instance returns true, do nothing
         if (fragment instanceof IOnBackPressed && ((IOnBackPressed) fragment).clearText()) return;
         //otherwise do something
-        Log.d("SUPER", "BACKPRESSEd");
         super.onBackPressed();
     }
 
@@ -296,26 +202,16 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navViewBack = navView;
         fragmentManager = getSupportFragmentManager();
-        Log.d("tag", "total on stack is " + Integer.toString(getFragmentManager().getBackStackEntryCount()));
         Bundle args = new Bundle();
         args.putString(NEW_FRAGMENT, HOME_FRAGMENT);
         fragController(args);
-
-//        //setup for shared pref
-//        //FIXME CHANGE SO THAT APP ON STARTUP DYNAMICALLY CHANGES TO DICTIONARY
-//        SharedPreferences pref = getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
-//        SharedPreferences.Editor editor = pref.edit();
-//        editor.putString("CurDict", "BHUTIA"); // Storing boolean - true/false
-//        editor.commit(); // commit changes
 
         //SECTION FOR GETTING AVAILABLE DICTIONARIES AHEAD OF TIME
         if (!(new File(Environment.getExternalStorageDirectory(), APP_NAME).isDirectory())){
             new File(Environment.getExternalStorageDirectory(),APP_NAME).mkdir();
         }
-
             //check internet connection
             if (!isOnline()) Toast.makeText(this, NO_INTERNET_ERROR, Toast.LENGTH_SHORT).show();
-
             //check if connection to server is possible
             myServerStatusReciever = new myServerStatusReciever();
             localBroadcastManager = LocalBroadcastManager.getInstance(this);
@@ -323,30 +219,11 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
             myAvailableDictionaryReciever = new myAvailableDictionaryReciever();
             localBroadcastManager.registerReceiver(myAvailableDictionaryReciever, new IntentFilter(DICTIONARY_LIST_DOWNLOADED));
-//
-//            //check if connection to server is possible
-//            BroadcastReceiver serverReceiver = new myServerReciever();
-//            IntentFilter serverfilter = new IntentFilter("SERVER_REACHED");
-//            HandlerThread serverThread = new HandlerThread("SERVER_STATUS");
-//            serverThread.start();
-//            Looper looper = serverThread.getLooper();
-//            Handler handler = new Handler(looper);
-//            this.registerReceiver(serverReceiver, serverfilter, null, handler);
-//
-//            //begin reciever of new list
-//            BroadcastReceiver downloadReceiver = new myAvailableDictionaryReciever();
-//            IntentFilter downloadFilter = new IntentFilter("DICTIONARY_LIST_DOWNLOADED");
-//            HandlerThread downloadThread = new HandlerThread("LANGUAGE_DOWNLOAD");
-//            downloadThread.start();
-//            looper = downloadThread.getLooper();
-//            handler = new Handler(looper);
-//            this.registerReceiver(downloadReceiver, downloadFilter, null, handler);
 
         Handler mainHandler = new Handler(Looper.getMainLooper());
         Runnable myRunnable = new Runnable(){
             @Override
             public void run() {
-                //Code that uses AsyncHttpClient
                 try {
                     new DictionaryClientUsage().checkStatus(context);
                 } catch (HttpBadRequestException e) {
@@ -357,13 +234,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
         };
         mainHandler.post(myRunnable);
-
-//
-//
-//        Connectivity connectivity = new Connectivity(this);
-//                connectivity.start();
-
-
 
 
     }

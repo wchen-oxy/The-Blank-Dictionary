@@ -25,7 +25,6 @@ import com.example.myapplication.Translation;
 
 import java.io.File;
 
-
 import static com.example.myapplication.Constants.DictionaryData.QUERY;
 import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
 import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
@@ -55,8 +54,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     public static HomeFragment newInstance(){
         return new HomeFragment();
     }
-
-
 
     @Override
     public void onAttach(Context context) {
@@ -127,9 +124,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 
             Spinner spinner = getView().findViewById(R.id.home_trans_spinner);
-
-//            String[] stringArray = getResources().getStringArray(R.array.bhutia_array);
-//            String[] stringArray = translationSet();
             String[] translationTypesArray = Translation.getSet(getContext());
             translationSpinnerAdapter = new myTranslationSpinnerAdapter<String>(getActivity(),
                     android.R.layout.simple_spinner_dropdown_item, translationTypesArray);
@@ -146,18 +140,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                     }
                     if (mDictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) == null) {
                         Toast.makeText(getActivity(), NO_DICT_SELECTED_TOAST, Toast.LENGTH_LONG).show();
-
                     }
                 }
             });
         }
     }
 
-
     @Override
     public void onResume() {
         mainSearchBar.setQuery("", false);
-
         mainSearchBar.setFocusable(true);
         mainSearchBar.setIconified(true);
         mainSearchBar.clearFocus();

@@ -16,10 +16,6 @@ public class myServerStatusReciever extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "SUCCESS", Toast.LENGTH_SHORT).show();
-        Log.d("Server Check", "BROADCAST RECIEVED");
-
-
-
+        Toast.makeText(context, "Successfully Connected to Server!", Toast.LENGTH_SHORT).show();
     }
 }

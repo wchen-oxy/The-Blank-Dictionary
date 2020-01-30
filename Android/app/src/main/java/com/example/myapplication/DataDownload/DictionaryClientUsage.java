@@ -23,24 +23,10 @@ public class DictionaryClientUsage {
     private JSONArray list = null;
 
 
-//    public void check() throws JSONException{
-//        DictionaryClient.get("", null, new JsonHttpResponseHandler(){
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-//                super.onSuccess(statusCode, headers, response);
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                super.onFailure(statusCode, headers, throwable, errorResponse);
-//            }
-//        });
-//    }
     public void getAvailableDic(final Context context) throws JSONException {
         DictionaryClient.get(DICT_LIST_URL_PART, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-//                super.onSuccess(statusCode, headers, response);
                 Log.d("RECEIVED RESPONSE", response.toString());
                 ArrayList<String> arrayListResponse = new ArrayList<>();
                 for (int i = 0; i < response.length(); i++) {
@@ -51,27 +37,6 @@ public class DictionaryClientUsage {
                     }
                 }
                 DataSerialization.serializer(arrayListResponse);
-
-//                list = response;
-//                //store file
-//                //TODO change to internal storage
-//                File file = new File(Environment.getExternalStorageDirectory()+"/BlankDictionary", "list.json");
-//                file.setWritable(true);
-//
-//                try {
-//
-//
-//                    Writer output = new BufferedWriter(new FileWriter(file));
-//                    output.write(list.toString());
-//                    output.close();
-//                    context.sendBroadcast(new Intent("DICTIONARY_LIST_DOWNLOADED"));
-//
-//                }
-//                catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
 
                 LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent("DICTIONARY_LIST_DOWNLOADED"));
 

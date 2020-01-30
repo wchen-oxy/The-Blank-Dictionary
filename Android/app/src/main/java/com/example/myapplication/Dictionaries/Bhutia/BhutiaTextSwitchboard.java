@@ -1,9 +1,9 @@
 package com.example.myapplication.Dictionaries.Bhutia;
 
-import com.example.myapplication.Adapters.MyAdapter;
+import com.example.myapplication.Adapters.MyQueryResultAdapter;
 
 public class BhutiaTextSwitchboard {
-    public static void select(MyAdapter.MyViewHolder myViewHolder, String string, BhutiaWord bhutiaWord){
+    public static void select(MyQueryResultAdapter.MyViewHolder myViewHolder, String string, BhutiaWord bhutiaWord){
         switch (string){
             case("English to Bhutia (Formal)"):
                 myViewHolder.textView.setText(bhutiaWord.bhut_rom_formal);

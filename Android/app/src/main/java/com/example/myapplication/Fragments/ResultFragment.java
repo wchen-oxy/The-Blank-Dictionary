@@ -24,23 +24,8 @@ import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ResultFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ResultFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ResultFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private String curDict;
     private Bundle args;
     private View.OnTouchListener touchListener = new View.OnTouchListener(){
@@ -92,10 +77,6 @@ public class ResultFragment extends Fragment {
         SharedPreferences pref = getContext().getSharedPreferences(APP_PREFERENCES, 0);
         curDict = pref.getString(CURRENTLY_SELECTED_DICTIONARY, null);
 
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
     }
 
     @Override
@@ -104,28 +85,18 @@ public class ResultFragment extends Fragment {
 
 
         View rootView = inflater.inflate(R.layout.fragment_result, container,false);
-
         //initialize return listener
         rootView.findViewById(R.id.final_result_frag).setOnClickListener(myListener);
-
         //set spinner return listener
         Spinner spinner = rootView.findViewById(R.id.final_result_adv_trans_spinner);
         DumbSpinnerAdapter dumbSpinnerAdapter = new DumbSpinnerAdapter(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, myListener);
         dumbSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setOnTouchListener(touchListener);
-
-//        TextView textView = rootView.findViewById(android.R.id.text1);
-//        textView.setOnClickListener(myListener);
-
         spinner.setAdapter(dumbSpinnerAdapter);
-
 
         //setting results
         ScrollView dictInfoContainer = rootView.findViewById(R.id.dict_info_container);
-
-//        View view = inflater.inflate(R.layout.z_final_bhutia, null);
-//        dictInfoContainer.addView(view);
 
         ILayoutSetter layoutSetter = null;
         switch (curDict){
@@ -140,7 +111,6 @@ public class ResultFragment extends Fragment {
         dictInfoContainer.addView(layoutSetter.getDictionaryLayout().returnView());
 
         return rootView;
-
 
     }
 

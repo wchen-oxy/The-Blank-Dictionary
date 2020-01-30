@@ -15,6 +15,7 @@ import com.example.myapplication.Dictionaries.AppDatabase;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaDao;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaDataInsert;
 import com.example.myapplication.Dictionaries.English.EnglishDao;
+import com.example.myapplication.Dictionaries.English.EnglishDataInsert;
 import com.example.myapplication.Fragments.LanguagePackFragment;
 
 import java.io.File;
@@ -22,10 +23,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
+import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
+
 public class myDictionaryDownloadReceiver extends BroadcastReceiver {
-    public static long downloadId;
-    private EnglishDao englishDao;
-    private BhutiaDao bhutiaDao;
     String type;
 
 
@@ -39,19 +40,18 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
         StringBuilder sb = new StringBuilder();
         sb.append("Action: " + intent.getAction() + "\n");
         sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");
-        String log = sb.toString();
 
-        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+//        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
         //Checking if the received broadcast is for our enqueued download by matching download id
             LanguagePackFragment.DOWNLOAD_IN_PROGRSS = false;
             Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
 
             final File file = new File(Environment.getExternalStorageDirectory()+"/BlankDictionary", type);
-            FileInputStream fis = null;
+
             String message = "";
 
             try {
-                fis = new FileInputStream(file);
+                FileInputStream fis = new FileInputStream(file);
                 int c;
                 while ((c = fis.read()) != -1) {
                     message += String.valueOf((char) c);
@@ -73,17 +73,18 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
             final SharedPreferences.Editor editor = pref.edit();
             //build an abstract factory
             switch (type) {
-                case "BHUTIA": {
+                case BHUTIA: {
                     BhutiaDao bhutiaDao = db.getBhutiaDao();
                     BhutiaDataInsert.BhuInsert(bhutiaDao, file);
-                    editor.putBoolean("BHUTIA", true);
+                    editor.putBoolean(BHUTIA, true);
                     editor.commit();
                     break;
 
                 }
-                case "ENGLISH": {
+                case ENGLISH: {
                     EnglishDao englishDao = db.getEnglishDao();
-                    editor.putBoolean("ENGLISH", true);
+                    EnglishDataInsert.engInsert(englishDao, file);
+                    editor.putBoolean(ENGLISH, true);
                     editor.commit();
                     break;
 

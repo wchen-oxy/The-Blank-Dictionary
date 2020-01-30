@@ -46,7 +46,6 @@ public class DictionarySelectionFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
 
-
     }
 
     @Override
@@ -64,7 +63,6 @@ public class DictionarySelectionFragment extends Fragment {
         SharedPreferences pref = getActivity().getSharedPreferences(APP_PREFERENCES, 0); // 0 - for private mode
         final SharedPreferences.Editor editor = pref.edit();
 
-        //new one
         ArrayList<String> list = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory() + APP_DICTIONARY_FILE));
         LinearLayout linearLayout = rootView.findViewById(R.id.dict_pack_list_linear_layout);
 
@@ -73,12 +71,9 @@ public class DictionarySelectionFragment extends Fragment {
         for (String s:list) {
             //if it doesn't exist, it will return false
             if (pref.getBoolean(s,false) == false) {
-                Log.d("DictSelect", "Inner");
                 continue;
             }
-            Log.d("DictSelect", "Outer");
 
-            //create new button
             Button button = new Button(getActivity());
             button.setTypeface(Typeface.create(FONT_STYLE, Typeface.NORMAL));
             button.setText(s);

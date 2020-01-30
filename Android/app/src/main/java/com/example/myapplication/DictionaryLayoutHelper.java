@@ -1,10 +1,8 @@
 package com.example.myapplication;
 
-import android.os.Bundle;
 import android.view.View;
 
 public class DictionaryLayoutHelper {
-    Bundle args;
     View rootView;
     //recieve custom view from each subclass
     public DictionaryLayoutHelper(View view){
