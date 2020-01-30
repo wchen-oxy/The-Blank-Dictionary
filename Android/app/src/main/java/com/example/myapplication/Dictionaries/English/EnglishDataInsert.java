@@ -10,14 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnglishDataInsert {
-    private static EnglishWord readEng (JsonReader reader) throws IOException {
-        String ipa, definition, example;
-        ipa = definition = example = "";
+    private static EnglishWord readEng(JsonReader reader) throws IOException {
+        String word, ipa, definition, example;
+        word = ipa = definition = example = "";
         reader.beginObject();
 
         while (reader.hasNext()) {
 
-            switch (reader.nextName()){
+            switch (reader.nextName()) {
+                case ("word"):
+                    if (reader.peek() == JsonToken.NULL) {
+                        reader.skipValue();
+                        continue;
+                    }
+                    word = reader.nextString();
+                    break;
+
                 case ("ipa"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
@@ -25,7 +33,7 @@ public class EnglishDataInsert {
                     }
                     ipa = reader.nextString();
                     break;
-                case("definition"):
+                case ("definition"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
                         continue;
@@ -33,7 +41,7 @@ public class EnglishDataInsert {
                     definition = reader.nextString();
                     break;
 
-                case("example"):
+                case ("example"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
                         continue;
@@ -50,22 +58,22 @@ public class EnglishDataInsert {
         }
 
         reader.endObject();
-        return new EnglishWord(ipa, definition, example);
+        return new EnglishWord(word, ipa, definition, example);
 
     }
-    public static void engInsert(EnglishDao englishDao, File file){
+
+    public static void engInsert(EnglishDao englishDao, File file) {
         List<EnglishWord> words = new ArrayList<EnglishWord>();
-        try{
+        try {
             JsonReader reader = new JsonReader(new FileReader(file));
             reader.beginArray();
             while (reader.hasNext()) {
-                while(reader.hasNext()){
+                while (reader.hasNext()) {
                     words.add(readEng(reader));
                 }
             }
             reader.endArray();
-        }
-        catch (IOException io){
+        } catch (IOException io) {
             io.printStackTrace();
         }
         englishDao.deleteAll();

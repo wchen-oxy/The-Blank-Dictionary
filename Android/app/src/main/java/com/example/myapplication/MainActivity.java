@@ -7,29 +7,22 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
 
 import com.example.myapplication.BroadcastRecievers.myAvailableDictionaryReciever;
 import com.example.myapplication.BroadcastRecievers.myServerStatusReciever;
-import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
-import com.example.myapplication.HelperInterfaces.IOnBackPressed;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.myapplication.DataDownload.DictionaryClientUsage;
 import com.example.myapplication.DataDownload.HttpBadRequestException;
 import com.example.myapplication.Fragments.DictionarySelectionFragment;
@@ -38,6 +31,9 @@ import com.example.myapplication.Fragments.LanguagePackFragment;
 import com.example.myapplication.Fragments.ResultFragment;
 import com.example.myapplication.Fragments.SearchFragment;
 import com.example.myapplication.Fragments.SettingsFragment;
+import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
+import com.example.myapplication.HelperInterfaces.IOnBackPressed;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,30 +51,56 @@ import static com.example.myapplication.Constants.Network.NO_INTERNET_ERROR;
 import static com.example.myapplication.Constants.System.APP_NAME;
 
 public class MainActivity extends AppCompatActivity implements IFragmentCommunicator {
+    final Context context = this;
+    public BroadcastReceiver myAvailableDictionaryReciever;
+    public Boolean isAdvSearch = false;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     BottomNavigationView navViewBack;
     com.example.myapplication.BroadcastRecievers.myServerStatusReciever myServerStatusReciever;
     LocalBroadcastManager localBroadcastManager;
-    public BroadcastReceiver myAvailableDictionaryReciever;
-    public Boolean isAdvSearch = false;
-    final Context context = this;
     Bundle args;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    if (isAdvSearch) {
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frag_container, SearchFragment.newInstance(args), SEARCH_FRAGMENT).commit();
+                        return true;
+                    }
+                    clearBackStack();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frag_container, HomeFragment.newInstance(), HOME_FRAGMENT).commit();
+                    return true;
+
+
+                case R.id.navigation_settings:
+                    clearBackStack();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frag_container, SettingsFragment.newInstance(), SETTINGS_FRAGMENT).commit();
+
+                    return true;
+            }
+            return false;
+        }
+    };
 
     //to create all fragments
     @Override
     public void bundPass(Bundle args, boolean isPause) {
-        if (isPause) {this.args = args;
-        }
-        else {
+        if (isPause) {
+            this.args = args;
+        } else {
             fragController(args);
         }
     }
 
-
-    private void fragController(Bundle args){
-        switch (args.getString(NEW_FRAGMENT)){
+    private void fragController(Bundle args) {
+        switch (args.getString(NEW_FRAGMENT)) {
             case HOME_FRAGMENT:
                 HomeFragment homeFragment = HomeFragment.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
@@ -115,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                         // No explanation needed; request the permission
                         ActivityCompat.requestPermissions(this,
                                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-                                ,101);
+                                , 101);
 
                         // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                         // app-defined int constant. The callback method gets the
@@ -135,35 +157,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    if (isAdvSearch) {
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_container, SearchFragment.newInstance(args), SEARCH_FRAGMENT).commit();
-                        return true;
-                    }
-                    clearBackStack();
-                    fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, HomeFragment.newInstance(), HOME_FRAGMENT).commit();
-                    return true;
-
-
-                case R.id.navigation_settings:
-                    clearBackStack();
-                    fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, SettingsFragment.newInstance(), SETTINGS_FRAGMENT).commit();
-
-                    return true;
-            }
-            return false;
-        }
-    };
-
     private void clearBackStack() {
         if (fragmentManager.getBackStackEntryCount() > 0) {
             FragmentManager.BackStackEntry first = fragmentManager.getBackStackEntryAt(0);
@@ -175,17 +168,19 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         Runtime runtime = Runtime.getRuntime();
         try {
             Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
-            int     exitValue = ipProcess.waitFor();
+            int exitValue = ipProcess.waitFor();
             return (exitValue == 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        catch (IOException e)          { e.printStackTrace(); }
-        catch (InterruptedException e) { e.printStackTrace(); }
         return false;
     }
 
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container);
         //if it is an instance, and if the instance returns true, do nothing
         if (fragment instanceof IOnBackPressed && ((IOnBackPressed) fragment).clearText()) return;
@@ -207,21 +202,21 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         fragController(args);
 
         //SECTION FOR GETTING AVAILABLE DICTIONARIES AHEAD OF TIME
-        if (!(new File(Environment.getExternalStorageDirectory(), APP_NAME).isDirectory())){
-            new File(Environment.getExternalStorageDirectory(),APP_NAME).mkdir();
+        if (!(new File(Environment.getExternalStorageDirectory(), APP_NAME).isDirectory())) {
+            new File(Environment.getExternalStorageDirectory(), APP_NAME).mkdir();
         }
-            //check internet connection
-            if (!isOnline()) Toast.makeText(this, NO_INTERNET_ERROR, Toast.LENGTH_SHORT).show();
-            //check if connection to server is possible
-            myServerStatusReciever = new myServerStatusReciever();
-            localBroadcastManager = LocalBroadcastManager.getInstance(this);
-            localBroadcastManager.registerReceiver(myServerStatusReciever, new IntentFilter(SERVER_REACHED));
+        //check internet connection
+        if (!isOnline()) Toast.makeText(this, NO_INTERNET_ERROR, Toast.LENGTH_SHORT).show();
+        //check if connection to server is possible
+        myServerStatusReciever = new myServerStatusReciever();
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.registerReceiver(myServerStatusReciever, new IntentFilter(SERVER_REACHED));
 
-            myAvailableDictionaryReciever = new myAvailableDictionaryReciever();
-            localBroadcastManager.registerReceiver(myAvailableDictionaryReciever, new IntentFilter(DICTIONARY_LIST_DOWNLOADED));
+        myAvailableDictionaryReciever = new myAvailableDictionaryReciever();
+        localBroadcastManager.registerReceiver(myAvailableDictionaryReciever, new IntentFilter(DICTIONARY_LIST_DOWNLOADED));
 
         Handler mainHandler = new Handler(Looper.getMainLooper());
-        Runnable myRunnable = new Runnable(){
+        Runnable myRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -239,14 +234,13 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(myServerStatusReciever);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(myAvailableDictionaryReciever);
 
         super.onDestroy();
 
     }
-
 
 
 }

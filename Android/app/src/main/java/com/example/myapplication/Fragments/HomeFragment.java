@@ -4,11 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +12,12 @@ import android.widget.AdapterView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.Adapters.myTranslationSpinnerAdapter;
 import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
@@ -31,10 +32,8 @@ import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_TYP
 import static com.example.myapplication.Constants.Fragment.HOME_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
-import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
-import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
-import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.APP_NAME;
+import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 import static com.example.myapplication.Constants.Toast.NO_DICT_INSTALLED_TOAST;
 import static com.example.myapplication.Constants.Toast.NO_DICT_SELECTED_TOAST;
@@ -51,7 +50,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     private SharedPreferences pref;
     private boolean mDictionaryInstalled = true;
 
-    public static HomeFragment newInstance(){
+    public static HomeFragment newInstance() {
         return new HomeFragment();
     }
 

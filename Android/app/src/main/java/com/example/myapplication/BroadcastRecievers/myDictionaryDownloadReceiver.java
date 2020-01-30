@@ -1,6 +1,5 @@
 package com.example.myapplication.BroadcastRecievers;
 
-import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -43,65 +42,60 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
 
 //        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
         //Checking if the received broadcast is for our enqueued download by matching download id
-            LanguagePackFragment.DOWNLOAD_IN_PROGRSS = false;
-            Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
+        LanguagePackFragment.DOWNLOAD_IN_PROGRSS = false;
+        Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
 
-            final File file = new File(Environment.getExternalStorageDirectory()+"/BlankDictionary", type);
+        final File file = new File(Environment.getExternalStorageDirectory() + "/BlankDictionary", type);
 
-            String message = "";
+        String message = "";
 
-            try {
-                FileInputStream fis = new FileInputStream(file);
-                int c;
-                while ((c = fis.read()) != -1) {
-                    message += String.valueOf((char) c);
-                }
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                fis.close();
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            int c;
+            while ((c = fis.read()) != -1) {
+                message += String.valueOf((char) c);
+            }
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            fis.close();
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+        //builds database upon completion of download
+        AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").fallbackToDestructiveMigration().enableMultiInstanceInvalidation().build();
+        //create a value to store in shared preferences
+        SharedPreferences pref = context.getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
+        final SharedPreferences.Editor editor = pref.edit();
+        //build an abstract factory
+        switch (type) {
+            case BHUTIA: {
+                BhutiaDao bhutiaDao = db.getBhutiaDao();
+                BhutiaDataInsert.BhuInsert(bhutiaDao, file);
+                editor.putBoolean(BHUTIA, true);
+                editor.commit();
+                break;
 
             }
-            catch (IOException io) {
-                io.printStackTrace();
-            }
-            //builds database upon completion of download
-            AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").fallbackToDestructiveMigration().enableMultiInstanceInvalidation().build();
-            //create a value to store in shared preferences
-            SharedPreferences pref = context.getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
-            final SharedPreferences.Editor editor = pref.edit();
-            //build an abstract factory
-            switch (type) {
-                case BHUTIA: {
-                    BhutiaDao bhutiaDao = db.getBhutiaDao();
-                    BhutiaDataInsert.BhuInsert(bhutiaDao, file);
-                    editor.putBoolean(BHUTIA, true);
-                    editor.commit();
-                    break;
-
-                }
-                case ENGLISH: {
-                    EnglishDao englishDao = db.getEnglishDao();
-                    EnglishDataInsert.engInsert(englishDao, file);
-                    editor.putBoolean(ENGLISH, true);
-                    editor.commit();
-                    break;
-
-                }
-                default:
-                    Log.d("myDictionaryReciever", "Something went wrong");
+            case ENGLISH: {
+                EnglishDao englishDao = db.getEnglishDao();
+                EnglishDataInsert.engInsert(englishDao, file);
+                editor.putBoolean(ENGLISH, true);
+                editor.commit();
+                break;
 
             }
+            default:
+                Log.d("myDictionaryReciever", "Something went wrong");
+
+        }
 
 
 //        }
 
     }
-
-
-
-
 
 
 }

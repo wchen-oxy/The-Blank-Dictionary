@@ -12,16 +12,16 @@ import java.util.List;
 public class BhutiaDataInsert {
     private static BhutiaWord readBhut(JsonReader reader) throws IOException {
         String ipa, category, eng_trans, bhut_rom_formal,
-                bhut_rom_informal,  bhut_script_formal, bhut_script_informal,
-                example,  spoken_b, spoken_e;
+                bhut_rom_informal, bhut_script_formal, bhut_script_informal,
+                example, spoken_b, spoken_e;
         ipa = category = eng_trans = bhut_rom_formal =
                 bhut_rom_informal = bhut_script_formal = bhut_script_informal =
-                example =  spoken_b = spoken_e = "";
+                        example = spoken_b = spoken_e = "";
         reader.beginObject();
 
         while (reader.hasNext()) {
 
-            switch (reader.nextName()){
+            switch (reader.nextName()) {
                 case ("ipa"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
@@ -29,63 +29,63 @@ public class BhutiaDataInsert {
                     }
                     ipa = reader.nextString();
                     break;
-                case("category"):
+                case ("category"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
                         continue;
                     }
                     category = reader.nextString();
                     break;
-                case("eng_trans"):
+                case ("eng_trans"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
                         continue;
                     }
                     eng_trans = reader.nextString();
                     break;
-                case("bhut_rom_formal"):
+                case ("bhut_rom_formal"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
                         continue;
                     }
                     bhut_rom_formal = reader.nextString();
                     break;
-                case("bhut_rom_informal"):
+                case ("bhut_rom_informal"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
                         continue;
                     }
                     bhut_rom_informal = reader.nextString();
                     break;
-                case("bhut_script_formal"):
+                case ("bhut_script_formal"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
                         continue;
                     }
                     bhut_script_formal = reader.nextString();
                     break;
-                case("bhut_script_informal"):
+                case ("bhut_script_informal"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
                         continue;
                     }
                     bhut_script_informal = reader.nextString();
                     break;
-                case("example"):
+                case ("example"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
                         continue;
                     }
                     example = reader.nextString();
                     break;
-                case("spoken_b"):
+                case ("spoken_b"):
                     if (reader.peek() == null) {
                         reader.skipValue();
                         continue;
                     }
                     spoken_b = reader.nextString();
                     break;
-                case("spoken_e"):
+                case ("spoken_e"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
                         continue;
@@ -102,22 +102,22 @@ public class BhutiaDataInsert {
         reader.endObject();
         return new BhutiaWord(ipa, category, eng_trans, bhut_rom_formal, bhut_rom_informal,
                 bhut_script_formal, bhut_script_informal,
-                example,  spoken_b, spoken_e);
+                example, spoken_b, spoken_e);
 
     }
-    public static void BhuInsert(BhutiaDao bhutiaDao, File file){
+
+    public static void BhuInsert(BhutiaDao bhutiaDao, File file) {
         List<BhutiaWord> words = new ArrayList<BhutiaWord>();
-        try{
+        try {
             JsonReader reader = new JsonReader(new FileReader(file));
             reader.beginArray();
             while (reader.hasNext()) {
-               while(reader.hasNext()){
-                   words.add(readBhut(reader));
-               }
+                while (reader.hasNext()) {
+                    words.add(readBhut(reader));
+                }
             }
             reader.endArray();
-        }
-        catch (IOException io){
+        } catch (IOException io) {
             io.printStackTrace();
         }
         bhutiaDao.deleteAll();

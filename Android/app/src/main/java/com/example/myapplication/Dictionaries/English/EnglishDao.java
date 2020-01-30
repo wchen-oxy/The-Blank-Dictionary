@@ -1,10 +1,8 @@
 package com.example.myapplication.Dictionaries.English;
 
 import androidx.room.Dao;
-
 import androidx.room.Insert;
 import androidx.room.Query;
-
 
 import java.util.List;
 
@@ -18,7 +16,7 @@ public interface EnglishDao {
     List<EnglishWord> englishSearch(String query);
 
 
-//    @Query("SELECT * FROM word WHERE uid IN (:userIds)")
+    //    @Query("SELECT * FROM word WHERE uid IN (:userIds)")
 //    List<EnglishWord> loadAllByIds(int[] userIds);
 //
 //    @Query("SELECT * FROM word WHERE first_name LIKE :first AND " +

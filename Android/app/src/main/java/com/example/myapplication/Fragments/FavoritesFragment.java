@@ -1,29 +1,30 @@
 package com.example.myapplication.Fragments;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 
 //Not used right now
 public class FavoritesFragment extends Fragment {
 
-    public static FavoritesFragment newInstance(){
+    public static FavoritesFragment newInstance() {
         return new FavoritesFragment();
     }
 
     @Override
-    public void onCreate (Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_favorites, container,false);
+        View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
         return rootView;
     }
 

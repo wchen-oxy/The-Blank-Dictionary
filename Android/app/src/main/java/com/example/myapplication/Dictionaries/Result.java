@@ -5,7 +5,7 @@ import java.util.List;
 public class Result {
     List result;
 
-    public Result(List result){
+    public Result(List result) {
         this.result = result;
     }
 

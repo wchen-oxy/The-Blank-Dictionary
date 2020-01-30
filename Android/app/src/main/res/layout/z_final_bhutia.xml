@@ -46,7 +46,7 @@
         />
 
     <TextView
-        android:id="@+id/example"
+        android:id="@+id/bhutia_example"
         style="@style/SubTitles"
         />
 

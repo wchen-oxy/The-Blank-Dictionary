@@ -3,9 +3,6 @@ package com.example.myapplication.Fragments;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,11 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.myapplication.Adapters.DumbSpinnerAdapter;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaLayout;
 import com.example.myapplication.Dictionaries.English.EnglishLayout;
 import com.example.myapplication.HelperInterfaces.ILayoutSetter;
 import com.example.myapplication.R;
-import com.example.myapplication.Adapters.DumbSpinnerAdapter;
 
 import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
@@ -28,7 +28,7 @@ public class ResultFragment extends Fragment {
 
     private String curDict;
     private Bundle args;
-    private View.OnTouchListener touchListener = new View.OnTouchListener(){
+    private View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -48,12 +48,11 @@ public class ResultFragment extends Fragment {
     };
 
 
-
     public ResultFragment() {
         // Required empty public constructor
     }
 
-//    /**
+    //    /**
 //     * Use this factory method to create a new instance of
 //     * this fragment using the provided parameters.
 //     *
@@ -67,7 +66,6 @@ public class ResultFragment extends Fragment {
         resultFragment.setArguments(args);
         return resultFragment;
     }
-
 
 
     @Override
@@ -84,7 +82,7 @@ public class ResultFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        View rootView = inflater.inflate(R.layout.fragment_result, container,false);
+        View rootView = inflater.inflate(R.layout.fragment_result, container, false);
         //initialize return listener
         rootView.findViewById(R.id.final_result_frag).setOnClickListener(myListener);
         //set spinner return listener
@@ -99,12 +97,12 @@ public class ResultFragment extends Fragment {
         ScrollView dictInfoContainer = rootView.findViewById(R.id.dict_info_container);
 
         ILayoutSetter layoutSetter = null;
-        switch (curDict){
+        switch (curDict) {
             case (BHUTIA):
                 layoutSetter = new BhutiaLayout(getContext(), inflater, args);
                 break;
             case (ENGLISH):
-                layoutSetter = new EnglishLayout(getContext(),inflater, args);
+                layoutSetter = new EnglishLayout(getContext(), inflater, args);
                 break;
 
         }
@@ -113,8 +111,6 @@ public class ResultFragment extends Fragment {
         return rootView;
 
     }
-
-
 
 
     @Override

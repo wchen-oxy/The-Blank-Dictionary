@@ -27,7 +27,7 @@ public class BhutiaLayout implements ILayoutSetter {
 
 
     //constructor call from ResultFrag
-    public BhutiaLayout(Context context,LayoutInflater inflater, Bundle args) {
+    public BhutiaLayout(Context context, LayoutInflater inflater, Bundle args) {
         //create your layout here.
         //get translation direction
         this.selectedTranslationId = args.getInt(TRANSLATION_TYPE);
@@ -47,7 +47,7 @@ public class BhutiaLayout implements ILayoutSetter {
         TextView subTitle2 = view.findViewById(R.id.bhutia_sub_title_2);
         TextView subTitle3 = view.findViewById(R.id.bhutia_sub_title_3);
         TextView subTitle4 = view.findViewById(R.id.bhutia_sub_title_4);
-        TextView example = view.findViewById(R.id.example);
+        TextView example = view.findViewById(R.id.bhutia_example);
 //
 //
 //        textViewArrayList.add(title);

@@ -14,10 +14,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,9 +22,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import com.example.myapplication.R;
-import com.example.myapplication.DataSerialization;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.example.myapplication.BroadcastRecievers.myDictionaryDownloadReceiver;
+import com.example.myapplication.DataSerialization;
+import com.example.myapplication.R;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -49,12 +51,12 @@ import static com.example.myapplication.Constants.Toast.DICT_STILL_DOWNLOADING_T
 
 //FIXME Add 404 reaction to download
 public class LanguagePackFragment extends Fragment {
+    public static Boolean DOWNLOAD_IN_PROGRSS = false;
     Activity activtiy;
     Context mContext;
 
-    public static Boolean DOWNLOAD_IN_PROGRSS = false;
-    public static LanguagePackFragment newInstance(){
-       return new LanguagePackFragment();
+    public static LanguagePackFragment newInstance() {
+        return new LanguagePackFragment();
     }
 
 
@@ -66,20 +68,20 @@ public class LanguagePackFragment extends Fragment {
     }
 
     @Override
-    public void onCreate (Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        final View rootView = inflater.inflate(R.layout.fragment_language_pack_list, container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View rootView = inflater.inflate(R.layout.fragment_language_pack_list, container, false);
 
-        ArrayList<String> lists = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory()+"/BlankDictionary/list.json"));
+        ArrayList<String> lists = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory() + "/BlankDictionary/list.json"));
         LinearLayout linearLayout = rootView.findViewById(R.id.lang_pack_root_layout);
 
         //case where there are downloaded languages
-        for (String s:lists) {
+        for (String s : lists) {
             Button button = new Button(mContext);
             button.setTypeface(Typeface.create(FONT_STYLE, Typeface.NORMAL));
             button.setText(s);
@@ -91,9 +93,9 @@ public class LanguagePackFragment extends Fragment {
             button.setOnClickListener(
                     new View.OnClickListener() {
                         public void onClick(View v) {
-                            if (!DOWNLOAD_IN_PROGRSS){
+                            if (!DOWNLOAD_IN_PROGRSS) {
 //                        Toast test = new Toast();
-                                Toast.makeText(getActivity(), BUTTON_SELECTED_TOAST,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), BUTTON_SELECTED_TOAST, Toast.LENGTH_SHORT).show();
                                 if (ContextCompat.checkSelfPermission(activtiy, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                                         != PackageManager.PERMISSION_GRANTED) {
                                     // Permission is not granted
@@ -106,7 +108,7 @@ public class LanguagePackFragment extends Fragment {
                                         // No explanation needed; request the permission
                                         ActivityCompat.requestPermissions(activtiy,
                                                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-                                                ,101);
+                                                , 101);
 
                                         // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                                         // app-defined int constant. The callback method gets the
@@ -115,11 +117,10 @@ public class LanguagePackFragment extends Fragment {
                                 } else {
                                     // Permission has already been granted
                                     Button b = (Button) v;
-                                    dataDownload(getAbsoluteUrl(DOWNLOAD_URL_PART) +  b.getText().toString(), b.getText().toString());
+                                    dataDownload(getAbsoluteUrl(DOWNLOAD_URL_PART) + b.getText().toString(), b.getText().toString());
                                     DOWNLOAD_IN_PROGRSS = true;
                                 }
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(getActivity(), DICT_STILL_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -132,22 +133,21 @@ public class LanguagePackFragment extends Fragment {
         if (!lists.isEmpty()) {
             Log.d("download", lists.toString());
             Log.d("Download,specific", lists.get(0));
-        }
-        else{
+        } else {
             Toast.makeText(mContext, BAD_SERVER_CONNECTION_TOAST, Toast.LENGTH_LONG).show();
         }
 
         return rootView;
     }
 
-    private void dataDownload(String url, String buttonText){
+    private void dataDownload(String url, String buttonText) {
         Log.d("Download URL: ", url);
-        Toast.makeText(getActivity(),DICTIONARY_IS_DOWNLOADING_TOAST,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), DICTIONARY_IS_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        File file = new File(Environment.getExternalStorageDirectory()+"/"+ APP_NAME, buttonText);
+        File file = new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME, buttonText);
         file.setWritable(true);
         if (file.exists()) {
-            Log.d("File", file.getAbsolutePath() );
+            Log.d("File", file.getAbsolutePath());
             try {
 
                 Log.v("Write Permission", Boolean.toString(ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
@@ -157,7 +157,7 @@ public class LanguagePackFragment extends Fragment {
                 Log.d("Pref. File Exists", Boolean.toString(file.exists()));
 
 
-            } catch(Exception e) {
+            } catch (Exception e) {
                 Log.d("File", "Not Deleted");
             }
         }
@@ -167,7 +167,7 @@ public class LanguagePackFragment extends Fragment {
                 .setDestinationUri(Uri.fromFile(file))
                 .addRequestHeader(REQUEST_AUTH_HEADER, authDigest());
         Log.d("CHECK2", Environment.getExternalStorageDirectory().toString());
-        DownloadManager downloadManager= (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
+        DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
         downloadManager.enqueue(request);
 
         BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(buttonText);

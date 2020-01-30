@@ -3,11 +3,6 @@ package com.example.myapplication.Fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +11,24 @@ import android.widget.AdapterView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.Adapters.MyQueryResultAdapter;
 import com.example.myapplication.Adapters.myTranslationSpinnerAdapter;
+import com.example.myapplication.DatabaseQuery;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
+import com.example.myapplication.Dictionaries.English.EnglishWord;
 import com.example.myapplication.Dictionaries.Result;
 import com.example.myapplication.Dictionaries.ResultWrapper;
 import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.example.myapplication.HelperInterfaces.IOnBackPressed;
-import com.example.myapplication.Adapters.MyQueryResultAdapter;
-import com.example.myapplication.DatabaseQuery;
 import com.example.myapplication.R;
 import com.example.myapplication.Translation;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -58,20 +61,20 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     private SharedPreferences pref;
     private View.OnClickListener listener = new View.OnClickListener() {
 
-            @Override
-            public void onClick(View item) {
-                Bundle args = new Bundle();
-                args.putString(NEW_FRAGMENT, RESULT_FRAGMENT);
-                int position = ((RecyclerView.ViewHolder) item.getTag()).getAdapterPosition();
-                args.putString(TRANSLATION_STRING, currentTranslationString);
-                args.putString(QUERY_ID, getQueryKey(resultWrapper, position));
-                Log.d(TRANSLATION_TYPE, String.valueOf(selectedTranslationNumber));
-                fragmentCommunicator.bundPass(args, false);
+        @Override
+        public void onClick(View item) {
+            Bundle args = new Bundle();
+            args.putString(NEW_FRAGMENT, RESULT_FRAGMENT);
+            int position = ((RecyclerView.ViewHolder) item.getTag()).getAdapterPosition();
+            args.putString(TRANSLATION_STRING, currentTranslationString);
+            args.putString(QUERY_ID, getQueryKey(resultWrapper, position));
+            Log.d(TRANSLATION_TYPE, String.valueOf(selectedTranslationNumber));
+            fragmentCommunicator.bundPass(args, false);
 
         }
     };
 
-    public static SearchFragment newInstance(Bundle args){
+    public static SearchFragment newInstance(Bundle args) {
         SearchFragment searchFragment = new SearchFragment();
         searchFragment.setArguments(args);
         return searchFragment;
@@ -197,13 +200,13 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-    private String[] translationSet(){
+    private String[] translationSet() {
         String[] tranSet = null;
         switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
             case (BHUTIA):
                 tranSet = getResources().getStringArray(R.array.bhutia_array);
                 break;
-            case(ENGLISH):
+            case (ENGLISH):
                 tranSet = getResources().getStringArray(R.array.english_array);
                 break;
 
@@ -211,31 +214,30 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         return tranSet;
     }
 
-    private String getQueryKey(ResultWrapper resultWrapper, int position){
+    private String getQueryKey(ResultWrapper resultWrapper, int position) {
         String queryKey = null;
         switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
             case (BHUTIA):
                 BhutiaWord bhutiaWord = (BhutiaWord) resultWrapper.getList().getResult().get(position);
                 queryKey = bhutiaWord.eng_trans;
-                Log.d("Query Id", queryKey);
+                Log.d("Bhutia Query Id", queryKey);
                 break;
             case (ENGLISH):
-
-
+                EnglishWord englishWord = (EnglishWord) resultWrapper.getList().getResult().get(position);
+                queryKey = englishWord.word;
+                Log.d("English Query Id", queryKey);
                 break;
         }
         return queryKey;
     }
 
-    private void refreshResult(){
+    private void refreshResult() {
         try {
             resultWrapper.getList().getResult().clear();
             //add back into existing ResultWrapper because the adapter needs the original reference to the ResultWrapper
             if (!(args.getString(QUERY).isEmpty())) {
-                List<BhutiaWord> list = new DatabaseQuery(getContext()).execute(args).get().getList().getResult();
-                for (BhutiaWord bhutiaWord : list) {
-                    resultWrapper.getList().getResult().add(bhutiaWord);
-                }
+                List refreshedList = returnList();
+
             }
 
         } catch (ExecutionException e) {
@@ -251,12 +253,32 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
     @Override
     public boolean clearText() {
-        if (!searchView.getQuery().toString().isEmpty()){
+        if (!searchView.getQuery().toString().isEmpty()) {
             searchView.setQuery("", true);
             return true;
         }
         return false;
 
+    }
+
+    private List returnList() throws ExecutionException, InterruptedException {
+        List resultList = new ArrayList();
+        switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)){
+            case(BHUTIA):
+                resultList = new DatabaseQuery(getContext()).execute(args).get().getList().getResult();
+                for (BhutiaWord bhutiaWord : (List<BhutiaWord>) resultList) {
+                    resultWrapper.getList().getResult().add(bhutiaWord);
+                }
+                break;
+            case(ENGLISH):
+                resultList = new DatabaseQuery(getContext()).execute(args).get().getList().getResult();
+                for (EnglishWord englishWord : (List<EnglishWord>) resultList) {
+                    resultWrapper.getList().getResult().add(englishWord);
+                }
+                break;
+        }
+
+        return resultList;
     }
 }
 

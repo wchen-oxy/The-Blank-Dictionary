@@ -5,12 +5,15 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+
 import androidx.room.Room;
-import java.lang.ref.WeakReference;
+
 import com.example.myapplication.Dictionaries.AppDatabase;
 import com.example.myapplication.Dictionaries.Bhutia.Bhutia;
 import com.example.myapplication.Dictionaries.English.English;
 import com.example.myapplication.Dictionaries.ResultWrapper;
+
+import java.lang.ref.WeakReference;
 
 import static com.example.myapplication.Constants.DictionaryData.DATABASE;
 import static com.example.myapplication.Constants.DictionaryData.QUERY;
@@ -24,7 +27,7 @@ public class DatabaseQuery extends AsyncTask<Bundle, Void, ResultWrapper> {
     private final WeakReference<Context> weakContext;
     private SharedPreferences pref;
 
-    public DatabaseQuery(Context context){
+    public DatabaseQuery(Context context) {
         this.weakContext = new WeakReference<>(context);
         pref = context.getSharedPreferences(APP_PREFERENCES, 0);
     }
@@ -35,21 +38,18 @@ public class DatabaseQuery extends AsyncTask<Bundle, Void, ResultWrapper> {
         AppDatabase db = Room.databaseBuilder(weakContext.get(), AppDatabase.class, DATABASE).enableMultiInstanceInvalidation().build();
         Bundle args = full_query[0];
         switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
-            case(BHUTIA):
+            case (BHUTIA):
                 Log.d("Check", "Inner");
                 resultWrapper = new Bhutia(db, args.getString(QUERY), args.getString(TRANSLATION_STRING));
 
                 break;
-            case(ENGLISH):
+            case (ENGLISH):
                 resultWrapper = new English(db, args.getString(QUERY), args.getString(TRANSLATION_STRING));
         }
 
         if (resultWrapper == null) throw new NullPointerException();
         return resultWrapper;
-        }
-
-
-
+    }
 
 
 }

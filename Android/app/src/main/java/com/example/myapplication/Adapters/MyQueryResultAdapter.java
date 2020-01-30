@@ -1,10 +1,11 @@
 package com.example.myapplication.Adapters;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaTextSwitchboard;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaWord;
@@ -77,6 +78,7 @@ public class MyQueryResultAdapter extends RecyclerView.Adapter<MyQueryResultAdap
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.row_text);

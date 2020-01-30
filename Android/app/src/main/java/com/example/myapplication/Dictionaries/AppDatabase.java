@@ -14,6 +14,7 @@ import com.example.myapplication.Dictionaries.English.EnglishWord;
 @Database(entities = {BhutiaWord.class, EnglishWord.class}, version = 4, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract BhutiaDao getBhutiaDao();
+
     public abstract EnglishDao getEnglishDao();
 
 

@@ -4,12 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.os.Environment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +13,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.myapplication.R;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.myapplication.DataSerialization;
+import com.example.myapplication.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class DictionarySelectionFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_dictionary_selection, container,false);
+        View rootView = inflater.inflate(R.layout.fragment_dictionary_selection, container, false);
 
 
         SharedPreferences pref = getActivity().getSharedPreferences(APP_PREFERENCES, 0); // 0 - for private mode
@@ -67,10 +67,9 @@ public class DictionarySelectionFragment extends Fragment {
         LinearLayout linearLayout = rootView.findViewById(R.id.dict_pack_list_linear_layout);
 
 
-
-        for (String s:list) {
+        for (String s : list) {
             //if it doesn't exist, it will return false
-            if (pref.getBoolean(s,false) == false) {
+            if (pref.getBoolean(s, false) == false) {
                 continue;
             }
 

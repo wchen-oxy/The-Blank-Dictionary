@@ -7,7 +7,6 @@ import java.security.NoSuchAlgorithmException;
 public final class Constants {
     //Network Constants
     public static class Network {
-        private static final String DEBUG_URL = "http://10.0.2.2:8000/";
         public static final String BASE_URL = "http://blank-dictionary.herokuapp.com/";
         public static final String DOWNLOAD_URL_PART = "api/";
         public static final String STATUS_URL_PART = "status/";
@@ -18,6 +17,7 @@ public final class Constants {
         public static final String REQUEST_TITLE = "Dictionary Download Started.";
         public static final String REQUEST_AUTH_HEADER = "Authorization";
         public static final String LANG_DOWNLOAD_HANDLER_THREAD_NAME = "LanguageDownload";
+        private static final String DEBUG_URL = "http://10.0.2.2:8000/";
 
         public static String getAbsoluteUrl(String relativeUrl) {
             return BASE_URL + relativeUrl;
@@ -35,7 +35,7 @@ public final class Constants {
 
                 output = String.format("%02x", new BigInteger(1, data1));
 
-            }  catch (NoSuchAlgorithmException e) {
+            } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
             return output;
@@ -43,8 +43,7 @@ public final class Constants {
     }
 
     //Key Value Pairs
-    public static class Fragment
-    {
+    public static class Fragment {
         public static final String NEW_FRAGMENT = "NewFragment";
         public static final String HOME_FRAGMENT = "HomeFragment";
         public static final String SEARCH_FRAGMENT = "SearchFragment";
@@ -54,13 +53,13 @@ public final class Constants {
         public static final String SETTINGS_FRAGMENT = "SettingsFragment";
     }
 
-    public static class IntentFilters{
+    public static class IntentFilters {
         public static final String SERVER_REACHED = "ServerReached";
         public static final String DICTIONARY_LIST_DOWNLOADED = "DictionaryListDownloaded";
 
     }
 
-    public static class System{
+    public static class System {
         public static final String APP_NAME = "BlankDictionary";
         public static final String APP_PREFERENCES = "BlankDictPref";
         public static final String CURRENTLY_SELECTED_DICTIONARY = "CurrentDictionary";
@@ -68,13 +67,14 @@ public final class Constants {
         public static final String APP_DICTIONARY_FILE = "/BlankDictionary/list.json";
     }
 
-    public static class SupportedDictionaries{
+    public static class SupportedDictionaries {
         public static final String BHUTIA = "BHUTIA";
         public static final String ENGLISH = "ENGLISH";
 
 
     }
-    public static class DictionaryData{
+
+    public static class DictionaryData {
         public static final String QUERY = "Query";
         public static final String QUERY_ID = "QueryId";
         //Note, the value for the Translation Type is an int value!
@@ -83,7 +83,8 @@ public final class Constants {
         public static final String DATABASE = "Database";
 
     }
-    public static class Toast{
+
+    public static class Toast {
         public static final String NO_DICT_INSTALLED_TOAST = "Please Download a Dictionary from Settings First";
         public static final String NO_DICT_SELECTED_TOAST = "Choose your current dictionary in Settings.";
         public static final String DICTIONARY_SELECTED_TOAST = "Dictionary Selected";
@@ -93,10 +94,9 @@ public final class Constants {
         public static final String BAD_SERVER_CONNECTION_TOAST = "Can't Connect to server to download available dictionaries.";
 
 
-
     }
 
 
-        //
+    //
 
 }

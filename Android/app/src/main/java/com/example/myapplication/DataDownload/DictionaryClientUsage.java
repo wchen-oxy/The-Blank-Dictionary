@@ -1,15 +1,18 @@
 package com.example.myapplication.DataDownload;
+
 import android.content.Context;
 import android.content.Intent;
-
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.example.myapplication.Constants;
-import com.example.myapplication.DataSerialization;
-import com.loopj.android.http.*;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import org.json.*;
+import com.example.myapplication.DataSerialization;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -44,7 +47,7 @@ public class DictionaryClientUsage {
 
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable error){
+            public void onFailure(int statusCode, Header[] headers, String errorResponse, Throwable error) {
 //                super.onFailure( statusCode,  headers, errorResponse, error);
                 Log.d("RECEIVED RESPONSE", "FAILURE");
 
@@ -68,8 +71,7 @@ public class DictionaryClientUsage {
     }
 
     public void checkStatus(final Context context) throws HttpBadRequestException {
-        DictionaryClient.get(STATUS_URL_PART, null, new AsyncHttpResponseHandler()
-                {
+        DictionaryClient.get(STATUS_URL_PART, null, new AsyncHttpResponseHandler() {
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -87,7 +89,7 @@ public class DictionaryClientUsage {
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        Log.d("Failed: ", ""+statusCode);
+                        Log.d("Failed: ", "" + statusCode);
                         Log.d("Error : ", "" + error);
 
                     }

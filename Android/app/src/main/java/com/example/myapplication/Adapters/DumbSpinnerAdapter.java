@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-public class DumbSpinnerAdapter  extends ArrayAdapter{
-View.OnClickListener listener;
+public class DumbSpinnerAdapter extends ArrayAdapter {
+    View.OnClickListener listener;
 
     public DumbSpinnerAdapter(@NonNull Context context, int resource, View.OnClickListener listener) {
         super(context, resource);
@@ -17,6 +17,7 @@ View.OnClickListener listener;
 
 
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
