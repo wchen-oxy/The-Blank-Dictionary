@@ -1,5 +1,6 @@
 package com.example.myapplication.Fragments;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
@@ -42,6 +44,9 @@ public class SettingsFragment extends Fragment {
         languagePack.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+                        ActivityCompat.requestPermissions(getActivity(),
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
+                                , 101);
 
                         Bundle args = new Bundle();
                         args.putString(NEW_FRAGMENT, LANGUAGE_DOWNLOAD_FRAGMENT);

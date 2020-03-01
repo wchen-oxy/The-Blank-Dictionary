@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -49,11 +50,15 @@ import static com.example.myapplication.Constants.IntentFilters.DICTIONARY_LIST_
 import static com.example.myapplication.Constants.IntentFilters.SERVER_REACHED;
 import static com.example.myapplication.Constants.Network.NO_INTERNET_ERROR;
 import static com.example.myapplication.Constants.System.APP_NAME;
+import static com.example.myapplication.Constants.System.APP_PREFERENCES;
+import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 
 public class MainActivity extends AppCompatActivity implements IFragmentCommunicator {
     final Context context = this;
     public BroadcastReceiver myAvailableDictionaryReciever;
     public Boolean isAdvSearch = false;
+    private String activeLang = "";
+    private SharedPreferences pref;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     BottomNavigationView navViewBack;
@@ -67,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    if (isAdvSearch) {
+                    if (isAdvSearch && activeLang == pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
                         fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.frag_container, SearchFragment.newInstance(args), SEARCH_FRAGMENT).commit();
                         return true;
@@ -109,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
             case SEARCH_FRAGMENT:
                 SearchFragment searchFragment = SearchFragment.newInstance(args);
+
+                activeLang = pref.getString(CURRENTLY_SELECTED_DICTIONARY, null);
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frag_container, searchFragment, SEARCH_FRAGMENT).addToBackStack(SEARCH_FRAGMENT).commit();
                 isAdvSearch = true;
@@ -192,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pref = getSharedPreferences(APP_PREFERENCES, 0);
         setContentView(R.layout.partial_main_frame);
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

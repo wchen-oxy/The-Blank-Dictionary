@@ -104,16 +104,17 @@ public class LanguagePackFragment extends Fragment {
                                         // Show an explanation to the user *asynchronously* -- don't block
                                         // this thread waiting for the user's response! After the user
                                         // sees the explanation, try again to request the permission.
-                                    } else {
-                                        // No explanation needed; request the permission
-                                        ActivityCompat.requestPermissions(activtiy,
-                                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-                                                , 101);
-
-                                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                                        // app-defined int constant. The callback method gets the
-                                        // result of the request.
                                     }
+//                                    else {
+//                                        // No explanation needed; request the permission
+//                                        ActivityCompat.requestPermissions(activtiy,
+//                                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
+//                                                , 101);
+//
+//                                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+//                                        // app-defined int constant. The callback method gets the
+//                                        // result of the request.
+//                                    }
                                 } else {
                                     // Permission has already been granted
                                     Button b = (Button) v;
