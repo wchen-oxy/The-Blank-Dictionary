@@ -22,6 +22,9 @@ android {
             includeAndroidResources = true
         }
     }
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 }
 
 dependencies {
@@ -35,6 +38,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
     implementation 'com.loopj.android:android-async-http:1.4.9'
@@ -43,5 +47,13 @@ dependencies {
     def room_version = "2.2.1"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    // Used for Testing
+    def fragment_version = "1.2.2"
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+
+    dependencies { testImplementation "org.mockito:mockito-core:2.+" }
+
+
+
 
 }

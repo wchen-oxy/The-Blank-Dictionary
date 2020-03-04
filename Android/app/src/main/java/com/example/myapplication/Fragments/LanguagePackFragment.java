@@ -144,33 +144,22 @@ public class LanguagePackFragment extends Fragment {
     private void dataDownload(String url, String buttonText) {
         Log.d("Download URL: ", url);
         Toast.makeText(getActivity(), DICTIONARY_IS_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         File file = new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME, buttonText);
         file.setWritable(true);
         if (file.exists()) {
             Log.d("File", file.getAbsolutePath());
             try {
-
                 Log.v("Write Permission", Boolean.toString(ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
                 Log.d("Is Readable", Boolean.toString(file.canRead()));
                 Log.d("Is Writable", Boolean.toString(file.canWrite()));
                 Log.d("Prev. File Deleted", Boolean.toString(file.delete()));
                 Log.d("Pref. File Exists", Boolean.toString(file.exists()));
-
-
             } catch (Exception e) {
                 Log.d("File", "Not Deleted");
             }
         }
 
-        request.setDescription(REQUEST_DESCRIPTION)
-                .setTitle(REQUEST_TITLE)
-                .setDestinationUri(Uri.fromFile(file))
-                .addRequestHeader(REQUEST_AUTH_HEADER, authDigest());
-        Log.d("CHECK2", Environment.getExternalStorageDirectory().toString());
-        DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
-        downloadManager.enqueue(request);
-
+        makeDownloadRequest(url, file);
         BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(buttonText);
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
@@ -178,6 +167,15 @@ public class LanguagePackFragment extends Fragment {
         Looper looper = handlerThread.getLooper();
         Handler handler = new Handler(looper);
         mContext.registerReceiver(broadcastReceiver, filter, null, handler);
+    }
+    private void makeDownloadRequest(String url, File file){
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setDescription(REQUEST_DESCRIPTION)
+                .setTitle(REQUEST_TITLE)
+                .setDestinationUri(Uri.fromFile(file))
+                .addRequestHeader(REQUEST_AUTH_HEADER, authDigest());
+        DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
+        downloadManager.enqueue(request);
     }
 }
 

@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -249,6 +251,14 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         super.onDestroy();
 
     }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+
+    }
+
 
 
 }
