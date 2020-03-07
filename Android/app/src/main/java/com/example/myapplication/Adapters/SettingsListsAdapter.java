@@ -35,13 +35,15 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        String language = installed.get(position);
+        holder.checkBox.setTag(language);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             (holder.linearLayout).getLayoutTransition()
                     .enableTransitionType(LayoutTransition.CHANGING);
         }
-        holder.textView.setText(installed.get(position));
+        holder.textView.setText(language);
         if (checkboxVisiblity == false) holder.checkBox.setVisibility(View.GONE);
         else{
             holder.checkBox.setVisibility(View.VISIBLE);
@@ -54,6 +56,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
     public int getItemCount() {
         return installed.size();
     }
+
 
     public void makeCheckboxVisible(boolean visible){
         if (visible) {
@@ -77,7 +80,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
             textView = itemView.findViewById(R.id.language_text);
             checkBox = itemView.findViewById(R.id.dict_checkbox);
             linearLayout = itemView.findViewById(R.id.dict_pack_row_linear_layout);
-            itemView.setTag(this);
+//            itemView.setTag(this);
 //            itemView.setOnClickListener(listener);
         }
     }

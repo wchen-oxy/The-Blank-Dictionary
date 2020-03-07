@@ -76,6 +76,9 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
                 BhutiaDataInsert.BhuInsert(bhutiaDao, file);
                 editor.putBoolean(BHUTIA, true);
                 editor.commit();
+                //upon database insertion, remove actual file
+                Log.d("Download File Deleted: ", Boolean.toString(file.delete()));
+
                 break;
 
             }
@@ -84,6 +87,8 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
                 EnglishDataInsert.engInsert(englishDao, file);
                 editor.putBoolean(ENGLISH, true);
                 editor.commit();
+                Log.d("Download File Deleted: ", Boolean.toString(file.delete()));
+
                 break;
 
             }
@@ -91,6 +96,8 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
                 Log.d("myDictionaryReciever", "Something went wrong");
 
         }
+        Log.i("Temp Payload Deleted:",  Boolean.toString(file.delete()));
+
 
 
 //        }

@@ -32,6 +32,7 @@ import com.example.myapplication.DataSerialization;
 import com.example.myapplication.R;
 
 import java.io.File;
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -148,15 +149,11 @@ public class LanguagePackFragment extends Fragment {
         file.setWritable(true);
         if (file.exists()) {
             Log.d("File", file.getAbsolutePath());
-            try {
-                Log.v("Write Permission", Boolean.toString(ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
-                Log.d("Is Readable", Boolean.toString(file.canRead()));
-                Log.d("Is Writable", Boolean.toString(file.canWrite()));
-                Log.d("Prev. File Deleted", Boolean.toString(file.delete()));
-                Log.d("Pref. File Exists", Boolean.toString(file.exists()));
-            } catch (Exception e) {
-                Log.d("File", "Not Deleted");
-            }
+            Log.v("Write Permission", Boolean.toString(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
+            Log.d("Is Readable", Boolean.toString(file.canRead()));
+            Log.d("Is Writable", Boolean.toString(file.canWrite()));
+            Log.d("Prev. File Deleted", Boolean.toString(file.delete()));
+            Log.d("Pref. File Exists", Boolean.toString(file.exists()));
         }
 
         makeDownloadRequest(url, file);

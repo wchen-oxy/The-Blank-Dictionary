@@ -23,6 +23,7 @@
             android:onClick="onCheckboxClicked"
 
             />
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"

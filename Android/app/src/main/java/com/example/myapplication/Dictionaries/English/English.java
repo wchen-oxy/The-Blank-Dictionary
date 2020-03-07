@@ -9,6 +9,10 @@ import java.util.List;
 public class English implements ResultWrapper {
     private Result result;
 
+    public English(AppDatabase db){
+        db.getEnglishDao().deleteAll();
+    }
+
     public English(AppDatabase db, String query, String currentTranslationString) {
         EnglishDao EnglishDao = db.getEnglishDao();
         List words = null;

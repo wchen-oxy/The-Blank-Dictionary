@@ -28,18 +28,21 @@ import com.example.myapplication.BroadcastRecievers.myAvailableDictionaryRecieve
 import com.example.myapplication.BroadcastRecievers.myServerStatusReciever;
 import com.example.myapplication.DataDownload.DictionaryClientUsage;
 import com.example.myapplication.DataDownload.HttpBadRequestException;
+import com.example.myapplication.Dictionaries.ResultWrapper;
 import com.example.myapplication.Fragments.DictionarySelectionFragment;
 import com.example.myapplication.Fragments.HomeFragment;
 import com.example.myapplication.Fragments.LanguagePackFragment;
 import com.example.myapplication.Fragments.ResultFragment;
 import com.example.myapplication.Fragments.SearchFragment;
 import com.example.myapplication.Fragments.SettingsFragment;
+import com.example.myapplication.HelperInterfaces.IDelete;
 import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.example.myapplication.HelperInterfaces.IOnBackPressed;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.example.myapplication.Constants.Fragment.DICTIONARY_SELECTION_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.HOME_FRAGMENT;
@@ -55,7 +58,7 @@ import static com.example.myapplication.Constants.System.APP_NAME;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 
-public class MainActivity extends AppCompatActivity implements IFragmentCommunicator {
+public class MainActivity extends AppCompatActivity implements IFragmentCommunicator, IDelete {
     final Context context = this;
     public BroadcastReceiver myAvailableDictionaryReciever;
     public Boolean isAdvSearch = false;
@@ -64,9 +67,11 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     BottomNavigationView navViewBack;
-    com.example.myapplication.BroadcastRecievers.myServerStatusReciever myServerStatusReciever;
+    myServerStatusReciever myServerStatusReciever;
     LocalBroadcastManager localBroadcastManager;
     Bundle args;
+    ArrayList<String> langToDelete;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -107,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     }
 
     private void fragController(Bundle args) {
+
+
         switch (args.getString(NEW_FRAGMENT)) {
             case HOME_FRAGMENT:
                 HomeFragment homeFragment = HomeFragment.newInstance();
@@ -116,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
             case SEARCH_FRAGMENT:
                 SearchFragment searchFragment = SearchFragment.newInstance(args);
-
                 activeLang = pref.getString(CURRENTLY_SELECTED_DICTIONARY, null);
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frag_container, searchFragment, SEARCH_FRAGMENT).addToBackStack(SEARCH_FRAGMENT).commit();
@@ -128,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 fragmentTransaction.replace(R.id.frag_container, resultFragment).addToBackStack(RESULT_FRAGMENT).commit();
                 break;
             case DICTIONARY_SELECTION_FRAGMENT:
+                langToDelete = new ArrayList<>();
                 DictionarySelectionFragment dictionarySelectionFragment = DictionarySelectionFragment.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frag_container, dictionarySelectionFragment).addToBackStack(DICTIONARY_SELECTION_FRAGMENT).commit();
@@ -252,13 +259,26 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
     }
 
+    //Checkbox related functions
+
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
-
-
+        if (checked) langToDelete.add(view.getTag().toString());
+        else{
+            for (int i = 0; i < langToDelete.size(); i++){
+                if (langToDelete.get(i) == view.getTag().toString()) langToDelete.remove(i);
+            }
+        }
     }
 
+    @Override
+    public void delete() {
+            new DatabaseClear(this).execute(langToDelete);
+    }
 
-
+    @Override
+    public void clearLangToDeleteList() {
+        langToDelete.clear();
+    }
 }

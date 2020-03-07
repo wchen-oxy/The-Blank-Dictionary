@@ -13,6 +13,12 @@ import java.util.List;
 public class Bhutia implements ResultWrapper {
     private Result result;
 
+    public Bhutia(AppDatabase db){
+        //delete all
+        db.getBhutiaDao().deleteAll();
+    }
+
+
     public Bhutia(AppDatabase db, String query, String currentTranslationString) {
         BhutiaDao bhutiaDao = db.getBhutiaDao();
         List words = null;

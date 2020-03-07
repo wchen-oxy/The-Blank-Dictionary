@@ -3,13 +3,17 @@ package com.example.myapplication.BroadcastRecievers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
-public class myServerStatusReciever extends BroadcastReceiver {
+import com.example.myapplication.Adapters.SettingsListsAdapter;
+
+public class myDeleteReciever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "Successfully Connected to Server!", Toast.LENGTH_SHORT).show();
+        System.out.println("ONE RECIEVER GOT");
         context.unregisterReceiver(this);
+        //get instance of settings list adapter to refresh list
+
+
     }
 }

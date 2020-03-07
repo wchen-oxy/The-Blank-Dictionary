@@ -65,6 +65,8 @@ public final class Constants {
         public static final String CURRENTLY_SELECTED_DICTIONARY = "CurrentDictionary";
         public static final String FONT_STYLE = "alegreya_sans";
         public static final String APP_DICTIONARY_FILE = "/BlankDictionary/list.json";
+        public static final String DATABASE = "Database";
+        public static final String DATABASE_CLEARED = "Database Cleared";
     }
 
     public static class SupportedDictionaries {
