@@ -43,16 +43,13 @@ public class DatabaseClear extends AsyncTask<ArrayList<String>, Void, Boolean> {
     protected Boolean doInBackground(ArrayList<String>...languagesToDelete) {
         String currentDictionary = null;
 
-
         if (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) != null)
             currentDictionary = pref.getString(CURRENTLY_SELECTED_DICTIONARY, null);
 
-
         AppDatabase db = Room.databaseBuilder(weakContext.get(), AppDatabase.class, DATABASE).enableMultiInstanceInvalidation().build();
-        System.out.println("HERE IS THE ARRAYS " + languagesToDelete[0]);
         for (String lang:languagesToDelete[0]) {
             if (currentDictionary.equals(lang)) {
-                editor.putString(CURRENTLY_SELECTED_DICTIONARY, null);
+                editor.remove(CURRENTLY_SELECTED_DICTIONARY).apply();
             }
             switch (lang) {
                 case Constants.SupportedDictionaries.BHUTIA:

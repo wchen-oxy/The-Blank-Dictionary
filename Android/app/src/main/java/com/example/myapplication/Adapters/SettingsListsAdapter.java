@@ -1,13 +1,17 @@
 package com.example.myapplication.Adapters;
 
 import android.animation.LayoutTransition;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,13 +20,21 @@ import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
+import static com.example.myapplication.Constants.System.APP_PREFERENCES;
+import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
+
 public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdapter.MyViewHolder> {
     ArrayList<String> installed;
     boolean checkboxVisiblity;
     View view;
+    Context mContext;
+    SharedPreferences pref;
 
-    public SettingsListsAdapter(ArrayList<String> installed){
+
+    public SettingsListsAdapter(Context context, ArrayList<String> installed){
         this.installed = installed;
+        this.mContext = context;
+        pref = context.getSharedPreferences(APP_PREFERENCES, 0); // 0 - for private mode;
         checkboxVisiblity = false;
     }
     @NonNull
@@ -33,17 +45,24 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         return vh;
     }
 
+    
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String language = installed.get(position);
-        holder.checkBox.setTag(language);
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             (holder.linearLayout).getLayoutTransition()
                     .enableTransitionType(LayoutTransition.CHANGING);
         }
+
+        final String language = installed.get(position);
+        holder.checkBox.setTag(language);
         holder.textView.setText(language);
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pref.edit().putString(CURRENTLY_SELECTED_DICTIONARY, language).apply();
+                Toast.makeText(mContext, "Selected " + language, Toast.LENGTH_SHORT).show();
+            }
+        });
         if (checkboxVisiblity == false) holder.checkBox.setVisibility(View.GONE);
         else{
             holder.checkBox.setVisibility(View.VISIBLE);
