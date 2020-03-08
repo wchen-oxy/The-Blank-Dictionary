@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     }
 
     private void fragController(Bundle args) {
-
-
         switch (args.getString(NEW_FRAGMENT)) {
             case HOME_FRAGMENT:
                 HomeFragment homeFragment = HomeFragment.newInstance();

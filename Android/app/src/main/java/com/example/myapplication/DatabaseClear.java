@@ -5,21 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.room.Room;
-
 import com.example.myapplication.Dictionaries.AppDatabase;
 import com.example.myapplication.Dictionaries.Bhutia.Bhutia;
-import com.example.myapplication.Dictionaries.Bhutia.BhutiaDao;
 import com.example.myapplication.Dictionaries.English.English;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import static com.example.myapplication.Constants.DictionaryData.DATABASE;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
@@ -48,7 +41,7 @@ public class DatabaseClear extends AsyncTask<ArrayList<String>, Void, Boolean> {
 
         AppDatabase db = Room.databaseBuilder(weakContext.get(), AppDatabase.class, DATABASE).enableMultiInstanceInvalidation().build();
         for (String lang:languagesToDelete[0]) {
-            if (currentDictionary.equals(lang)) {
+            if (currentDictionary.equals(lang) && lang != null) {
                 editor.remove(CURRENTLY_SELECTED_DICTIONARY).apply();
             }
             switch (lang) {
@@ -66,11 +59,8 @@ public class DatabaseClear extends AsyncTask<ArrayList<String>, Void, Boolean> {
         }
         Intent filesDeletedIntent = new Intent();
         filesDeletedIntent.setAction(DATABASE_CLEARED);
-        System.out.println("THE CONTEXT AFTER  " + context.toString());
         context.sendBroadcast(filesDeletedIntent);
         LocalBroadcastManager.getInstance(context).sendBroadcast(filesDeletedIntent);
-
-
         return true;
     }
 

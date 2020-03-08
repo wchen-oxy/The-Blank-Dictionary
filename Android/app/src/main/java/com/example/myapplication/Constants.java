@@ -67,6 +67,8 @@ public final class Constants {
         public static final String APP_DICTIONARY_FILE = "/BlankDictionary/list.json";
         public static final String DATABASE = "Database";
         public static final String DATABASE_CLEARED = "Database Cleared";
+        public static final String BUTTON_FOCUSED_COLOR = "#c2c2c2";
+        public static final String TRANSPARENT_COLOR = "#00000000";
     }
 
     public static class SupportedDictionaries {

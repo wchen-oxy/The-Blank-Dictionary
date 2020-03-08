@@ -95,7 +95,6 @@ public class DictionarySelectionFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
                 if (!editing) {
                     settingsListsAdapter.makeCheckboxVisible(true);
                     delete.setVisibility(View.VISIBLE);
@@ -127,9 +126,10 @@ public class DictionarySelectionFragment extends Fragment {
         super.onResume();
         IntentFilter filter = new IntentFilter(DATABASE);
         filter.addAction(DATABASE_CLEARED);
-        System.out.println("THE CONTEXT B4 " + mContext.toString());
         mContext.registerReceiver(broadcastReceiver, filter);
     }
+
+
 
     @Override
     public void onPause() {
