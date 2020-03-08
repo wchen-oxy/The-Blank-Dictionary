@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/settings_frag"
     android:background="@color/cardview_light_background">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/settings_title_bar"
         android:layout_width="0dp"
@@ -15,8 +14,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/title_settings"
@@ -26,10 +24,10 @@
             android:text="@string/title_settings"
             android:textColor="#FFF"
             android:textSize="30dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
             />
 
@@ -39,8 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:paddingTop="10dp"
         android:paddingLeft="10dp"
+        android:paddingTop="10dp"
         android:paddingRight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,15 +49,15 @@
             android:id="@+id/language_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/language_pack_button"
-            android:fontFamily="@font/alegreya_sans"
-            android:textSize="16dp"
-            android:gravity="left|center_vertical"
-            android:drawableRight="@drawable/resize_arrow"
             android:background="@android:color/transparent"
+            android:drawableRight="@drawable/resize_arrow"
+            android:fontFamily="@font/alegreya_sans"
+            android:gravity="left|center_vertical"
+            android:text="@string/language_pack_button"
+            android:textSize="16dp"
 
             />
-        
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp" />
@@ -69,93 +67,92 @@
             android:id="@+id/current_dictionary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/default_button"
-            android:fontFamily="@font/alegreya_sans"
-            android:textSize="16dp"
-            android:gravity="left|center_vertical"
-            android:drawableRight="@drawable/resize_arrow"
             android:background="@android:color/transparent"
-            />
+            android:drawableRight="@drawable/resize_arrow"
+            android:fontFamily="@font/alegreya_sans"
+            android:gravity="left|center_vertical"
+            android:text="@string/default_button"
+            android:textSize="16dp" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
         <!--<Button-->
-            <!--android:id="@+id/interface_button"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/interface_button"-->
-            <!--android:fontFamily="@font/alegreya_sans"-->
-            <!--android:textSize="16dp"-->
-            <!--android:gravity="left|center_vertical"-->
-            <!--android:drawableRight="@drawable/resize_arrow"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--/>-->
+        <!--android:id="@+id/interface_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/interface_button"-->
+        <!--android:fontFamily="@font/alegreya_sans"-->
+        <!--android:textSize="16dp"-->
+        <!--android:gravity="left|center_vertical"-->
+        <!--android:drawableRight="@drawable/resize_arrow"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--/>-->
 
         <!--<Space-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="10dp" />-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="10dp" />-->
 
         <!--<Button-->
-            <!--android:id="@+id/help_button"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/help_button"-->
-            <!--android:fontFamily="@font/alegreya_sans"-->
-            <!--android:textSize="16dp"-->
-            <!--android:gravity="left|center_vertical"-->
-            <!--android:drawableRight="@drawable/resize_arrow"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--/>-->
+        <!--android:id="@+id/help_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/help_button"-->
+        <!--android:fontFamily="@font/alegreya_sans"-->
+        <!--android:textSize="16dp"-->
+        <!--android:gravity="left|center_vertical"-->
+        <!--android:drawableRight="@drawable/resize_arrow"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--/>-->
 
         <!--<Space-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="10dp" />-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="10dp" />-->
 
         <!--<Button-->
-            <!--android:id="@+id/feedback_button"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/feedback_button"-->
-            <!--android:fontFamily="@font/alegreya_sans"-->
-            <!--android:textSize="16dp"-->
-            <!--android:gravity="left|center_vertical"-->
-            <!--android:drawableRight="@drawable/resize_arrow"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--/>-->
+        <!--android:id="@+id/feedback_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/feedback_button"-->
+        <!--android:fontFamily="@font/alegreya_sans"-->
+        <!--android:textSize="16dp"-->
+        <!--android:gravity="left|center_vertical"-->
+        <!--android:drawableRight="@drawable/resize_arrow"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--/>-->
 
         <!--<Space-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="10dp" />-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="10dp" />-->
 
         <!--<Button-->
-            <!--android:id="@+id/donate_button"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/donate_button"-->
-            <!--android:fontFamily="@font/alegreya_sans"-->
-            <!--android:textSize="16dp"-->
-            <!--android:gravity="left|center_vertical"-->
-            <!--android:drawableRight="@drawable/resize_arrow"-->
-            <!--android:background="@android:color/transparent"-->
-            <!--/>-->
+        <!--android:id="@+id/donate_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/donate_button"-->
+        <!--android:fontFamily="@font/alegreya_sans"-->
+        <!--android:textSize="16dp"-->
+        <!--android:gravity="left|center_vertical"-->
+        <!--android:drawableRight="@drawable/resize_arrow"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--/>-->
     </LinearLayout>
 
 
     <!--<LinearLayout-->
-        <!--android:id="@+id/settings_layout"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="#FFF"-->
-        <!--android:orientation="vertical"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent">-->
+    <!--android:id="@+id/settings_layout"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="#FFF"-->
+    <!--android:orientation="vertical"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent">-->
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="#00000000" />-->
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textColor="#00000000" />-->
     <!--</LinearLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

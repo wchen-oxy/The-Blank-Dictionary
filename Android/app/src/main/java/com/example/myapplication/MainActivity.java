@@ -28,7 +28,6 @@ import com.example.myapplication.BroadcastRecievers.myAvailableDictionaryRecieve
 import com.example.myapplication.BroadcastRecievers.myServerStatusReciever;
 import com.example.myapplication.DataDownload.DictionaryClientUsage;
 import com.example.myapplication.DataDownload.HttpBadRequestException;
-import com.example.myapplication.Dictionaries.ResultWrapper;
 import com.example.myapplication.Fragments.DictionarySelectionFragment;
 import com.example.myapplication.Fragments.HomeFragment;
 import com.example.myapplication.Fragments.LanguagePackFragment;
@@ -62,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     final Context context = this;
     public BroadcastReceiver myAvailableDictionaryReciever;
     public Boolean isAdvSearch = false;
-    private String activeLang = "";
-    private SharedPreferences pref;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     BottomNavigationView navViewBack;
@@ -71,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     LocalBroadcastManager localBroadcastManager;
     Bundle args;
     ArrayList<String> langToDelete;
-
+    private String activeLang = "";
+    private SharedPreferences pref;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -263,8 +261,8 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
         if (checked) langToDelete.add(view.getTag().toString());
-        else{
-            for (int i = 0; i < langToDelete.size(); i++){
+        else {
+            for (int i = 0; i < langToDelete.size(); i++) {
                 if (langToDelete.get(i) == view.getTag().toString()) langToDelete.remove(i);
             }
         }
@@ -272,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
     @Override
     public void delete() {
-            new DatabaseClear(this).execute(langToDelete);
+        new DatabaseClear(this).execute(langToDelete);
     }
 
     @Override

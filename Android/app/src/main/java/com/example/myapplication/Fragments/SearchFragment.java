@@ -263,14 +263,14 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
     private List returnList() throws ExecutionException, InterruptedException {
         List resultList = new ArrayList();
-        switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)){
-            case(BHUTIA):
+        switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
+            case (BHUTIA):
                 resultList = new DatabaseQuery(getContext()).execute(args).get().getList().getResult();
                 for (BhutiaWord bhutiaWord : (List<BhutiaWord>) resultList) {
                     resultWrapper.getList().getResult().add(bhutiaWord);
                 }
                 break;
-            case(ENGLISH):
+            case (ENGLISH):
                 resultList = new DatabaseQuery(getContext()).execute(args).get().getList().getResult();
                 for (EnglishWord englishWord : (List<EnglishWord>) resultList) {
                     resultWrapper.getList().getResult().add(englishWord);

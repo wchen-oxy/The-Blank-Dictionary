@@ -37,19 +37,19 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
     private int checkedPosition;
 
 
-
-    public SettingsListsAdapter(Context context, ArrayList<String> installed){
+    public SettingsListsAdapter(Context context, ArrayList<String> installed) {
         if (installed.size() > 0) this.installed = installed;
-        else{
+        else {
             installed.add("Please Download a Dictionary.");
             this.installed = installed;
             noDictionary = true;
         }
-
+        checkedPosition = -1;
         this.mContext = context;
         pref = context.getSharedPreferences(APP_PREFERENCES, 0); // 0 - for private mode;
         checkboxVisiblity = false;
     }
+
     @NonNull
     @Override
     public SettingsListsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,7 +58,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         return vh;
     }
 
-    
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         selected = pref.getString(CURRENTLY_SELECTED_DICTIONARY, "");
@@ -66,33 +66,36 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
             (holder.dictRowLinearLayout).getLayoutTransition()
                     .enableTransitionType(LayoutTransition.CHANGING);
         }
+        Toast.makeText(mContext, selected, Toast.LENGTH_SHORT).show();
+
 
         String language = installed.get(position);
         if (selected.equals(language)) {
             Toast.makeText(mContext, installed.get(position), Toast.LENGTH_SHORT).show();
             checkedPosition = position;
             holder.dictRowLinearLayout.setBackgroundColor(Color.parseColor(BUTTON_FOCUSED_COLOR));
-        }
-        else if(!selected.equals(language)){
+        } else if (!selected.equals(language)) {
             holder.dictRowLinearLayout.setBackgroundColor(Color.parseColor(TRANSPARENT_COLOR));
         }
 
         holder.checkBox.setTag(language);
         holder.textView.setText(language);
-        if (noDictionary)holder.langNameLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkedPosition != position) {
-                    Toast.makeText(mContext, installed.get(position), Toast.LENGTH_SHORT).show();
-                    pref.edit().putString(CURRENTLY_SELECTED_DICTIONARY, installed.get(position)).apply();
-                    checkedPosition = position;
-                    notifyDataSetChanged();
+        if (!noDictionary)
+            holder.langNameLinearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("Pos", String.valueOf(position));
+                    if (checkedPosition != position) {
+                        Toast.makeText(mContext, installed.get(position), Toast.LENGTH_SHORT).show();
+                        pref.edit().putString(CURRENTLY_SELECTED_DICTIONARY, installed.get(position)).apply();
+                        checkedPosition = position;
+                        notifyDataSetChanged();
+                    }
                 }
-            }
-        });
+            });
 
         if (checkboxVisiblity == false) holder.checkBox.setVisibility(View.GONE);
-        else{
+        else {
             holder.checkBox.setVisibility(View.VISIBLE);
         }
     }
@@ -103,13 +106,12 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
     }
 
 
-    public void makeCheckboxVisible(boolean visible){
+    public void makeCheckboxVisible(boolean visible) {
         if (visible) {
             checkboxVisiblity = visible;
             notifyDataSetChanged();
 
-        }
-        else {
+        } else {
             checkboxVisiblity = false;
             notifyDataSetChanged();
         }

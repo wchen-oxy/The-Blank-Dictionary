@@ -1,44 +1,46 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bhutia_result_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/bhutia_result_linear_layout">
+    android:orientation="vertical">
+
     <Space
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        />
+        android:layout_height="100dp" />
 
 
     <TextView
         android:id="@+id/bhutia_title_text"
-        style="@style/Title"
-        />
+        style="@style/Title" />
+
     <TextView
         android:id="@+id/bhutia_ipa"
         style="@style/SubTitles"
 
         />
+
     <TextView
         android:id="@+id/bhutia_category"
         style="@style/SubTitles"
 
         />
+
     <TextView
         android:id="@+id/bhutia_sub_title_1"
-        style="@style/SubTitles"
-        />
+        style="@style/SubTitles" />
+
     <TextView
         android:id="@+id/bhutia_sub_title_2"
         style="@style/SubTitles"
 
         />
+
     <TextView
         android:id="@+id/bhutia_sub_title_3"
         style="@style/SubTitles"
 
         />
+
     <TextView
         android:id="@+id/bhutia_sub_title_4"
         style="@style/SubTitles"
@@ -47,10 +49,7 @@
 
     <TextView
         android:id="@+id/bhutia_example"
-        style="@style/SubTitles"
-        />
-
-
+        style="@style/SubTitles" />
 
 
 </LinearLayout>

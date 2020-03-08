@@ -13,7 +13,7 @@ import java.util.List;
 public class Bhutia implements ResultWrapper {
     private Result result;
 
-    public Bhutia(AppDatabase db){
+    public Bhutia(AppDatabase db) {
         //delete all
         db.getBhutiaDao().deleteAll();
     }

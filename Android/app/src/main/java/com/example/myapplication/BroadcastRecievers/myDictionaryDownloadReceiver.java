@@ -96,8 +96,7 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
                 Log.d("myDictionaryReciever", "Something went wrong");
 
         }
-        Log.i("Temp Payload Deleted:",  Boolean.toString(file.delete()));
-
+        Log.i("Temp Payload Deleted:", Boolean.toString(file.delete()));
 
 
 //        }

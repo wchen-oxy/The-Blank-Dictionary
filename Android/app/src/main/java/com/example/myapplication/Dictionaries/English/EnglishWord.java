@@ -9,7 +9,8 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "EnglishWords")
 public class EnglishWord {
 
-    @PrimaryKey @NonNull
+    @PrimaryKey
+    @NonNull
     public String word;
     @ColumnInfo(name = "ipa")
     public String ipa;

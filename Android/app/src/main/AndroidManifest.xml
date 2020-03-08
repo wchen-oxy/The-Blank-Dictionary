@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/basic_launcher"
@@ -23,33 +21,35 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <uses-library android:name="android.test.runner"
+        <uses-library
+            android:name="android.test.runner"
             android:required="false" />
-        <uses-library android:name="android.test.base"
+        <uses-library
+            android:name="android.test.base"
             android:required="false" />
-        <uses-library android:name="android.test.mock"
+        <uses-library
+            android:name="android.test.mock"
             android:required="false" />
 
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!--<meta-data-->
-                <!--android:name="android.app.default_searchable"-->
-                <!--android:value=".SearchActivity" />-->
-
+            <!--android:name="android.app.default_searchable"-->
+            <!--android:value=".SearchActivity" />-->
 
 
         </activity>
         <!--<receiver android:name=".myReceiver"  android:exported="true">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
-                <!--<action android:name="android.intent.action.INPUT_METHOD_CHANGED" />-->
-            <!--</intent-filter>-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+        <!--<action android:name="android.intent.action.INPUT_METHOD_CHANGED" />-->
+        <!--</intent-filter>-->
         <!--</receiver>-->
 
     </application>

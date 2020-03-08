@@ -9,7 +9,7 @@ import java.util.List;
 public class English implements ResultWrapper {
     private Result result;
 
-    public English(AppDatabase db){
+    public English(AppDatabase db) {
         db.getEnglishDao().deleteAll();
     }
 

@@ -17,8 +17,8 @@ android {
         }
     }
 
-    testOptions{
-        unitTests{
+    testOptions {
+        unitTests {
             includeAndroidResources = true
         }
     }
@@ -46,14 +46,13 @@ dependencies {
 
     def room_version = "2.2.1"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // For Kotlin use kapt instead of annotationProcessor
     // Used for Testing
     def fragment_version = "1.2.2"
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 
     dependencies { testImplementation "org.mockito:mockito-core:2.+" }
-
-
 
 
 }

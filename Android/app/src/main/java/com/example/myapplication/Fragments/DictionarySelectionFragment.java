@@ -12,17 +12,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.myapplication.Adapters.SettingsListsAdapter;
 import com.example.myapplication.DataSerialization;
 import com.example.myapplication.HelperInterfaces.IDelete;
 import com.example.myapplication.R;
+
 import java.io.File;
 import java.util.ArrayList;
+
 import static com.example.myapplication.Constants.System.APP_DICTIONARY_FILE;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.DATABASE;
@@ -89,7 +93,7 @@ public class DictionarySelectionFragment extends Fragment {
         final Button edit = rootView.findViewById(R.id.dict_pack_edit);
         final ObjectAnimator mLeftAnimation = ObjectAnimator.ofFloat(languagesRecyclerView, "translationX", 130f);
         mLeftAnimation.setDuration(500);
-        final ObjectAnimator mRightAnimation = ObjectAnimator.ofFloat(languagesRecyclerView,"translationX", 0);
+        final ObjectAnimator mRightAnimation = ObjectAnimator.ofFloat(languagesRecyclerView, "translationX", 0);
         mRightAnimation.setDuration(500);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,8 +105,7 @@ public class DictionarySelectionFragment extends Fragment {
                     delete.setClickable(true);
                     editing = true;
                     return;
-                }
-                else{
+                } else {
                     settingsListsAdapter.makeCheckboxVisible(false);
                     delete.setVisibility(View.INVISIBLE);
                     delete.setClickable(false);
@@ -129,8 +132,6 @@ public class DictionarySelectionFragment extends Fragment {
         mContext.registerReceiver(broadcastReceiver, filter);
     }
 
-
-
     @Override
     public void onPause() {
         super.onPause();
@@ -143,9 +144,9 @@ public class DictionarySelectionFragment extends Fragment {
         iDelete.clearLangToDeleteList();
     }
 
-    private void checkInstalledLanguage(SharedPreferences pref){
+    private void checkInstalledLanguage(SharedPreferences pref) {
         ArrayList<String> list = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory() + APP_DICTIONARY_FILE));
-        for (String lang: list){
+        for (String lang : list) {
             if (pref.getBoolean(lang, false)) installed.add(lang);
         }
     }

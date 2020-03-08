@@ -32,7 +32,6 @@ import com.example.myapplication.DataSerialization;
 import com.example.myapplication.R;
 
 import java.io.File;
-import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -165,7 +164,8 @@ public class LanguagePackFragment extends Fragment {
         Handler handler = new Handler(looper);
         mContext.registerReceiver(broadcastReceiver, filter, null, handler);
     }
-    private void makeDownloadRequest(String url, File file){
+
+    private void makeDownloadRequest(String url, File file) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDescription(REQUEST_DESCRIPTION)
                 .setTitle(REQUEST_TITLE)

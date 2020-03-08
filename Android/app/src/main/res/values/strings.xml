@@ -18,7 +18,6 @@
     <string name="no_list_found">You must download a dictionary first.</string>
 
 
-
     <string-array name="planets_array">
         <item>Mercury</item>
         <item>Venus</item>
@@ -29,7 +28,6 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
-
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -69,6 +69,7 @@ public final class Constants {
         public static final String DATABASE_CLEARED = "Database Cleared";
         public static final String BUTTON_FOCUSED_COLOR = "#c2c2c2";
         public static final String TRANSPARENT_COLOR = "#00000000";
+        public static final String DISABLED_COLOR = "#ebe6e6";
     }
 
     public static class SupportedDictionaries {
@@ -89,7 +90,7 @@ public final class Constants {
     }
 
     public static class Toast {
-        public static final String NO_DICT_INSTALLED_TOAST = "Please Download a Dictionary from Settings First";
+        public static final String NO_DICT_INSTALLED_TOAST = "Please Download a Dictionary from Settings.";
         public static final String NO_DICT_SELECTED_TOAST = "Choose your current dictionary in Settings.";
         public static final String DICTIONARY_SELECTED_TOAST = "Dictionary Selected";
         public static final String DICTIONARY_IS_DOWNLOADING_TOAST = "Dictionary is downloading.";

@@ -2,15 +2,17 @@ package com.example.myapplication.Fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,12 +31,12 @@ import java.io.File;
 import static com.example.myapplication.Constants.DictionaryData.QUERY;
 import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
 import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
-import static com.example.myapplication.Constants.Fragment.HOME_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
 import static com.example.myapplication.Constants.System.APP_NAME;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
+import static com.example.myapplication.Constants.System.DISABLED_COLOR;
 import static com.example.myapplication.Constants.Toast.NO_DICT_INSTALLED_TOAST;
 import static com.example.myapplication.Constants.Toast.NO_DICT_SELECTED_TOAST;
 
@@ -45,6 +47,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     IFragmentCommunicator fragmentCommunicator;
     Bundle args;
     myTranslationSpinnerAdapter<String> translationSpinnerAdapter;
+    Spinner spinner;
+    Context mContext;
+    TextView textView;
     private SharedPreferences pref;
     private boolean mDictionaryInstalled = true;
 
@@ -66,6 +71,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         pref = getContext().getSharedPreferences(APP_PREFERENCES, 0);
         if (!(new File(Environment.getExternalStorageDirectory(), APP_NAME).isDirectory()))
             mDictionaryInstalled = false;
+        textView = new TextView(getContext());
     }
 
     @Override
@@ -77,14 +83,18 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mainSearchBar = view.findViewById(R.id.searchView);
-        mainSearchBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainSearchBar.setIconified(false);
-            }
-        });
+        spinner = getView().findViewById(R.id.home_trans_spinner);
+
 
         if (mDictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) != null) {
+            //include this to prevent the search bar from opening keyboard
+            mainSearchBar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainSearchBar.setIconified(false);
+                }
+            });
+            //actual listener for submitting text
             mainSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
                 @Override
@@ -104,7 +114,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             });
 
 
-            Spinner spinner = getView().findViewById(R.id.home_trans_spinner);
             String[] translationTypesArray = Translation.getSet(getContext());
             translationSpinnerAdapter = new myTranslationSpinnerAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_dropdown_item, translationTypesArray);
@@ -113,17 +122,29 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             spinner.setOnItemSelectedListener(this);
 
         } else {
-            mainSearchBar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!mDictionaryInstalled) {
+            mainSearchBar.setVisibility(View.GONE);
+            spinner.setVisibility(View.GONE);
+            LinearLayout outerLinearLayout = view.findViewById(R.id.outer_search_linear_layout);
+            outerLinearLayout.setBackgroundColor(Color.parseColor(DISABLED_COLOR));
+
+            if (!mDictionaryInstalled) {
+                Toast.makeText(getActivity(), NO_DICT_INSTALLED_TOAST, Toast.LENGTH_LONG).show();
+                outerLinearLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
                         Toast.makeText(getActivity(), NO_DICT_INSTALLED_TOAST, Toast.LENGTH_LONG).show();
                     }
-                    if (mDictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) == null) {
+                });
+            }
+            if (mDictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) == null) {
+                Toast.makeText(getActivity(), NO_DICT_SELECTED_TOAST, Toast.LENGTH_LONG).show();
+                outerLinearLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
                         Toast.makeText(getActivity(), NO_DICT_SELECTED_TOAST, Toast.LENGTH_LONG).show();
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -131,7 +152,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     public void onResume() {
         mainSearchBar.setQuery("", false);
         mainSearchBar.setFocusable(true);
-        mainSearchBar.setIconified(true);
         mainSearchBar.clearFocus();
         super.onResume();
     }
