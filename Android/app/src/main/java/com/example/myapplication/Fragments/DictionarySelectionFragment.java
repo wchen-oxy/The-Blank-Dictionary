@@ -16,6 +16,9 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.selection.ItemKeyProvider;
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.selection.StableIdKeyProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,22 +30,27 @@ import com.example.myapplication.R;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.example.myapplication.Constants.System.APP_DICTIONARY_FILE;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.DATABASE;
 import static com.example.myapplication.Constants.System.DATABASE_CLEARED;
+import static com.example.myapplication.Constants.System.DATABASE_UPDATED;
+import static com.example.myapplication.Constants.Toast.DOWNLOAD_DICTIONARY_PROMPT;
 
 
 public class DictionarySelectionFragment extends Fragment {
     SharedPreferences pref;
     IDelete iDelete;
     Context mContext;
-    Boolean editing;
+    Boolean isCurrentlyEditing;
     RecyclerView languagesRecyclerView;
     View rootView;
-    BroadcastReceiver broadcastReceiver;
+    BroadcastReceiver refreshListBroadcastReciever;
     SettingsListsAdapter settingsListsAdapter;
-    ArrayList<String> installed;
+    Button delete;
+    ArrayList<String> available;
+    public static boolean DOWNLOAD_IN_PROGRESS;
 
 
     public static DictionarySelectionFragment newInstance() {
@@ -58,18 +66,26 @@ public class DictionarySelectionFragment extends Fragment {
         super.onAttach(context);
         pref = context.getSharedPreferences(APP_PREFERENCES, 0); // 0 - for private mode;
         mContext = context;
-        editing = false;
+        isCurrentlyEditing = false;
         iDelete = (IDelete) context;
-        installed = new ArrayList<>();
-        broadcastReceiver = new BroadcastReceiver() {
+        DOWNLOAD_IN_PROGRESS = false;
+
+        refreshListBroadcastReciever = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                installed.clear();
-                checkInstalledLanguage(pref);
+
+
+//                checkInstalledLanguage(pref);
+                if (isCurrentlyEditing) {
+                    isCurrentlyEditing = false;
+                    settingsListsAdapter.makeCheckboxVisible(false);
+                    delete.setVisibility(View.GONE);
+                }
                 settingsListsAdapter.notifyDataSetChanged();
             }
         };
-        checkInstalledLanguage(pref);
+        available = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory() + "/BlankDictionary/list.json"));
+
     }
 
 
@@ -86,30 +102,45 @@ public class DictionarySelectionFragment extends Fragment {
         languagesRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
         languagesRecyclerView.setLayoutManager(layoutManager);
-        settingsListsAdapter = new SettingsListsAdapter(mContext, installed);
+        settingsListsAdapter = new SettingsListsAdapter(mContext, getActivity(), available, DOWNLOAD_IN_PROGRESS);
         languagesRecyclerView.setAdapter(settingsListsAdapter);
 
-        final Button delete = rootView.findViewById(R.id.dict_pack_delete);
+        //FIXME: IMPLEMENT RECYCLERVIEW SELECTOR
+//        //Recyclerview selector
+//        SelectionTracker tracker = new SelectionTracker.Builder<>(
+//            "lanuguage",
+//                languagesRecyclerView,
+//                new StableIdKeyProvider(languagesRecyclerView),
+//
+//        );
+
+
+        delete = rootView.findViewById(R.id.dict_pack_delete);
         final Button edit = rootView.findViewById(R.id.dict_pack_edit);
         final ObjectAnimator mLeftAnimation = ObjectAnimator.ofFloat(languagesRecyclerView, "translationX", 130f);
         mLeftAnimation.setDuration(500);
         final ObjectAnimator mRightAnimation = ObjectAnimator.ofFloat(languagesRecyclerView, "translationX", 0);
         mRightAnimation.setDuration(500);
+//        System.out.println("INSTALLED: " + installed.get(0));
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("Edit Clicked");
 
-                if (!editing) {
+
+                if (!isCurrentlyEditing) {
+                    System.out.println("Edit true");
+
                     settingsListsAdapter.makeCheckboxVisible(true);
                     delete.setVisibility(View.VISIBLE);
                     delete.setClickable(true);
-                    editing = true;
+                    isCurrentlyEditing = true;
                     return;
                 } else {
                     settingsListsAdapter.makeCheckboxVisible(false);
                     delete.setVisibility(View.INVISIBLE);
                     delete.setClickable(false);
-                    editing = false;
+                    isCurrentlyEditing = false;
                 }
 
             }
@@ -118,6 +149,7 @@ public class DictionarySelectionFragment extends Fragment {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("Delete Clicked");
                 iDelete.delete();
             }
         });
@@ -127,15 +159,21 @@ public class DictionarySelectionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        IntentFilter filter = new IntentFilter(DATABASE);
-        filter.addAction(DATABASE_CLEARED);
-        mContext.registerReceiver(broadcastReceiver, filter);
+        IntentFilter deleteFilter = new IntentFilter(DATABASE);
+        deleteFilter.addAction(DATABASE_CLEARED);
+        mContext.registerReceiver(refreshListBroadcastReciever, deleteFilter);
+
+        IntentFilter refreshFilter = new IntentFilter(DATABASE);
+        refreshFilter.addAction(DATABASE_UPDATED);
+        mContext.registerReceiver(refreshListBroadcastReciever, refreshFilter);
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mContext.unregisterReceiver(broadcastReceiver);
+        mContext.unregisterReceiver(refreshListBroadcastReciever);
+
     }
 
     @Override
@@ -144,11 +182,11 @@ public class DictionarySelectionFragment extends Fragment {
         iDelete.clearLangToDeleteList();
     }
 
-    private void checkInstalledLanguage(SharedPreferences pref) {
-        ArrayList<String> list = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory() + APP_DICTIONARY_FILE));
-        for (String lang : list) {
-            if (pref.getBoolean(lang, false)) installed.add(lang);
-        }
-    }
+//    private void checkInstalledLanguage(SharedPreferences pref) {
+//        ArrayList<String> list = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory() + APP_DICTIONARY_FILE));
+//        for (String lang : list) {
+//            if (pref.getBoolean(lang, false)) installed.add(lang);
+//        }
+//    }
 
 }

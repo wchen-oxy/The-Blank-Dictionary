@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.room.Room;
 
 import com.example.myapplication.Dictionaries.AppDatabase;
@@ -15,6 +16,7 @@ import com.example.myapplication.Dictionaries.Bhutia.BhutiaDao;
 import com.example.myapplication.Dictionaries.Bhutia.BhutiaDataInsert;
 import com.example.myapplication.Dictionaries.English.EnglishDao;
 import com.example.myapplication.Dictionaries.English.EnglishDataInsert;
+import com.example.myapplication.Fragments.DictionarySelectionFragment;
 import com.example.myapplication.Fragments.LanguagePackFragment;
 
 import java.io.File;
@@ -24,6 +26,7 @@ import java.io.IOException;
 
 import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
+import static com.example.myapplication.Constants.System.DATABASE_UPDATED;
 
 public class myDictionaryDownloadReceiver extends BroadcastReceiver {
     String type;
@@ -43,6 +46,7 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
 //        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
         //Checking if the received broadcast is for our enqueued download by matching download id
         LanguagePackFragment.DOWNLOAD_IN_PROGRSS = false;
+        DictionarySelectionFragment.DOWNLOAD_IN_PROGRESS = false;
         Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
 
         final File file = new File(Environment.getExternalStorageDirectory() + "/BlankDictionary", type);
@@ -76,9 +80,6 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
                 BhutiaDataInsert.BhuInsert(bhutiaDao, file);
                 editor.putBoolean(BHUTIA, true);
                 editor.commit();
-                //upon database insertion, remove actual file
-                Log.d("Download File Deleted: ", Boolean.toString(file.delete()));
-
                 break;
 
             }
@@ -87,7 +88,6 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
                 EnglishDataInsert.engInsert(englishDao, file);
                 editor.putBoolean(ENGLISH, true);
                 editor.commit();
-                Log.d("Download File Deleted: ", Boolean.toString(file.delete()));
 
                 break;
 
@@ -97,8 +97,10 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
 
         }
         Log.i("Temp Payload Deleted:", Boolean.toString(file.delete()));
-
-
+        Intent filesDeletedIntent = new Intent();
+        filesDeletedIntent.setAction(DATABASE_UPDATED);
+        context.sendBroadcast(filesDeletedIntent);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(filesDeletedIntent);
 //        }
 
     }

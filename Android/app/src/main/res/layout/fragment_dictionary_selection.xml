@@ -62,6 +62,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
 
+
     <!--<ScrollView-->
 
     <!--android:id="@+id/dict_pack_list"-->

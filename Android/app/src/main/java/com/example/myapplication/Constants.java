@@ -67,6 +67,8 @@ public final class Constants {
         public static final String APP_DICTIONARY_FILE = "/BlankDictionary/list.json";
         public static final String DATABASE = "Database";
         public static final String DATABASE_CLEARED = "Database Cleared";
+        public static final String DATABASE_UPDATED = "Database Updated";
+
         public static final String BUTTON_FOCUSED_COLOR = "#c2c2c2";
         public static final String TRANSPARENT_COLOR = "#00000000";
         public static final String DISABLED_COLOR = "#ebe6e6";
@@ -97,7 +99,7 @@ public final class Constants {
         public static final String BUTTON_SELECTED_TOAST = "Selected";
         public static final String DICT_STILL_DOWNLOADING_TOAST = "A dictionary is already downloading.";
         public static final String BAD_SERVER_CONNECTION_TOAST = "Can't Connect to server to download available dictionaries.";
-
+        public static final String DOWNLOAD_DICTIONARY_PROMPT = "Please Download a Dictionary.";
 
     }
 

@@ -260,7 +260,8 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
-        if (checked) langToDelete.add(view.getTag().toString());
+        if (checked) {langToDelete.add(view.getTag().toString());
+        System.out.println(view.getTag().toString());}
         else {
             for (int i = 0; i < langToDelete.size(); i++) {
                 if (langToDelete.get(i) == view.getTag().toString()) langToDelete.remove(i);
@@ -270,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
     @Override
     public void delete() {
+        System.out.println((langToDelete));
         new DatabaseClear(this).execute(langToDelete);
     }
 
