@@ -23,6 +23,7 @@ public class DataSerialization {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+
     }
 
     public static ArrayList<String> deserializer(File file) {

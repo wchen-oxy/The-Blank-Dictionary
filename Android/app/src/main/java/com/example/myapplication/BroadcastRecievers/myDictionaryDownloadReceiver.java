@@ -1,5 +1,6 @@
 package com.example.myapplication.BroadcastRecievers;
 
+import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,24 +25,32 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static android.content.Context.DOWNLOAD_SERVICE;
 import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
+import static com.example.myapplication.Constants.System.APP_NAME;
 import static com.example.myapplication.Constants.System.DATABASE_UPDATED;
 import static com.example.myapplication.Constants.System.DOWNLOAD_ID;
 import static com.example.myapplication.Constants.System.DOWNLOAD_TYPE;
 
 public class myDictionaryDownloadReceiver extends BroadcastReceiver {
     String type;
+    long id;
 
 
-    public myDictionaryDownloadReceiver(String type) {
+    public myDictionaryDownloadReceiver(long id, String type) {
         this.type = type;
+        this.id = id;
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         System.out.println("RECIEVER REACHED");
         context.unregisterReceiver(this);
+        System.out.println("LONG ID: "  + id);
+
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+        System.out.println( "SUCCESSFUL DOWNLOAD: " + downloadManager.getUriForDownloadedFile(id));
         StringBuilder sb = new StringBuilder();
         sb.append("Action: " + intent.getAction() + "\n");
         sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");
@@ -52,7 +61,8 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
         DictionarySelectionFragment.DOWNLOAD_IN_PROGRESS = false;
         Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
 
-        final File file = new File(Environment.getExternalStorageDirectory() + "/BlankDictionary", type);
+        final File file = new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME, type);
+        System.out.println("IS THIS A FILE>>" + file.isFile());
 
 //        String message = "";
 //

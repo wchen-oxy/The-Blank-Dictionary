@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -120,7 +121,7 @@ public class DictionarySelectionFragment extends Fragment {
 
 
         delete = rootView.findViewById(R.id.dict_pack_delete);
-        final Button edit = rootView.findViewById(R.id.dict_pack_edit);
+        final ImageButton edit = rootView.findViewById(R.id.dict_pack_edit);
         final ObjectAnimator mLeftAnimation = ObjectAnimator.ofFloat(languagesRecyclerView, "translationX", 130f);
         mLeftAnimation.setDuration(500);
         final ObjectAnimator mRightAnimation = ObjectAnimator.ofFloat(languagesRecyclerView, "translationX", 0);

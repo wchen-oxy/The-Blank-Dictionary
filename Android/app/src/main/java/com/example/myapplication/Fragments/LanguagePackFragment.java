@@ -154,15 +154,15 @@ public class LanguagePackFragment extends Fragment {
             Log.d("Prev. File Deleted", Boolean.toString(file.delete()));
             Log.d("Pref. File Exists", Boolean.toString(file.exists()));
         }
-
-        makeDownloadRequest(url, file);
-        BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(buttonText);
-        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
-        handlerThread.start();
-        Looper looper = handlerThread.getLooper();
-        Handler handler = new Handler(looper);
-        mContext.registerReceiver(broadcastReceiver, filter, null, handler);
+//
+//        makeDownloadRequest(url, file);
+//        BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(buttonText);
+//        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+//        HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
+//        handlerThread.start();
+//        Looper looper = handlerThread.getLooper();
+//        Handler handler = new Handler(looper);
+//        mContext.registerReceiver(broadcastReceiver, filter, null, handler);
     }
 
     private void makeDownloadRequest(String url, File file) {

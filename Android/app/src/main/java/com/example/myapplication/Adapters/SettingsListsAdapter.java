@@ -44,6 +44,7 @@ import com.example.myapplication.DataSerialization;
 import com.example.myapplication.R;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -243,6 +244,10 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         Log.d("Download URL: ", url);
         Toast.makeText(mContext, DICTIONARY_IS_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
         File file = new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME, buttonText);
+        Log.d("Is Folder Writable",  String.valueOf(new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME).canWrite()));
+
+        Log.d("FILEPATH: ", file.getAbsolutePath().toString());
+        Log.d("FILE Exists??", String.valueOf(file.isFile()));
         file.setWritable(true);
         if (file.exists()) {
             Log.d("File", file.getAbsolutePath());
@@ -254,13 +259,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         }
 
         makeDownloadRequest(url, file, buttonText);
-        BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(buttonText);
-        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
-        handlerThread.start();
-        Looper looper = handlerThread.getLooper();
-        Handler handler = new Handler(looper);
-        mContext.registerReceiver(broadcastReceiver, filter, null, handler);
+
     }
 
     private void makeDownloadRequest(String url, File file, String type) {
@@ -270,43 +269,65 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
                 .setDestinationUri(Uri.fromFile(file))
                 .addRequestHeader(REQUEST_AUTH_HEADER, authDigest());
         DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
+        System.out.println("DOWNLIADMANAGER IS>" +  mContext.getSystemService(DOWNLOAD_SERVICE));
         final long id = downloadManager.enqueue(request);
+        BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(id, type);
+        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+        HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
+        handlerThread.start();
+        Looper looper = handlerThread.getLooper();
+        Handler handler = new Handler(looper);
+        mContext.registerReceiver(broadcastReceiver, filter, null, handler);
+        System.out.println("FILE path from download: " + file.getAbsolutePath());
+//
+        //slow af internet debug
+        myServerStatusReciever myServerStatusReciever = new myServerStatusReciever();
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+        localBroadcastManager.registerReceiver(myServerStatusReciever, new IntentFilter(SERVER_REACHED));
 
-//        //slow af internet debug
-//        myServerStatusReciever myServerStatusReciever = new myServerStatusReciever();
-//        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
-//        localBroadcastManager.registerReceiver(myServerStatusReciever, new IntentFilter(SERVER_REACHED));
-//
-//
-//        DownloadManager.Query query = new DownloadManager.Query();
-//        query.setFilterById(id);
-//        Cursor c = downloadManager.query(query);
-//        new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//
-//                boolean downloading = true;
-//
-//                DownloadManager manager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-//                while (downloading) {
-//
-//                    DownloadManager.Query q = new DownloadManager.Query();
-//                    q.setFilterById(id); //filter by id which you have receieved when reqesting download from download manager
-//                    Cursor cursor = manager.query(q);
-//                    cursor.moveToFirst();
-//                    int bytes_downloaded = cursor.getInt(cursor
-//                            .getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
-//                    int bytes_total = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
-//
-//                    System.out.println(bytes_downloaded + " out of " + bytes_total);
-//
-//                    if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
-//                        downloading = false;
-//                    }
-//                }
-//            }
-//        }).start();
+
+        DownloadManager.Query query = new DownloadManager.Query();
+        query.setFilterById(id);
+        Cursor c = downloadManager.query(query);
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                boolean downloading = true;
+
+                DownloadManager manager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+                while (downloading) {
+
+                    DownloadManager.Query q = new DownloadManager.Query();
+                    q.setFilterById(id); //filter by id which you have receieved when reqesting download from download manager
+                    Cursor cursor = manager.query(q);
+                    cursor.moveToFirst();
+                    int bytes_downloaded = cursor.getInt(cursor
+                            .getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+                    int bytes_total = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+
+                    System.out.println(bytes_downloaded + " out of " + bytes_total);
+                    System.out.println("CURRENT STATUS " + cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)));
+
+                    if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_RUNNING) {
+                        System.out.println("Still running");}
+                    else if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_FAILED) {
+                        System.out.println("FAILED");
+                        downloading = false;
+                        Log.i("handleData()", "Reason: " + cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_REASON)));
+
+                        cursor.close();
+                    }
+                    else if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
+                        downloading = false;
+                        cursor.close();
+                    }
+
+
+                }
+            }
+        }).start();
 
 
 

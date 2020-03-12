@@ -54,7 +54,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/baseline_first_page_black_18dp"
+            android:background="@drawable/outline_get_app_black_18dp"
 
             />
     </LinearLayout>

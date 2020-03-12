@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
 
                 case R.id.navigation_settings:
+
                     clearBackStack();
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.frag_container, SettingsFragment.newInstance(), SETTINGS_FRAGMENT).commit();
@@ -143,34 +144,34 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 fragmentTransaction.replace(R.id.frag_container, dictionarySelectionFragment).addToBackStack(DICTIONARY_SELECTION_FRAGMENT).commit();
                 break;
 
-            case LANGUAGE_DOWNLOAD_FRAGMENT:
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    // Permission is not granted
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
-                    } else {
-                        // No explanation needed; request the permission
-                        ActivityCompat.requestPermissions(this,
-                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-                                , 101);
-
-                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                        // app-defined int constant. The callback method gets the
-                        // result of the request.
-                    }
-                } else {
-                    // Permission has already been granted
-                    LanguagePackFragment languagePackFragment = LanguagePackFragment.newInstance();
-                    fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, languagePackFragment).addToBackStack(LANGUAGE_DOWNLOAD_FRAGMENT).commit();
-                }
-
-
-                break;
+//            case LANGUAGE_DOWNLOAD_FRAGMENT:
+//                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                        != PackageManager.PERMISSION_GRANTED) {
+//                    // Permission is not granted
+//                    if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                        // Show an explanation to the user *asynchronously* -- don't block
+//                        // this thread waiting for the user's response! After the user
+//                        // sees the explanation, try again to request the permission.
+//                    } else {
+//                        // No explanation needed; request the permission
+//                        ActivityCompat.requestPermissions(this,
+//                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
+//                                , 101);
+//
+//                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+//                        // app-defined int constant. The callback method gets the
+//                        // result of the request.
+//                    }
+//                } else {
+//                    // Permission has already been granted
+//                    LanguagePackFragment languagePackFragment = LanguagePackFragment.newInstance();
+//                    fragmentTransaction = fragmentManager.beginTransaction();
+//                    fragmentTransaction.replace(R.id.frag_container, languagePackFragment).addToBackStack(LANGUAGE_DOWNLOAD_FRAGMENT).commit();
+//                }
+//
+//
+//                break;
 
         }
 
@@ -220,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         Bundle args = new Bundle();
         args.putString(NEW_FRAGMENT, HOME_FRAGMENT);
         fragController(args);
+
 
         //SECTION FOR GETTING AVAILABLE DICTIONARIES AHEAD OF TIME
         if (!(new File(Environment.getExternalStorageDirectory(), APP_NAME).isDirectory())) {
