@@ -9,7 +9,9 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +34,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.BroadcastRecievers.myDictionaryDownloadReceiver;
+import com.example.myapplication.BroadcastRecievers.myServerStatusReciever;
 import com.example.myapplication.DataSerialization;
 import com.example.myapplication.R;
 
@@ -42,6 +47,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
+import static com.example.myapplication.Constants.IntentFilters.SERVER_REACHED;
 import static com.example.myapplication.Constants.Network.DOWNLOAD_URL_PART;
 import static com.example.myapplication.Constants.Network.LANG_DOWNLOAD_HANDLER_THREAD_NAME;
 import static com.example.myapplication.Constants.Network.REQUEST_AUTH_HEADER;
@@ -54,12 +60,15 @@ import static com.example.myapplication.Constants.System.APP_NAME;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.BUTTON_FOCUSED_COLOR;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
+import static com.example.myapplication.Constants.System.DOWNLOAD_ID;
+import static com.example.myapplication.Constants.System.DOWNLOAD_TYPE;
 import static com.example.myapplication.Constants.System.TRANSPARENT_COLOR;
 import static com.example.myapplication.Constants.Toast.BAD_SERVER_CONNECTION_TOAST;
 import static com.example.myapplication.Constants.Toast.BUTTON_SELECTED_TOAST;
 import static com.example.myapplication.Constants.Toast.DICTIONARY_IS_DOWNLOADING_TOAST;
 import static com.example.myapplication.Constants.Toast.DICT_STILL_DOWNLOADING_TOAST;
 import static com.example.myapplication.Constants.Toast.DOWNLOAD_DICTIONARY_PROMPT;
+import static com.example.myapplication.Constants.Toast.DOWNLOAD_PROMPT;
 
 public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdapter.MyViewHolder> {
     Activity activity;
@@ -69,7 +78,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
     View view;
     Context mContext;
     SharedPreferences pref;
-    String selected;
+
 
     private int checkedPosition;
     public static Boolean DOWNLOAD_IN_PROGRSS;
@@ -84,7 +93,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         this.DOWNLOAD_IN_PROGRSS = DOWNLOAD_IN_PROGRSS;
 
         pref = context.getSharedPreferences(APP_PREFERENCES, 0); // 0 - for private mode;
-        selected = pref.getString(CURRENTLY_SELECTED_DICTIONARY, "");
+
 
     }
 
@@ -99,7 +108,8 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        String language = available.get(position);
+        final String language = available.get(position);
+
         //fill in viewholder information
         holder.checkBox.setTag(language);
         holder.textView.setText(language);
@@ -113,14 +123,17 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
 //        System.out.println("Selected one is: " + selected);
 //        //check if the selected language matches the current viewholder
 //
+
 //        //FIXME: REMOVE AFTER FIXING SELECTVIEW
-//        if (selected.equals(language)) {
-////            Toast.makeText(mContext, installed.get(position), Toast.LENGTH_SHORT).show();
-//            checkedPosition = position;
-//            holder.dictRowLinearLayout.setBackgroundColor(Color.parseColor(BUTTON_FOCUSED_COLOR));
-//        } else {
-//            holder.dictRowLinearLayout.setBackgroundColor(Color.parseColor(TRANSPARENT_COLOR));
-//        }
+        if ((pref.getString(CURRENTLY_SELECTED_DICTIONARY, "")).equals(language)) {
+//            Toast.makeText(mContext, installed.get(position), Toast.LENGTH_SHORT).show();
+            checkedPosition = position;
+            holder.dictRowLinearLayout.setBackgroundColor(Color.parseColor(BUTTON_FOCUSED_COLOR));
+            holder.textView.setTypeface(holder.textView.getTypeface(), Typeface.BOLD);
+        } else {
+            holder.dictRowLinearLayout.setBackgroundColor(Color.parseColor(TRANSPARENT_COLOR));
+            holder.textView.setTypeface(null, Typeface.NORMAL);
+        }
 
 
         //initialize download button
@@ -130,11 +143,15 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
                 @Override
                 public void onClick(View view) {
 //                    Log.d("Pos", String.valueOf(position));
-                    if (checkedPosition != position) {
+                    if (checkedPosition != position && pref.getBoolean(language, false)) {
                         Toast.makeText(mContext, available.get(position), Toast.LENGTH_SHORT).show();
                         pref.edit().putString(CURRENTLY_SELECTED_DICTIONARY, available.get(position)).apply();
                         checkedPosition = position;
                         notifyDataSetChanged();
+                    }
+                    else{
+                        Toast.makeText(mContext, DOWNLOAD_PROMPT, Toast.LENGTH_SHORT).show();
+
                     }
                 }
             });
@@ -212,6 +229,10 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
             notifyDataSetChanged();
         }
     }
+
+    public void notifyDownloadComplete(){
+        DOWNLOAD_IN_PROGRSS = false;
+    }
     private void dataDownload(String url, String buttonText) {
         Log.d("Download URL: ", url);
         Toast.makeText(mContext, DICTIONARY_IS_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
@@ -226,7 +247,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
             Log.d("Pref. File Exists", Boolean.toString(file.exists()));
         }
 
-        makeDownloadRequest(url, file);
+        makeDownloadRequest(url, file, buttonText);
         BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(buttonText);
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
@@ -236,14 +257,58 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         mContext.registerReceiver(broadcastReceiver, filter, null, handler);
     }
 
-    private void makeDownloadRequest(String url, File file) {
+    private void makeDownloadRequest(String url, File file, String type) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDescription(REQUEST_DESCRIPTION)
                 .setTitle(REQUEST_TITLE)
                 .setDestinationUri(Uri.fromFile(file))
                 .addRequestHeader(REQUEST_AUTH_HEADER, authDigest());
         DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
-        downloadManager.enqueue(request);
+        final long id = downloadManager.enqueue(request);
+
+//        //slow af internet debug
+//        myServerStatusReciever myServerStatusReciever = new myServerStatusReciever();
+//        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+//        localBroadcastManager.registerReceiver(myServerStatusReciever, new IntentFilter(SERVER_REACHED));
+//
+//
+//        DownloadManager.Query query = new DownloadManager.Query();
+//        query.setFilterById(id);
+//        Cursor c = downloadManager.query(query);
+//        new Thread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//
+//                boolean downloading = true;
+//
+//                DownloadManager manager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+//                while (downloading) {
+//
+//                    DownloadManager.Query q = new DownloadManager.Query();
+//                    q.setFilterById(id); //filter by id which you have receieved when reqesting download from download manager
+//                    Cursor cursor = manager.query(q);
+//                    cursor.moveToFirst();
+//                    int bytes_downloaded = cursor.getInt(cursor
+//                            .getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+//                    int bytes_total = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+//
+//                    System.out.println(bytes_downloaded + " out of " + bytes_total);
+//
+//                    if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
+//                        downloading = false;
+//                    }
+//                }
+//            }
+//        }).start();
+
+
+
+
+//        pref.edit().putLong(DOWNLOAD_ID, id).apply();
+//        pref.edit().putString(DOWNLOAD_TYPE, type).apply();
+
+
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -251,7 +316,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         public CheckBox checkBox;
         public LinearLayout dictRowLinearLayout;
         public LinearLayout langNameLinearLayout;
-        public Button downloadButton;
+        public ImageButton downloadButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -266,26 +331,6 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
 
         }
     }
-        //FIXME: IMPLEMENT RECYCLERVIEW SELECTOR
-//    final public class MyDetailsLookup extends ItemDetailsLookup {
-//        private final RecyclerView mRecyclerView;
-//
-//        MyDetailsLookup(RecyclerView recyclerView) {
-//            this.mRecyclerView = recyclerView;
-//        }
-//
-//
-//        @Nullable
-//        @Override
-//        public ItemDetails getItemDetails(@NonNull MotionEvent e) {
-//            View view = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
-//            if (view != null) {
-//                RecyclerView.ViewHolder holder = mRecyclerView.getChildViewHolder(view);
-//                if (holder instanceof MyHolder) {
-//                    return ((MyHolder) holder).getItemDetails();
-//                }
-//            }
-//            return null;
-//        }
-//    }
+
 }
+

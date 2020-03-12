@@ -45,22 +45,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_title_bar">
 
-        <Button
-            android:id="@+id/language_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableRight="@drawable/resize_arrow"
-            android:fontFamily="@font/alegreya_sans"
-            android:gravity="left|center_vertical"
-            android:text="@string/language_pack_button"
-            android:textSize="16dp"
+        <!--<Button-->
+            <!--android:id="@+id/language_button"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:drawableRight="@drawable/resize_arrow"-->
+            <!--android:fontFamily="@font/alegreya_sans"-->
+            <!--android:gravity="left|center_vertical"-->
+            <!--android:text="@string/language_pack_button"-->
+            <!--android:textSize="16dp"-->
 
-            />
+            <!--/>-->
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+        <!--<Space-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="10dp" />-->
 
 
         <Button

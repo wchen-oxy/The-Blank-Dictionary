@@ -48,11 +48,14 @@
         android:layout_marginRight="20dp"
         android:gravity="end"
         >
-        <Button
+        <ImageButton
             android:id="@+id/download_button"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/baseline_first_page_black_18dp"
+
             />
     </LinearLayout>
 </LinearLayout>

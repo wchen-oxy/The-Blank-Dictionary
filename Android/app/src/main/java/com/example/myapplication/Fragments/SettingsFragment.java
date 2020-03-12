@@ -39,21 +39,21 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
-        Button languagePack = rootView.findViewById(R.id.language_button);
+//        Button languagePack = rootView.findViewById(R.id.language_button);
         Button currentDictionary = rootView.findViewById(R.id.current_dictionary);
-        languagePack.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        ActivityCompat.requestPermissions(getActivity(),
-                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-                                , 101);
-
-                        Bundle args = new Bundle();
-                        args.putString(NEW_FRAGMENT, LANGUAGE_DOWNLOAD_FRAGMENT);
-                        fragmentCommunicator.bundPass(args, false);
-
-                    }
-                });
+//        languagePack.setOnClickListener(
+//                new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        ActivityCompat.requestPermissions(getActivity(),
+//                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
+//                                , 101);
+//
+//                        Bundle args = new Bundle();
+//                        args.putString(NEW_FRAGMENT, LANGUAGE_DOWNLOAD_FRAGMENT);
+//                        fragmentCommunicator.bundPass(args, false);
+//
+//                    }
+//                });
         currentDictionary.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {

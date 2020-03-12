@@ -27,6 +27,8 @@ import java.io.IOException;
 import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.example.myapplication.Constants.System.DATABASE_UPDATED;
+import static com.example.myapplication.Constants.System.DOWNLOAD_ID;
+import static com.example.myapplication.Constants.System.DOWNLOAD_TYPE;
 
 public class myDictionaryDownloadReceiver extends BroadcastReceiver {
     String type;
@@ -38,6 +40,7 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        System.out.println("RECIEVER REACHED");
         context.unregisterReceiver(this);
         StringBuilder sb = new StringBuilder();
         sb.append("Action: " + intent.getAction() + "\n");
@@ -51,23 +54,23 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
 
         final File file = new File(Environment.getExternalStorageDirectory() + "/BlankDictionary", type);
 
-        String message = "";
-
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            int c;
-            while ((c = fis.read()) != -1) {
-                message += String.valueOf((char) c);
-            }
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-            fis.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-
-        } catch (IOException io) {
-            io.printStackTrace();
-        }
+//        String message = "";
+//
+//        try {
+//            FileInputStream fis = new FileInputStream(file);
+//            int c;
+//            while ((c = fis.read()) != -1) {
+//                message += String.valueOf((char) c);
+//            }
+//            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+//            fis.close();
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//
+//        } catch (IOException io) {
+//            io.printStackTrace();
+//        }
         //builds database upon completion of download
         AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").fallbackToDestructiveMigration().enableMultiInstanceInvalidation().build();
         //create a value to store in shared preferences
@@ -96,11 +99,14 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
                 Log.d("myDictionaryReciever", "Something went wrong");
 
         }
+//        pref.edit().remove(DOWNLOAD_TYPE).apply();
+        pref.edit().remove(DOWNLOAD_ID).apply();
+
         Log.i("Temp Payload Deleted:", Boolean.toString(file.delete()));
-        Intent filesDeletedIntent = new Intent();
-        filesDeletedIntent.setAction(DATABASE_UPDATED);
-        context.sendBroadcast(filesDeletedIntent);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(filesDeletedIntent);
+        Intent dictionaryDownloadedIntent = new Intent();
+        dictionaryDownloadedIntent.setAction(DATABASE_UPDATED);
+        context.sendBroadcast(dictionaryDownloadedIntent);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(dictionaryDownloadedIntent);
 //        }
 
     }

@@ -1,14 +1,17 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.myapplication.BroadcastRecievers.myAvailableDictionaryReciever;
+import com.example.myapplication.BroadcastRecievers.myDictionaryDownloadReceiver;
 import com.example.myapplication.BroadcastRecievers.myServerStatusReciever;
 import com.example.myapplication.DataDownload.DictionaryClientUsage;
 import com.example.myapplication.DataDownload.HttpBadRequestException;
@@ -52,10 +56,13 @@ import static com.example.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.SETTINGS_FRAGMENT;
 import static com.example.myapplication.Constants.IntentFilters.DICTIONARY_LIST_DOWNLOADED;
 import static com.example.myapplication.Constants.IntentFilters.SERVER_REACHED;
+import static com.example.myapplication.Constants.Network.LANG_DOWNLOAD_HANDLER_THREAD_NAME;
 import static com.example.myapplication.Constants.Network.NO_INTERNET_ERROR;
 import static com.example.myapplication.Constants.System.APP_NAME;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
+import static com.example.myapplication.Constants.System.DOWNLOAD_ID;
+import static com.example.myapplication.Constants.System.DOWNLOAD_TYPE;
 
 public class MainActivity extends AppCompatActivity implements IFragmentCommunicator, IDelete {
     final Context context = this;
@@ -253,6 +260,87 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
         super.onDestroy();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        System.out.println("Resume REACHED");
+////
+//        DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+//        DownloadManager.Query downloadManagerQuery = new DownloadManager.Query();
+//        downloadManager.query(downloadManagerQuery);
+//        downloadManagerQuery.setFilterById(pref.getLong(DOWNLOAD_ID, -1)).setFilterByStatus(DownloadManager.STATUS_SUCCESSFUL);
+//        Cursor cursor = null;
+////        int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
+//        if (pref.getLong(DOWNLOAD_ID, -1) != -1)
+//            cursor = downloadManager.query(new DownloadManager.Query().setFilterById(pref.getLong(DOWNLOAD_ID, -1)));
+//
+//        if (cursor != null && cursor.moveToNext()) {
+//            int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
+//            cursor.close();
+//            System.out.println("DOWNLOAD...");
+//
+//
+//            if (status == DownloadManager.STATUS_FAILED) {
+//                System.out.println("FAIL");
+//                // do something when failed
+//            }
+//            else if (status == DownloadManager.STATUS_PENDING || status == DownloadManager.STATUS_PAUSED) {
+//                System.out.println("PENDING/ PAUSED");
+//
+//                // do something pending or paused
+//            }
+//            else if (status == DownloadManager.STATUS_SUCCESSFUL) {
+//                System.out.println("SUCCESS");
+//
+//                // do something when successful
+//            }
+//            else if (status == DownloadManager.STATUS_RUNNING) {
+//                System.out.println("RUNNING");
+//
+//                // do something when running
+//            }
+//        }
+//
+//        if (pref.getLong(DOWNLOAD_ID, -4) != -4) {
+//            int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
+//            switch (status) {
+//                case DownloadManager.STATUS_PAUSED:
+//                    System.out.println("Paused");
+//
+//                    break;
+//                case DownloadManager.STATUS_PENDING:
+//                    System.out.println("Pending");
+//
+//                    break;
+//                case DownloadManager.STATUS_RUNNING:
+//                    System.out.println("Running");
+//
+//                    break;
+//                case DownloadManager.STATUS_SUCCESSFUL:
+//                    System.out.println("Success");
+//
+//                    break;
+//                case DownloadManager.STATUS_FAILED:
+//                    System.out.println("failed");
+//
+//                    break;
+//            }
+//        }
+//        String type = pref.getString(DOWNLOAD_TYPE, "");
+//        if (cursor.moveToFirst() && !type.isEmpty()){
+//            System.out.println("INNER REACHED");
+//            BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(type);
+//            IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+//            HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
+//            handlerThread.start();
+//            Looper looper = handlerThread.getLooper();
+//            Handler handler = new Handler(looper);
+//            context.registerReceiver(broadcastReceiver, filter, null, handler);
+//        }
+//
+//        cursor.close();
     }
 
     //Checkbox related functions

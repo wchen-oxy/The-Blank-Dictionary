@@ -16,27 +16,25 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.selection.ItemKeyProvider;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StableIdKeyProvider;
+import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Adapters.SettingsListsAdapter;
 import com.example.myapplication.DataSerialization;
 import com.example.myapplication.HelperInterfaces.IDelete;
+import com.example.myapplication.Adapters.AdapterHelpers.MyDetailsLookup;
 import com.example.myapplication.R;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
-import static com.example.myapplication.Constants.System.APP_DICTIONARY_FILE;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.DATABASE;
 import static com.example.myapplication.Constants.System.DATABASE_CLEARED;
 import static com.example.myapplication.Constants.System.DATABASE_UPDATED;
-import static com.example.myapplication.Constants.Toast.DOWNLOAD_DICTIONARY_PROMPT;
 
 
 public class DictionarySelectionFragment extends Fragment {
@@ -81,6 +79,7 @@ public class DictionarySelectionFragment extends Fragment {
                     settingsListsAdapter.makeCheckboxVisible(false);
                     delete.setVisibility(View.GONE);
                 }
+                settingsListsAdapter.notifyDownloadComplete();
                 settingsListsAdapter.notifyDataSetChanged();
             }
         };
@@ -111,8 +110,12 @@ public class DictionarySelectionFragment extends Fragment {
 //            "lanuguage",
 //                languagesRecyclerView,
 //                new StableIdKeyProvider(languagesRecyclerView),
-//
-//        );
+//                new MyDetailsLookup(languagesRecyclerView),
+//                StorageStrategy.createLongStorage())
+//                .build();
+
+
+
 
 
         delete = rootView.findViewById(R.id.dict_pack_delete);
@@ -166,6 +169,8 @@ public class DictionarySelectionFragment extends Fragment {
         IntentFilter refreshFilter = new IntentFilter(DATABASE);
         refreshFilter.addAction(DATABASE_UPDATED);
         mContext.registerReceiver(refreshListBroadcastReciever, refreshFilter);
+
+        settingsListsAdapter.notifyDataSetChanged();
 
     }
 
