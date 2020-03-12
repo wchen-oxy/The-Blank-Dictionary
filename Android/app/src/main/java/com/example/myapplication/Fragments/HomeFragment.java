@@ -31,6 +31,7 @@ import java.io.File;
 import static com.example.myapplication.Constants.DictionaryData.QUERY;
 import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
 import static com.example.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
+import static com.example.myapplication.Constants.DictionaryTitles.returnTitle;
 import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
 import static com.example.myapplication.Constants.System.APP_NAME;
@@ -87,6 +88,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 
         if (mDictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) != null) {
+            TextView textView = getView().findViewById(R.id.mainTitle);
+            textView.setText(returnTitle(pref.getString(CURRENTLY_SELECTED_DICTIONARY, "")));
             //include this to prevent the search bar from opening keyboard
             mainSearchBar.setOnClickListener(new View.OnClickListener() {
                 @Override

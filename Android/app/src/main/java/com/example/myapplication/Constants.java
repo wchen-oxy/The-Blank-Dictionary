@@ -80,7 +80,21 @@ public final class Constants {
     public static class SupportedDictionaries {
         public static final String BHUTIA = "BHUTIA";
         public static final String ENGLISH = "ENGLISH";
+    }
 
+    public static class DictionaryTitles {
+        public static final String BHUTIA_TITLE = "The Bhutia Dictionary";
+        public static final String ENGLISH_TITLE = "The English Dictionary";
+
+        public static String returnTitle(String language) {
+            switch (language){
+                case("BHUTIA"):
+                    return BHUTIA_TITLE;
+                case("ENGLISH"):
+                    return ENGLISH_TITLE;
+            }
+            return "The Blank Dictionary";
+        }
 
     }
 
