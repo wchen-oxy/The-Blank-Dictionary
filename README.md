@@ -29,3 +29,9 @@ Notes for MySQL setup on Mac
 
 -> to start mysql, cd to /usr/local/mysql/bin
 -> type mysql -u root -p
+
+#Arbitrary Code Bugs
+
+For some reason Android API28+ DownloadManager does not like it if you don't set it to use clear text traffic in requests.
+refer to this:
+https://stackoverflow.com/questions/53985649/download-failed-with-error-400-when-using-android-pie/53985701
