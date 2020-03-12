@@ -143,15 +143,11 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
                 @Override
                 public void onClick(View view) {
 //                    Log.d("Pos", String.valueOf(position));
-                    if (checkedPosition != position && pref.getBoolean(language, false)) {
+                    if (checkedPosition != position) {
                         Toast.makeText(mContext, available.get(position), Toast.LENGTH_SHORT).show();
                         pref.edit().putString(CURRENTLY_SELECTED_DICTIONARY, available.get(position)).apply();
                         checkedPosition = position;
                         notifyDataSetChanged();
-                    }
-                    else{
-                        Toast.makeText(mContext, DOWNLOAD_PROMPT, Toast.LENGTH_SHORT).show();
-
                     }
                 }
             });
@@ -169,6 +165,16 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
                             }
                         }
                     });
+            holder.langNameLinearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                  Toast.makeText(mContext, DOWNLOAD_PROMPT, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+
+
         }
 
 //        if (!available.isEmpty()) {

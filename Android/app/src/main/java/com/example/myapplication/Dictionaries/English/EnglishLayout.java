@@ -52,7 +52,7 @@ public class EnglishLayout implements ILayoutSetter {
         Log.d("Translation num", String.valueOf(selectedTranslationId));
 
         ipa.setText("Pronounciation: " + englishWord.ipa);
-        definition.setText("Definition: " + englishWord.ipa);
+        definition.setText("Definition: " + englishWord.definition);
         example.setText("Example: " + englishWord.example);
 
         switch (tranType[selectedTranslationId]) {

@@ -79,6 +79,7 @@ public class DictionarySelectionFragment extends Fragment {
                     settingsListsAdapter.makeCheckboxVisible(false);
                     delete.setVisibility(View.GONE);
                 }
+                DOWNLOAD_IN_PROGRESS = false;
                 settingsListsAdapter.notifyDownloadComplete();
                 settingsListsAdapter.notifyDataSetChanged();
             }
