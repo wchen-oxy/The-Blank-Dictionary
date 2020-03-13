@@ -5,26 +5,12 @@
     android:id="@+id/dict_pack_row_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
     android:orientation="horizontal"
 
     >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:gravity="center_vertical">
 
-        <CheckBox
-            android:id="@+id/dict_checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onCheckboxClicked"
-
-            />
-
-    </LinearLayout>
+    <!--android:animateLayoutChanges="true"-->
 
     <LinearLayout
         android:id="@+id/dict_pack_language_title_linear_layout"
@@ -50,11 +36,29 @@
         >
         <ImageButton
             android:id="@+id/download_button"
-            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_width="35dp"
             android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/outline_get_app_black_48"
+
+            />
+        <ImageView
+            android:id="@+id/installed_dictionary_imageview"
+            android:layout_height="35dp"
+            android:layout_width="35dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/outline_check_black_48"
+            android:visibility="gone"
+            />
+        <CheckBox
+            android:id="@+id/dict_checkbox"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/outline_get_app_black_18dp"
+
+            android:onClick="onCheckboxClicked"
 
             />
     </LinearLayout>

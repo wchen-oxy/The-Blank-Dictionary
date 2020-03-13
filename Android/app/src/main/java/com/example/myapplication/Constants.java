@@ -87,10 +87,10 @@ public final class Constants {
         public static final String ENGLISH_TITLE = "The English Dictionary";
 
         public static String returnTitle(String language) {
-            switch (language){
-                case("BHUTIA"):
+            switch (language) {
+                case ("BHUTIA"):
                     return BHUTIA_TITLE;
-                case("ENGLISH"):
+                case ("ENGLISH"):
                     return ENGLISH_TITLE;
             }
             return "The Blank Dictionary";
@@ -111,7 +111,7 @@ public final class Constants {
     public static class Toast {
         public static final String NO_DICT_INSTALLED_TOAST = "Please Download a Dictionary from Settings.";
         public static final String NO_DICT_SELECTED_TOAST = "Choose your current dictionary in Settings.";
-        public static final String DICTIONARY_SELECTED_TOAST = "Dictionary Selected";
+        public static final String DICTIONARY_DELETED = "Successfully cleared from your phone.";
         public static final String DICTIONARY_IS_DOWNLOADING_TOAST = "Dictionary is downloading.";
         public static final String BUTTON_SELECTED_TOAST = "Selected";
         public static final String DICT_STILL_DOWNLOADING_TOAST = "A dictionary is already downloading.";

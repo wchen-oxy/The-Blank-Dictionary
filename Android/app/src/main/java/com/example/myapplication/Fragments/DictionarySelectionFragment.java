@@ -1,6 +1,5 @@
 package com.example.myapplication.Fragments;
 
-import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,22 +10,19 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.selection.SelectionTracker;
-import androidx.recyclerview.selection.StableIdKeyProvider;
-import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Adapters.SettingsListsAdapter;
 import com.example.myapplication.DataSerialization;
 import com.example.myapplication.HelperInterfaces.IDelete;
-import com.example.myapplication.Adapters.AdapterHelpers.MyDetailsLookup;
 import com.example.myapplication.R;
 
 import java.io.File;
@@ -36,9 +32,11 @@ import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.DATABASE;
 import static com.example.myapplication.Constants.System.DATABASE_CLEARED;
 import static com.example.myapplication.Constants.System.DATABASE_UPDATED;
+import static com.example.myapplication.Constants.Toast.DICTIONARY_DELETED;
 
 
 public class DictionarySelectionFragment extends Fragment {
+    public static boolean DOWNLOAD_IN_PROGRESS;
     SharedPreferences pref;
     IDelete iDelete;
     Context mContext;
@@ -47,10 +45,10 @@ public class DictionarySelectionFragment extends Fragment {
     View rootView;
     BroadcastReceiver refreshListBroadcastReciever;
     SettingsListsAdapter settingsListsAdapter;
-    Button delete;
+    ImageButton close;
+    ImageButton editDelete;
     ArrayList<String> available;
-    public static boolean DOWNLOAD_IN_PROGRESS;
-
+    LinearLayout dictPackLinearLayout;
 
     public static DictionarySelectionFragment newInstance() {
 
@@ -72,13 +70,12 @@ public class DictionarySelectionFragment extends Fragment {
         refreshListBroadcastReciever = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
-
-//                checkInstalledLanguage(pref);
                 if (isCurrentlyEditing) {
+                    Toast.makeText(context, DICTIONARY_DELETED, Toast.LENGTH_SHORT).show();
                     isCurrentlyEditing = false;
                     settingsListsAdapter.makeCheckboxVisible(false);
-                    delete.setVisibility(View.GONE);
+                    close.setVisibility(View.GONE);
+                    editDelete.setBackground(getResources().getDrawable(R.drawable.outline_edit_white_48));
                 }
                 DOWNLOAD_IN_PROGRESS = false;
                 settingsListsAdapter.notifyDownloadComplete();
@@ -105,57 +102,39 @@ public class DictionarySelectionFragment extends Fragment {
         languagesRecyclerView.setLayoutManager(layoutManager);
         settingsListsAdapter = new SettingsListsAdapter(mContext, getActivity(), available, DOWNLOAD_IN_PROGRESS);
         languagesRecyclerView.setAdapter(settingsListsAdapter);
-
-        //FIXME: IMPLEMENT RECYCLERVIEW SELECTOR
-//        //Recyclerview selector
-//        SelectionTracker tracker = new SelectionTracker.Builder<>(
-//            "lanuguage",
-//                languagesRecyclerView,
-//                new StableIdKeyProvider(languagesRecyclerView),
-//                new MyDetailsLookup(languagesRecyclerView),
-//                StorageStrategy.createLongStorage())
-//                .build();
-
-
-
-
-
-        delete = rootView.findViewById(R.id.dict_pack_delete);
-        final ImageButton edit = rootView.findViewById(R.id.dict_pack_edit);
-        final ObjectAnimator mLeftAnimation = ObjectAnimator.ofFloat(languagesRecyclerView, "translationX", 130f);
-        mLeftAnimation.setDuration(500);
-        final ObjectAnimator mRightAnimation = ObjectAnimator.ofFloat(languagesRecyclerView, "translationX", 0);
-        mRightAnimation.setDuration(500);
-//        System.out.println("INSTALLED: " + installed.get(0));
-        edit.setOnClickListener(new View.OnClickListener() {
+        close = rootView.findViewById(R.id.dict_pack_delete);
+        editDelete = rootView.findViewById(R.id.dict_pack_edit_delete);
+        close.setVisibility(View.GONE);
+        editDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Edit Clicked");
-
 
                 if (!isCurrentlyEditing) {
-                    System.out.println("Edit true");
-
+                    editDelete.setBackground(getResources().getDrawable(R.drawable.delete_states));
                     settingsListsAdapter.makeCheckboxVisible(true);
-                    delete.setVisibility(View.VISIBLE);
-                    delete.setClickable(true);
+                    close.setVisibility(View.VISIBLE);
+                    close.setClickable(true);
                     isCurrentlyEditing = true;
-                    return;
+
                 } else {
-                    settingsListsAdapter.makeCheckboxVisible(false);
-                    delete.setVisibility(View.INVISIBLE);
-                    delete.setClickable(false);
-                    isCurrentlyEditing = false;
+                    System.out.println("Delete Clicked");
+                    if (iDelete.getLangListCount() > 0)
+                        iDelete.delete();
                 }
 
             }
         });
 
-        delete.setOnClickListener(new View.OnClickListener() {
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Delete Clicked");
-                iDelete.delete();
+                editDelete.setBackground(getResources().getDrawable(R.drawable.outline_edit_white_48));
+                settingsListsAdapter.makeCheckboxVisible(false);
+                close.setVisibility(View.GONE);
+                close.setClickable(false);
+                isCurrentlyEditing = false;
+                iDelete.clearLangToDeleteList();
+
             }
         });
         return rootView;

@@ -17,7 +17,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import static com.example.myapplication.Constants.DictionaryData.DATABASE;
-import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 import static com.example.myapplication.Constants.System.DATABASE_CLEARED;
@@ -41,26 +40,26 @@ public class DatabaseClear extends AsyncTask<ArrayList<String>, Void, Boolean> {
         String currentDictionary = pref.getString(CURRENTLY_SELECTED_DICTIONARY, "");
         AppDatabase db = Room.databaseBuilder(weakContext.get(), AppDatabase.class, DATABASE).enableMultiInstanceInvalidation().build();
 
-            for (String lang : languagesToDelete[0]) {
-                if (currentDictionary.equals(lang)) {
-                    editor.remove(CURRENTLY_SELECTED_DICTIONARY).apply();
-                }
-
-                switch (lang) {
-                    case Constants.SupportedDictionaries.BHUTIA:
-                        new Bhutia(db);
-                        pref.edit().remove(Constants.SupportedDictionaries.BHUTIA).apply();
-
-                        break;
-                    case Constants.SupportedDictionaries.ENGLISH:
-                        new English(db);
-                        pref.edit().remove(Constants.SupportedDictionaries.ENGLISH).apply();
-
-                        break;
-                    default:
-
-                }
+        for (String lang : languagesToDelete[0]) {
+            if (currentDictionary.equals(lang)) {
+                editor.remove(CURRENTLY_SELECTED_DICTIONARY).apply();
             }
+
+            switch (lang) {
+                case Constants.SupportedDictionaries.BHUTIA:
+                    new Bhutia(db);
+                    pref.edit().remove(Constants.SupportedDictionaries.BHUTIA).apply();
+
+                    break;
+                case Constants.SupportedDictionaries.ENGLISH:
+                    new English(db);
+                    pref.edit().remove(Constants.SupportedDictionaries.ENGLISH).apply();
+
+                    break;
+                default:
+
+            }
+        }
 
 
         Intent filesDeletedIntent = new Intent();

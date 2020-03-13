@@ -23,13 +23,14 @@
 
             >
 
-            <Button
+            <ImageButton
                 android:id="@+id/dict_pack_delete"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/delete_states"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/outline_close_white_48"
                 android:clickable="false"
-                android:visibility="gone" />
+                android:visibility="visible"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -42,12 +43,11 @@
             >
 
             <ImageButton
-                android:id="@+id/dict_pack_edit"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:id="@+id/dict_pack_edit_delete"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/outline_edit_white_18dp"
+                android:background="@drawable/outline_edit_white_48"
                 android:text="@string/manage_dictionary" />
         </LinearLayout>
 
@@ -62,36 +62,6 @@
         app:layout_constraintTop_toBottomOf="@+id/dict_pack_top">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-
-
-    <!--<ScrollView-->
-
-    <!--android:id="@+id/dict_pack_list"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:background="#FFF"-->
-    <!--app:layout_constraintTop_toBottomOf="@+id/dict_pack_top"-->
-    <!--&gt;-->
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/dict_pack_list_linear_layout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:orientation="vertical"-->
-    <!--android:paddingTop="10dp"-->
-    <!--android:paddingLeft="10dp"-->
-    <!--android:paddingRight="10dp"-->
-    <!--&gt;-->
-    <!--<ToggleButton-->
-    <!--android:id="@+id/dict_pack_select"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:textOff="0"-->
-    <!--/>-->
-
-    <!--</LinearLayout>-->
-    <!--</ScrollView>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

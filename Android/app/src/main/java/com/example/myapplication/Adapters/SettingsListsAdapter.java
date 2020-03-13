@@ -1,7 +1,6 @@
 package com.example.myapplication.Adapters;
 
 import android.Manifest;
-import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
@@ -13,38 +12,32 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.BroadcastRecievers.myDictionaryDownloadReceiver;
 import com.example.myapplication.BroadcastRecievers.myServerStatusReciever;
-import com.example.myapplication.DataSerialization;
 import com.example.myapplication.R;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -56,34 +49,26 @@ import static com.example.myapplication.Constants.Network.REQUEST_DESCRIPTION;
 import static com.example.myapplication.Constants.Network.REQUEST_TITLE;
 import static com.example.myapplication.Constants.Network.authDigest;
 import static com.example.myapplication.Constants.Network.getAbsoluteUrl;
-import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.example.myapplication.Constants.System.APP_NAME;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.BUTTON_FOCUSED_COLOR;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
-import static com.example.myapplication.Constants.System.DOWNLOAD_ID;
-import static com.example.myapplication.Constants.System.DOWNLOAD_TYPE;
 import static com.example.myapplication.Constants.System.TRANSPARENT_COLOR;
-import static com.example.myapplication.Constants.Toast.BAD_SERVER_CONNECTION_TOAST;
-import static com.example.myapplication.Constants.Toast.BUTTON_SELECTED_TOAST;
 import static com.example.myapplication.Constants.Toast.DICTIONARY_IS_DOWNLOADING_TOAST;
 import static com.example.myapplication.Constants.Toast.DICT_STILL_DOWNLOADING_TOAST;
-import static com.example.myapplication.Constants.Toast.DOWNLOAD_DICTIONARY_PROMPT;
 import static com.example.myapplication.Constants.Toast.DOWNLOAD_PROMPT;
 
 public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdapter.MyViewHolder> {
+    public static Boolean DOWNLOAD_IN_PROGRSS;
     Activity activity;
     ArrayList<String> available;
     ArrayList<String> installed;
     boolean checkboxVisiblity;
+    boolean downloadButtonVisible;
     View view;
     Context mContext;
     SharedPreferences pref;
-
-
     private int checkedPosition;
-    public static Boolean DOWNLOAD_IN_PROGRSS;
-
 
 
     public SettingsListsAdapter(Context context, Activity activity, ArrayList<String> available, boolean DOWNLOAD_IN_PROGRSS) {
@@ -91,10 +76,9 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         this.activity = activity;
         this.available = available;
         this.checkedPosition = -1;
-        this.DOWNLOAD_IN_PROGRSS = DOWNLOAD_IN_PROGRSS;
-
+        this.downloadButtonVisible = false;
+        SettingsListsAdapter.DOWNLOAD_IN_PROGRSS = DOWNLOAD_IN_PROGRSS;
         pref = context.getSharedPreferences(APP_PREFERENCES, 0); // 0 - for private mode;
-
 
     }
 
@@ -111,51 +95,39 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         final String language = available.get(position);
 
-        //fill in viewholder information
         holder.checkBox.setTag(language);
         holder.textView.setText(language);
-        //checkbox visibility from edit button
-        if (!checkboxVisiblity) holder.checkBox.setVisibility(View.GONE);
-        else if (checkboxVisiblity && pref.getBoolean(language, false)) {
-            holder.checkBox.setVisibility(View.VISIBLE);
-        }
 
-////        Toast.makeText(mContext, selected, Toast.LENGTH_SHORT).show();
-//        System.out.println("Selected one is: " + selected);
-//        //check if the selected language matches the current viewholder
-//
+        if (pref.getBoolean(language, false)) {
+            if (!checkboxVisiblity) {
+                holder.installedDictionaryImage.setVisibility(View.VISIBLE);
+                holder.checkBox.setVisibility(View.GONE);
+            } else {
+                holder.checkBox.setVisibility(View.VISIBLE);
+                holder.installedDictionaryImage.setVisibility(View.GONE);
+            }
 
-//        //FIXME: REMOVE AFTER FIXING SELECTVIEW
-        if ((pref.getString(CURRENTLY_SELECTED_DICTIONARY, "")).equals(language)) {
-//            Toast.makeText(mContext, installed.get(position), Toast.LENGTH_SHORT).show();
-            checkedPosition = position;
-            holder.dictRowLinearLayout.setBackgroundColor(Color.parseColor(BUTTON_FOCUSED_COLOR));
-            holder.textView.setTypeface(holder.textView.getTypeface(), Typeface.BOLD);
-        } else {
-            holder.dictRowLinearLayout.setBackgroundColor(Color.parseColor(TRANSPARENT_COLOR));
-            holder.textView.setTypeface(null, Typeface.NORMAL);
-        }
-
-
-        //initialize download button
-        if (pref.getBoolean(language, false))  {
             holder.downloadButton.setVisibility(View.GONE);
             holder.langNameLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Log.d("Pos", String.valueOf(position));
                     if (checkedPosition != position) {
-                        Toast.makeText(mContext, available.get(position), Toast.LENGTH_SHORT).show();
+                        String capitaliedLang = available.get(position).substring(0, 1).toUpperCase() + available.get(position).substring(1).toLowerCase();
+                        Toast.makeText(mContext, "You are now using the " + capitaliedLang + " dictionary.", Toast.LENGTH_SHORT).show();
                         pref.edit().putString(CURRENTLY_SELECTED_DICTIONARY, available.get(position)).apply();
                         checkedPosition = position;
                         notifyDataSetChanged();
                     }
                 }
             });
-        }
-
-        else {
-            holder.downloadButton.setVisibility(View.VISIBLE);
+        } else {
+            holder.installedDictionaryImage.setVisibility(View.GONE);
+            if (!checkboxVisiblity) {
+                holder.downloadButton.setVisibility(View.VISIBLE);
+                holder.checkBox.setVisibility(View.GONE);
+            } else {
+                holder.downloadButton.setVisibility(View.GONE);
+            }
             holder.downloadButton.setOnClickListener(
                     new View.OnClickListener() {
                         public void onClick(View v) {
@@ -169,26 +141,27 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
             holder.langNameLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                  Toast.makeText(mContext, DOWNLOAD_PROMPT, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, DOWNLOAD_PROMPT, Toast.LENGTH_SHORT).show();
                 }
             });
 
-
-
-
         }
 
-//        if (!available.isEmpty()) {
-//            Log.d("download", available.toString());
-//            Log.d("Download,specific", available.get(0));
-//        } else {
-//            Toast.makeText(mContext, BAD_SERVER_CONNECTION_TOAST, Toast.LENGTH_LONG).show();
-//        }
+        //Section that indicates selection or not
+        if ((pref.getString(CURRENTLY_SELECTED_DICTIONARY, "")).equals(language)) {
+            checkedPosition = position;
+            holder.dictRowLinearLayout.setBackgroundColor(Color.parseColor(BUTTON_FOCUSED_COLOR));
+            holder.textView.setTypeface(holder.textView.getTypeface(), Typeface.BOLD);
+        } else {
+            holder.dictRowLinearLayout.setBackgroundColor(Color.parseColor(TRANSPARENT_COLOR));
+            holder.textView.setTypeface(null, Typeface.NORMAL);
+        }
+
     }
 
-    private void requestPermission(String language){
+    private void requestPermission(String language) {
         //                        Toast test = new Toast();
-        Toast.makeText(mContext, BUTTON_SELECTED_TOAST, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, BUTTON_SELECTED_TOAST, Toast.LENGTH_SHORT).show();
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
@@ -197,8 +170,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
-            }
-            else {
+            } else {
                 // No explanation needed; request the permission
                 ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
@@ -210,7 +182,6 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
             }
         } else {
             // Permission has already been granted
-
             dataDownload(getAbsoluteUrl(DOWNLOAD_URL_PART) + language, language);
             DOWNLOAD_IN_PROGRSS = true;
         }
@@ -223,31 +194,20 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
 
 
     public void makeCheckboxVisible(boolean visible) {
-        if (visible) {
-            System.out.println("checkbox true Clicked");
-
-            checkboxVisiblity = visible;
-            notifyDataSetChanged();
-
-        } else {
-            System.out.println("checkbox false Clicked");
-
-            checkboxVisiblity = visible;
-            notifyDataSetChanged();
-        }
+        checkboxVisiblity = visible;
+        notifyDataSetChanged();
     }
 
-    public void notifyDownloadComplete(){
+    public void notifyDownloadComplete() {
         DOWNLOAD_IN_PROGRSS = false;
     }
+
     private void dataDownload(String url, String buttonText) {
         Log.d("Download URL: ", url);
         Toast.makeText(mContext, DICTIONARY_IS_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
         File file = new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME, buttonText);
-        Log.d("Is Folder Writable",  String.valueOf(new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME).canWrite()));
+        Log.d("Is Folder Writable", String.valueOf(new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME).canWrite()));
 
-        Log.d("FILEPATH: ", file.getAbsolutePath().toString());
-        Log.d("FILE Exists??", String.valueOf(file.isFile()));
         file.setWritable(true);
         if (file.exists()) {
             Log.d("File", file.getAbsolutePath());
@@ -269,7 +229,6 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
                 .setDestinationUri(Uri.fromFile(file))
                 .addRequestHeader(REQUEST_AUTH_HEADER, authDigest());
         DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
-        System.out.println("DOWNLIADMANAGER IS>" +  mContext.getSystemService(DOWNLOAD_SERVICE));
         final long id = downloadManager.enqueue(request);
         BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(id, type);
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
@@ -278,14 +237,11 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         Looper looper = handlerThread.getLooper();
         Handler handler = new Handler(looper);
         mContext.registerReceiver(broadcastReceiver, filter, null, handler);
-        System.out.println("FILE path from download: " + file.getAbsolutePath());
-//
+
         //slow af internet debug
         myServerStatusReciever myServerStatusReciever = new myServerStatusReciever();
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
         localBroadcastManager.registerReceiver(myServerStatusReciever, new IntentFilter(SERVER_REACHED));
-
-
         DownloadManager.Query query = new DownloadManager.Query();
         query.setFilterById(id);
         Cursor c = downloadManager.query(query);
@@ -311,15 +267,14 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
                     System.out.println("CURRENT STATUS " + cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)));
 
                     if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_RUNNING) {
-                        System.out.println("Still running");}
-                    else if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_FAILED) {
+                        System.out.println("Still running");
+                    } else if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_FAILED) {
                         System.out.println("FAILED");
                         downloading = false;
                         Log.i("handleData()", "Reason: " + cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_REASON)));
 
                         cursor.close();
-                    }
-                    else if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
+                    } else if (cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL) {
                         downloading = false;
                         cursor.close();
                     }
@@ -329,13 +284,6 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
             }
         }).start();
 
-
-
-
-//        pref.edit().putLong(DOWNLOAD_ID, id).apply();
-//        pref.edit().putString(DOWNLOAD_TYPE, type).apply();
-
-
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -344,17 +292,20 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         public LinearLayout dictRowLinearLayout;
         public LinearLayout langNameLinearLayout;
         public ImageButton downloadButton;
+        public ImageView installedDictionaryImage;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.language_text);
             checkBox = itemView.findViewById(R.id.dict_checkbox);
             downloadButton = itemView.findViewById(R.id.download_button);
+            installedDictionaryImage = itemView.findViewById(R.id.installed_dictionary_imageview);
             dictRowLinearLayout = itemView.findViewById(R.id.dict_pack_row_linear_layout);
             langNameLinearLayout = itemView.findViewById(R.id.dict_pack_language_title_linear_layout);
+
             //enable transition in linear layout
-            dictRowLinearLayout.getLayoutTransition()
-                    .enableTransitionType(LayoutTransition.CHANGING);
+//            dictRowLinearLayout.getLayoutTransition()
+//                    .enableTransitionType(LayoutTransition.CHANGING);
 
         }
     }

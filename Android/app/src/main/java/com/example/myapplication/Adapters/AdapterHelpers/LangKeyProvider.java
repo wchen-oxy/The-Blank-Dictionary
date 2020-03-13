@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.selection.ItemKeyProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
- class LangKeyProvider extends ItemKeyProvider<Long> {
+class LangKeyProvider extends ItemKeyProvider<Long> {
 
     LangKeyProvider(RecyclerView.Adapter adapter) {
         super(ItemKeyProvider.SCOPE_MAPPED);

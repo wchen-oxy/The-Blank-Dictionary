@@ -3,17 +3,12 @@ package com.example.myapplication.Fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,7 +22,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.myapplication.BroadcastRecievers.myDictionaryDownloadReceiver;
 import com.example.myapplication.DataSerialization;
 import com.example.myapplication.R;
 
@@ -36,7 +30,6 @@ import java.util.ArrayList;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 import static com.example.myapplication.Constants.Network.DOWNLOAD_URL_PART;
-import static com.example.myapplication.Constants.Network.LANG_DOWNLOAD_HANDLER_THREAD_NAME;
 import static com.example.myapplication.Constants.Network.REQUEST_AUTH_HEADER;
 import static com.example.myapplication.Constants.Network.REQUEST_DESCRIPTION;
 import static com.example.myapplication.Constants.Network.REQUEST_TITLE;

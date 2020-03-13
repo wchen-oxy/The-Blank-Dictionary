@@ -21,9 +21,6 @@ import com.example.myapplication.Fragments.DictionarySelectionFragment;
 import com.example.myapplication.Fragments.LanguagePackFragment;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
@@ -31,7 +28,6 @@ import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.example.myapplication.Constants.System.APP_NAME;
 import static com.example.myapplication.Constants.System.DATABASE_UPDATED;
 import static com.example.myapplication.Constants.System.DOWNLOAD_ID;
-import static com.example.myapplication.Constants.System.DOWNLOAD_TYPE;
 
 public class myDictionaryDownloadReceiver extends BroadcastReceiver {
     String type;
@@ -47,13 +43,13 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         System.out.println("RECIEVER REACHED");
         context.unregisterReceiver(this);
-        System.out.println("LONG ID: "  + id);
+        System.out.println("LONG ID: " + id);
 
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
-        System.out.println( "SUCCESSFUL DOWNLOAD: " + downloadManager.getUriForDownloadedFile(id));
+        System.out.println("SUCCESSFUL DOWNLOAD: " + downloadManager.getUriForDownloadedFile(id));
         StringBuilder sb = new StringBuilder();
         sb.append("Action: " + intent.getAction() + "\n");
-        sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");
+        sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME) + "\n");
 
 //        long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
         //Checking if the received broadcast is for our enqueued download by matching download id

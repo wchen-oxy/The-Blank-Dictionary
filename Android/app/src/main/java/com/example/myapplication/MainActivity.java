@@ -1,17 +1,12 @@
 package com.example.myapplication;
 
-import android.Manifest;
-import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,21 +15,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.myapplication.BroadcastRecievers.myAvailableDictionaryReciever;
-import com.example.myapplication.BroadcastRecievers.myDictionaryDownloadReceiver;
 import com.example.myapplication.BroadcastRecievers.myServerStatusReciever;
 import com.example.myapplication.DataDownload.DictionaryClientUsage;
 import com.example.myapplication.DataDownload.HttpBadRequestException;
 import com.example.myapplication.Fragments.DictionarySelectionFragment;
 import com.example.myapplication.Fragments.HomeFragment;
-import com.example.myapplication.Fragments.LanguagePackFragment;
 import com.example.myapplication.Fragments.ResultFragment;
 import com.example.myapplication.Fragments.SearchFragment;
 import com.example.myapplication.Fragments.SettingsFragment;
@@ -49,20 +40,16 @@ import java.util.ArrayList;
 
 import static com.example.myapplication.Constants.Fragment.DICTIONARY_SELECTION_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.HOME_FRAGMENT;
-import static com.example.myapplication.Constants.Fragment.LANGUAGE_DOWNLOAD_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.RESULT_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.SETTINGS_FRAGMENT;
 import static com.example.myapplication.Constants.IntentFilters.DICTIONARY_LIST_DOWNLOADED;
 import static com.example.myapplication.Constants.IntentFilters.SERVER_REACHED;
-import static com.example.myapplication.Constants.Network.LANG_DOWNLOAD_HANDLER_THREAD_NAME;
 import static com.example.myapplication.Constants.Network.NO_INTERNET_ERROR;
 import static com.example.myapplication.Constants.System.APP_NAME;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
-import static com.example.myapplication.Constants.System.DOWNLOAD_ID;
-import static com.example.myapplication.Constants.System.DOWNLOAD_TYPE;
 
 public class MainActivity extends AppCompatActivity implements IFragmentCommunicator, IDelete {
     final Context context = this;
@@ -350,9 +337,10 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
-        if (checked) {langToDelete.add(view.getTag().toString());
-        System.out.println(view.getTag().toString());}
-        else {
+        if (checked) {
+            langToDelete.add(view.getTag().toString());
+            System.out.println(view.getTag().toString());
+        } else {
             for (int i = 0; i < langToDelete.size(); i++) {
                 if (langToDelete.get(i) == view.getTag().toString()) langToDelete.remove(i);
             }
@@ -368,5 +356,10 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     @Override
     public void clearLangToDeleteList() {
         langToDelete.clear();
+    }
+
+    @Override
+    public int getLangListCount() {
+        return langToDelete.size();
     }
 }

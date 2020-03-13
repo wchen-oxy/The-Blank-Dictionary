@@ -28,10 +28,7 @@ import com.example.myapplication.R;
 import java.io.File;
 
 import static com.example.myapplication.Constants.Fragment.DICTIONARY_SELECTION_FRAGMENT;
-import static com.example.myapplication.Constants.Fragment.LANGUAGE_DOWNLOAD_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
-import static com.example.myapplication.Constants.Network.DOWNLOAD_URL_PART;
-import static com.example.myapplication.Constants.Network.getAbsoluteUrl;
 import static com.example.myapplication.Constants.System.APP_NAME;
 
 public class SettingsFragment extends Fragment {
@@ -86,23 +83,23 @@ public class SettingsFragment extends Fragment {
                                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
                                         , 101);
                                 if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                        != PackageManager.PERMISSION_GRANTED) new FilePermissionDialogFragment().showNow(getParentFragmentManager(), "dialog");
+                                        != PackageManager.PERMISSION_GRANTED)
+                                    new FilePermissionDialogFragment().showNow(getParentFragmentManager(), "dialog");
 
 
                                 // Show an explanation to the user *asynchronously* -- don't block
                                 // this thread waiting for the user's response! After the user
                                 // sees the explanation, try again to request the permission.
-                            }
-                                    else {
-                                        // No explanation needed; request the permission
-                                        ActivityCompat.requestPermissions(activity,
-                                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-                                                , 101);
+                            } else {
+                                // No explanation needed; request the permission
+                                ActivityCompat.requestPermissions(activity,
+                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
+                                        , 101);
 
-                                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                                        // app-defined int constant. The callback method gets the
-                                        // result of the request.
-                                    }
+                                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                                // app-defined int constant. The callback method gets the
+                                // result of the request.
+                            }
                         } else {
                             //make directory for file storage
                             if (!(new File(Environment.getExternalStorageDirectory(), APP_NAME).isDirectory())) {
