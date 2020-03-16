@@ -62,7 +62,6 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
     public static Boolean DOWNLOAD_IN_PROGRSS;
     Activity activity;
     ArrayList<String> available;
-    ArrayList<String> installed;
     boolean checkboxVisiblity;
     boolean downloadButtonVisible;
     View view;
@@ -100,11 +99,16 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
 
         if (pref.getBoolean(language, false)) {
             if (!checkboxVisiblity) {
-                holder.installedDictionaryImage.setVisibility(View.VISIBLE);
+                if (pref.getString(CURRENTLY_SELECTED_DICTIONARY, "").equals(language)) {
+                    holder.selectedDictionaryImage.setVisibility(View.VISIBLE);
+                }
+                else{
+                    holder.selectedDictionaryImage.setVisibility(View.GONE);
+                }
                 holder.checkBox.setVisibility(View.GONE);
             } else {
                 holder.checkBox.setVisibility(View.VISIBLE);
-                holder.installedDictionaryImage.setVisibility(View.GONE);
+                holder.selectedDictionaryImage.setVisibility(View.GONE);
             }
 
             holder.downloadButton.setVisibility(View.GONE);
@@ -121,7 +125,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
                 }
             });
         } else {
-            holder.installedDictionaryImage.setVisibility(View.GONE);
+            holder.selectedDictionaryImage.setVisibility(View.GONE);
             if (!checkboxVisiblity) {
                 holder.downloadButton.setVisibility(View.VISIBLE);
                 holder.checkBox.setVisibility(View.GONE);
@@ -292,14 +296,14 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
         public LinearLayout dictRowLinearLayout;
         public LinearLayout langNameLinearLayout;
         public ImageButton downloadButton;
-        public ImageView installedDictionaryImage;
+        public ImageView selectedDictionaryImage;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.language_text);
             checkBox = itemView.findViewById(R.id.dict_checkbox);
             downloadButton = itemView.findViewById(R.id.download_button);
-            installedDictionaryImage = itemView.findViewById(R.id.installed_dictionary_imageview);
+            selectedDictionaryImage = itemView.findViewById(R.id.installed_dictionary_imageview);
             dictRowLinearLayout = itemView.findViewById(R.id.dict_pack_row_linear_layout);
             langNameLinearLayout = itemView.findViewById(R.id.dict_pack_language_title_linear_layout);
 

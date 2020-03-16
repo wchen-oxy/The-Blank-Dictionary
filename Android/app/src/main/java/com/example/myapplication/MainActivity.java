@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    if (isAdvSearch && activeLang == pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
+                    if (isAdvSearch && activeLang.equals(pref.getString(CURRENTLY_SELECTED_DICTIONARY, ""))) {
                         fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.frag_container, SearchFragment.newInstance(args), SEARCH_FRAGMENT).commit();
                         return true;
@@ -81,9 +81,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                     fragmentTransaction.replace(R.id.frag_container, HomeFragment.newInstance(), HOME_FRAGMENT).commit();
                     return true;
 
-
                 case R.id.navigation_settings:
-
                     clearBackStack();
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.frag_container, SettingsFragment.newInstance(), SETTINGS_FRAGMENT).commit();
@@ -111,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.add(R.id.frag_container, homeFragment, HOME_FRAGMENT).commit();
                 break;
-
             case SEARCH_FRAGMENT:
                 SearchFragment searchFragment = SearchFragment.newInstance(args);
                 activeLang = pref.getString(CURRENTLY_SELECTED_DICTIONARY, null);
@@ -130,38 +127,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frag_container, dictionarySelectionFragment).addToBackStack(DICTIONARY_SELECTION_FRAGMENT).commit();
                 break;
-
-//            case LANGUAGE_DOWNLOAD_FRAGMENT:
-//                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                        != PackageManager.PERMISSION_GRANTED) {
-//                    // Permission is not granted
-//                    if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-//                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                        // Show an explanation to the user *asynchronously* -- don't block
-//                        // this thread waiting for the user's response! After the user
-//                        // sees the explanation, try again to request the permission.
-//                    } else {
-//                        // No explanation needed; request the permission
-//                        ActivityCompat.requestPermissions(this,
-//                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
-//                                , 101);
-//
-//                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-//                        // app-defined int constant. The callback method gets the
-//                        // result of the request.
-//                    }
-//                } else {
-//                    // Permission has already been granted
-//                    LanguagePackFragment languagePackFragment = LanguagePackFragment.newInstance();
-//                    fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.frag_container, languagePackFragment).addToBackStack(LANGUAGE_DOWNLOAD_FRAGMENT).commit();
-//                }
-//
-//
-//                break;
-
         }
-
     }
 
     private void clearBackStack() {
@@ -185,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         return false;
     }
 
-
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container);
@@ -194,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         //otherwise do something
         super.onBackPressed();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         Bundle args = new Bundle();
         args.putString(NEW_FRAGMENT, HOME_FRAGMENT);
         fragController(args);
-
 
         //SECTION FOR GETTING AVAILABLE DICTIONARIES AHEAD OF TIME
         if (!(new File(Environment.getExternalStorageDirectory(), APP_NAME).isDirectory())) {
@@ -233,107 +196,22 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 } catch (HttpBadRequestException e) {
                     e.printStackTrace();
                 }
-
             }
 
         };
         mainHandler.post(myRunnable);
-
-
     }
 
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(myServerStatusReciever);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(myAvailableDictionaryReciever);
-
         super.onDestroy();
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        System.out.println("Resume REACHED");
-////
-//        DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
-//        DownloadManager.Query downloadManagerQuery = new DownloadManager.Query();
-//        downloadManager.query(downloadManagerQuery);
-//        downloadManagerQuery.setFilterById(pref.getLong(DOWNLOAD_ID, -1)).setFilterByStatus(DownloadManager.STATUS_SUCCESSFUL);
-//        Cursor cursor = null;
-////        int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
-//        if (pref.getLong(DOWNLOAD_ID, -1) != -1)
-//            cursor = downloadManager.query(new DownloadManager.Query().setFilterById(pref.getLong(DOWNLOAD_ID, -1)));
-//
-//        if (cursor != null && cursor.moveToNext()) {
-//            int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
-//            cursor.close();
-//            System.out.println("DOWNLOAD...");
-//
-//
-//            if (status == DownloadManager.STATUS_FAILED) {
-//                System.out.println("FAIL");
-//                // do something when failed
-//            }
-//            else if (status == DownloadManager.STATUS_PENDING || status == DownloadManager.STATUS_PAUSED) {
-//                System.out.println("PENDING/ PAUSED");
-//
-//                // do something pending or paused
-//            }
-//            else if (status == DownloadManager.STATUS_SUCCESSFUL) {
-//                System.out.println("SUCCESS");
-//
-//                // do something when successful
-//            }
-//            else if (status == DownloadManager.STATUS_RUNNING) {
-//                System.out.println("RUNNING");
-//
-//                // do something when running
-//            }
-//        }
-//
-//        if (pref.getLong(DOWNLOAD_ID, -4) != -4) {
-//            int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
-//            switch (status) {
-//                case DownloadManager.STATUS_PAUSED:
-//                    System.out.println("Paused");
-//
-//                    break;
-//                case DownloadManager.STATUS_PENDING:
-//                    System.out.println("Pending");
-//
-//                    break;
-//                case DownloadManager.STATUS_RUNNING:
-//                    System.out.println("Running");
-//
-//                    break;
-//                case DownloadManager.STATUS_SUCCESSFUL:
-//                    System.out.println("Success");
-//
-//                    break;
-//                case DownloadManager.STATUS_FAILED:
-//                    System.out.println("failed");
-//
-//                    break;
-//            }
-//        }
-//        String type = pref.getString(DOWNLOAD_TYPE, "");
-//        if (cursor.moveToFirst() && !type.isEmpty()){
-//            System.out.println("INNER REACHED");
-//            BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(type);
-//            IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-//            HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
-//            handlerThread.start();
-//            Looper looper = handlerThread.getLooper();
-//            Handler handler = new Handler(looper);
-//            context.registerReceiver(broadcastReceiver, filter, null, handler);
-//        }
-//
-//        cursor.close();
-    }
 
     //Checkbox related functions
-
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -362,4 +240,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     public int getLangListCount() {
         return langToDelete.size();
     }
+
+
 }

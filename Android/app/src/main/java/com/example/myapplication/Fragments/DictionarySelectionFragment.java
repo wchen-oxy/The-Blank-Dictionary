@@ -10,8 +10,8 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +29,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
+import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 import static com.example.myapplication.Constants.System.DATABASE;
 import static com.example.myapplication.Constants.System.DATABASE_CLEARED;
 import static com.example.myapplication.Constants.System.DATABASE_UPDATED;
@@ -48,7 +49,8 @@ public class DictionarySelectionFragment extends Fragment {
     ImageButton close;
     ImageButton editDelete;
     ArrayList<String> available;
-    LinearLayout dictPackLinearLayout;
+
+
 
     public static DictionarySelectionFragment newInstance() {
 
@@ -76,8 +78,17 @@ public class DictionarySelectionFragment extends Fragment {
                     settingsListsAdapter.makeCheckboxVisible(false);
                     close.setVisibility(View.GONE);
                     editDelete.setBackground(getResources().getDrawable(R.drawable.outline_edit_white_48));
+                    iDelete.clearLangToDeleteList();
                 }
-                DOWNLOAD_IN_PROGRESS = false;
+                else{
+                    DOWNLOAD_IN_PROGRESS = false;
+                    ArrayList<String> installedLanguages = new ArrayList<>();
+                    //loop through list.json
+
+                    checkInstalled(installedLanguages);
+                    if (installedLanguages.size() == 1) pref.edit().putString(CURRENTLY_SELECTED_DICTIONARY, installedLanguages.get(0)).apply();
+
+                }
                 settingsListsAdapter.notifyDownloadComplete();
                 settingsListsAdapter.notifyDataSetChanged();
             }
@@ -117,9 +128,9 @@ public class DictionarySelectionFragment extends Fragment {
                     isCurrentlyEditing = true;
 
                 } else {
-                    System.out.println("Delete Clicked");
                     if (iDelete.getLangListCount() > 0)
                         iDelete.delete();
+
                 }
 
             }
@@ -133,11 +144,18 @@ public class DictionarySelectionFragment extends Fragment {
                 close.setVisibility(View.GONE);
                 close.setClickable(false);
                 isCurrentlyEditing = false;
-                iDelete.clearLangToDeleteList();
+                clearCheckbox();
 
             }
         });
         return rootView;
+    }
+
+    private void clearCheckbox(){
+        for (int i = 0; i < languagesRecyclerView.getChildCount(); i++){
+            CheckBox checkBox = languagesRecyclerView.getChildAt(i).findViewById(R.id.dict_checkbox);
+            checkBox.setChecked(false);
+        }
     }
 
     @Override
@@ -168,11 +186,10 @@ public class DictionarySelectionFragment extends Fragment {
         iDelete.clearLangToDeleteList();
     }
 
-//    private void checkInstalledLanguage(SharedPreferences pref) {
-//        ArrayList<String> list = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory() + APP_DICTIONARY_FILE));
-//        for (String lang : list) {
-//            if (pref.getBoolean(lang, false)) installed.add(lang);
-//        }
-//    }
+    private void checkInstalled(ArrayList<String> installedLanguages){
+        for (String lang: available){
+            if (pref.getBoolean(lang, false)) installedLanguages.add(lang);
+        }
+    }
 
 }

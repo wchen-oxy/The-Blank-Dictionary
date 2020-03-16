@@ -6,4 +6,5 @@ public interface IDelete {
     void clearLangToDeleteList();
 
     int getLangListCount();
+
 }
