@@ -24,6 +24,7 @@ import com.example.myapplication.BroadcastRecievers.myAvailableDictionaryRecieve
 import com.example.myapplication.BroadcastRecievers.myServerStatusReciever;
 import com.example.myapplication.DataDownload.DictionaryClientUsage;
 import com.example.myapplication.DataDownload.HttpBadRequestException;
+import com.example.myapplication.DataDownload.NetworkCheck;
 import com.example.myapplication.Fragments.DictionarySelectionFragment;
 import com.example.myapplication.Fragments.HomeFragment;
 import com.example.myapplication.Fragments.ResultFragment;
@@ -137,19 +138,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         }
     }
 
-    public boolean isOnline() {
-        Runtime runtime = Runtime.getRuntime();
-        try {
-            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
-            int exitValue = ipProcess.waitFor();
-            return (exitValue == 0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -178,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
             new File(Environment.getExternalStorageDirectory(), APP_NAME).mkdir();
         }
         //check internet connection
-        if (!isOnline()) Toast.makeText(this, NO_INTERNET_ERROR, Toast.LENGTH_SHORT).show();
+        if (!NetworkCheck.isOnline()) Toast.makeText(this, NO_INTERNET_ERROR, Toast.LENGTH_SHORT).show();
         //check if connection to server is possible
         myServerStatusReciever = new myServerStatusReciever();
         localBroadcastManager = LocalBroadcastManager.getInstance(this);

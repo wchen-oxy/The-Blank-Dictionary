@@ -83,8 +83,6 @@ public class DictionarySelectionFragment extends Fragment {
                 else{
                     DOWNLOAD_IN_PROGRESS = false;
                     ArrayList<String> installedLanguages = new ArrayList<>();
-                    //loop through list.json
-
                     checkInstalled(installedLanguages);
                     if (installedLanguages.size() == 1) pref.edit().putString(CURRENTLY_SELECTED_DICTIONARY, installedLanguages.get(0)).apply();
 

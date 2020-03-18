@@ -4,36 +4,10 @@
     <string name="title_favorites">Favorites</string>
     <string name="title_settings">Settings</string>
     <string name="title">The Blank Dictionary</string>
-    <string name="search_hint">Enter your search term here!</string>
-    <string name="language_pack_button">Download a Language Pack</string>
     <string name="default_button">Select Your Current Dictionary</string>
-    <string name="interface_button">App Language</string>
-    <string name="help_button">Help</string>
-    <string name="feedback_button">Feedback</string>
-    <string name="donate_button">Donate</string>
-    <string name="bhutia_dictionary">Bhutia</string>
-    <string name="english_dictionary">English</string>
-
-    <string name="test_definition">The definition for Bhutia is this. They are used in lol 中文</string>
-    <string name="no_list_found">You must download a dictionary first.</string>
-
-
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="word_placeholder">WORD PLACEHOLDER</string>
-    <string name="english_word_placeholder">English Word Placeholder</string>
     <string name="manage_dictionary">Manage Your Dictionaries</string>
 
     <!--BEGIN TRANSLATION DIRECTIONS USED FOR THE APP -->

@@ -39,9 +39,7 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        System.out.println("RECIEVER REACHED");
         context.unregisterReceiver(this);
-        System.out.println("LONG ID: " + id);
 
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
         System.out.println("SUCCESSFUL DOWNLOAD: " + downloadManager.getUriForDownloadedFile(id));
@@ -73,7 +71,6 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
                 EnglishDataInsert.engInsert(englishDao, file);
                 editor.putBoolean(ENGLISH, true);
                 editor.commit();
-
                 break;
 
             }
@@ -87,10 +84,6 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
         dictionaryDownloadedIntent.setAction(DATABASE_UPDATED);
         context.sendBroadcast(dictionaryDownloadedIntent);
         LocalBroadcastManager.getInstance(context).sendBroadcast(dictionaryDownloadedIntent);
-//        }
-
     }
-
-
 }
 
