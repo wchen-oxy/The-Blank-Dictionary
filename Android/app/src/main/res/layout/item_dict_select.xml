@@ -16,8 +16,8 @@
         android:id="@+id/dict_pack_language_title_linear_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="start"
         android:layout_weight="1"
+        android:gravity="start"
 
         >
 
@@ -28,30 +28,32 @@
             android:layout_margin="@dimen/text_margin"
             android:textAppearance="?attr/textAppearanceListItem" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginRight="20dp"
-        android:gravity="end"
-        >
+        android:gravity="end">
+
         <ImageButton
             android:id="@+id/download_button"
-            android:layout_height="35dp"
             android:layout_width="35dp"
-            android:layout_weight="1"
+            android:layout_height="35dp"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:background="@drawable/outline_get_app_black_48"
 
             />
+
         <ImageView
             android:id="@+id/installed_dictionary_imageview"
-            android:layout_height="35dp"
             android:layout_width="35dp"
-            android:layout_weight="1"
+            android:layout_height="35dp"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:background="@drawable/outline_check_black_48"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
+
         <CheckBox
             android:id="@+id/dict_checkbox"
             android:layout_width="wrap_content"

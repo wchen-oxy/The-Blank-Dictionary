@@ -1,16 +1,21 @@
 package com.example.myapplication.DataDownload;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.myapplication.BroadcastRecievers.myDictionaryDownloadReceiver;
@@ -25,13 +30,43 @@ import static com.example.myapplication.Constants.Network.REQUEST_AUTH_HEADER;
 import static com.example.myapplication.Constants.Network.REQUEST_DESCRIPTION;
 import static com.example.myapplication.Constants.Network.REQUEST_TITLE;
 import static com.example.myapplication.Constants.Network.authDigest;
+import static com.example.myapplication.Constants.System.APP_NAME;
+import static com.example.myapplication.Constants.Toast.DICTIONARY_IS_DOWNLOADING_TOAST;
 
 public class DownloadRequest {
     Context mContext;
-    public DownloadRequest(Context context){
+    File file;
+
+    public DownloadRequest(Context context) {
         this.mContext = context;
     }
-    public void begin(String url, File file, String type) {
+
+    public void start(String url, String lang){
+        makeFile(url, lang);
+        launchDownload(url, file, lang);
+
+    }
+
+    private void makeFile(String url, String buttonText) {
+        Log.d("Download URL: ", url);
+        Toast.makeText(mContext, DICTIONARY_IS_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
+        file = new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME, buttonText);
+        Log.d("Is Folder Writable", String.valueOf(new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME).canWrite()));
+
+        file.setWritable(true);
+        if (file.exists()) {
+            Log.d("File", file.getAbsolutePath());
+            Log.v("Write Permission", Boolean.toString(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
+            Log.d("Is Readable", Boolean.toString(file.canRead()));
+            Log.d("Is Writable", Boolean.toString(file.canWrite()));
+            Log.d("Prev. File Deleted", Boolean.toString(file.delete()));
+            Log.d("Pref. File Exists", Boolean.toString(file.exists()));
+        }
+
+
+    }
+
+    private void launchDownload(String url, File file, String lang) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDescription(REQUEST_DESCRIPTION)
                 .setTitle(REQUEST_TITLE)
@@ -39,7 +74,7 @@ public class DownloadRequest {
                 .addRequestHeader(REQUEST_AUTH_HEADER, authDigest());
         DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(DOWNLOAD_SERVICE);
         final long id = downloadManager.enqueue(request);
-        BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(id, type);
+        BroadcastReceiver broadcastReceiver = new myDictionaryDownloadReceiver(id, lang);
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         HandlerThread handlerThread = new HandlerThread(LANG_DOWNLOAD_HANDLER_THREAD_NAME);
         handlerThread.start();

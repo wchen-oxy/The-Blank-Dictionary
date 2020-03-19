@@ -1,28 +1,18 @@
 package com.example.myapplication;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import androidx.fragment.app.testing.FragmentScenario;
-import androidx.lifecycle.Lifecycle;
-import androidx.test.core.app.ActivityScenario;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.myapplication.Fragments.HomeFragment;
-
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Arrays;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -31,7 +21,6 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.example.myapplication.Constants.Fragment.HOME_FRAGMENT;
 import static com.example.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.example.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
@@ -45,17 +34,19 @@ import static org.junit.Assert.assertEquals;
 @RunWith(AndroidJUnit4ClassRunner.class)
 public class HomeFragInstrumentedTest {
 
-    private SharedPreferences sharedPreferences;
-    private Intent launch = new Intent();
-
-
-
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class, true, false);
+    private SharedPreferences sharedPreferences;
+    private Intent launch = new Intent();
+
+    @AfterClass
+    public static void clearPref() {
+        InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE).edit().remove(CURRENTLY_SELECTED_DICTIONARY).commit();
+    }
 
     @Before
-    public void setSharedPreferences(){
+    public void setSharedPreferences() {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         launch.setAction(Intent.ACTION_MAIN);
         sharedPreferences = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
@@ -63,7 +54,7 @@ public class HomeFragInstrumentedTest {
     }
 
     @Test
-    public void checkRemovedTitle(){
+    public void checkRemovedTitle() {
         mActivityRule.launchActivity(launch);
         onView(withId(R.id.mainTitle)).check(matches(withText("The Blank Dictionary")));
         onView(withId(R.id.navigation_settings)).perform(click());
@@ -73,7 +64,7 @@ public class HomeFragInstrumentedTest {
     }
 
     @Test
-    public void checkBhutiaSpinner(){
+    public void checkBhutiaSpinner() {
         mActivityRule.launchActivity(launch);
         sharedPreferences.edit().putString(CURRENTLY_SELECTED_DICTIONARY, BHUTIA).apply();
         assertEquals(sharedPreferences.getString(CURRENTLY_SELECTED_DICTIONARY, "nope"), BHUTIA);
@@ -85,7 +76,7 @@ public class HomeFragInstrumentedTest {
     }
 
     @Test
-    public void checkEnglishSpinner(){
+    public void checkEnglishSpinner() {
         mActivityRule.launchActivity(launch);
         sharedPreferences.edit().putString(CURRENTLY_SELECTED_DICTIONARY, ENGLISH).apply();
         assertEquals(sharedPreferences.getString(CURRENTLY_SELECTED_DICTIONARY, "nope"), ENGLISH);
@@ -96,22 +87,13 @@ public class HomeFragInstrumentedTest {
         onView(withId(R.id.home_trans_spinner)).check(matches(withSpinnerText(containsString("English to English"))));
     }
 
-    @AfterClass
-    public static void clearPref(){
-        InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE).edit().remove(CURRENTLY_SELECTED_DICTIONARY).commit();
-    }
-
-
-
-    public String[] getHomeTransSpinner(String language){
+    public String[] getHomeTransSpinner(String language) {
 
         switch (language) {
             case BHUTIA:
                 return mActivityRule.getActivity().getResources().getStringArray(R.array.bhutia_array);
             case ENGLISH:
                 return mActivityRule.getActivity().getResources().getStringArray(R.array.english_array);
-
-
         }
         return null;
 

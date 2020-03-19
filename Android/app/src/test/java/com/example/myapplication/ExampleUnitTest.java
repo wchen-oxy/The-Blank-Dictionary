@@ -1,19 +1,7 @@
 package com.example.myapplication;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
-
-import androidx.test.core.app.ApplicationProvider;
-
-import com.example.myapplication.Fragments.DictionarySelectionFragment;
-import com.example.myapplication.HelperInterfaces.IFragmentCommunicator;
-
-import org.junit.Before;
 import org.junit.Test;
 
-import static com.example.myapplication.Constants.Fragment.HOME_FRAGMENT;
-import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static org.junit.Assert.assertEquals;
 
 /**

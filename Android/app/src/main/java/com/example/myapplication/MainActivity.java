@@ -36,7 +36,6 @@ import com.example.myapplication.HelperInterfaces.IOnBackPressed;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.example.myapplication.Constants.Fragment.DICTIONARY_SELECTION_FRAGMENT;
@@ -139,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     }
 
 
-
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container);
@@ -167,7 +165,8 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
             new File(Environment.getExternalStorageDirectory(), APP_NAME).mkdir();
         }
         //check internet connection
-        if (!NetworkCheck.isOnline()) Toast.makeText(this, NO_INTERNET_ERROR, Toast.LENGTH_SHORT).show();
+        if (!NetworkCheck.isOnline())
+            Toast.makeText(this, NO_INTERNET_ERROR, Toast.LENGTH_SHORT).show();
         //check if connection to server is possible
         myServerStatusReciever = new myServerStatusReciever();
         localBroadcastManager = LocalBroadcastManager.getInstance(this);

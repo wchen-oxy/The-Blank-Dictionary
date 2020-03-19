@@ -41,7 +41,7 @@ public class HelperMethodTests {
     }
 
     @Test
-    public void testIsOnline(){
+    public void testIsOnline() {
         assertEquals(NetworkCheck.isOnline(), true);
     }
 }

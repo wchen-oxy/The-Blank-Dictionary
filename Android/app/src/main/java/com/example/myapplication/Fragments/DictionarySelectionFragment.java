@@ -51,7 +51,6 @@ public class DictionarySelectionFragment extends Fragment {
     ArrayList<String> available;
 
 
-
     public static DictionarySelectionFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -79,12 +78,12 @@ public class DictionarySelectionFragment extends Fragment {
                     close.setVisibility(View.GONE);
                     editDelete.setBackground(getResources().getDrawable(R.drawable.outline_edit_white_48));
                     iDelete.clearLangToDeleteList();
-                }
-                else{
+                } else {
                     DOWNLOAD_IN_PROGRESS = false;
                     ArrayList<String> installedLanguages = new ArrayList<>();
                     checkInstalled(installedLanguages);
-                    if (installedLanguages.size() == 1) pref.edit().putString(CURRENTLY_SELECTED_DICTIONARY, installedLanguages.get(0)).apply();
+                    if (installedLanguages.size() == 1)
+                        pref.edit().putString(CURRENTLY_SELECTED_DICTIONARY, installedLanguages.get(0)).apply();
 
                 }
                 settingsListsAdapter.notifyDownloadComplete();
@@ -149,8 +148,8 @@ public class DictionarySelectionFragment extends Fragment {
         return rootView;
     }
 
-    private void clearCheckbox(){
-        for (int i = 0; i < languagesRecyclerView.getChildCount(); i++){
+    private void clearCheckbox() {
+        for (int i = 0; i < languagesRecyclerView.getChildCount(); i++) {
             CheckBox checkBox = languagesRecyclerView.getChildAt(i).findViewById(R.id.dict_checkbox);
             checkBox.setChecked(false);
         }
@@ -184,8 +183,8 @@ public class DictionarySelectionFragment extends Fragment {
         iDelete.clearLangToDeleteList();
     }
 
-    private void checkInstalled(ArrayList<String> installedLanguages){
-        for (String lang: available){
+    private void checkInstalled(ArrayList<String> installedLanguages) {
+        for (String lang : available) {
             if (pref.getBoolean(lang, false)) installedLanguages.add(lang);
         }
     }

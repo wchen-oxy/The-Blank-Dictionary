@@ -23,7 +23,7 @@
     <string-array name="english_array">
         <item>English to English</item>
     </string-array>
-    
+
     <string name="ok">OK</string>
     <string name="resource_permission">The app needs to access file storage to store dictionary data.</string>
 </resources>

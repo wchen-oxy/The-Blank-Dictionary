@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,19 +27,19 @@ public class MyInterfaceTest {
     public ActivityTestRule<MainActivity> mActivityRule =
             new ActivityTestRule<>(MainActivity.class);
 
-    @Test void basicLifeCycleTest() throws Throwable {
+    @Test
+    void basicLifeCycleTest() throws Throwable {
         final FragmentManager fragmentManager = mActivityRule.getActivity().getSupportFragmentManager();
         Bundle args = new Bundle();
         args.putString(NEW_FRAGMENT, HOME_FRAGMENT);
         mActivityRule.getActivity().bundPass(args, false);
         assertEquals(fragmentManager.getBackStackEntryCount(), 1);
         List<Fragment> fragmentList = fragmentManager.getFragments();
-        HomeFragment fragment =  (HomeFragment) fragmentList.get(0);
+        HomeFragment fragment = (HomeFragment) fragmentList.get(0);
         fragmentManager.beginTransaction().remove(fragment);
 
 
     }
-
 
 
 }
