@@ -62,14 +62,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentCommunicator = (IFragmentCommunicator) context;
+        mContext = context;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentManager = getFragmentManager();
+        fragmentManager = getParentFragmentManager();
         args = new Bundle();
-        pref = getContext().getSharedPreferences(APP_PREFERENCES, 0);
+        pref = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         if (!(new File(Environment.getExternalStorageDirectory(), APP_NAME).isDirectory()))
             mDictionaryInstalled = false;
         textView = new TextView(getContext());
@@ -117,7 +118,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             });
 
 
-            String[] translationTypesArray = Translation.getSet(getContext());
+            String[] translationTypesArray = Translation.getSet(mContext);
             translationSpinnerAdapter = new myTranslationSpinnerAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_dropdown_item, translationTypesArray);
             translationSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

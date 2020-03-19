@@ -78,8 +78,8 @@ public final class Constants {
     }
 
     public static class SupportedDictionaries {
-        public static final String BHUTIA = "BHUTIA";
-        public static final String ENGLISH = "ENGLISH";
+        public static final String BHUTIA = "Bhutia";
+        public static final String ENGLISH = "English";
     }
 
     public static class DictionaryTitles {
@@ -88,9 +88,9 @@ public final class Constants {
 
         public static String returnTitle(String language) {
             switch (language) {
-                case ("BHUTIA"):
+                case ("Bhutia"):
                     return BHUTIA_TITLE;
-                case ("ENGLISH"):
+                case ("English"):
                     return ENGLISH_TITLE;
             }
             return "The Blank Dictionary";

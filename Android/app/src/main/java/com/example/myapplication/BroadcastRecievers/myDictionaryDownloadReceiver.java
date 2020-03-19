@@ -75,7 +75,7 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
 
             }
             default:
-                Log.d("myDictionaryReciever", "Something went wrong");
+                Log.d("myDictionaryReciever", "Something went wrong and here is the lang --" + type);
 
         }
 

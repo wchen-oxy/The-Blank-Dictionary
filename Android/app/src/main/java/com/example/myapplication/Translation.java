@@ -11,7 +11,7 @@ import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICT
 public class Translation {
     public static String[] getSet(Context context) {
         String[] result = null;
-        SharedPreferences pref = context.getSharedPreferences(APP_PREFERENCES, 0);
+        SharedPreferences pref = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
             case (BHUTIA):
@@ -20,6 +20,9 @@ public class Translation {
             case (ENGLISH):
                 result = context.getResources().getStringArray(R.array.english_array);
                 break;
+            default:
+
+
 
         }
         return result;
