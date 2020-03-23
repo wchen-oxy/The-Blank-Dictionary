@@ -66,12 +66,19 @@
      {% include "languages/bhutia/navbar/search.html" %}
       {% endif %}
 
+      {% if english %}
+     {% include "languages/english/navbar/search.html" %}
+      {% endif %}
+
     </ul>
     
         <div class="selection">
         <select id="translation" class="custom-select">
       {% if bhutia %}
         {% include "languages/bhutia/navbar/trans.html" %}
+      {% endif %}
+      {% if english %}
+        {% include "languages/english/navbar/trans.html" %}
       {% endif %}
 
         </select>

@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,17 +25,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.DataDownload.DownloadRequest;
 import com.example.myapplication.R;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import static com.example.myapplication.Constants.Network.DOWNLOAD_URL_PART;
 import static com.example.myapplication.Constants.Network.getAbsoluteUrl;
-import static com.example.myapplication.Constants.System.APP_NAME;
 import static com.example.myapplication.Constants.System.APP_PREFERENCES;
 import static com.example.myapplication.Constants.System.BUTTON_FOCUSED_COLOR;
 import static com.example.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 import static com.example.myapplication.Constants.System.TRANSPARENT_COLOR;
-import static com.example.myapplication.Constants.Toast.DICTIONARY_IS_DOWNLOADING_TOAST;
 import static com.example.myapplication.Constants.Toast.DICT_STILL_DOWNLOADING_TOAST;
 import static com.example.myapplication.Constants.Toast.DOWNLOAD_PROMPT;
 
@@ -171,7 +166,6 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
             DOWNLOAD_IN_PROGRSS = true;
             DownloadRequest downloadRequest = new DownloadRequest(mContext);
             downloadRequest.start(getAbsoluteUrl(DOWNLOAD_URL_PART) + language, language);
-//            dataDownload(getAbsoluteUrl(DOWNLOAD_URL_PART) + language, language);
         }
     }
 
@@ -189,26 +183,6 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
     public void notifyDownloadComplete() {
         DOWNLOAD_IN_PROGRSS = false;
     }
-
-//    private void dataDownload(String url, String buttonText) {
-//        Log.d("Download URL: ", url);
-//        Toast.makeText(mContext, DICTIONARY_IS_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
-//        File file = new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME, buttonText);
-//        Log.d("Is Folder Writable", String.valueOf(new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME).canWrite()));
-//
-//        file.setWritable(true);
-//        if (file.exists()) {
-//            Log.d("File", file.getAbsolutePath());
-//            Log.v("Write Permission", Boolean.toString(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
-//            Log.d("Is Readable", Boolean.toString(file.canRead()));
-//            Log.d("Is Writable", Boolean.toString(file.canWrite()));
-//            Log.d("Prev. File Deleted", Boolean.toString(file.delete()));
-//            Log.d("Pref. File Exists", Boolean.toString(file.exists()));
-//        }
-//        DownloadRequest downloadRequest = new DownloadRequest(mContext);
-//        downloadRequest.begin(url, file, buttonText);
-//
-//    }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

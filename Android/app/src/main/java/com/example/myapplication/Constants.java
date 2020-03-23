@@ -46,6 +46,7 @@ public final class Constants {
     public static class Fragment {
         public static final String NEW_FRAGMENT = "NewFragment";
         public static final String HOME_FRAGMENT = "HomeFragment";
+        public static final String ABOUT_FRAGMENT = "AboutFragment";
         public static final String SEARCH_FRAGMENT = "SearchFragment";
         public static final String RESULT_FRAGMENT = "ResultFragment";
         public static final String LANGUAGE_DOWNLOAD_FRAGMENT = "LangDownloadFragment";

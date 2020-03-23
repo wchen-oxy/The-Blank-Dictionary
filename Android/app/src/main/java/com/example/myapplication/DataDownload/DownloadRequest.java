@@ -41,7 +41,7 @@ public class DownloadRequest {
         this.mContext = context;
     }
 
-    public void start(String url, String lang){
+    public void start(String url, String lang) {
         makeFile(url, lang);
         launchDownload(url, file, lang);
 

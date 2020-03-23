@@ -27,6 +27,7 @@ import com.example.myapplication.R;
 
 import java.io.File;
 
+import static com.example.myapplication.Constants.Fragment.ABOUT_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.DICTIONARY_SELECTION_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.example.myapplication.Constants.System.APP_NAME;
@@ -112,6 +113,18 @@ public class SettingsFragment extends Fragment {
                             fragmentCommunicator.bundPass(args, false);
                         }
 
+                    }
+                }
+        );
+
+        Button aboutApp = rootView.findViewById(R.id.about_app_button);
+        aboutApp.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle args = new Bundle();
+                        args.putString(NEW_FRAGMENT, ABOUT_FRAGMENT);
+                        fragmentCommunicator.bundPass(args, false);
                     }
                 }
         );

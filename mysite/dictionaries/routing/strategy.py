@@ -63,7 +63,7 @@ class EnglishStrategy(Strategy):
     def execute(self, request, lang, translation) -> HttpResponse:
         if not request.GET['query']:
             error = True
-            return render(request, 'languages/english/entry_english.html', {'error': error})
+            return render(request, 'languages/english/entry_english.html', {'error': error, 'english': True})
         query = request.GET['query']
 
         #get dictionary pack
@@ -91,5 +91,5 @@ class EnglishStrategy(Strategy):
 
       
 
-        return super().execute(query)
+        # return super().execute(query)
       
