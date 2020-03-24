@@ -24,8 +24,8 @@ Yes! Just reach out to us to get you set up!
 We have **no funding**. The "Blank Dictionary" is going to rely on your help for building content, funding and to improve the platform. Please contact us if you're interested in doing so.
 
 ## Screenshots
-### The Website
+### Example Dictionary Homepage
 <img width="1279" alt="Screen Shot 2020-03-23 at 2 19 41 PM" src="https://user-images.githubusercontent.com/21160570/77467566-75c63700-6dc9-11ea-8c08-b759d0e1be7d.png">
 
-### The Android App Homepage
-<img width="600" alt="Screen Shot 2020-03-23 at 2 28 25 PM" src="https://user-images.githubusercontent.com/21160570/77467804-da819180-6dc9-11ea-8065-897b1b5f4672.png">
+### Example Android App Homepage
+<img width="300" alt="Screen Shot 2020-03-23 at 2 28 25 PM" src="https://user-images.githubusercontent.com/21160570/77469063-c2ab0d00-6dcb-11ea-85e8-7f502f9c4e06.png">
