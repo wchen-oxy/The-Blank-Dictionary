@@ -1,15 +1,17 @@
 # The Blank Dictionary
 
-## Overview
+This project is a dictionary platform intended to promote endangered or at-risk minority languages. This repo contains a Django webapp and a Android app that streamline the creation, maintainence and viewing of digital dictionaries.
+
+------------------
 ### See It Live!
-##### The Website
+#### The Website
 ###### *We are currently using free website hosting so the website may take a couple seconds to load if it hasn't been used in awhile*
 http://blank-dictionary.herokuapp.com/
-##### The Android App
+#### The Android App
 ###### *Almost There!*
 
 ### What is this? 
-This project is a dictionary platform intended to promote endangered or at-risk minority languages. The "Blank Dictionary" allows non-technical users to create and maintain a dictionary that is immediately viewable on web browsers and as a mobile app (mobile app users can download dictionary data for offline use). By providing this tool, we hope to increase the availability of digital language resources to those who truly need modern reference resources but lack the technical know-how or financial means to create their own. 
+The "Blank Dictionary" allows non-technical users to create and maintain a dictionary that is immediately viewable on web browsers and as a mobile app (mobile app users can download dictionary data for offline use). By providing this tool, we hope to increase the availability of digital language resources to those who truly need modern reference resources but lack the technical know-how or financial means to create their own. 
 
 ### What is the Tech behind this?
 We have two main components, a Django webapp that can be accessed via a web browser and an Android app for mobile users. We're using ClearDB for our MySQL instance as well as Heroku to host the website/api.
