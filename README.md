@@ -2,14 +2,15 @@
 
 This project is a dictionary platform intended to promote endangered or at-risk minority languages. This repo contains a Django webapp and a Android app that streamline the creation, maintainence and viewing of digital dictionaries.
 
-------------------
-### See It Live!
+## See It Live!
 #### The Website
 ###### *We are currently using free website hosting so the website may take a couple seconds to load if it hasn't been used in awhile*
 http://blank-dictionary.herokuapp.com/
 #### The Android App
 ###### *Almost There!*
 
+------------------
+## Overview
 ### What is this? 
 The "Blank Dictionary" allows non-technical users to create and maintain a dictionary that is immediately viewable on web browsers and as a mobile app (mobile app users can download dictionary data for offline use). By providing this tool, we hope to increase the availability of digital language resources to those who truly need modern reference resources but lack the technical know-how or financial means to create their own. 
 
@@ -27,4 +28,4 @@ We have **no funding**. The "Blank Dictionary" is going to rely on your help for
 <img width="1279" alt="Screen Shot 2020-03-23 at 2 19 41 PM" src="https://user-images.githubusercontent.com/21160570/77467566-75c63700-6dc9-11ea-8c08-b759d0e1be7d.png">
 
 ### The Android App Homepage
-<img alt=Android Home" src="https://user-images.githubusercontent.com/21160570/77467804-da819180-6dc9-11ea-8065-897b1b5f4672.png">
+<img width="600" alt="Screen Shot 2020-03-23 at 2 28 25 PM" src="https://user-images.githubusercontent.com/21160570/77467804-da819180-6dc9-11ea-8065-897b1b5f4672.png">
