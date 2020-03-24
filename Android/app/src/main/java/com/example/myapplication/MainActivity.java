@@ -25,6 +25,7 @@ import com.example.myapplication.BroadcastRecievers.myServerStatusReciever;
 import com.example.myapplication.DataDownload.DictionaryClientUsage;
 import com.example.myapplication.DataDownload.HttpBadRequestException;
 import com.example.myapplication.DataDownload.NetworkCheck;
+import com.example.myapplication.Fragments.AboutFragment;
 import com.example.myapplication.Fragments.DictionarySelectionFragment;
 import com.example.myapplication.Fragments.HomeFragment;
 import com.example.myapplication.Fragments.ResultFragment;
@@ -38,6 +39,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.example.myapplication.Constants.Fragment.ABOUT_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.DICTIONARY_SELECTION_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.HOME_FRAGMENT;
 import static com.example.myapplication.Constants.Fragment.NEW_FRAGMENT;
@@ -126,6 +128,12 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 DictionarySelectionFragment dictionarySelectionFragment = DictionarySelectionFragment.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frag_container, dictionarySelectionFragment).addToBackStack(DICTIONARY_SELECTION_FRAGMENT).commit();
+                break;
+
+            case ABOUT_FRAGMENT:
+                AboutFragment aboutFragment = AboutFragment.newInstance();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frag_container, aboutFragment).addToBackStack(ABOUT_FRAGMENT).commit();
                 break;
         }
     }
