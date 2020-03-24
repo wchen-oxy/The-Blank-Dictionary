@@ -1,37 +1,28 @@
 # The Blank Dictionary
 
-Project funded by "Davis Projects for Peace" that promotes endangered minority languages in India. "The Blank Dictionary" is a Django webapp and an Android app that bootstraps the creation of accessible digital dictionaries. This platform will host dictionaries for different endangered languages and allow dictionary editors to create, manage and delete content on a single platform. End users can then view dictionary content on the webapp or Android app.
-
-See the beta here! (May take 5 seconds to load if it hasn't been used in awhile)
-
+## Overview
+### See It Live!
+##### The Website
+###### *We are currently using free website hosting so the website may take a couple seconds to load if it hasn't been used in awhile*
 http://blank-dictionary.herokuapp.com/
+##### The Android App
+###### *Almost There!*
 
-For the webapp and Android app, users will be able to quickly toggle between different dictionaries. On the Android app, a user will also be able to download dictionary data for offline use. 
+### What is this? 
+This project is a dictionary platform intended to promote endangered or at-risk minority languages. The "Blank Dictionary" allows non-technical users to create and maintain a dictionary that is immediately viewable on web browsers and as a mobile app (mobile app users can download dictionary data for offline use). By providing this tool, we hope to increase the availability of digital language resources to those who truly need modern reference resources but lack the technical know-how or financial means to create their own. 
 
-An Example Dictionary homepage:
-<img width="1279" alt="Screen Shot 2019-11-08 at 12 26 59 PM" src="https://user-images.githubusercontent.com/21160570/68508377-19e88080-0223-11ea-9b69-b92ccf878ce8.png">
+### What is the Tech behind this?
+We have two main components, a Django webapp that can be accessed via a web browser and an Android app for mobile users. We're using ClearDB for our MySQL instance as well as Heroku to host the website/api.
 
-A Sample Entry:
+### Can I Add a New Dictionary or Maintain an Existing One?
+Yes! Just reach out to us to get you set up!
 
-<img width="584" alt="Screen Shot 2019-11-08 at 12 28 43 PM" src="https://user-images.githubusercontent.com/21160570/68508455-51efc380-0223-11ea-8b37-08aa47e52ed0.png">
+### How Else Can I Get Involved?
+We have **no funding**. The "Blank Dictionary" is going to rely on your help for building content, funding and to improve the platform. Please contact us if you're interested in doing so.
 
-The Android Component Home Page:
+## Screenshots
+### The Website
+<img width="1279" alt="Screen Shot 2020-03-23 at 2 19 41 PM" src="https://user-images.githubusercontent.com/21160570/77467566-75c63700-6dc9-11ea-8c08-b759d0e1be7d.png">
 
-<img width="306" alt="Screen Shot 2019-11-08 at 12 36 45 PM" src="https://user-images.githubusercontent.com/21160570/68508916-8dd75880-0224-11ea-8331-5f2b0a952cee.png">
-
-The Android Component Query Page:
-
-<img width="307" alt="Screen Shot 2019-11-08 at 12 40 31 PM" src="https://user-images.githubusercontent.com/21160570/68509085-fcb4b180-0224-11ea-92d2-bbe1a13dea0d.png">
-
-# Usage
-Notes for MySQL setup on Mac
--> link just in case https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial
-
--> to start mysql, cd to /usr/local/mysql/bin
--> type mysql -u root -p
-
-#Arbitrary Code Bugs
-
-For some reason Android API28+ DownloadManager does not like it if you don't set it to use clear text traffic in requests.
-refer to this:
-https://stackoverflow.com/questions/53985649/download-failed-with-error-400-when-using-android-pie/53985701
+### The Android App Homepage
+<img alt=Android Home" src="https://user-images.githubusercontent.com/21160570/77467804-da819180-6dc9-11ea-8065-897b1b5f4672.png">
