@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
@@ -27,6 +28,7 @@ import com.blankdictionary.myapplication.Dictionaries.ResultWrapper;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.blankdictionary.myapplication.HelperInterfaces.IOnBackPressed;
 import com.blankdictionary.myapplication.R;
+import com.blankdictionary.myapplication.SetAdapterThread;
 import com.blankdictionary.myapplication.Translation;
 
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLA
 import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
 import static com.blankdictionary.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.RESULT_FRAGMENT;
+import static com.blankdictionary.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.blankdictionary.myapplication.Constants.System.APP_PREFERENCES;
@@ -55,8 +58,10 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     ArrayList<String> translationHolder = new ArrayList<>();
     IFragmentCommunicator fragmentCommunicator;
     myTranslationSpinnerAdapter<String> adapter;
+    Context mContext;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
+    RecyclerView.Adapter mAdapter;
+    Spinner spinner;
     private RecyclerView.LayoutManager layoutManager;
     private SharedPreferences pref;
     private View.OnClickListener listener = new View.OnClickListener() {
@@ -87,6 +92,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         super.onAttach(context);
         //initialize to return args back to activity/start new fragment
         fragmentCommunicator = (IFragmentCommunicator) context;
+        mContext = context;
     }
 
 
@@ -162,13 +168,18 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
         searchView.setIconifiedByDefault(false);
         searchView.clearFocus();
-        String[] stringArray = translationSet();
-        Spinner spinner = getView().findViewById(R.id.adv_trans_spinner);
-        adapter = new myTranslationSpinnerAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, stringArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+
+        spinner = getView().findViewById(R.id.adv_trans_spinner);
+
+        final LinearLayout myLayout = view.findViewById(R.id.adv_search_linear_layout);
+
+        myLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("TEST", "Layout width : " + searchView.getWidth());
+                refreshDropdown(myLayout.getWidth());
+            }
+        });
     }
 
 
@@ -212,6 +223,19 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
 
         }
         return tranSet;
+    }
+
+    private void refreshDropdown(int myLayoutWidth){
+        String[] translationTypesArray = translationSet();
+        adapter = new myTranslationSpinnerAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, translationTypesArray, myLayoutWidth);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
+        int leftPadding = -1 * searchView.getWidth();
+        spinner.setPadding(leftPadding, 0, spinner.getPaddingRight(), 0);
+
     }
 
     private String getQueryKey(ResultWrapper resultWrapper, int position) {

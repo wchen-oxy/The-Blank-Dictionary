@@ -5,11 +5,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.blankdictionary.myapplication.Adapters.myTranslationSpinnerAdapter;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.blankdictionary.myapplication.R;
+import com.blankdictionary.myapplication.SetAdapterThread;
 import com.blankdictionary.myapplication.Translation;
 
 import java.io.File;
@@ -32,6 +35,7 @@ import static com.blankdictionary.myapplication.Constants.DictionaryData.QUERY;
 import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
 import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
 import static com.blankdictionary.myapplication.Constants.DictionaryTitles.returnTitle;
+import static com.blankdictionary.myapplication.Constants.Fragment.HOME_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.System.APP_NAME;
@@ -79,17 +83,20 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
+
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mainSearchBar = view.findViewById(R.id.searchView);
-        spinner = getView().findViewById(R.id.home_trans_spinner);
+        spinner = view.findViewById(R.id.home_trans_spinner);
+
 
 
         if (mDictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) != null) {
-            TextView textView = getView().findViewById(R.id.mainTitle);
+            TextView textView = view.findViewById(R.id.mainTitle);
             textView.setText(returnTitle(pref.getString(CURRENTLY_SELECTED_DICTIONARY, "")));
             //include this to prevent the search bar from opening keyboard
             mainSearchBar.setOnClickListener(new View.OnClickListener() {
@@ -117,13 +124,20 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 }
             });
 
+            final LinearLayout myLayout = (LinearLayout) view.findViewById(R.id.outer_search_linear_layout);
 
-            String[] translationTypesArray = Translation.getSet(mContext);
-            translationSpinnerAdapter = new myTranslationSpinnerAdapter<>(getActivity(),
-                    android.R.layout.simple_spinner_dropdown_item, translationTypesArray);
-            translationSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(translationSpinnerAdapter);
-            spinner.setOnItemSelectedListener(this);
+
+            myLayout.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    Log.i("TEST", "Screen width : " +  view.getWidth());
+                    Log.i("TEST", "Layout width : " + myLayout.getWidth());
+                    refreshDropdown(myLayout.getWidth());
+
+
+                }
+            });
 
         } else {
             mainSearchBar.setVisibility(View.GONE);
@@ -157,6 +171,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         mainSearchBar.setQuery("", false);
         mainSearchBar.setFocusable(true);
         mainSearchBar.clearFocus();
+        System.out.println("GET VIEW " + getView().findViewById(R.id.outer_search_linear_layout).getLayoutParams().width);
         super.onResume();
     }
 
@@ -165,6 +180,22 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         args.putInt(TRANSLATION_TYPE, pos);
         args.putString(TRANSLATION_STRING, parent.getItemAtPosition(pos).toString());
         translationSpinnerAdapter.itemSelect(pos);
+
+    }
+
+    private void refreshDropdown(int myLayoutWidth){
+        String[] translationTypesArray = Translation.getSet(mContext);
+        translationSpinnerAdapter = new myTranslationSpinnerAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, translationTypesArray, myLayoutWidth);
+        translationSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(translationSpinnerAdapter);
+        spinner.setOnItemSelectedListener(this);
+        int leftPadding = -1 * mainSearchBar.getWidth();
+        spinner.setPadding(leftPadding, 0, spinner.getPaddingRight(), 0);
+
+
+//        translationSpinnerAdapter.notifyDataSetChanged();
+
     }
 
     @Override

@@ -41,12 +41,15 @@
     </LinearLayout>
 
     <Spinner
+        app:layout_constraintBottom_toBottomOf="@+id/adv_search_linear_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/adv_trans_spinner"
         android:layout_width="wrap_content"
         android:layout_height="@+id/adv_search_linear_layout"
-        app:layout_constraintBottom_toBottomOf="@+id/adv_search_linear_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></Spinner>
+        android:spinnerMode="dropdown"
+        android:dropDownVerticalOffset="58dp"
+        ></Spinner>
 
     <FrameLayout
         android:layout_width="0dp"
