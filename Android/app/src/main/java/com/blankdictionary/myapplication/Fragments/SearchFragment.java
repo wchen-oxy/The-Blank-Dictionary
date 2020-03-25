@@ -28,7 +28,6 @@ import com.blankdictionary.myapplication.Dictionaries.ResultWrapper;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.blankdictionary.myapplication.HelperInterfaces.IOnBackPressed;
 import com.blankdictionary.myapplication.R;
-import com.blankdictionary.myapplication.SetAdapterThread;
 import com.blankdictionary.myapplication.Translation;
 
 import java.util.ArrayList;
