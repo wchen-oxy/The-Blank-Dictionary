@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,17 +26,17 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.blankdictionary.myapplication.Adapters.myTranslationSpinnerAdapter;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
+import com.blankdictionary.myapplication.MainActivity;
 import com.blankdictionary.myapplication.R;
-import com.blankdictionary.myapplication.SetAdapterThread;
 import com.blankdictionary.myapplication.Translation;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 import static com.blankdictionary.myapplication.Constants.DictionaryData.QUERY;
 import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
 import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
 import static com.blankdictionary.myapplication.Constants.DictionaryTitles.returnTitle;
-import static com.blankdictionary.myapplication.Constants.Fragment.HOME_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.System.APP_NAME;
@@ -92,6 +93,27 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
         mainSearchBar = view.findViewById(R.id.searchView);
         spinner = view.findViewById(R.id.home_trans_spinner);
+        try {
+
+            Field popup = Spinner.class.getDeclaredField("mPopup");
+            popup.setAccessible(true);
+
+            // Get private mPopup member variable and try cast to ListPopupWindow
+            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner);
+
+            android.util.TypedValue value = new android.util.TypedValue();
+            boolean b = mContext.getTheme().resolveAttribute(android.R.attr.listPreferredItemHeight, value, true);
+            String s = TypedValue.coerceToString(value.type, value.data);
+            android.util.DisplayMetrics metrics = new android.util.DisplayMetrics();
+            ((MainActivity) mContext).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            float ret = value.getDimension(metrics);
+
+            // Set popupWindow height to 500px
+            popupWindow.setHeight((int) ret*3);
+        }
+        catch (NoSuchFieldException | IllegalAccessException e) {
+            Log.d("ERROR", "getting default style attribute");
+        }
 
 
 
