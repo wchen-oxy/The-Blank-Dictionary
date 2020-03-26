@@ -18,13 +18,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.LayoutManager;
+
 
 import com.blankdictionary.myapplication.Adapters.MyQueryResultAdapter;
 import com.blankdictionary.myapplication.Adapters.myTranslationSpinnerAdapter;
 import com.blankdictionary.myapplication.DatabaseQuery;
 import com.blankdictionary.myapplication.Dictionaries.Bhutia.BhutiaWord;
 import com.blankdictionary.myapplication.Dictionaries.English.EnglishWord;
-import com.blankdictionary.myapplication.Dictionaries.Result;
 import com.blankdictionary.myapplication.Dictionaries.ResultWrapper;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.blankdictionary.myapplication.HelperInterfaces.IOnBackPressed;
@@ -49,20 +50,18 @@ import static com.blankdictionary.myapplication.Constants.System.APP_PREFERENCES
 import static com.blankdictionary.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 
 public class SearchFragment extends Fragment implements AdapterView.OnItemSelectedListener, IOnBackPressed {
-    SearchView searchView;
-    Bundle args;
-    ResultWrapper resultWrapper;
-    String currentTranslationString;
+    private Bundle args;
+    private ResultWrapper resultWrapper;
     int selectedTranslationNumber;
-    boolean initial = true;
-    ArrayList<String> translationHolder = new ArrayList<>();
-    IFragmentCommunicator fragmentCommunicator;
-    myTranslationSpinnerAdapter<String> adapter;
-    Context mContext;
-    private RecyclerView recyclerView;
-    RecyclerView.Adapter mAdapter;
-    Spinner spinner;
-    private RecyclerView.LayoutManager layoutManager;
+    boolean initialLaunch = true;
+    private ArrayList<String> translationHolder = new ArrayList<>();
+    private IFragmentCommunicator fragmentCommunicator;
+    private myTranslationSpinnerAdapter<String> translationTypeAdapter;
+    private Context mContext;
+    private RecyclerView.Adapter mAdapter;
+    private Spinner translationTypeSpinner;
+    private SearchView mainSearchView;
+
     private SharedPreferences pref;
     private View.OnClickListener listener = new View.OnClickListener() {
 
@@ -71,9 +70,12 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             Bundle args = new Bundle();
             args.putString(NEW_FRAGMENT, RESULT_FRAGMENT);
             int position = ((RecyclerView.ViewHolder) item.getTag()).getAdapterPosition();
-            args.putString(TRANSLATION_STRING, currentTranslationString);
-            args.putString(QUERY_ID, getQueryKey(resultWrapper, position));
-            Log.d(TRANSLATION_TYPE, String.valueOf(selectedTranslationNumber));
+            String queryKey = getQueryKey(resultWrapper, position);
+            args.putString(QUERY_ID, queryKey);
+//            MyQueryResultAdapter.MyViewHolder rv = (MyQueryResultAdapter.MyViewHolder) item.getTag();
+//            args.putString(TRANSLATION_STRING,  rv.textView.getText().toString());
+//            Log.d("cur ", rv.textView.getText().toString());
+//            mainSearchView.setQuery(TRANSLATION_STRING, false);
             fragmentCommunicator.bundPass(args, false);
 
         }
@@ -90,7 +92,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        //initialize to return args back to activity/start new fragment
+        //initialLaunchize to return args back to activity/start new fragment
         fragmentCommunicator = (IFragmentCommunicator) context;
         mContext = context;
     }
@@ -122,10 +124,10 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         String[] translaltionTypesArray = Translation.getSet(context);
         if (!translationHolder.isEmpty()) translationHolder.clear();
         translationHolder.add(translaltionTypesArray[args.getInt(TRANSLATION_TYPE)]);
-        recyclerView = rootView.findViewById(R.id.my_recycler_view);
+        RecyclerView recyclerView = rootView.findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(context);
+        LayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new MyQueryResultAdapter(resultWrapper, translationHolder, listener, pref.getString(CURRENTLY_SELECTED_DICTIONARY, null));
         recyclerView.setAdapter(mAdapter);
@@ -138,13 +140,13 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         //pass info to activity in case user switches out by bottom nav
         fragmentCommunicator.bundPass(args, true);
         //You need to inflate the Fragment's view and call findViewById() on the View it returns.
-        searchView = view.findViewById(R.id.searchAdvView);
+        mainSearchView = view.findViewById(R.id.searchAdvView);
         //Any query text is cleared when iconified. So setIconified to false.
-        searchView.setQuery(args.getString(QUERY), true);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        mainSearchView.setQuery(args.getString(QUERY), true);
+        mainSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                searchView.clearFocus();
+                mainSearchView.clearFocus();
                 return false;
             }
 
@@ -166,17 +168,17 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             }
         });
 
-        searchView.setIconifiedByDefault(false);
-        searchView.clearFocus();
+        mainSearchView.setIconifiedByDefault(false);
+        mainSearchView.clearFocus();
 
-        spinner = getView().findViewById(R.id.adv_trans_spinner);
+        translationTypeSpinner = getView().findViewById(R.id.adv_trans_spinner);
         try {
 
             Field popup = Spinner.class.getDeclaredField("mPopup");
             popup.setAccessible(true);
 
             // Get private mPopup member variable and try cast to ListPopupWindow
-            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner);
+            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(translationTypeSpinner);
 
             android.util.TypedValue value = new android.util.TypedValue();
             boolean b = mContext.getTheme().resolveAttribute(android.R.attr.listPreferredItemHeight, value, true);
@@ -186,9 +188,8 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             float ret = value.getDimension(metrics);
 
             // Set popupWindow height to 500px
-            popupWindow.setHeight((int) ret*3);
-        }
-        catch (NoSuchFieldException | IllegalAccessException e) {
+            popupWindow.setHeight((int) ret * 3);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.d("ERROR", "getting default style attribute");
         }
 
@@ -197,7 +198,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         myLayout.post(new Runnable() {
             @Override
             public void run() {
-                Log.i("TEST", "Layout width : " + searchView.getWidth());
+                Log.i("TEST", "Layout width : " + mainSearchView.getWidth());
                 refreshDropdown(myLayout.getWidth());
             }
         });
@@ -212,50 +213,47 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     //item selected for avail. translations
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        if (initial) {
-            //initial selection
-            System.out.println("Initial: " + parent.getItemAtPosition(pos));
-            adapter.itemSelect(selectedTranslationNumber);
-            initial = false;
+        if (initialLaunch) {
+            //initialLaunch selection
+            translationTypeAdapter.itemSelect(selectedTranslationNumber);
+            initialLaunch = false;
         } else {
-            System.out.println("Current item is:  " + parent.getItemAtPosition(pos));
-            adapter.itemSelect(pos);
-            args.putInt(TRANSLATION_TYPE, pos);
-            args.putString(TRANSLATION_STRING, parent.getItemAtPosition(pos).toString());
+            translationTypeAdapter.itemSelect(pos);
+//            args.putInt(TRANSLATION_TYPE, pos);
+//            args.putString(TRANSLATION_STRING, parent.getItemAtPosition(pos).toString());
+
             resultWrapper.getList().getResult().clear();
             refreshResult();
-
-
         }
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-    private String[] translationSet() {
-        String[] tranSet = null;
-        switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
-            case (BHUTIA):
-                tranSet = getResources().getStringArray(R.array.bhutia_array);
-                break;
-            case (ENGLISH):
-                tranSet = getResources().getStringArray(R.array.english_array);
-                break;
+//    private String[] translationSet() {
+//        String[] tranSet = null;
+//        switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
+//            case (BHUTIA):
+//                tranSet = getResources().getStringArray(R.array.bhutia_array);
+//                break;
+//            case (ENGLISH):
+//                tranSet = getResources().getStringArray(R.array.english_array);
+//                break;
+//
+//        }
+//        return tranSet;
+//    }
 
-        }
-        return tranSet;
-    }
-
-    private void refreshDropdown(int myLayoutWidth){
-        String[] translationTypesArray = translationSet();
-        adapter = new myTranslationSpinnerAdapter<>(getActivity(),
+    private void refreshDropdown(int myLayoutWidth) {
+        String[] translationTypesArray = Translation.getSet(mContext);
+        translationTypeAdapter = new myTranslationSpinnerAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, translationTypesArray, myLayoutWidth);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        translationTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        translationTypeSpinner.setAdapter(translationTypeAdapter);
+        translationTypeSpinner.setOnItemSelectedListener(this);
 
-        int leftPadding = -1 * searchView.getWidth();
-        spinner.setPadding(leftPadding, 0, spinner.getPaddingRight(), 0);
+        int leftPadding = -1 * mainSearchView.getWidth();
+        translationTypeSpinner.setPadding(leftPadding, 0, translationTypeSpinner.getPaddingRight(), 0);
 
     }
 
@@ -282,7 +280,6 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             //add back into existing ResultWrapper because the adapter needs the original reference to the ResultWrapper
             if (!(args.getString(QUERY).isEmpty())) {
                 List refreshedList = returnList();
-
             }
 
         } catch (ExecutionException e) {
@@ -291,15 +288,18 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             e.printStackTrace();
         }
         translationHolder.clear();
-        translationHolder.add(currentTranslationString);
+//        System.out.println("CUR TRANS STRING " + currentTranslationString );
+//        translationHolder.add(currentTranslationString);
         mAdapter.notifyDataSetChanged();
     }
 
 
     @Override
     public boolean clearText() {
-        if (!searchView.getQuery().toString().isEmpty()) {
-            searchView.setQuery("", true);
+        if (!mainSearchView.getQuery().toString().isEmpty()) {
+            mainSearchView.setQuery("", true);
+            mainSearchView.setIconified(true);
+
             return true;
         }
         return false;

@@ -28,7 +28,7 @@
         <!--</android.support.v7.widget.ActionMenuView>-->
 
         <SearchView
-            android:id="@+id/searchAdvView"
+            android:id="@+id/resultSearchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"

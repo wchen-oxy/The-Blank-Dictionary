@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ba375c"
-    android:clickable="true"
-    android:focusable="true"
+
     >
 
     <View
@@ -40,7 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:focusable="false" />
+            />
 
         <RelativeLayout
             android:layout_width="50dp"

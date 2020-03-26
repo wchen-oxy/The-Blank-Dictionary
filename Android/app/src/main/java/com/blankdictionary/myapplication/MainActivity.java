@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     public Boolean isAdvSearch = false;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
-    BottomNavigationView navViewBack;
+    BottomNavigationView bottomNavigationMenu;
     myServerStatusReciever myServerStatusReciever;
     LocalBroadcastManager localBroadcastManager;
     Bundle args;
@@ -150,7 +150,11 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container);
         //if it is an instance, and if the instance returns true, do nothing
-        if (fragment instanceof IOnBackPressed && ((IOnBackPressed) fragment).clearText()) return;
+        if (fragment instanceof IOnBackPressed && ((IOnBackPressed) fragment).clearText()) {
+            System.out.println("RETURNEd");
+            return;
+        }
+        System.out.println("OTHER RETURN");
         //otherwise do something
         super.onBackPressed();
     }
@@ -162,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         setContentView(R.layout.partial_main_frame);
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navViewBack = navView;
+        bottomNavigationMenu = navView;
         fragmentManager = getSupportFragmentManager();
         Bundle args = new Bundle();
         args.putString(NEW_FRAGMENT, HOME_FRAGMENT);

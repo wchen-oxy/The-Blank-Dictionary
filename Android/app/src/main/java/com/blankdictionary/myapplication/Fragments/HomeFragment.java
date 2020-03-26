@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -48,7 +47,6 @@ import static com.blankdictionary.myapplication.Constants.Toast.NO_DICT_SELECTED
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     FragmentManager fragmentManager;
-    FragmentTransaction searchTransaction;
     SearchView mainSearchBar;
     IFragmentCommunicator fragmentCommunicator;
     Bundle args;
@@ -84,7 +82,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
-
     }
 
     @Override
@@ -93,29 +90,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
         mainSearchBar = view.findViewById(R.id.searchView);
         spinner = view.findViewById(R.id.home_trans_spinner);
-        try {
-
-            Field popup = Spinner.class.getDeclaredField("mPopup");
-            popup.setAccessible(true);
-
-            // Get private mPopup member variable and try cast to ListPopupWindow
-            android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner);
-
-            android.util.TypedValue value = new android.util.TypedValue();
-            boolean b = mContext.getTheme().resolveAttribute(android.R.attr.listPreferredItemHeight, value, true);
-            String s = TypedValue.coerceToString(value.type, value.data);
-            android.util.DisplayMetrics metrics = new android.util.DisplayMetrics();
-            ((MainActivity) mContext).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            float ret = value.getDimension(metrics);
-
-            // Set popupWindow height to 500px
-            popupWindow.setHeight((int) ret*3);
-        }
-        catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.d("ERROR", "getting default style attribute");
-        }
-
-
 
         if (mDictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) != null) {
             TextView textView = view.findViewById(R.id.mainTitle);
@@ -146,14 +120,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 }
             });
 
-            final LinearLayout myLayout = (LinearLayout) view.findViewById(R.id.outer_search_linear_layout);
+            final LinearLayout myLayout = view.findViewById(R.id.outer_search_linear_layout);
 
 
             myLayout.post(new Runnable() {
                 @Override
                 public void run() {
 
-                    Log.i("TEST", "Screen width : " +  view.getWidth());
+                    Log.i("TEST", "Screen width : " + view.getWidth());
                     Log.i("TEST", "Layout width : " + myLayout.getWidth());
                     refreshDropdown(myLayout.getWidth());
 
@@ -190,11 +164,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     @Override
     public void onResume() {
-        mainSearchBar.setQuery("", false);
-        mainSearchBar.setFocusable(true);
-        mainSearchBar.clearFocus();
-        System.out.println("GET VIEW " + getView().findViewById(R.id.outer_search_linear_layout).getLayoutParams().width);
         super.onResume();
+
+        mainSearchBar.setQuery("", false);
+        mainSearchBar.setIconified(true);
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,
@@ -205,7 +178,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     }
 
-    private void refreshDropdown(int myLayoutWidth){
+    private void refreshDropdown(int myLayoutWidth) {
         String[] translationTypesArray = Translation.getSet(mContext);
         translationSpinnerAdapter = new myTranslationSpinnerAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, translationTypesArray, myLayoutWidth);
@@ -215,9 +188,29 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         int leftPadding = -1 * mainSearchBar.getWidth();
         spinner.setPadding(leftPadding, 0, spinner.getPaddingRight(), 0);
 
+        if (translationTypesArray.length > 3) {
+            try {
 
-//        translationSpinnerAdapter.notifyDataSetChanged();
+                Field popup = Spinner.class.getDeclaredField("mPopup");
+                popup.setAccessible(true);
 
+                // Get private mPopup member variable and try cast to ListPopupWindow
+                android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner);
+
+                android.util.TypedValue value = new android.util.TypedValue();
+                boolean b = mContext.getTheme().resolveAttribute(android.R.attr.listPreferredItemHeight, value, true);
+                String s = TypedValue.coerceToString(value.type, value.data);
+                android.util.DisplayMetrics metrics = new android.util.DisplayMetrics();
+                ((MainActivity) mContext).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                float ret = value.getDimension(metrics);
+
+                // Set popupWindow height to 500px
+                popupWindow.setHeight((int) ret * 3);
+
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                Log.d("ERROR", "getting default style attribute");
+            }
+        }
     }
 
     @Override

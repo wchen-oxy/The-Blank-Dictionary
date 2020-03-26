@@ -8,8 +8,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -19,6 +22,8 @@ import com.blankdictionary.myapplication.Dictionaries.English.EnglishLayout;
 import com.blankdictionary.myapplication.HelperInterfaces.ILayoutSetter;
 import com.blankdictionary.myapplication.R;
 
+import static com.blankdictionary.myapplication.Constants.DictionaryData.QUERY_ID;
+import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.blankdictionary.myapplication.Constants.System.APP_PREFERENCES;
@@ -27,6 +32,7 @@ import static com.blankdictionary.myapplication.Constants.System.CURRENTLY_SELEC
 public class ResultFragment extends Fragment {
 
     private String curDict;
+    private String currentQuery;
     private Bundle args;
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
@@ -74,6 +80,7 @@ public class ResultFragment extends Fragment {
         args = getArguments();
         SharedPreferences pref = getContext().getSharedPreferences(APP_PREFERENCES, 0);
         curDict = pref.getString(CURRENTLY_SELECTED_DICTIONARY, null);
+        currentQuery = args.getString(TRANSLATION_STRING, "");
 
     }
 
@@ -93,6 +100,7 @@ public class ResultFragment extends Fragment {
         spinner.setOnTouchListener(touchListener);
         spinner.setAdapter(dumbSpinnerAdapter);
 
+
         //setting results
         ScrollView dictInfoContainer = rootView.findViewById(R.id.dict_info_container);
 
@@ -106,8 +114,8 @@ public class ResultFragment extends Fragment {
                 break;
 
         }
-        dictInfoContainer.addView(layoutSetter.getDictionaryLayout().returnView());
 
+        dictInfoContainer.addView(layoutSetter.getDictionaryLayout().returnView());
         return rootView;
 
     }
