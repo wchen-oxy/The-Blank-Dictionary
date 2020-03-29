@@ -72,27 +72,27 @@ public class BhutiaLayout implements ILayoutSetter {
         switch (tranType[selectedTranslationId]) {
             case ("English to Bhutia (Formal)"):
                 title.setText(bhutiaWord.bhut_rom_formal);
-                subTitle1.setText(context.getString( R.string.bhutia_eng_trans) + bhutiaWord.eng_trans);
-                subTitle2.setText(context.getString( R.string.bhutia_bhutia_trans) + bhutiaWord.bhut_rom_informal);
-                subTitle3.setText(context.getString( R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
-                subTitle4.setText(context.getString( R.string.bhutia_bhutiascript_inf_trans )+ bhutiaWord.bhut_script_informal);
+                subTitle1.setText(context.getString(R.string.bhutia_eng_trans) + bhutiaWord.eng_trans);
+                subTitle2.setText(context.getString(R.string.bhutia_bhutia_trans) + bhutiaWord.bhut_rom_informal);
+                subTitle3.setText(context.getString(R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
+                subTitle4.setText(context.getString(R.string.bhutia_bhutiascript_inf_trans) + bhutiaWord.bhut_script_informal);
                 break;
             case ("English to Bhutia (Informal)"):
                 title.setText(bhutiaWord.bhut_rom_informal);
-                subTitle1.setText(context.getString( R.string.bhutia_eng_trans ) + bhutiaWord.eng_trans);
-                subTitle2.setText(context.getString( R.string.bhutia_bhutia_form_trans )+ bhutiaWord.bhut_rom_formal);
-                subTitle3.setText(context.getString( R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
-                subTitle4.setText(context.getString( R.string.bhutia_bhutiascript_inf_trans )+ bhutiaWord.bhut_script_informal);
+                subTitle1.setText(context.getString(R.string.bhutia_eng_trans) + bhutiaWord.eng_trans);
+                subTitle2.setText(context.getString(R.string.bhutia_bhutia_form_trans) + bhutiaWord.bhut_rom_formal);
+                subTitle3.setText(context.getString(R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
+                subTitle4.setText(context.getString(R.string.bhutia_bhutiascript_inf_trans) + bhutiaWord.bhut_script_informal);
                 break;
 
             //Everything to English
             default:
                 System.out.println("BHUT " + bhutiaWord.bhut_rom_formal);
                 title.setText(bhutiaWord.eng_trans);
-                subTitle1.setText(context.getString( R.string.bhutia_bhutia_form_trans) + bhutiaWord.bhut_rom_formal);
-                subTitle2.setText(context.getString( R.string.bhutia_bhutia_trans) + bhutiaWord.bhut_rom_informal);
-                subTitle3.setText(context.getString( R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
-                subTitle4.setText(context.getString( R.string.bhutia_bhutiascript_inf_trans) + bhutiaWord.bhut_script_informal);
+                subTitle1.setText(context.getString(R.string.bhutia_bhutia_form_trans) + bhutiaWord.bhut_rom_formal);
+                subTitle2.setText(context.getString(R.string.bhutia_bhutia_trans) + bhutiaWord.bhut_rom_informal);
+                subTitle3.setText(context.getString(R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
+                subTitle4.setText(context.getString(R.string.bhutia_bhutiascript_inf_trans) + bhutiaWord.bhut_script_informal);
 
         }
 

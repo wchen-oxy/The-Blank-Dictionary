@@ -67,8 +67,7 @@ public class ResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
+        
         View rootView = inflater.inflate(R.layout.fragment_result, container, false);
         //initialize return listener
         rootView.findViewById(R.id.final_result_frag).setOnClickListener(myListener);

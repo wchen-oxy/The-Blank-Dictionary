@@ -18,7 +18,6 @@ import java.lang.ref.WeakReference;
 import static com.blankdictionary.myapplication.Constants.DictionaryData.DATABASE;
 import static com.blankdictionary.myapplication.Constants.DictionaryData.QUERY;
 import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE_NUM_ID;
-import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE_STRING;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.blankdictionary.myapplication.Constants.System.APP_PREFERENCES;

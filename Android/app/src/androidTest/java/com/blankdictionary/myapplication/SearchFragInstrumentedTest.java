@@ -4,15 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,12 +17,9 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.pressKey;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasImeAction;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.BHUTIA;
@@ -48,6 +42,10 @@ public class SearchFragInstrumentedTest {
 
     private Intent launch = new Intent().setAction(Intent.ACTION_MAIN);
 
+    @AfterClass
+    public static void clearPref() {
+        InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE).edit().remove(CURRENTLY_SELECTED_DICTIONARY).commit();
+    }
 
     public String[] getHomeTransSpinner(String language) {
 
@@ -60,14 +58,6 @@ public class SearchFragInstrumentedTest {
         return null;
 
     }
-
-
-    @AfterClass
-    public static void clearPref() {
-        InstrumentationRegistry.getInstrumentation().getTargetContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE).edit().remove(CURRENTLY_SELECTED_DICTIONARY).commit();
-    }
-
-
 
     @Test
     public void checkTranslationSpinner() {

@@ -1,13 +1,15 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:top="9dp" android:bottom="9dp">
+    <item
+        android:bottom="9dp"
+        android:top="9dp">
         <shape android:shape="rectangle">
-            <solid android:color="#cccccc"/>
+            <solid android:color="#cccccc" />
         </shape>
     </item>
 
     <item android:left="3dp">
         <shape android:shape="rectangle">
-            <solid android:color="#fff"/>
+            <solid android:color="#fff" />
         </shape>
     </item>
 </layer-list>
