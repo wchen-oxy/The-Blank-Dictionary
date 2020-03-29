@@ -13,6 +13,7 @@ public class BhutiaTextSwitchboard {
                 break;
             default:
                 myViewHolder.textView.setText(bhutiaWord.eng_trans);
+                System.out.println("default");
                 break;
 
         }

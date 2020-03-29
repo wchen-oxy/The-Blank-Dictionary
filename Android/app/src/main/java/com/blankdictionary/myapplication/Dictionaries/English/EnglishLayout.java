@@ -18,7 +18,7 @@ import com.blankdictionary.myapplication.R;
 import java.util.ArrayList;
 
 import static com.blankdictionary.myapplication.Constants.DictionaryData.QUERY_ID;
-import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
+import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE_NUM_ID;
 
 public class EnglishLayout implements ILayoutSetter {
     private DictionaryLayoutHelper dictionaryLayout;
@@ -29,7 +29,7 @@ public class EnglishLayout implements ILayoutSetter {
     public EnglishLayout(Context context, LayoutInflater inflater, Bundle args) {
         //create your layout here.
         //get translation direction
-        this.selectedTranslationId = args.getInt(TRANSLATION_TYPE);
+        this.selectedTranslationId = args.getInt(TRANSLATION_TYPE_NUM_ID);
         //begin filling in text with args here
 
         //once created, set dictionary layout to resulting view

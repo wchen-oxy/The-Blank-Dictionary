@@ -18,7 +18,7 @@ import com.blankdictionary.myapplication.R;
 import java.util.ArrayList;
 
 import static com.blankdictionary.myapplication.Constants.DictionaryData.QUERY_ID;
-import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
+import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE_NUM_ID;
 
 //sets the layout for the results fragment
 public class BhutiaLayout implements ILayoutSetter {
@@ -30,7 +30,7 @@ public class BhutiaLayout implements ILayoutSetter {
     public BhutiaLayout(Context context, LayoutInflater inflater, Bundle args) {
         //create your layout here.
         //get translation direction
-        this.selectedTranslationId = args.getInt(TRANSLATION_TYPE);
+        this.selectedTranslationId = args.getInt(TRANSLATION_TYPE_NUM_ID);
         //begin filling in text with args here
 
         //once created, set dictionary layout to resulting view
@@ -72,25 +72,27 @@ public class BhutiaLayout implements ILayoutSetter {
         switch (tranType[selectedTranslationId]) {
             case ("English to Bhutia (Formal)"):
                 title.setText(bhutiaWord.bhut_rom_formal);
-                subTitle1.setText("English Translation: " + bhutiaWord.eng_trans);
-                subTitle2.setText("Bhutia (Informal): " + bhutiaWord.bhut_script_informal);
-                subTitle3.setText("Bhutia Script (Formal): " + bhutiaWord.bhut_script_formal);
-                subTitle4.setText("Bhutia Script (Informal): " + bhutiaWord.bhut_rom_informal);
+                subTitle1.setText(context.getString( R.string.bhutia_eng_trans) + bhutiaWord.eng_trans);
+                subTitle2.setText(context.getString( R.string.bhutia_bhutia_trans) + bhutiaWord.bhut_rom_informal);
+                subTitle3.setText(context.getString( R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
+                subTitle4.setText(context.getString( R.string.bhutia_bhutiascript_inf_trans )+ bhutiaWord.bhut_script_informal);
                 break;
             case ("English to Bhutia (Informal)"):
                 title.setText(bhutiaWord.bhut_rom_informal);
-                subTitle1.setText("English Translation: " + bhutiaWord.eng_trans);
-                subTitle2.setText("Bhutia (Formal): " + bhutiaWord.bhut_rom_formal);
-                subTitle3.setText("Bhutia Script (Formal): " + bhutiaWord.bhut_script_formal);
-                subTitle4.setText("Bhutia Script (Informal): " + bhutiaWord.bhut_rom_informal);
+                subTitle1.setText(context.getString( R.string.bhutia_eng_trans ) + bhutiaWord.eng_trans);
+                subTitle2.setText(context.getString( R.string.bhutia_bhutia_form_trans )+ bhutiaWord.bhut_rom_formal);
+                subTitle3.setText(context.getString( R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
+                subTitle4.setText(context.getString( R.string.bhutia_bhutiascript_inf_trans )+ bhutiaWord.bhut_script_informal);
                 break;
+
+            //Everything to English
             default:
-                Log.d("HIT HERE", "Defualt");
+                System.out.println("BHUT " + bhutiaWord.bhut_rom_formal);
                 title.setText(bhutiaWord.eng_trans);
-                subTitle1.setText("Bhutia (Formal): " + bhutiaWord.bhut_rom_formal);
-                subTitle2.setText("Bhutia (Informal): " + bhutiaWord.bhut_rom_informal);
-                subTitle3.setText("Bhutia Script (Formal): " + bhutiaWord.bhut_script_formal);
-                subTitle4.setText("Bhutia Script (Informal): " + bhutiaWord.bhut_rom_informal);
+                subTitle1.setText(context.getString( R.string.bhutia_bhutia_form_trans) + bhutiaWord.bhut_rom_formal);
+                subTitle2.setText(context.getString( R.string.bhutia_bhutia_trans) + bhutiaWord.bhut_rom_informal);
+                subTitle3.setText(context.getString( R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
+                subTitle4.setText(context.getString( R.string.bhutia_bhutiascript_inf_trans) + bhutiaWord.bhut_script_informal);
 
         }
 

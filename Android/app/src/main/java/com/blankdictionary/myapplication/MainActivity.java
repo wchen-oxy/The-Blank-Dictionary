@@ -151,10 +151,8 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container);
         //if it is an instance, and if the instance returns true, do nothing
         if (fragment instanceof IOnBackPressed && ((IOnBackPressed) fragment).clearText()) {
-            System.out.println("RETURNEd");
             return;
         }
-        System.out.println("OTHER RETURN");
         //otherwise do something
         super.onBackPressed();
     }

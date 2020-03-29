@@ -71,8 +71,7 @@ public final class Constants {
         public static final String DATABASE_UPDATED = "Database Updated";
         public static final String DOWNLOAD_ID = "Download Id";
         public static final String DOWNLOAD_TYPE = "Download Type";
-
-
+        public static final String DROPDOWN_ROW_HEIGHT = "Dropdown Row Height";
         public static final String BUTTON_FOCUSED_COLOR = "#e6e6e6";
         public static final String TRANSPARENT_COLOR = "#00000000";
         public static final String DISABLED_COLOR = "#ebe6e6";
@@ -103,8 +102,8 @@ public final class Constants {
         public static final String QUERY = "Query";
         public static final String QUERY_ID = "QueryId";
         //Note, the value for the Translation Type is an int value!
-        public static final String TRANSLATION_TYPE = "TranslationType";
-        public static final String TRANSLATION_STRING = "TranslationString";
+        public static final String TRANSLATION_TYPE_NUM_ID = "TranslationTypeNumID";
+        public static final String TRANSLATION_TYPE_STRING = "TranslationTypeString";
         public static final String DATABASE = "Database";
 
     }

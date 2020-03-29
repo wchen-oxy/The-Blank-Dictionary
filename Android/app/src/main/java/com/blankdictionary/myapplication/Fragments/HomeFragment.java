@@ -21,7 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.blankdictionary.myapplication.Adapters.myTranslationSpinnerAdapter;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
@@ -33,8 +32,8 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import static com.blankdictionary.myapplication.Constants.DictionaryData.QUERY;
-import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
-import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE;
+import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE_NUM_ID;
+import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE_STRING;
 import static com.blankdictionary.myapplication.Constants.DictionaryTitles.returnTitle;
 import static com.blankdictionary.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
@@ -42,6 +41,7 @@ import static com.blankdictionary.myapplication.Constants.System.APP_NAME;
 import static com.blankdictionary.myapplication.Constants.System.APP_PREFERENCES;
 import static com.blankdictionary.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 import static com.blankdictionary.myapplication.Constants.System.DISABLED_COLOR;
+import static com.blankdictionary.myapplication.Constants.System.DROPDOWN_ROW_HEIGHT;
 import static com.blankdictionary.myapplication.Constants.Toast.NO_DICT_INSTALLED_TOAST;
 import static com.blankdictionary.myapplication.Constants.Toast.NO_DICT_SELECTED_TOAST;
 
@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mainSearchBar = view.findViewById(R.id.searchView);
+        mainSearchBar = view.findViewById(R.id.home_search_view);
         spinner = view.findViewById(R.id.home_trans_spinner);
 
         if (mDictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) != null) {
@@ -106,8 +106,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
                 @Override
                 public boolean onQueryTextSubmit(String s) {
-                    if (args.getString(TRANSLATION_STRING) == null)
-                        args.putString(TRANSLATION_STRING, translationSpinnerAdapter.getItem(0));
+                    if (args.getInt(TRANSLATION_TYPE_NUM_ID, 0) == 0)
+                        args.putInt(TRANSLATION_TYPE_NUM_ID, 0);
                     args.putString(QUERY, s);
                     args.putString(NEW_FRAGMENT, SEARCH_FRAGMENT);
                     fragmentCommunicator.bundPass(args, false);
@@ -120,18 +120,48 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 }
             });
 
+            if (pref.getInt(DROPDOWN_ROW_HEIGHT, -1) == -1) {
+                try {
+
+                    Field popup = Spinner.class.getDeclaredField("mPopup");
+                    popup.setAccessible(true);
+
+                    // Get private mPopup member variable and try cast to ListPopupWindow
+                    android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner);
+
+                    android.util.TypedValue value = new android.util.TypedValue();
+                    boolean b = mContext.getTheme().resolveAttribute(android.R.attr.listPreferredItemHeight, value, true);
+                    String s = TypedValue.coerceToString(value.type, value.data);
+                    android.util.DisplayMetrics metrics = new android.util.DisplayMetrics();
+                    ((MainActivity) mContext).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                    float ret = value.getDimension(metrics);
+
+                    // Set popupWindow height to 500px
+                    int dropdownRowHeight = (int) ret * 3;
+                    popupWindow.setHeight(dropdownRowHeight);
+                    pref.edit().putInt(DROPDOWN_ROW_HEIGHT, dropdownRowHeight).apply();
+
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    Log.d("ERROR", "getting default style attribute");
+                }
+            }
+            else{
+                try {
+                Field popup = Spinner.class.getDeclaredField("mPopup");
+                popup.setAccessible(true);
+                // Get private mPopup member variable and try cast to ListPopupWindow
+                android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner);
+                popupWindow.setHeight(pref.getInt(DROPDOWN_ROW_HEIGHT, 300));
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    Log.d("ERROR", "getting default style attribute");
+                }
+            }
+
             final LinearLayout myLayout = view.findViewById(R.id.outer_search_linear_layout);
-
-
             myLayout.post(new Runnable() {
                 @Override
                 public void run() {
-
-                    Log.i("TEST", "Screen width : " + view.getWidth());
-                    Log.i("TEST", "Layout width : " + myLayout.getWidth());
                     refreshDropdown(myLayout.getWidth());
-
-
                 }
             });
 
@@ -172,45 +202,22 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        args.putInt(TRANSLATION_TYPE, pos);
-        args.putString(TRANSLATION_STRING, parent.getItemAtPosition(pos).toString());
-        translationSpinnerAdapter.itemSelect(pos);
+        args.putInt(TRANSLATION_TYPE_NUM_ID, pos);
+//        args.putString(TRANSLATION_TYPE_STRING, parent.getItemAtPosition(pos).toString());
+        translationSpinnerAdapter.notifyNewSelectedItem(pos);
 
     }
 
     private void refreshDropdown(int myLayoutWidth) {
         String[] translationTypesArray = Translation.getSet(mContext);
         translationSpinnerAdapter = new myTranslationSpinnerAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, translationTypesArray, myLayoutWidth);
+                android.R.layout.simple_spinner_dropdown_item, translationTypesArray, 0,  myLayoutWidth);
         translationSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(translationSpinnerAdapter);
         spinner.setOnItemSelectedListener(this);
         int leftPadding = -1 * mainSearchBar.getWidth();
         spinner.setPadding(leftPadding, 0, spinner.getPaddingRight(), 0);
 
-        if (translationTypesArray.length > 3) {
-            try {
-
-                Field popup = Spinner.class.getDeclaredField("mPopup");
-                popup.setAccessible(true);
-
-                // Get private mPopup member variable and try cast to ListPopupWindow
-                android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(spinner);
-
-                android.util.TypedValue value = new android.util.TypedValue();
-                boolean b = mContext.getTheme().resolveAttribute(android.R.attr.listPreferredItemHeight, value, true);
-                String s = TypedValue.coerceToString(value.type, value.data);
-                android.util.DisplayMetrics metrics = new android.util.DisplayMetrics();
-                ((MainActivity) mContext).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                float ret = value.getDimension(metrics);
-
-                // Set popupWindow height to 500px
-                popupWindow.setHeight((int) ret * 3);
-
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                Log.d("ERROR", "getting default style attribute");
-            }
-        }
     }
 
     @Override

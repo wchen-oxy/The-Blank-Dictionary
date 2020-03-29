@@ -1,18 +1,14 @@
 package com.blankdictionary.myapplication.Fragments;
 
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
-import android.widget.SearchView;
 import android.widget.Spinner;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -22,8 +18,6 @@ import com.blankdictionary.myapplication.Dictionaries.English.EnglishLayout;
 import com.blankdictionary.myapplication.HelperInterfaces.ILayoutSetter;
 import com.blankdictionary.myapplication.R;
 
-import static com.blankdictionary.myapplication.Constants.DictionaryData.QUERY_ID;
-import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_STRING;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.ENGLISH;
 import static com.blankdictionary.myapplication.Constants.System.APP_PREFERENCES;
@@ -32,7 +26,6 @@ import static com.blankdictionary.myapplication.Constants.System.CURRENTLY_SELEC
 public class ResultFragment extends Fragment {
 
     private String curDict;
-    private String currentQuery;
     private Bundle args;
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
@@ -54,19 +47,6 @@ public class ResultFragment extends Fragment {
     };
 
 
-    public ResultFragment() {
-        // Required empty public constructor
-    }
-
-    //    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment ResultFragment.
-//     */
-    // TODO: Rename and change types and number of parameters
     public static ResultFragment newInstance(Bundle args) {
         ResultFragment resultFragment = new ResultFragment();
         resultFragment.setArguments(args);
@@ -80,7 +60,7 @@ public class ResultFragment extends Fragment {
         args = getArguments();
         SharedPreferences pref = getContext().getSharedPreferences(APP_PREFERENCES, 0);
         curDict = pref.getString(CURRENTLY_SELECTED_DICTIONARY, null);
-        currentQuery = args.getString(TRANSLATION_STRING, "");
+
 
     }
 
@@ -114,7 +94,6 @@ public class ResultFragment extends Fragment {
                 break;
 
         }
-
         dictInfoContainer.addView(layoutSetter.getDictionaryLayout().returnView());
         return rootView;
 
@@ -125,20 +104,5 @@ public class ResultFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
 
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

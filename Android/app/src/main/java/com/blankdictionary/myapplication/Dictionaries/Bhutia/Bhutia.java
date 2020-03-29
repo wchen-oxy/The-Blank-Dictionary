@@ -25,33 +25,33 @@ public class Bhutia implements ResultWrapper {
 
         switch (currentTranslationString) {
             case ("English to Bhutia (Formal)"):
-                Log.d("English to Bhutia f", "Found");
+                Log.d("English to Bhutia (for)", "Found");
                 words = bhutiaDao.engTranSearch(query + "%");
                 break;
 
             case ("English to Bhutia (Informal)"):
-                Log.d("English to Bhutia i", "Found");
+                Log.d("English to Bhutia (inf)", "Found");
                 words = bhutiaDao.engTranSearch(query + "%");
                 break;
 
             case ("Bhutia to English (Formal)"):
-                Log.d("Bhutia to English f", "Found");
+                Log.d("Bhutia to English (for)", "Found");
                 words = bhutiaDao.bhutRomFormalSearch(query + "%");
                 break;
 
             case ("Bhutia to English (Informal)"):
-                Log.d("Bhutia to English i", "Found");
+                Log.d("Bhutia to English (inf)", "Found");
                 words = bhutiaDao.bhutRomInformalSearch(query + "%");
                 break;
 
 
             case ("Bhutia Script to English (Formal)"):
-                Log.d("Bhutia to English f", "Found");
+                Log.d("Bhu Script to English", "Found");
                 words = bhutiaDao.bhutScriptFormalSearch(query + "%");
                 break;
 
             case ("Bhutia Script to English (Informal)"):
-                Log.d("Bhutia to English i", "Found");
+                Log.d("Bhu Script to English", "Found");
                 words = bhutiaDao.bhutScriptInformalSearch(query + "%");
                 break;
 

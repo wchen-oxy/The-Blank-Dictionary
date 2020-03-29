@@ -12,13 +12,15 @@ public class myTranslationSpinnerAdapter<T> extends ArrayAdapter<String> {
     private int outerSearchLinearLayoutWidth;
 
     public myTranslationSpinnerAdapter(Context context, int textViewResourceId, String[] objects,
+                                       int intialSelectedItem,
                                        int outerSearchLinearLayoutWidth) {
         super(context, textViewResourceId, objects);
+        this.selectedItem = intialSelectedItem;
         this.outerSearchLinearLayoutWidth = outerSearchLinearLayoutWidth;
 
     }
 
-    public void itemSelect(int selectedItem) {
+    public void notifyNewSelectedItem(int selectedItem) {
         this.selectedItem = selectedItem;
     }
 

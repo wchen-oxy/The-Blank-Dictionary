@@ -53,4 +53,9 @@
         \n\n
         \t If something isn\'t working or if you have any other questions, free free to email me as well!
     </string>
+    <string name="bhutia_eng_trans">English Translation:</string>
+    <string name="bhutia_bhutia_trans">Bhutia (Informal):</string>
+    <string name="bhutia_bhutiascript_form_trans">Bhutia Script (Formal):</string>
+    <string name="bhutia_bhutiascript_inf_trans">Bhutia Script (Informal):</string>
+    <string name="bhutia_bhutia_form_trans">Bhutia (Formal):</string>
 </resources>

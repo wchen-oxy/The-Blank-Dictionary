@@ -27,6 +27,7 @@
 
         <SearchView
             android:id="@+id/searchAdvView"
+            android:imeOptions="actionNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -41,15 +42,15 @@
     </LinearLayout>
 
     <Spinner
-        app:layout_constraintBottom_toBottomOf="@+id/adv_search_linear_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/adv_trans_spinner"
         android:layout_width="wrap_content"
         android:layout_height="@+id/adv_search_linear_layout"
         android:spinnerMode="dropdown"
         android:dropDownVerticalOffset="58dp"
-        ></Spinner>
+        app:layout_constraintBottom_toBottomOf="@+id/adv_search_linear_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <FrameLayout
         android:layout_width="0dp"
