@@ -25,13 +25,11 @@ public class DatabaseClear extends AsyncTask<ArrayList<String>, Void, Boolean> {
     private final WeakReference<Context> weakContext;
     private SharedPreferences pref;
     private Editor editor;
-    private Context context;
 
-    public DatabaseClear(Context context) {
+    DatabaseClear(Context context) {
         this.weakContext = new WeakReference<>(context);
         pref = context.getSharedPreferences(APP_PREFERENCES, 0);
         editor = pref.edit();
-        this.context = context;
 
     }
 
@@ -57,6 +55,7 @@ public class DatabaseClear extends AsyncTask<ArrayList<String>, Void, Boolean> {
 
                     break;
                 default:
+                    return false;
 
             }
         }
@@ -64,8 +63,8 @@ public class DatabaseClear extends AsyncTask<ArrayList<String>, Void, Boolean> {
 
         Intent filesDeletedIntent = new Intent();
         filesDeletedIntent.setAction(DATABASE_CLEARED);
-        context.sendBroadcast(filesDeletedIntent);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(filesDeletedIntent);
+        weakContext.get().sendBroadcast(filesDeletedIntent);
+        LocalBroadcastManager.getInstance(weakContext.get()).sendBroadcast(filesDeletedIntent);
         return true;
     }
 

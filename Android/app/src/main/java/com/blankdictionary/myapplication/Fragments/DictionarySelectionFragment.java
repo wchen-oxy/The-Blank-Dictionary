@@ -37,18 +37,17 @@ import static com.blankdictionary.myapplication.Constants.Toast.DICTIONARY_DELET
 
 
 public class DictionarySelectionFragment extends Fragment {
-    public static boolean DOWNLOAD_IN_PROGRESS;
-    SharedPreferences pref;
-    IDelete iDelete;
-    Context mContext;
-    Boolean isCurrentlyEditing;
-    RecyclerView languagesRecyclerView;
-    View rootView;
-    BroadcastReceiver refreshListBroadcastReciever;
-    SettingsListsAdapter settingsListsAdapter;
-    ImageButton close;
-    ImageButton editDelete;
-    ArrayList<String> available;
+    private static boolean DOWNLOAD_IN_PROGRESS;
+    private SharedPreferences pref;
+    private IDelete iDelete;
+    private Context mContext;
+    private Boolean isCurrentlyEditing;
+    private RecyclerView languagesRecyclerView;
+    private BroadcastReceiver refreshListBroadcastReceiver;
+    private SettingsListsAdapter settingsListsAdapter;
+    private ImageButton close;
+    private ImageButton editDelete;
+    private ArrayList<String> available;
 
 
     public static DictionarySelectionFragment newInstance() {
@@ -68,7 +67,7 @@ public class DictionarySelectionFragment extends Fragment {
         iDelete = (IDelete) context;
         DOWNLOAD_IN_PROGRESS = false;
 
-        refreshListBroadcastReciever = new BroadcastReceiver() {
+        refreshListBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (isCurrentlyEditing) {
@@ -103,7 +102,7 @@ public class DictionarySelectionFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_dictionary_selection, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_dictionary_selection, container, false);
         languagesRecyclerView = rootView.findViewById(R.id.dict_pack_recyclerview);
         languagesRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
@@ -160,11 +159,11 @@ public class DictionarySelectionFragment extends Fragment {
         super.onResume();
         IntentFilter deleteFilter = new IntentFilter(DATABASE);
         deleteFilter.addAction(DATABASE_CLEARED);
-        mContext.registerReceiver(refreshListBroadcastReciever, deleteFilter);
+        mContext.registerReceiver(refreshListBroadcastReceiver, deleteFilter);
 
         IntentFilter refreshFilter = new IntentFilter(DATABASE);
         refreshFilter.addAction(DATABASE_UPDATED);
-        mContext.registerReceiver(refreshListBroadcastReciever, refreshFilter);
+        mContext.registerReceiver(refreshListBroadcastReceiver, refreshFilter);
 
         settingsListsAdapter.notifyDataSetChanged();
 
@@ -173,7 +172,7 @@ public class DictionarySelectionFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        mContext.unregisterReceiver(refreshListBroadcastReciever);
+        mContext.unregisterReceiver(refreshListBroadcastReceiver);
 
     }
 
@@ -188,5 +187,6 @@ public class DictionarySelectionFragment extends Fragment {
             if (pref.getBoolean(lang, false)) installedLanguages.add(lang);
         }
     }
+
 
 }

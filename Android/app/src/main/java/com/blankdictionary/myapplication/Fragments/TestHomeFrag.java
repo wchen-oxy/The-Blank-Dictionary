@@ -1,21 +1,22 @@
 package com.blankdictionary.myapplication.Fragments;
 import com.blankdictionary.myapplication.Adapters.myTranslationSpinnerAdapter;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
-import com.blankdictionary.myapplication.MainActivity;
+import com.blankdictionary.myapplication.HelperInterfaces.ITranslationDialogListener;
 import com.blankdictionary.myapplication.R;
 import com.blankdictionary.myapplication.Translation;
+import com.google.android.material.snackbar.Snackbar;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -26,8 +27,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import junit.framework.Test;
+
 import java.io.File;
-import java.lang.reflect.Field;
 
 import static com.blankdictionary.myapplication.Constants.DictionaryData.QUERY;
 import static com.blankdictionary.myapplication.Constants.DictionaryData.TRANSLATION_TYPE_NUM_ID;
@@ -43,25 +45,27 @@ import static com.blankdictionary.myapplication.Constants.Toast.NO_DICT_INSTALLE
 import static com.blankdictionary.myapplication.Constants.Toast.NO_DICT_SELECTED_TOAST;
 
 
-public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class TestHomeFrag extends Fragment implements ITranslationDialogListener {
     private SearchView mainSearchBar;
     private IFragmentCommunicator fragmentCommunicator;
+    private ITranslationDialogListener iTranslationDialog;
     private Bundle args;
     private myTranslationSpinnerAdapter<String> translationSpinnerAdapter;
-    private Spinner translationTypeSpinner;
+    private ImageButton translationButton;
     private Context context;
     private SharedPreferences pref;
     private boolean dictionaryInstalled = true;
 
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+    public static TestHomeFrag newInstance() {
+
+        return new TestHomeFrag();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        fragmentCommunicator = (IFragmentCommunicator) context;
         this.context = context;
+        fragmentCommunicator = (IFragmentCommunicator) context;
     }
 
     @Override
@@ -75,17 +79,17 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_test_home, container, false);
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mainSearchBar = view.findViewById(R.id.home_search_view);
-        translationTypeSpinner = view.findViewById(R.id.home_trans_spinner);
+        mainSearchBar = view.findViewById(R.id.test_home_search_view);
+        translationButton =  view.findViewById(R.id.test_trans_button);
 
         if (dictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) != null) {
-            TextView textView = view.findViewById(R.id.mainTitle);
+            TextView textView = view.findViewById(R.id.test_title);
             textView.setText(returnTitle(pref.getString(CURRENTLY_SELECTED_DICTIONARY, "")));
             //include this to prevent the search bar from opening keyboard
             mainSearchBar.setOnClickListener(new View.OnClickListener() {
@@ -113,67 +117,23 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 }
             });
 
-            System.out.println("Dropdown " + pref.getInt(DROPDOWN_ROW_HEIGHT, -1));
-            if (pref.getInt(DROPDOWN_ROW_HEIGHT, -1) == -1) {
-                try {
 
-                    Field popup = Spinner.class.getDeclaredField("mPopup");
-                    popup.setAccessible(true);
-
-                    // Get private mPopup member variable and try cast to ListPopupWindow
-                    android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(translationTypeSpinner);
-
-                    android.util.TypedValue value = new android.util.TypedValue();
-                    boolean b = context.getTheme().resolveAttribute(android.R.attr.listPreferredItemHeight, value, true);
-                    String s = TypedValue.coerceToString(value.type, value.data);
-                    android.util.DisplayMetrics metrics = new android.util.DisplayMetrics();
-                    ((MainActivity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                    float ret = value.getDimension(metrics);
-
-                    // Set popupWindow height to 500px
-                    int dropdownRowHeight = (int) ret * 3;
-                    popupWindow.setHeight(dropdownRowHeight);
-                    pref.edit().putInt(DROPDOWN_ROW_HEIGHT, dropdownRowHeight).apply();
-
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    Log.d("ERROR", "getting default style attribute");
-                }
-            } else {
-                System.out.println("ELSE");
-                try {
-                    Field popup = Spinner.class.getDeclaredField("mPopup");
-                    popup.setAccessible(true);
-
-                    // Get private mPopup member variable and try cast to ListPopupWindow
-                    android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(translationTypeSpinner);
-
-                    android.util.TypedValue value = new android.util.TypedValue();
-                    boolean b = context.getTheme().resolveAttribute(android.R.attr.listPreferredItemHeight, value, true);
-                    String s = TypedValue.coerceToString(value.type, value.data);
-                    android.util.DisplayMetrics metrics = new android.util.DisplayMetrics();
-                    ((MainActivity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                    float ret = value.getDimension(metrics);
-
-                    popupWindow.setHeight(pref.getInt(DROPDOWN_ROW_HEIGHT, 300));
-                    popupWindow.setHeight(100);
-
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    Log.d("ERROR", "getting default style attribute");
-                }
-            }
-
-            final LinearLayout myLayout = view.findViewById(R.id.outer_search_linear_layout);
-            myLayout.post(new Runnable() {
+            //TODO IMPLEMENT HERE
+            translationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void run() {
-                    refreshDropdown(myLayout.getWidth());
+                public void onClick(View view) {
+                    TranslationDialogFragment translationDialogFragment = new TranslationDialogFragment();
+                    translationDialogFragment.setTargetFragment(TestHomeFrag.this, 0);
+                    translationDialogFragment.show(getActivity().getSupportFragmentManager(), "Warning");
+//                    iTranslationDialog.showTranslations();
                 }
             });
 
+
         } else {
             mainSearchBar.setVisibility(View.GONE);
-            translationTypeSpinner.setVisibility(View.GONE);
-            LinearLayout outerLinearLayout = view.findViewById(R.id.outer_search_linear_layout);
+            translationButton.setVisibility(View.GONE);
+            LinearLayout outerLinearLayout = view.findViewById(R.id.test_outer_search_linear_layout);
             outerLinearLayout.setBackgroundColor(Color.parseColor(DISABLED_COLOR));
 
             if (!dictionaryInstalled) {
@@ -206,27 +166,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        args.putInt(TRANSLATION_TYPE_NUM_ID, pos);
-        translationSpinnerAdapter.notifyNewSelectedItem(pos);
 
-    }
-
-    private void refreshDropdown(int myLayoutWidth) {
-        String[] translationTypesArray = Translation.getSet(context);
-        translationSpinnerAdapter = new myTranslationSpinnerAdapter<>(context,
-                android.R.layout.simple_spinner_dropdown_item, translationTypesArray, 0, myLayoutWidth);
-        translationSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        translationTypeSpinner.setAdapter(translationSpinnerAdapter);
-        translationTypeSpinner.setOnItemSelectedListener(this);
-        int leftPadding = -1 * mainSearchBar.getWidth();
-        translationTypeSpinner.setPadding(leftPadding, 0, translationTypeSpinner.getPaddingRight(), 0);
 
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+    public void sendSelectedTranslation(int pos) {
+        System.out.println("Tran " + pos);
+//        args.putInt(TRANSLATION_TYPE_NUM_ID, pos);
     }
-
-
 }

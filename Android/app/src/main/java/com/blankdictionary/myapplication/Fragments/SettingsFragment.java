@@ -23,6 +23,7 @@ import com.blankdictionary.myapplication.DataDownload.DictionaryClientUsage;
 import com.blankdictionary.myapplication.DataDownload.HttpBadRequestException;
 import com.blankdictionary.myapplication.DialogFragments.FilePermissionDialogFragment;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
+import com.blankdictionary.myapplication.HelperInterfaces.IShowDialogWarning;
 import com.blankdictionary.myapplication.R;
 
 import java.io.File;
@@ -32,10 +33,11 @@ import static com.blankdictionary.myapplication.Constants.Fragment.DICTIONARY_SE
 import static com.blankdictionary.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.System.APP_NAME;
 
-public class SettingsFragment extends Fragment {
-    IFragmentCommunicator fragmentCommunicator;
-    Activity activity;
-    Context context;
+public class SettingsFragment extends Fragment{
+    private IFragmentCommunicator fragmentCommunicator;
+    private Activity activity;
+    private Context context;
+    private IShowDialogWarning iShowDialogWarning;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -44,8 +46,11 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
         fragmentCommunicator = (IFragmentCommunicator) context;
+        iShowDialogWarning = (IShowDialogWarning) context;
         activity = getActivity();
+
 
     }
 
@@ -61,7 +66,7 @@ public class SettingsFragment extends Fragment {
         currentDictionary.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                                 != PackageManager.PERMISSION_GRANTED) {
                             // Permission is not granted
                             if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
@@ -69,9 +74,10 @@ public class SettingsFragment extends Fragment {
                                 ActivityCompat.requestPermissions(activity,
                                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
                                         , 101);
+
                                 if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                        != PackageManager.PERMISSION_GRANTED)
-                                    new FilePermissionDialogFragment().showNow(getParentFragmentManager(), "dialog");
+                                        != PackageManager.PERMISSION_GRANTED) iShowDialogWarning.showWarning();
+
 
 
                                 // Show an explanation to the user *asynchronously* -- don't block
@@ -139,4 +145,5 @@ public class SettingsFragment extends Fragment {
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}
                 , 101);
     }
+
 }

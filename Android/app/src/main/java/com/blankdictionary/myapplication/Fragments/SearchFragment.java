@@ -55,8 +55,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
     private ArrayList<String> translationHolder = new ArrayList<>();
     private IFragmentCommunicator fragmentCommunicator;
     private myTranslationSpinnerAdapter<String> translationTypeAdapter;
-    private RecyclerView.Adapter mQueryResultAdapter;
-    private Spinner translationTypeSpinner;
+    private RecyclerView.Adapter queryResultAdapter;
     private SearchView mainSearchView;
     private int dropdownRowHeight;
     private SharedPreferences pref;
@@ -140,11 +139,11 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
         //container object
         translationHolder.add(translationTypesArray[selectedTranslationNumber]);
         //CREATE RESULT ADAPTER
-        mQueryResultAdapter = new MyQueryResultAdapter(resultWrapper, translationHolder, listener, pref.getString(CURRENTLY_SELECTED_DICTIONARY, ""));
-        recyclerView.setAdapter(mQueryResultAdapter);
+        queryResultAdapter = new MyQueryResultAdapter(resultWrapper, translationHolder, listener, pref.getString(CURRENTLY_SELECTED_DICTIONARY, ""));
+        recyclerView.setAdapter(queryResultAdapter);
 
         //You need to inflate the Fragment's view and call findViewById() on the View it returns.
-        translationTypeSpinner = view.findViewById(R.id.adv_trans_spinner);
+        Spinner translationTypeSpinner = view.findViewById(R.id.adv_trans_spinner);
 
         //Any query text is cleared when iconified. So setIconified to false.
         mainSearchView.setQuery(args.getString(QUERY), true);
@@ -164,7 +163,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
                 } else {
                     args.putString(QUERY, "");
                     resultWrapper.getList().getResult().clear();
-                    mQueryResultAdapter.notifyDataSetChanged();
+                    queryResultAdapter.notifyDataSetChanged();
                 }
                 fragmentCommunicator.bundPass(args, true);
                 return false;
@@ -181,7 +180,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             android.widget.ListPopupWindow popupWindow = (android.widget.ListPopupWindow) popup.get(translationTypeSpinner);
             // Set popupWindow height to 500px
             System.out.println("Row Height " + dropdownRowHeight);
-            popupWindow.setHeight(dropdownRowHeight);
+            popupWindow.setHeight(200);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.d("ERROR", "getting default style attribute");
         }
@@ -234,7 +233,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemSelect
             e.printStackTrace();
         }
         translationHolder.clear();
-        mQueryResultAdapter.notifyDataSetChanged();
+        queryResultAdapter.notifyDataSetChanged();
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

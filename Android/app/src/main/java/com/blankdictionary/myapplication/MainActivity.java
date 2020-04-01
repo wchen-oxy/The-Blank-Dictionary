@@ -24,15 +24,19 @@ import com.blankdictionary.myapplication.BroadcastRecievers.myServerStatusReciev
 import com.blankdictionary.myapplication.DataDownload.DictionaryClientUsage;
 import com.blankdictionary.myapplication.DataDownload.HttpBadRequestException;
 import com.blankdictionary.myapplication.DataDownload.NetworkCheck;
+import com.blankdictionary.myapplication.DialogFragments.FilePermissionDialogFragment;
 import com.blankdictionary.myapplication.Fragments.AboutFragment;
 import com.blankdictionary.myapplication.Fragments.DictionarySelectionFragment;
 import com.blankdictionary.myapplication.Fragments.HomeFragment;
 import com.blankdictionary.myapplication.Fragments.ResultFragment;
 import com.blankdictionary.myapplication.Fragments.SearchFragment;
 import com.blankdictionary.myapplication.Fragments.SettingsFragment;
+import com.blankdictionary.myapplication.Fragments.TestHomeFrag;
+import com.blankdictionary.myapplication.Fragments.TranslationDialogFragment;
 import com.blankdictionary.myapplication.HelperInterfaces.IDelete;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.blankdictionary.myapplication.HelperInterfaces.IOnBackPressed;
+import com.blankdictionary.myapplication.HelperInterfaces.IShowDialogWarning;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
@@ -45,6 +49,7 @@ import static com.blankdictionary.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.RESULT_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.SETTINGS_FRAGMENT;
+import static com.blankdictionary.myapplication.Constants.Fragment.TEST_HOME_FRAG;
 import static com.blankdictionary.myapplication.Constants.IntentFilters.DICTIONARY_LIST_DOWNLOADED;
 import static com.blankdictionary.myapplication.Constants.IntentFilters.SERVER_REACHED;
 import static com.blankdictionary.myapplication.Constants.Network.NO_INTERNET_ERROR;
@@ -52,9 +57,9 @@ import static com.blankdictionary.myapplication.Constants.System.APP_NAME;
 import static com.blankdictionary.myapplication.Constants.System.APP_PREFERENCES;
 import static com.blankdictionary.myapplication.Constants.System.CURRENTLY_SELECTED_DICTIONARY;
 
-public class MainActivity extends AppCompatActivity implements IFragmentCommunicator, IDelete {
+public class MainActivity extends AppCompatActivity implements IFragmentCommunicator, IDelete, IShowDialogWarning {
     final Context context = this;
-    public BroadcastReceiver myAvailableDictionaryReciever;
+    public BroadcastReceiver availableDictionaryReciever;
     public Boolean isAdvSearch = false;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -103,6 +108,12 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         }
     }
 
+    @Override
+    public void showWarning() {
+        new FilePermissionDialogFragment().showNow(fragmentManager, "dialog");
+    }
+
+
     private void fragController(Bundle args) {
         switch (args.getString(NEW_FRAGMENT)) {
             case HOME_FRAGMENT:
@@ -134,6 +145,12 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frag_container, aboutFragment).addToBackStack(ABOUT_FRAGMENT).commit();
                 break;
+            case TEST_HOME_FRAG:
+                TestHomeFrag testHomeFragment = TestHomeFrag.newInstance();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.frag_container, testHomeFragment, TEST_HOME_FRAG).commit();
+                break;
+
         }
     }
 
@@ -166,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         bottomNavigationMenu = navView;
         fragmentManager = getSupportFragmentManager();
         Bundle args = new Bundle();
-        args.putString(NEW_FRAGMENT, HOME_FRAGMENT);
+        args.putString(NEW_FRAGMENT, TEST_HOME_FRAG);
         fragController(args);
 
         //SECTION FOR GETTING AVAILABLE DICTIONARIES AHEAD OF TIME
@@ -181,8 +198,8 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         localBroadcastManager.registerReceiver(myServerStatusReciever, new IntentFilter(SERVER_REACHED));
 
-        myAvailableDictionaryReciever = new myAvailableDictionaryReciever();
-        localBroadcastManager.registerReceiver(myAvailableDictionaryReciever, new IntentFilter(DICTIONARY_LIST_DOWNLOADED));
+        availableDictionaryReciever = new myAvailableDictionaryReciever();
+        localBroadcastManager.registerReceiver(availableDictionaryReciever, new IntentFilter(DICTIONARY_LIST_DOWNLOADED));
 
         Handler mainHandler = new Handler(Looper.getMainLooper());
         Runnable myRunnable = new Runnable() {
@@ -202,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(myServerStatusReciever);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(myAvailableDictionaryReciever);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(availableDictionaryReciever);
         super.onDestroy();
 
     }

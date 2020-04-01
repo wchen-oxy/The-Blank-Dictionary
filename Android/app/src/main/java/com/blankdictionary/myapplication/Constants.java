@@ -52,6 +52,8 @@ public final class Constants {
         public static final String LANGUAGE_DOWNLOAD_FRAGMENT = "LangDownloadFragment";
         public static final String DICTIONARY_SELECTION_FRAGMENT = "DictionaryFragment";
         public static final String SETTINGS_FRAGMENT = "SettingsFragment";
+        public static final String DATABASE_QUERY = "Database Query";
+        public static final String TEST_HOME_FRAG = "Test Home Frag";
     }
 
     public static class IntentFilters {
@@ -118,6 +120,7 @@ public final class Constants {
         public static final String BAD_SERVER_CONNECTION_TOAST = "Can't Connect to server to download available dictionaries.";
         public static final String DOWNLOAD_DICTIONARY_PROMPT = "Please Download a Dictionary.";
         public static final String DOWNLOAD_PROMPT = "Please download the dictionary first!";
+        public static final String NO_MATCHING_DICTIONARY = "No matching dictionary.";
 
     }
 
