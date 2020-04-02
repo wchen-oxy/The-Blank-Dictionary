@@ -195,12 +195,12 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.language_text);
-            checkBox = itemView.findViewById(R.id.dict_checkbox);
-            downloadButton = itemView.findViewById(R.id.download_button);
-            selectedDictionaryImage = itemView.findViewById(R.id.installed_dictionary_imageview);
+            textView = itemView.findViewById(R.id.textview_hero_dictionary_title);
+            checkBox = itemView.findViewById(R.id.checkbox_dictionary);
+            downloadButton = itemView.findViewById(R.id.button_start_download);
+            selectedDictionaryImage = itemView.findViewById(R.id.imageview_installed_dictionary);
             dictRowLinearLayout = itemView.findViewById(R.id.dict_pack_row_linear_layout);
-            langNameLinearLayout = itemView.findViewById(R.id.dict_pack_language_title_linear_layout);
+            langNameLinearLayout = itemView.findViewById(R.id.linearlayout_dictionary_container);
 
             //enable transition in linear layout
 //            dictRowLinearLayout.getLayoutTransition()

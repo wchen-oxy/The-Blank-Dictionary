@@ -70,16 +70,13 @@ public class ResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         
         View rootView = inflater.inflate(R.layout.fragment_result, container, false);
-        //initialize return listener
-//        rootView.findViewById(R.id.fragment_result).setOnClickListener(myListener);
-//        //set spinner return listener
         rootView.findViewById(R.id.linearlayout_result_dummy).setOnTouchListener(touchListener);
         ImageButton button = rootView.findViewById(R.id.imagebutton_result_translations);
 
         button.setOnClickListener(myListener);
 
         //setting results
-        ScrollView dictInfoContainer = rootView.findViewById(R.id.dict_info_container);
+        ScrollView dictInfoContainer = rootView.findViewById(R.id.scrollview_dictionary_info);
 
         ILayoutSetter layoutSetter = null;
         switch (curDict) {

@@ -2,6 +2,7 @@ package com.blankdictionary.myapplication.Dictionaries.Bhutia;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,51 +49,50 @@ public class BhutiaLayout implements ILayoutSetter {
         TextView subTitle3 = view.findViewById(R.id.bhutia_sub_title_3);
         TextView subTitle4 = view.findViewById(R.id.bhutia_sub_title_4);
         TextView example = view.findViewById(R.id.bhutia_example);
-//
-//
-//        textViewArrayList.add(title);
-//        textViewArrayList.add(ipa);
-//        textViewArrayList.add(category);
-//        textViewArrayList.add(subTitle1);
-//        textViewArrayList.add(subTitle2);
-//        textViewArrayList.add(subTitle3);
-//        textViewArrayList.add(subTitle4);
-//        textViewArrayList.add(example);
 
-        //FIXME put on separate thread!
         AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").allowMainThreadQueries().enableMultiInstanceInvalidation().build();
         BhutiaWord bhutiaWord = db.getBhutiaDao().engTranSearch(args.getString(QUERY_ID)).get(0);
 
 
         Log.d("Translation num", String.valueOf(selectedTranslationId));
-        ipa.setText("Pronounciation: " + bhutiaWord.ipa);
-        category.setText("Category: " + bhutiaWord.category);
-        example.setText("Example: " + bhutiaWord.example);
+        String ipaContent = "<b>" + context.getString(R.string.desc_pronounciation) + "</b> " + bhutiaWord.ipa;
+        String categoryContent = "<b>" + context.getString(R.string.desc_category) + "</b> " + bhutiaWord.category;
+        String exampleContent = "<b>" + context.getString(R.string.desc_example) + "</b> " + bhutiaWord.example;
+
+        String english = "<b>" + context.getString(R.string.bhutia_eng_trans) + "</b> " + bhutiaWord.eng_trans;
+        String bhutiaFormal = "<b>" + context.getString(R.string.bhutia_bhutia_form_trans)+ "</b> "  + bhutiaWord.bhut_rom_formal;
+        String bhutiaInformal =   "<b>" + context.getString(R.string.bhutia_bhutia_inf_trans)+ "</b> "  + bhutiaWord.bhut_rom_informal;
+        String bhutiaScriptFormal =  "<b>" + context.getString(R.string.bhutia_bhutiascript_form_trans)+ "</b> " + bhutiaWord.bhut_script_formal;
+        String bhutiaScriptInformal =  "<b>" + context.getString(R.string.bhutia_bhutiascript_inf_trans)+ "</b> " + bhutiaWord.bhut_script_informal;
+
+        ipa.setText(Html.fromHtml(ipaContent));
+        category.setText(Html.fromHtml(categoryContent));
+        example.setText(Html.fromHtml(exampleContent));
 
         switch (tranType[selectedTranslationId]) {
             case ("English to Bhutia (Formal)"):
                 title.setText(bhutiaWord.bhut_rom_formal);
-                subTitle1.setText(context.getString(R.string.bhutia_eng_trans) + bhutiaWord.eng_trans);
-                subTitle2.setText(context.getString(R.string.bhutia_bhutia_trans) + bhutiaWord.bhut_rom_informal);
-                subTitle3.setText(context.getString(R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
-                subTitle4.setText(context.getString(R.string.bhutia_bhutiascript_inf_trans) + bhutiaWord.bhut_script_informal);
+                subTitle1.setText(Html.fromHtml(english));
+                subTitle2.setText(Html.fromHtml(bhutiaInformal));
+                subTitle3.setText(Html.fromHtml(bhutiaScriptFormal));
+                subTitle4.setText(Html.fromHtml(bhutiaScriptInformal));
                 break;
             case ("English to Bhutia (Informal)"):
                 title.setText(bhutiaWord.bhut_rom_informal);
-                subTitle1.setText(context.getString(R.string.bhutia_eng_trans) + bhutiaWord.eng_trans);
-                subTitle2.setText(context.getString(R.string.bhutia_bhutia_form_trans) + bhutiaWord.bhut_rom_formal);
-                subTitle3.setText(context.getString(R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
-                subTitle4.setText(context.getString(R.string.bhutia_bhutiascript_inf_trans) + bhutiaWord.bhut_script_informal);
+                subTitle1.setText(Html.fromHtml(english));
+                subTitle2.setText(Html.fromHtml(bhutiaFormal));
+                subTitle3.setText(Html.fromHtml(bhutiaScriptFormal));
+                subTitle4.setText(Html.fromHtml(bhutiaScriptInformal));
                 break;
 
             //Everything to English
             default:
                 System.out.println("BHUT " + bhutiaWord.bhut_rom_formal);
                 title.setText(bhutiaWord.eng_trans);
-                subTitle1.setText(context.getString(R.string.bhutia_bhutia_form_trans) + bhutiaWord.bhut_rom_formal);
-                subTitle2.setText(context.getString(R.string.bhutia_bhutia_trans) + bhutiaWord.bhut_rom_informal);
-                subTitle3.setText(context.getString(R.string.bhutia_bhutiascript_form_trans) + bhutiaWord.bhut_script_formal);
-                subTitle4.setText(context.getString(R.string.bhutia_bhutiascript_inf_trans) + bhutiaWord.bhut_script_informal);
+                subTitle1.setText(Html.fromHtml(bhutiaFormal));
+                subTitle2.setText(Html.fromHtml(bhutiaInformal));
+                subTitle3.setText(Html.fromHtml(bhutiaScriptFormal));
+                subTitle4.setText(Html.fromHtml(bhutiaScriptInformal));
 
         }
 

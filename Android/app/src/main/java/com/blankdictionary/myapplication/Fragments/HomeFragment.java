@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment implements ITranslationDialogListener
         translationButton =  view.findViewById(R.id.imagebutton_home_translations);
 
         if (dictionaryInstalled && pref.getString(CURRENTLY_SELECTED_DICTIONARY, null) != null) {
-            TextView textView = view.findViewById(R.id.textview_dictionary_title);
+            TextView textView = view.findViewById(R.id.textview_hero_dictionary_title);
             textView.setText(returnTitle(pref.getString(CURRENTLY_SELECTED_DICTIONARY, "")));
             //include this to prevent the search bar from opening keyboard
             mainSearchBar.setOnClickListener(new View.OnClickListener() {

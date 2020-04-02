@@ -7,19 +7,16 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.blankdictionary.myapplication.Adapters.testAdapter;
+import com.blankdictionary.myapplication.Adapters.TranslationOptionsAdapter;
 import com.blankdictionary.myapplication.HelperInterfaces.ITranslationDialogListener;
 import com.blankdictionary.myapplication.R;
-import com.blankdictionary.myapplication.Translation;
 
 public class TranslationDialogFragment extends DialogFragment {
     private ITranslationDialogListener iTranslationDialogListener;
-    private testAdapter adapter;
+    private TranslationOptionsAdapter adapter;
     private int initialTranslation;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -39,11 +36,10 @@ public class TranslationDialogFragment extends DialogFragment {
     };
 
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.adapter = new testAdapter(context, listener, initialTranslation);
+        this.adapter = new TranslationOptionsAdapter(context, listener, initialTranslation);
         iTranslationDialogListener = (ITranslationDialogListener) getTargetFragment();
         layoutManager = new LinearLayoutManager(context);
 
@@ -54,14 +50,12 @@ public class TranslationDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_translations, null);
         RecyclerView translationRecyclerView = view.findViewById(R.id.recyclerview_translations);
         translationRecyclerView.setHasFixedSize(true);
         translationRecyclerView.setLayoutManager(layoutManager);
         translationRecyclerView.setAdapter(adapter);
-
         builder.setTitle("Pick your Translation");
         builder.setView(view);
 

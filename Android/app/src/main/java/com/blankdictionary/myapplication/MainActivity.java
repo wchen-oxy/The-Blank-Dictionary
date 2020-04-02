@@ -31,7 +31,6 @@ import com.blankdictionary.myapplication.Fragments.HomeFragment;
 import com.blankdictionary.myapplication.Fragments.ResultFragment;
 import com.blankdictionary.myapplication.Fragments.SearchFragment;
 import com.blankdictionary.myapplication.Fragments.SettingsFragment;
-//import com.blankdictionary.myapplication.Fragments.TestHomeFrag;
 import com.blankdictionary.myapplication.HelperInterfaces.IDelete;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.blankdictionary.myapplication.HelperInterfaces.IOnBackPressed;
@@ -57,7 +56,7 @@ import static com.blankdictionary.myapplication.Constants.System.CURRENTLY_SELEC
 
 public class MainActivity extends AppCompatActivity implements IFragmentCommunicator, IDelete, IShowDialogWarning {
     final Context context = this;
-    public BroadcastReceiver availableDictionaryReciever;
+    public BroadcastReceiver availableDictionaryReceiver;
     public Boolean isAdvSearch = false;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -77,18 +76,18 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 case R.id.navigation_home:
                     if (isAdvSearch && activeLang.equals(pref.getString(CURRENTLY_SELECTED_DICTIONARY, ""))) {
                         fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_container, SearchFragment.newInstance(args), SEARCH_FRAGMENT).commit();
+                        fragmentTransaction.replace(R.id.relativelayout_fragment_container, SearchFragment.newInstance(args), SEARCH_FRAGMENT).commit();
                         return true;
                     }
                     clearBackStack();
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, HomeFragment.newInstance(), HOME_FRAGMENT).commit();
+                    fragmentTransaction.replace(R.id.relativelayout_fragment_container, HomeFragment.newInstance(), HOME_FRAGMENT).commit();
                     return true;
 
                 case R.id.navigation_settings:
                     clearBackStack();
                     fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frag_container, SettingsFragment.newInstance(), SETTINGS_FRAGMENT).commit();
+                    fragmentTransaction.replace(R.id.relativelayout_fragment_container, SettingsFragment.newInstance(), SETTINGS_FRAGMENT).commit();
 
                     return true;
             }
@@ -117,32 +116,32 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
             case HOME_FRAGMENT:
                 HomeFragment homeFragment = HomeFragment.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.frag_container, homeFragment, HOME_FRAGMENT).commit();
+                fragmentTransaction.add(R.id.relativelayout_fragment_container, homeFragment, HOME_FRAGMENT).commit();
                 isAdvSearch = true;
                 break;
             case SEARCH_FRAGMENT:
                 SearchFragment searchFragment = SearchFragment.newInstance(args);
                 activeLang = pref.getString(CURRENTLY_SELECTED_DICTIONARY, null);
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, searchFragment, SEARCH_FRAGMENT).addToBackStack(SEARCH_FRAGMENT).commit();
+                fragmentTransaction.replace(R.id.relativelayout_fragment_container, searchFragment, SEARCH_FRAGMENT).addToBackStack(SEARCH_FRAGMENT).commit();
                 isAdvSearch = true;
                 break;
             case RESULT_FRAGMENT:
                 ResultFragment resultFragment = ResultFragment.newInstance(args);
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, resultFragment).addToBackStack(RESULT_FRAGMENT).commit();
+                fragmentTransaction.replace(R.id.relativelayout_fragment_container, resultFragment).addToBackStack(RESULT_FRAGMENT).commit();
                 break;
             case DICTIONARY_SELECTION_FRAGMENT:
                 langToDelete = new ArrayList<>();
                 DictionarySelectionFragment dictionarySelectionFragment = DictionarySelectionFragment.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, dictionarySelectionFragment).addToBackStack(DICTIONARY_SELECTION_FRAGMENT).commit();
+                fragmentTransaction.replace(R.id.relativelayout_fragment_container, dictionarySelectionFragment).addToBackStack(DICTIONARY_SELECTION_FRAGMENT).commit();
                 break;
 
             case ABOUT_FRAGMENT:
                 AboutFragment aboutFragment = AboutFragment.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frag_container, aboutFragment).addToBackStack(ABOUT_FRAGMENT).commit();
+                fragmentTransaction.replace(R.id.relativelayout_fragment_container, aboutFragment).addToBackStack(ABOUT_FRAGMENT).commit();
                 break;
 
 
@@ -159,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
 
     @Override
     public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frag_container);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.relativelayout_fragment_container);
         //if it is an instance, and if the instance returns true, do nothing
         if (fragment instanceof IOnBackPressed && ((IOnBackPressed) fragment).clearText()) {
             return;
@@ -173,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         super.onCreate(savedInstanceState);
         pref = getSharedPreferences(APP_PREFERENCES, 0);
         setContentView(R.layout.partial_main_frame);
-        final BottomNavigationView navView = findViewById(R.id.nav_view);
+        final BottomNavigationView navView = findViewById(R.id.navigation_bottom);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         bottomNavigationMenu = navView;
         fragmentManager = getSupportFragmentManager();
@@ -193,8 +192,8 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         localBroadcastManager.registerReceiver(myServerStatusReciever, new IntentFilter(SERVER_REACHED));
 
-        availableDictionaryReciever = new myAvailableDictionaryReciever();
-        localBroadcastManager.registerReceiver(availableDictionaryReciever, new IntentFilter(DICTIONARY_LIST_DOWNLOADED));
+        availableDictionaryReceiver = new myAvailableDictionaryReciever();
+        localBroadcastManager.registerReceiver(availableDictionaryReceiver, new IntentFilter(DICTIONARY_LIST_DOWNLOADED));
 
         Handler mainHandler = new Handler(Looper.getMainLooper());
         Runnable myRunnable = new Runnable() {
@@ -214,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(myServerStatusReciever);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(availableDictionaryReciever);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(availableDictionaryReceiver);
         super.onDestroy();
 
     }

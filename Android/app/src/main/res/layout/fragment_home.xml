@@ -12,7 +12,7 @@
         android:layout_centerInParent="true" />
 
     <TextView
-        android:id="@+id/textview_dictionary_title"
+        android:id="@+id/textview_hero_dictionary_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/anchor"
@@ -28,7 +28,7 @@
         android:id="@+id/linearlayout_home_search_container"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/textview_dictionary_title"
+        android:layout_below="@+id/textview_hero_dictionary_title"
         android:layout_marginHorizontal="15dp"
         android:background="#FFF"
         android:orientation="horizontal">

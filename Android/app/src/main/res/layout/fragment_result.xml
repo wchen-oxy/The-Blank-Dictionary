@@ -74,7 +74,7 @@
         tools:layout_editor_absoluteY="68dp">
 
         <ScrollView
-            android:id="@+id/dict_info_container"
+            android:id="@+id/scrollview_dictionary_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

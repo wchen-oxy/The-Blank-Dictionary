@@ -87,7 +87,7 @@ public class MyQueryResultAdapter extends RecyclerView.Adapter<MyQueryResultAdap
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.row_text);
+            textView = itemView.findViewById(R.id.textview_query_result);
             itemView.setTag(this);
             itemView.setOnClickListener(listener);
         }

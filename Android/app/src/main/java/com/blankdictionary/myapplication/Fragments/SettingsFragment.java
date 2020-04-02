@@ -62,7 +62,7 @@ public class SettingsFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
-        Button currentDictionary = rootView.findViewById(R.id.current_dictionary);
+        Button currentDictionary = rootView.findViewById(R.id.button_select_dictionary);
         currentDictionary.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -123,7 +123,7 @@ public class SettingsFragment extends Fragment{
                 }
         );
 
-        Button aboutApp = rootView.findViewById(R.id.about_app_button);
+        Button aboutApp = rootView.findViewById(R.id.button_about_app);
         aboutApp.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

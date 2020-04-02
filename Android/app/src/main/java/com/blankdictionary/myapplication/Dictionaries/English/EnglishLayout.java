@@ -2,6 +2,7 @@ package com.blankdictionary.myapplication.Dictionaries.English;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,9 +52,14 @@ public class EnglishLayout implements ILayoutSetter {
 
         Log.d("Translation num", String.valueOf(selectedTranslationId));
 
-        ipa.setText("Pronounciation: " + englishWord.ipa);
-        definition.setText("Definition: " + englishWord.definition);
-        example.setText("Example: " + englishWord.example);
+
+        String ipaContent = "<b>" + context.getString(R.string.desc_pronounciation) + "</b>" + englishWord.ipa;
+        String definitionContent = "<b>" + context.getString(R.string.desc_category) + "</b>" + englishWord.definition;
+        String exampleContent = "<b>" + context.getString(R.string.desc_example) + "</b>" + englishWord.example;
+
+        ipa.setText(Html.fromHtml(ipaContent));
+        definition.setText(Html.fromHtml(definitionContent));
+        example.setText(Html.fromHtml(exampleContent));
 
         switch (tranType[selectedTranslationId]) {
             case ("English to English"):

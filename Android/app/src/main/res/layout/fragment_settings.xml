@@ -6,7 +6,7 @@
     android:background="@color/cardview_light_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/settings_title_bar"
+        android:id="@+id/constraintlayout_settings"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:background="#ba375c"
@@ -41,28 +41,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_title_bar">
-
-        <!--<Button-->
-        <!--android:id="@+id/language_button"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@android:color/transparent"-->
-        <!--android:drawableRight="@drawable/resize_arrow"-->
-        <!--android:fontFamily="@font/alegreya_sans"-->
-        <!--android:gravity="left|center_vertical"-->
-        <!--android:text="@string/language_pack_button"-->
-        <!--android:textSize="16dp"-->
-
-        <!--/>-->
-
-        <!--<Space-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="10dp" />-->
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout_settings">
 
 
         <Button
-            android:id="@+id/current_dictionary"
+            android:id="@+id/button_select_dictionary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -77,7 +60,7 @@
             android:layout_height="10dp" />
 
         <Button
-            android:id="@+id/about_app_button"
+            android:id="@+id/button_about_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"

@@ -13,7 +13,7 @@
     <!--android:animateLayoutChanges="true"-->
 
     <LinearLayout
-        android:id="@+id/dict_pack_language_title_linear_layout"
+        android:id="@+id/linearlayout_dictionary_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -22,7 +22,7 @@
         >
 
         <TextView
-            android:id="@+id/language_text"
+            android:id="@+id/textview_dictionary_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
@@ -36,7 +36,7 @@
         android:gravity="end">
 
         <ImageButton
-            android:id="@+id/download_button"
+            android:id="@+id/button_start_download"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
@@ -46,7 +46,7 @@
             />
 
         <ImageView
-            android:id="@+id/installed_dictionary_imageview"
+            android:id="@+id/imageview_installed_dictionary"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
@@ -55,7 +55,7 @@
             android:visibility="gone" />
 
         <CheckBox
-            android:id="@+id/dict_checkbox"
+            android:id="@+id/checkbox_dictionary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

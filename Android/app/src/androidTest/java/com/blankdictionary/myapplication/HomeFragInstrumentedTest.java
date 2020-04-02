@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.DataInteraction;
+import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -17,7 +21,10 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import com.blankdictionary.myapplication.Adapters.MyQueryResultAdapter;
+
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -56,7 +63,7 @@ public class HomeFragInstrumentedTest {
     @Test
     public void checkRemovedTitle() {
         mActivityRule.launchActivity(launch);
-        onView(withId(R.id.mainTitle)).check(matches(withText("The Blank Dictionary")));
+        onView(withId(R.id.textview_hero_dictionary_title)).check(matches(withText("The Blank Dictionary")));
         onView(withId(R.id.navigation_settings)).perform(click());
         sharedPreferences.edit().putString(CURRENTLY_SELECTED_DICTIONARY, BHUTIA).apply();
         assertEquals(sharedPreferences.getString(CURRENTLY_SELECTED_DICTIONARY, "nope"), BHUTIA);
@@ -64,30 +71,35 @@ public class HomeFragInstrumentedTest {
     }
 
     @Test
-    public void checkBhutiaSpinner() {
+    public void checkBhutiaTranslation() {
         mActivityRule.launchActivity(launch);
         sharedPreferences.edit().putString(CURRENTLY_SELECTED_DICTIONARY, BHUTIA).apply();
         assertEquals(sharedPreferences.getString(CURRENTLY_SELECTED_DICTIONARY, "nope"), BHUTIA);
-        String[] target = getHomeTransSpinner(BHUTIA);
+        String[] target = getHomeTranslationSet(BHUTIA);
         onView(withId(R.id.navigation_home)).perform(click());
-        onView(withId(R.id.home_trans_spinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is(target[0]))).perform(click());
-        onView(withId(R.id.home_trans_spinner)).check(matches(withSpinnerText(containsString("English to Bhutia (Formal)"))));
+        onView(withId(R.id.imagebutton_home_translations)).perform(click());
+        onView(ViewMatchers.withId(R.id.recyclerview_translations)).perform(
+                RecyclerViewActions.<MyQueryResultAdapter.MyViewHolder>actionOnItemAtPosition(0, click())
+
+        );
+        onView(withText("English to Bhutia (Formal)")).check(matches(isDisplayed()));
+
+
     }
 
-    @Test
-    public void checkEnglishSpinner() {
-        mActivityRule.launchActivity(launch);
-        sharedPreferences.edit().putString(CURRENTLY_SELECTED_DICTIONARY, ENGLISH).apply();
-        assertEquals(sharedPreferences.getString(CURRENTLY_SELECTED_DICTIONARY, "nope"), ENGLISH);
-        String[] target = getHomeTransSpinner(ENGLISH);
-        onView(withId(R.id.navigation_home)).perform(click());
-        onView(withId(R.id.home_trans_spinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is(target[0]))).perform(click());
-        onView(withId(R.id.home_trans_spinner)).check(matches(withSpinnerText(containsString("English to English"))));
-    }
+//    @Test
+//    public void checkEnglishTranslation() {
+//        mActivityRule.launchActivity(launch);
+//        sharedPreferences.edit().putString(CURRENTLY_SELECTED_DICTIONARY, ENGLISH).apply();
+//        assertEquals(sharedPreferences.getString(CURRENTLY_SELECTED_DICTIONARY, "nope"), ENGLISH);
+//        String[] target = getHomeTranslationSet(ENGLISH);
+//        onView(withId(R.id.navigation_home)).perform(click());
+//        onView(withId(R.id.imagebutton_home_translations)).perform(click());
+//        onData(allOf(is(instanceOf(String.class)), is(target[0]))).perform(click());
+//        onView(withId(R.id.imagebutton_home_translations)).check(matches(withText(containsString("English to English"))));
+//    }
 
-    public String[] getHomeTransSpinner(String language) {
+    public String[] getHomeTranslationSet(String language) {
 
         switch (language) {
             case BHUTIA:

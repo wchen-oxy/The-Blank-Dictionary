@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 
 import com.blankdictionary.myapplication.Adapters.MyQueryResultAdapter;
-import com.blankdictionary.myapplication.Adapters.testAdapter;
 import com.blankdictionary.myapplication.DatabaseQuery;
 import com.blankdictionary.myapplication.DialogFragments.TranslationDialogFragment;
 import com.blankdictionary.myapplication.Dictionaries.Bhutia.BhutiaWord;
@@ -120,7 +119,7 @@ public class SearchFragment extends Fragment implements IOnBackPressed, ITransla
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         //INITIALIZE TRANSLATION
-        selectedTranslationNumber = args.getInt(TRANSLATION_TYPE_NUM_ID);
+        selectedTranslationNumber = args.getInt(TRANSLATION_TYPE_NUM_ID, 0);
         System.out.println(Arrays.toString(translationTypesArray));
         System.out.println(translationTypesArray[selectedTranslationNumber]);
         //we need to add translation data inside ArrayList because we need a reference to the

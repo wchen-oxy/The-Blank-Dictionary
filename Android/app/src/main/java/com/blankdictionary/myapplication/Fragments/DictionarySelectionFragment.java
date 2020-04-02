@@ -149,7 +149,7 @@ public class DictionarySelectionFragment extends Fragment {
 
     private void clearCheckbox() {
         for (int i = 0; i < languagesRecyclerView.getChildCount(); i++) {
-            CheckBox checkBox = languagesRecyclerView.getChildAt(i).findViewById(R.id.dict_checkbox);
+            CheckBox checkBox = languagesRecyclerView.getChildAt(i).findViewById(R.id.checkbox_dictionary);
             checkBox.setChecked(false);
         }
     }
