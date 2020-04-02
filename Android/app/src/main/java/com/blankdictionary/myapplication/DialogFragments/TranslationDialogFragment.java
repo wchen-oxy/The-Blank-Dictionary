@@ -1,4 +1,4 @@
-package com.blankdictionary.myapplication.Fragments;
+package com.blankdictionary.myapplication.DialogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -19,14 +19,21 @@ import com.blankdictionary.myapplication.Translation;
 
 public class TranslationDialogFragment extends DialogFragment {
     private ITranslationDialogListener iTranslationDialogListener;
-    private RecyclerView.Adapter adapter;
-    RecyclerView.LayoutManager layoutManager;
+    private testAdapter adapter;
+    private int initialTranslation;
+    private RecyclerView.LayoutManager layoutManager;
+
+    public TranslationDialogFragment(int initialTranslation){
+        this.initialTranslation = initialTranslation;
+    }
+
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             view.setSelected(true);
             int translationPosition = ((RecyclerView.ViewHolder) view.getTag()).getAdapterPosition();
             iTranslationDialogListener.sendSelectedTranslation(translationPosition);
+            adapter.notifyNewTranslation(translationPosition);
 
         }
     };
@@ -36,8 +43,8 @@ public class TranslationDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.adapter = new testAdapter(context, listener, initialTranslation);
         iTranslationDialogListener = (ITranslationDialogListener) getTargetFragment();
-        this.adapter = new testAdapter(context, listener);
         layoutManager = new LinearLayoutManager(context);
 
     }
@@ -51,24 +58,15 @@ public class TranslationDialogFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_translations, null);
         RecyclerView translationRecyclerView = view.findViewById(R.id.recyclerview_translations);
-
-
         translationRecyclerView.setHasFixedSize(true);
         translationRecyclerView.setLayoutManager(layoutManager);
         translationRecyclerView.setAdapter(adapter);
-
-
-//
-//
-//        builder.setView(view);
 
         builder.setTitle("Pick your Translation");
         builder.setView(view);
 
                 builder.setNeutralButton("Close", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
-                        // FIRE ZE MISSILES!
                     }
                 });
 

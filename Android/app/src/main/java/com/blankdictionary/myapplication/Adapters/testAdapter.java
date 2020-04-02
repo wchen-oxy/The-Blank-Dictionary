@@ -1,6 +1,7 @@
 package com.blankdictionary.myapplication.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +20,25 @@ import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.
 public class testAdapter extends RecyclerView.Adapter<testAdapter.MyViewHolder>{
     private String[] translations;
     private View.OnClickListener listener;
+    private int currentTranslation;
 
-    public testAdapter(Context context, View.OnClickListener listener){
+    public testAdapter(Context context, View.OnClickListener listener, int initialTranslation){
+        System.out.println("testAdapter");
         this.listener = listener;
         translations = Translation.getSet(context);
+        currentTranslation = initialTranslation;
     }
+    public void notifyNewTranslation(int selectedItem) {
+        this.currentTranslation = selectedItem;
+        this.notifyDataSetChanged();
+
+    }
+
 
     @NonNull
     @Override
     public testAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_result, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_translation, parent, false);
         testAdapter.MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
@@ -37,6 +46,10 @@ public class testAdapter extends RecyclerView.Adapter<testAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.textView.setText(translations[position]);
+        if (currentTranslation == position) holder.itemView.setBackgroundColor(Color.rgb(235, 235, 235));
+        else{
+            holder.itemView.setBackgroundColor(Color.WHITE);
+        }
 
     }
 
@@ -44,7 +57,6 @@ public class testAdapter extends RecyclerView.Adapter<testAdapter.MyViewHolder>{
     public int getItemCount() {
         return translations.length;
     }
-
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

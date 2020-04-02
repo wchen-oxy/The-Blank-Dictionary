@@ -31,8 +31,7 @@ import com.blankdictionary.myapplication.Fragments.HomeFragment;
 import com.blankdictionary.myapplication.Fragments.ResultFragment;
 import com.blankdictionary.myapplication.Fragments.SearchFragment;
 import com.blankdictionary.myapplication.Fragments.SettingsFragment;
-import com.blankdictionary.myapplication.Fragments.TestHomeFrag;
-import com.blankdictionary.myapplication.Fragments.TranslationDialogFragment;
+//import com.blankdictionary.myapplication.Fragments.TestHomeFrag;
 import com.blankdictionary.myapplication.HelperInterfaces.IDelete;
 import com.blankdictionary.myapplication.HelperInterfaces.IFragmentCommunicator;
 import com.blankdictionary.myapplication.HelperInterfaces.IOnBackPressed;
@@ -49,7 +48,6 @@ import static com.blankdictionary.myapplication.Constants.Fragment.NEW_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.RESULT_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.SEARCH_FRAGMENT;
 import static com.blankdictionary.myapplication.Constants.Fragment.SETTINGS_FRAGMENT;
-import static com.blankdictionary.myapplication.Constants.Fragment.TEST_HOME_FRAG;
 import static com.blankdictionary.myapplication.Constants.IntentFilters.DICTIONARY_LIST_DOWNLOADED;
 import static com.blankdictionary.myapplication.Constants.IntentFilters.SERVER_REACHED;
 import static com.blankdictionary.myapplication.Constants.Network.NO_INTERNET_ERROR;
@@ -120,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 HomeFragment homeFragment = HomeFragment.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.add(R.id.frag_container, homeFragment, HOME_FRAGMENT).commit();
+                isAdvSearch = true;
                 break;
             case SEARCH_FRAGMENT:
                 SearchFragment searchFragment = SearchFragment.newInstance(args);
@@ -145,11 +144,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frag_container, aboutFragment).addToBackStack(ABOUT_FRAGMENT).commit();
                 break;
-            case TEST_HOME_FRAG:
-                TestHomeFrag testHomeFragment = TestHomeFrag.newInstance();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.frag_container, testHomeFragment, TEST_HOME_FRAG).commit();
-                break;
+
 
         }
     }
@@ -183,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
         bottomNavigationMenu = navView;
         fragmentManager = getSupportFragmentManager();
         Bundle args = new Bundle();
-        args.putString(NEW_FRAGMENT, TEST_HOME_FRAG);
+        args.putString(NEW_FRAGMENT, HOME_FRAGMENT);
         fragController(args);
 
         //SECTION FOR GETTING AVAILABLE DICTIONARIES AHEAD OF TIME

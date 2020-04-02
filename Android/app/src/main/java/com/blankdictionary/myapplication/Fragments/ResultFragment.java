@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
@@ -70,15 +71,12 @@ public class ResultFragment extends Fragment {
         
         View rootView = inflater.inflate(R.layout.fragment_result, container, false);
         //initialize return listener
-        rootView.findViewById(R.id.final_result_frag).setOnClickListener(myListener);
-        //set spinner return listener
-        Spinner spinner = rootView.findViewById(R.id.final_result_adv_trans_spinner);
-        DumbSpinnerAdapter dumbSpinnerAdapter = new DumbSpinnerAdapter(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, myListener);
-        dumbSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setOnTouchListener(touchListener);
-        spinner.setAdapter(dumbSpinnerAdapter);
+//        rootView.findViewById(R.id.fragment_result).setOnClickListener(myListener);
+//        //set spinner return listener
+        rootView.findViewById(R.id.linearlayout_result_dummy).setOnTouchListener(touchListener);
+        ImageButton button = rootView.findViewById(R.id.imagebutton_result_translations);
 
+        button.setOnClickListener(myListener);
 
         //setting results
         ScrollView dictInfoContainer = rootView.findViewById(R.id.dict_info_container);

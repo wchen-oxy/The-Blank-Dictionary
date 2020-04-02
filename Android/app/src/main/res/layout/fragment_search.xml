@@ -5,11 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF"
-
     >
 
     <LinearLayout
-        android:id="@+id/adv_search_linear_layout"
+        android:id="@+id/linearlayout_adv_search_container"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:background="#ba375c"
@@ -18,38 +17,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--<android.support.v7.widget.ActionMenuView-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--app:menu="@menu/dictionary_pack_menu"-->
-        <!--&gt;-->
-        <!--</android.support.v7.widget.ActionMenuView>-->
-
         <SearchView
-            android:id="@+id/searchAdvView"
-            android:layout_width="match_parent"
+            android:id="@+id/searchview_adv_search"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="50dp"
             android:layout_marginBottom="9dp"
+            android:gravity="fill_horizontal"
             android:background="#FFF"
             android:imeOptions="actionNext"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/searchview_adv_search"
+            >
+
+            <ImageButton
+                android:id="@+id/imagebutton_adv_translations"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/outline_menu_white_48"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+        </LinearLayout>
+
 
     </LinearLayout>
-
-    <Spinner
-        android:id="@+id/adv_trans_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="@+id/adv_search_linear_layout"
-        android:dropDownVerticalOffset="58dp"
-        android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toBottomOf="@+id/adv_search_linear_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:layout_width="0dp"
@@ -57,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adv_search_linear_layout"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_adv_search_container"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="68dp">
 
@@ -66,7 +67,7 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/my_recycler_view"
+                android:id="@+id/recyclerview_queries"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical" />

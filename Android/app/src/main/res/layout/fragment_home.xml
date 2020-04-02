@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ba375c"
-
     >
 
     <View
@@ -13,7 +12,7 @@
         android:layout_centerInParent="true" />
 
     <TextView
-        android:id="@+id/mainTitle"
+        android:id="@+id/textview_dictionary_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/anchor"
@@ -26,35 +25,36 @@
 
 
     <LinearLayout
-        android:id="@+id/outer_search_linear_layout"
+        android:id="@+id/linearlayout_home_search_container"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/mainTitle"
+        android:layout_below="@+id/textview_dictionary_title"
         android:layout_marginHorizontal="15dp"
         android:background="#FFF"
         android:orientation="horizontal">
 
         <SearchView
-            android:id="@+id/home_search_view"
+            android:id="@+id/searchview_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:imeOptions="actionNext" />
 
         <RelativeLayout
+            android:id="@+id/relativelayout_home_translations"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:padding="10dp"
+
             android:background="@drawable/border_left">
 
-            <Spinner
-                android:id="@+id/home_trans_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:dropDownVerticalOffset="50dp"
-                android:spinnerMode="dropdown"
+            <ImageButton
+                android:id="@+id/imagebutton_home_translations"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-
-                />
+                android:background="@drawable/outline_menu_grey_48"
+               />
 
         </RelativeLayout>
     </LinearLayout>

@@ -85,7 +85,7 @@ public final class Constants {
     }
 
     public static class DictionaryTitles {
-        public static final String BHUTIA_TITLE = "The Bhutia Dictionary";
+        public static final String BHUTIA_TITLE = "The ལྷོ་སྐད Dictionary";
         public static final String ENGLISH_TITLE = "The English Dictionary";
 
         public static String returnTitle(String language) {

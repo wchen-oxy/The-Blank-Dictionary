@@ -25,11 +25,16 @@ public class MyQueryResultAdapter extends RecyclerView.Adapter<MyQueryResultAdap
     private String curDict;
     private String translation;
 
-    public MyQueryResultAdapter(ResultWrapper myDataset, ArrayList<String> Translation, View.OnClickListener listener, String curDict) {
-        this.translation = Translation.get(0);
+    public MyQueryResultAdapter(ResultWrapper myDataset, String translation, View.OnClickListener listener, String curDict) {
+        this.translation = translation;
         this.mDataset = myDataset;
         this.listener = listener;
         this.curDict = curDict;
+    }
+
+    public void notifyTranslation(String newTranslation){
+        this.translation = newTranslation;
+        this.notifyDataSetChanged();
     }
 
     //method needs to construct a RecyclerView.ViewHolder and set the view it uses to display its contents.
@@ -44,6 +49,7 @@ public class MyQueryResultAdapter extends RecyclerView.Adapter<MyQueryResultAdap
     //method needs to fetch the appropriate data, and use it to fill in the view holder's (text) layout on creation
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        System.out.println("QueryResult " + translation);
         //grab the specific list from mDataSet
         switch (curDict) {
             case (BHUTIA):
