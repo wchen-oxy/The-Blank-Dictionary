@@ -195,7 +195,7 @@ public class SettingsListsAdapter extends RecyclerView.Adapter<SettingsListsAdap
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textview_hero_dictionary_title);
+            textView = itemView.findViewById(R.id.textview_settings_dictionary_title);
             checkBox = itemView.findViewById(R.id.checkbox_dictionary);
             downloadButton = itemView.findViewById(R.id.button_start_download);
             selectedDictionaryImage = itemView.findViewById(R.id.imageview_installed_dictionary);

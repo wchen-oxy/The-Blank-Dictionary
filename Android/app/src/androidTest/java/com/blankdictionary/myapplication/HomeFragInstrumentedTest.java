@@ -87,17 +87,19 @@ public class HomeFragInstrumentedTest {
 
     }
 
-//    @Test
-//    public void checkEnglishTranslation() {
-//        mActivityRule.launchActivity(launch);
-//        sharedPreferences.edit().putString(CURRENTLY_SELECTED_DICTIONARY, ENGLISH).apply();
-//        assertEquals(sharedPreferences.getString(CURRENTLY_SELECTED_DICTIONARY, "nope"), ENGLISH);
-//        String[] target = getHomeTranslationSet(ENGLISH);
-//        onView(withId(R.id.navigation_home)).perform(click());
-//        onView(withId(R.id.imagebutton_home_translations)).perform(click());
-//        onData(allOf(is(instanceOf(String.class)), is(target[0]))).perform(click());
-//        onView(withId(R.id.imagebutton_home_translations)).check(matches(withText(containsString("English to English"))));
-//    }
+    @Test
+    public void checkEnglishTranslation() {
+        mActivityRule.launchActivity(launch);
+        sharedPreferences.edit().putString(CURRENTLY_SELECTED_DICTIONARY, ENGLISH).apply();
+        assertEquals(sharedPreferences.getString(CURRENTLY_SELECTED_DICTIONARY, "nope"), ENGLISH);
+        String[] target = getHomeTranslationSet(BHUTIA);
+        onView(withId(R.id.navigation_home)).perform(click());
+        onView(withId(R.id.imagebutton_home_translations)).perform(click());
+        onView(ViewMatchers.withId(R.id.recyclerview_translations)).perform(
+                RecyclerViewActions.<MyQueryResultAdapter.MyViewHolder>actionOnItemAtPosition(0, click())
+        );
+        onView(withText("English to English")).check(matches(isDisplayed()));
+    }
 
     public String[] getHomeTranslationSet(String language) {
 
