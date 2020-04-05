@@ -3,4 +3,5 @@ Android/.idea
 Android/.gradle
 mysite/.env
 *.DS_Store
+Android/local.properties
 
