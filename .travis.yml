@@ -32,5 +32,5 @@ android:
 before_install:
     - yes | sdkmanager "platforms;android-27"
 
-script:
-    - ./gradlew assembleDebug
+# script:
+#     - ./gradlew assembleDebug
