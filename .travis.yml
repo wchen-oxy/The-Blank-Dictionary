@@ -32,7 +32,7 @@ android:
 
         # # Specify at least one system image,
         # # if you need to run emulator(s) during your tests
-        - sys-img-x86-android-28
+        # - sys-img-x86-android-28
 
         - extra
 
@@ -47,9 +47,9 @@ android:
 #     - $HOME/.android/build-cache
 before_script:
     # - ls /usr/local/android-sdk
+    - sdkmanager --install "system-images;android-28;default;x86"
     - set ANDROID_SDK_ROOT=/usr/local/android-sdk
     - export ANDROID_SDK_HOME=/usr/local/android-sdk
-    - ls /usr/local/android-sdk/x86//
     - android list sdk --extended --no-ui --all
     - android list targets
     - sdkmanager --list
