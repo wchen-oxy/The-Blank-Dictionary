@@ -53,7 +53,7 @@ before_script:
     - android list targets
     - sdkmanager --list
     - printf "%s\n" $PATH
-    - echo no | android create avd --name myandroid28 -t android-28 --abi "default/x86" 
+    - android create avd --name myandroid28 -t android-28 --abi default/x86 
     - emulator -list-avds
     - emulator -help-datadir
     - emulator -help-sdk-images
