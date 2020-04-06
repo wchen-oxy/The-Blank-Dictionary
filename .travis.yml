@@ -44,7 +44,9 @@ android:
 before_script:
     - android list sdk --extended --no-ui --all
     - android list targets
-    - echo no | android create avd --name myandroid28 -t android-28 --abi default/x86/
+    - ls /usr/local/android-sdk-25.2.3/system-images/android-28/default/x86/
+    - $PATH
+    - echo no | android create avd --name myandroid28 -t android-28 --abi default/x86
     - emulator -avd myandroid28 -debug init
     - emulator -list-avds
     - emulator -help-datadir
