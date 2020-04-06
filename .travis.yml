@@ -44,10 +44,10 @@ android:
 before_script:
     - android list sdk --extended --no-ui --all
     - android list targets
-    - echo no | android create avd --name myandroid28 -t android-28 --abi default/x86 
-    - ls /usr/local/android-sdk/tools/bin/sdk-manager
-
+    - echo no | android create avd --name myandroid28 -t android-28 --abi default/x86
+    - emulator -debug init 
     - emulator -list-avds
+    - emulator -help-datadir
     # - echo no | android create avd --force -n test -t android-28 --abi armeabi-v7a -c 100M
     - emulator -avd myandroid28 -no-audio -no-window &
     - android-wait-for-emulator
