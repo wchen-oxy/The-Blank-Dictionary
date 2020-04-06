@@ -7,7 +7,7 @@ env:
   global:
   - ANDROID_API_LEVEL=28
   - ANDROID_BUILD_TOOLS_VERSION=28.0.3
-  - ANDROID_SDK_ROOT=/usr/local/android-sdk/build-tools/28.0.3/   
+  - ANDROID_SDK_ROOT=/usr/local/android-sdk  
 
 before_install:
     - ls 
@@ -46,16 +46,16 @@ android:
 #     - $HOME/.gradle/wrapper/
 #     - $HOME/.android/build-cache
 before_script:
-    - ls /usr/local/android-sdk
-    # - android list sdk --extended --no-ui --all
-    # - android list targets
-    # - sdkmanager --list
-    # - printf "%s\n" $PATH
-    # - echo no | android create avd --name myandroid28 -t android-28 --abi default/x86 -c 100M
-    # - emulator -list-avds
-    # - emulator -help-datadir
-    # - emulator -help-sdk-images
-    # - emulator -avd myandroid28 -debug init
+    # - ls /usr/local/android-sdk
+    - android list sdk --extended --no-ui --all
+    - android list targets
+    - sdkmanager --list
+    - printf "%s\n" $PATH
+    - echo no | android create avd --name myandroid28 -t android-28 --abi default/x86 -c 100M
+    - emulator -list-avds
+    - emulator -help-datadir
+    - emulator -help-sdk-images
+    - emulator -avd myandroid28 -debug init
   
     # - echo no | android create avd --force -n test -t android-28 --abi armeabi-v7a -c 100M
     # - emulator -avd myandroid28 -no-audio -no-window &
