@@ -47,7 +47,7 @@ android:
 #     - $HOME/.android/build-cache
 before_script:
     # - ls /usr/local/android-sdk
-    - sdkmanager --install "system-images;android-28;default;x86"
+    - sdkmanager "system-images;android-28;build-tools;28.0.3;default;x86"
     - set ANDROID_SDK_ROOT=/usr/local/android-sdk
     - export ANDROID_SDK_HOME=/usr/local/android-sdk
     - android list sdk --extended --no-ui --all
