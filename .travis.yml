@@ -45,7 +45,7 @@ before_script:
     - android list sdk --extended --no-ui --all
     - android list targets
     - echo no | android create avd --name myandroid28 -t android-28 --abi default/x86 
-    - ls /usr/local/android-sdk/tools/bin/sdkmanager
+    - ls /usr/local/android-sdk/tools/bin/sdk-manager
 
     - emulator -list-avds
     # - echo no | android create avd --force -n test -t android-28 --abi armeabi-v7a -c 100M
