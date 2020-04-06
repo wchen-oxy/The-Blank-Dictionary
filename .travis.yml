@@ -56,6 +56,7 @@ before_script:
     - sdkmanager --list
     - printf "%s\n" $PATH
     - android create avd --name myandroid28 -t android-28 --abi $NEW_IMAGE_PATH
+    
     - emulator -list-avds
     - emulator -help-datadir
     - emulator -help-sdk-images
