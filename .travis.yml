@@ -47,6 +47,8 @@ android:
 #     - $HOME/.android/build-cache
 before_script:
     # - ls /usr/local/android-sdk
+    - set ANDROID_SDK_ROOT=/usr/local/android-sdk
+    - export ANDROID_SDK_HOME=/usr/local/android-sdk
     - android list sdk --extended --no-ui --all
     - android list targets
     - sdkmanager --list
