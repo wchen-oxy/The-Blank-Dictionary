@@ -17,7 +17,6 @@ android:
         # use the latest revision of Android SDK Tools
         - tools
         - platform-tools
-
         # The BuildTools version used by your project
         - build-tools-$ANDROID_BUILD_TOOLS_VERSION 
 
@@ -46,7 +45,7 @@ before_script:
     - echo $NEW_IMAGE_PATH
     - android list sdk --extended --no-ui --all
     - android list targets
-    - echo no | android create avd --name myandroid28 -t android-28 --abi %NEW_IMAGE_PATH
+    - echo no | android create avd --name myandroid28 -t android-28 --abi "%{NEW_IMAGE_PATH}"
     # - sdkmanager --list
     # - printf "%s\n" $PATH
     - emulator -list-avds
