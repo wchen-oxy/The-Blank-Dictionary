@@ -50,12 +50,12 @@ android:
 #     - $HOME/.android/build-cache
 before_script:
     # - ls /usr/local/android-sdk
-  
     - android list sdk --extended --no-ui --all
     - android list targets
     - sdkmanager --list
     - printf "%s\n" $PATH
-    - android create avd --name myandroid28 -t android-28 --abi default/x86
+    - android create avd --name myandroid28 -t android-28 --abi $IMAGE_PATH
+
     - emulator -list-avds
     - emulator -help-datadir
     - emulator -help-sdk-images
