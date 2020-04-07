@@ -35,7 +35,7 @@ android:
 
         # # Specify at least one system image,
         # # if you need to run emulator(s) during your tests
-        # - sys-img-x86-android-28
+        - sys-img-x86-android-28
 
         - extra
 
@@ -54,7 +54,7 @@ before_script:
     - android list targets
     - sdkmanager --list
     - printf "%s\n" $PATH
-    - android create avd --name myandroid28 -t android-28 --abi default/x86
+    - android create avd --name myandroid28 -t android-28 --abi $NEW_IMAGE_PATH
     - emulator -list-avds
     - emulator -avd myandroid28 -debug init
   
