@@ -50,6 +50,7 @@ before_script:
     # - sdkmanager --list
     # - printf "%s\n" $PATH
     - emulator -list-avds
+    = emulator -avd myandroid28 -kernel "/usr/local/android-sdk/system-images/android-28/default/x86"
     - emulator -avd myandroid28 -debug init
     # - emulator -avd myandroid28 -no-audio -no-window &
     # - android-wait-for-emulator
