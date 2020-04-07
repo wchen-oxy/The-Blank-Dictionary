@@ -55,8 +55,6 @@ before_script:
     # - printf "%s\n" $PATH
     - emulator -list-avds
     - emulator -avd myandroid28 -debug init
-
-    # - echo no | android create avd --force -n test -t android-28 --abi armeabi-v7a -c 100M
     # - emulator -avd myandroid28 -no-audio -no-window &
     # - android-wait-for-emulator
     # - adb shell input keyevent 82 &
