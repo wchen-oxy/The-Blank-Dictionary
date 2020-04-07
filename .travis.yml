@@ -9,7 +9,7 @@ env:
   - ANDROID_BUILD_TOOLS_VERSION=28.0.3
   - ANDROID_SDK_ROOT=/usr/local/android-sdk  
   - ANDROID_SDK_HOME=/usr/local/android-sdk
-  # - IMAGE_PATH=default/x86
+  - IMAGE_PATH=default/x86
   # - NEW_IMAGE_PATH=${IMAGE_PATH%/*}
 
 before_install:
@@ -50,7 +50,7 @@ before_script:
     # - ls /usr/local/android-sdk
     - android list sdk --extended --no-ui --all
     - android list targets
-    - echo no | android create avd --name myandroid28 -t android-28 --abi default/x86\
+    - echo no | android create avd --name myandroid28 -t android-28 --abi ${IMAGE_PATH/\//}
     # - sdkmanager --list
     # - printf "%s\n" $PATH
     - emulator -list-avds
