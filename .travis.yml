@@ -46,7 +46,7 @@ before_script:
     - export $NEW_IMAGE_PATH
     - android list sdk --extended --no-ui --all
     - android list targets
-    - echo no | android create avd --name myandroid28 -t android-28 --abi $NEW_IMAGE_PATH
+    - echo no | android create avd --name myandroid28 -t android-28 --abi "$NEW_IMAGE_PATH"
     # - sdkmanager --list
     # - printf "%s\n" $PATH
     - emulator -list-avds
