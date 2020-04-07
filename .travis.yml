@@ -54,12 +54,9 @@ before_script:
     - android list targets
     - sdkmanager --list
     - printf "%s\n" $PATH
-    - android create avd --name myandroid28 -t android-28 --abi $NEW_IMAGE_PATH
+    - android create avd --name myandroid28 -t android-28 --abi default/x86
     - emulator -list-avds
     - emulator -avd myandroid28 -debug init
-  
-
-
 
     # - echo no | android create avd --force -n test -t android-28 --abi armeabi-v7a -c 100M
     # - emulator -avd myandroid28 -no-audio -no-window &
