@@ -9,3 +9,6 @@ Notes for MySQL setup on Mac
 For some reason Android API28+ DownloadManager does not like it if you don't set it to use clear text traffic in requests.
 refer to this:
 https://stackoverflow.com/questions/53985649/download-failed-with-error-400-when-using-android-pie/53985701
+
+#Solution for a MysqlDB bug!!!
+https://stackoverflow.com/questions/6383310/python-mysqldb-library-not-loaded-libmysqlclient-18-dylib

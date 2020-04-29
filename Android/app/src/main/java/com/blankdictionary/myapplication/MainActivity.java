@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements IFragmentCommunic
                 HomeFragment homeFragment = HomeFragment.newInstance();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.add(R.id.relativelayout_fragment_container, homeFragment, HOME_FRAGMENT).commit();
-                isAdvSearch = true;
+                isAdvSearch = false;
                 break;
             case SEARCH_FRAGMENT:
                 SearchFragment searchFragment = SearchFragment.newInstance(args);

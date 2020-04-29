@@ -13,7 +13,7 @@ public class Translation {
         String[] result = null;
         SharedPreferences pref = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
-        switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, null)) {
+        switch (pref.getString(CURRENTLY_SELECTED_DICTIONARY, "")) {
             case (BHUTIA):
                 result = context.getResources().getStringArray(R.array.bhutia_array);
                 break;
