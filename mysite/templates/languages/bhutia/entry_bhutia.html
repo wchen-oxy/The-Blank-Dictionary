@@ -76,9 +76,11 @@
 	{% for match in be_f_possible %}
 	<!--skip the exact match query-->
 	{% if match.bhut_rom_formal != be_f_exact.0.bhut_rom_formal %}
+	{% url 'exact' lang='bhutia' translation='bhutia_english_formal' entry_id=match.entry_id as brf_url %}
 	<div class="row">
 		<p class="col"> {{match.bhut_rom_formal}} </p>
-			</div>
+		<a class="col" href="{{ brf_url }}">{{match.bhut_rom_formal}}</a>
+	</div>
 		{% endif %}
 		{% endfor %}
 	{% endif %}

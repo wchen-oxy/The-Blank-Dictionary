@@ -17,7 +17,7 @@
     </div>
   
     {% endif %}
-     {% if word.spoken_e %}
+ <!--     {% if word.spoken_e %}
     <div class="row">
 
  <p class="col">English Pronounciation:</p>
@@ -30,7 +30,7 @@
    src="{{word.spoken_e}}">
 </iframe>
     </div>
-    {% endif %}
+    {% endif %} -->
 
     <div class="row">
       <p class="col">Bhutia (formal): {{word.bhut_rom_formal}}</p>
@@ -38,9 +38,9 @@
     <div class="row">
       <p class="col">Bhutia (informal): {{word.bhut_rom_informal}}</p>
     </div>
-    <div class="row">
+   <!--  <div class="row">
       <p class="col"> Pronounciation: {{word.ipa}}</p>
-    </div>
+    </div> -->
     <div class="row">
     <p class="col"> English Translation: {{word.eng_trans}}</p>
   </div>
@@ -52,5 +52,5 @@
     <p class="col">Bhutia Script (informal): {{word.bhut_script_informal}}</p>
   </div>
     <div class="row">
-      <p class="col"> Example: {{word.example}}</p>
+      <p class="col"> Source: {{word.source}}</p>
     </div>

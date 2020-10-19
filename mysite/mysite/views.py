@@ -38,16 +38,12 @@ class AllBhutia(generics.ListAPIView):
     """
     FIXME implement dynamically called language pack
     """
-    # def get(self, request, *args, **kwargs):
-    # lang = self.kwargs['slug']
-    # target = apps.get_model('dictionaries', lang)
     target = apps.get_model('dictionaries', "Bhutia")
     queryset = target.objects.all()
     serializer_class = BhutiaSerializer
 
 @csrf_exempt
 def test(request, lang, word=None):
-    #  if request.method == 'GET':
      if request.method == 'GET' and 'Authorization' in request.headers:
          if request.headers['Authorization'] != encrypt_string("Az39dB0n!23"):
              return HttpResponse("Auth Key is Wrong.")
@@ -62,12 +58,6 @@ def test(request, lang, word=None):
              if lang.lower() == "english":
                 serializer = EnglishSerializer(dic, many=True)
              return JsonResponse(serializer.data, safe=False)
-
-        #  dictionary = apps.get_model("dictionaries", lang)
-        #  print(dictionary)
-        #  dic = dictionary.objects.all()
-        #  serializer = BhutiaSerializer(dic, many=True)
-        #  return JsonResponse(serializer.data, safe=False)
          return HttpResponse("Site works, but no lang matched")
      else:
         return HttpResponse("Site works, but you have no auth key.")
@@ -88,11 +78,6 @@ def status(request):
     if request.method == 'GET' and request.headers['Authorization'] == encrypt_string("Az39dB0n!23"):
         return HttpResponse()
     return HttpResponseBadRequest()
-
-# def checkConnection(request):
-#     if request.method == 'GET' and 'Authorization' in request.headers:
-#          if request.headers['Authorization'] != encrypt_string("Az39dB0n!23"):
-#              return HttpResponse("Auth Key is Wrong.")
 
 @csrf_exempt
 def updates(request):

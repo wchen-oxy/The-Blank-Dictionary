@@ -9,13 +9,15 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-import os
 
+import os
 #heroku import
 import django_heroku
 # import urllib.parse as urlparse
 import sys
-
+from dotenv import load_dotenv
+load_dotenv()
+LOCAL = os.getenv("LOCAL")
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,7 +31,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'y)i1bq+nsu0377az=6+4eq5utii#bn$$9ywc)t!q1ypa@d%e@i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True if LOCAL else False
 
 ALLOWED_HOSTS = ['heroku.com', 'herokuapp.com', '127.0.0.1', 'localhost']
 
@@ -184,5 +186,6 @@ STATICFILES_DIRS = [
 django_heroku.settings(locals())
 #IMPORTANT!!!
 #workaround for sslmode not supported when accessing admin on heroku (disable when running locally)
-del DATABASES['default']['OPTIONS']['sslmode']
+if not LOCAL: 
+    del DATABASES['default']['OPTIONS']['sslmode']
 

@@ -1,38 +1,34 @@
 {% load staticfiles %}
 {% include "base/navbar.html" %}
 <link rel="stylesheet" href="{% static 'css/languages/bhutia/master.css' %}">
-
-
 <main role="main" class="container">
+  <h1>Currently Available Words:</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">English</th>
+        <th scope="col">Bhutia/Lhokyed (Formal/Honorific Register)</th>
+        <th scope="col">Bhutia/Lhokyed (Informal)</th>
+        <th scope="col">Bhutia/Lhokyed Script (Formal/Honorific Register)</th>
+        <th scope="col">Bhutia/Lhokyed Script (Informal)</th>
+        <th scope="col">Spelling Derived From…</th>
 
- 
-<h1>Currently Available Words:</h1>
-
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">English Translation</th>
-      <th scope="col">Bhutia (Formal)</th>
-      <th scope="col">Bhutia (Informal)</th>
-      <th scope="col">Bhutia Script (Formal)</th>
-      <th scope="col">Bhutia Script (Informal)</th>
-
-    </tr>
-  </thead>
-  <tbody>
-    {% for word in master %}
-    <tr>
-      <td>{{word.eng_trans}}</td>
-      <td>{{word.bhut_rom_formal}}</td>
-      <td>{{word.bhut_rom_informal}}</td>
-      <td>{{word.bhut_script_formal}}</td>
-      <td>{{word.bhut_script_informal}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<!-- 
+      </tr>
+    </thead>
+    <tbody>
+      {% for word in master %}
+      <tr>
+        <td>{{word.eng_trans}}</td>
+        <td>{{word.bhut_rom_formal}}</td>
+        <td>{{word.bhut_rom_informal}}</td>
+        <td>{{word.bhut_script_formal}}</td>
+        <td>{{word.bhut_script_informal}}</td>
+        <!-- <td>{{word.bhut_source}}</td> -->
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <!-- 
 <div class="row">
 <h1>Currently Available Words:</h1>
 </div>
@@ -81,9 +77,12 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="{% static 'js/lang/bhutia.js' %}"></script>
 </body>
 

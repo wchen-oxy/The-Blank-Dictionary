@@ -1,0 +1,624 @@
+1,thank you,"thug-zee che, thukjeche","thug-zee che, thukjeche",ཐུགས་རྗེ་ཆེ་,ཐུགས་རྗེ་ཆེ་,2001
+2,greetings,"kuzu zangpo, kusu sangpo","kuzu zangpo, kusu sangpo",སྐུ་བཟུ་བཟང་པོ་,སྐུ་བཟུ་བཟང་པོ་,2001
+3,farewell,shap-kyal,,ཞབས་སྐྱེལ་,,2001
+4,where?,"gana, ghana","gana, ghana",ག་ན་,ག་ན་,"2001, 2004 [2005]"
+5,what?,"ghan bo, khamu","ghan bo, khamu","གན་རྦོ་, ཁ་མུ","གན་རྦོ་, ཁ་མུ",2004 [2005]
+6,when?,nam,nam,ནམ,ནམ,2001
+7,who?,ka,ka,ཀ་,ཀ་,2001
+8,how,"katem, gha tem","Katem, gha tem","ཀ་ཐེམ, ག་ཏེམ་","ཀ་ཐེམ, ག་ཏེམ་",2001
+9,"sorry, apologize",gongmati,zhothsol,གོངས་མ་ཏེད,བཟོད་གསོལ་,2001
+10,yes,"lags, lei","lags, lei",ལགས ,ལགས་ཡིན་,2001
+11,no,me,me,མེ,མེ,2001
+12,name,tshan,ming,མཚན་,མིང,2001
+13,my,"nge ki, ngahi","nge ki, gnahi","ངེའི་ཁྱི་, ངེའི་","ངེའི་ཁྱི་, ངེའི་","BLDWG, 2004 [2005]"
+14,I,nga,nga,ང་,ང་,2001
+15,you,"rang, rang lengey","chhoth, chod","་རང, རང་ལེན་གེ་",ཆོད་,BLDWG
+16,good,"leg, lem","leg, lem",ལེགས་,ལེགས་,2001
+17,bad,"nyes, ma-legs, ma ley, kyo kyo","nyes, ma-legs, ma ley, kyo kyo","ཉེས་, མ་ལེགས་, ཀྱོ་ཀྱོ་","ཉེས་, མ་ལེགས་, ཀྱོ་ཀྱོ་","2001, 2004 [2005]"
+18,understand,ha-gho,shesshhor,ཧ་གོ ,ཤེས་ཆོར་,2001
+19,know,khen,"shes, she",་མཁྱེན་,ཤེས་,2004 [2005]
+20,1,chig,chig,གཅིག་,གཅིག་,2001
+21,2,nyid,nyid,གཉིས་,གཉིས་,2001
+22,3,sum,sum,གསུམ་,གསུམ་,2001
+23,4,shi,shi,བཞི་,བཞི་,2001
+24,5,nga,nga,ལྔ་,ལྔ་,2001
+25,6,drug,drug,དྲུག་,དྲུག་,2001
+26,7,dun,dun,བདུན་,བདུན་,2001
+27,8,"ged, gyat","ged, gyat",བརྒྱད་,བརྒྱད་,"2001, 2004 [2005]"
+28,9,gu,gu,དགུ་,དགུ་,2001
+29,10,chu/ chu tampa,chu,བཅུ་/ ཐམ་པ་,བཅུ་ཐམ་པ་,2001
+30,11,chu-chig,chu-chig,བཅུ་གཅིག་,བཅུ་གཅིག་,2001
+31,12,chungi,chungi,བཅུ་གཉིས་,བཅུ་གཉིས་,2001
+32,13,chusum,chusum,བཅུ་གསུམ,བཅུ་གསུམ,2001
+33,14,chuzee,chuzee,བཅུ་བཞི་,བཅུ་བཞི་,2001
+34,15,chonga,chonga,བཅུ་ལྔ་,བཅུ་ལྔ་,2001
+35,16,chu drug,chu drug,བཅུ་དྲུག་,བཅུ་དྲུག་,2001
+36,17,chu dune,chu dune,་བཅུ་བདུན་,་བཅུ་བདུན་,2001
+37,18,chupgey,chupgey,བཅོ་བརྒྱད་,བཅོ་བརྒྱད་,2001
+38,19,chugu,chugu,བཅུ་དགུ་,བཅུ་དགུ་,2001
+39,20,"kechik, nyishu","kechik, nyishu",ཀེ་གཅིག་/ ཉི་ཤུ་,ཀེ་གཅིག་,2001
+40,100,gyacig,gyacig,བརྒྱ་གཅིག་,བརྒྱ་གཅིག་,BLDWG
+41,1000,tongtacig,tongtacig,སྟོང་ཏ་གཅིག་,སྟོང་ཏ་གཅིག་,BLDWG
+42,Mother,Yum,A ma,ཡུམ་,ཨ་མ་ལགས,2001
+43,Father,"Yab, Pa lags",A-ba,"ཡབ་་, པ་ལགས་",ཨ་བ་,2001
+44,Older sister,Aila,Ashi,ཨཻ་ལགས་,ཨ་ཞི་,2001
+45,Younger sister,,"Num, Busem",,"ནུམ, ་བུ་སིམ་",BLDWG
+46,Older brother,Agya,A chu,ཨ་རྒྱ་,ཨ་ཅུ་,2001
+47,Younger brother,Pillo,Pilbo,པི་ལཨོགས་,པི་ལཨོགས་,BLDWG
+48,Maternal aunt (younger),A nyi la,Ani,ཨ་ནི་ལགས་,ཨ་ཉི་,2001
+49,Paternal aunt (younger),Amchungla,Am chung,ཨམ་གཅུང་་ལགས་,ཨམ་གཅུང་,2001
+50,Maternal uncle (younger),"A shangla, Ajala","A shangs, Aja",ཨ་ཞང་་ལགས་,ཨ་ཞང་,2001
+51,Paternal uncle (younger),Akula,Aku,ཨ་ཀུ་་ལགས་,ཨ་ཀུ་,2001
+52,son,sres,bu,སྲས་,བུ་,2001
+53,daughter,"sem, srean",bumo ,སྲས་མོ་,བུ་མོ་,2001
+54,grandson,tsapyuk,tsapyuk,ཚ་ཕྱུག་,ཚ་ཕྱུག་,BLDWG
+55,granddaughter,tsam,tsam,ཚམ་,ཚམ་,BLDWG
+56,nephew,tsa-phyug,tsa-phyug,ཚ་ཕྱུག་,ཚ་ཕྱུག་,BLDWG
+57,niece,tsam,tsam,ཚམ་,ཚམ་,BLDWG
+58,great grandson,yangpuk,yangpuk,ཡང་ཕྱུག་,ཡང་ཕྱུག་,BLDWG
+59,,,,,,
+60,dog,kyi,kyi,ཁྱི་,ཁྱི་,2001
+61,cat,ali,ali,ཨལི་,ཨལི་,BLDWG
+62,cow,"ngo, bha",ngo,"ནོ་, ་བ་",ནོ་,2001
+63,bird,"pichung, bya",pichung,"བྱི་ཅུང་, , བྱ་",བྱི་ཅུང་,BLDWG
+64,pig,phag-ko,phag-ko,ཕག་ཀོ་,ཕག་ཀོ་,2001
+65,rat,pitsi,pitsi,བྱི་ཙི་,བྱི་ཙི་,2001
+66,animal,"seam chen, semcan","seam chen, semcan",སེམས ཅན་,སེམས ཅན་,2001
+67,fish,nya,nya,ཉ་,ཉ་,2001
+68,horse,ta,ta,རྟ་,རྟ་,BLDWG
+69,yak,yak,yak,གཡག་,གཡག་,BLDWG
+70,car,motor,lhang khor,མོ་ཏོ་,རླངས་འཁོར་,2001
+71,road,lam,lam,ལམ་,ལམ་,2001
+72,boat,chudrul,chudrul,ཆུ་གྲུ་,ཆུ་གྲུ་,2001
+73,hat,u-sha,"shamo, sham-bu",དབུ་ཞྭ་,"ཞྭ་མོ་, ཞམ་བུ་",2001
+74,clothing,namsa,kola,ནམ་བཟའ་,གོས་ལགས་,2001/ BLDWG
+75,head,u,go,དབུ་,མགོ་,BLDWG
+76,nose,shangs,na gug,ཤངས་,སྣ་གུག་,2001
+77,mouth,shal,kha,ཞལ་,ཁ་ ,2001
+78,eyes,"chan, chyan",mig,སྤྱན་,མིག,BLDWG
+79,tongue,jags,choe,ལྗགས་,ལྕེ་,2001
+80,hands,"chyag, chak",lag-ko,ཕྱག་ ,ལག་ཀོ་,2001
+81,feet,zhab,kang leb,ཞབས,རྐང་ལེབ་,"2001, 2004 [2005]"
+82,leg,zhab,khang po,ཞབས,རྐང་པོ་,"BLDWG, 2004 [2005]"
+83,arms,,lag-nya,,ལག་ཉ་,BLDWG
+84,body,"kuzu, kusu",lu,སྐུ་གཟུགས་,ལུས་,BLDWG
+85,brain,"lhethpo, let po, le po","lhethpo, let po, le po",ཀླད་པོ་,ཀླད་པོ་,"2001, 2004 [2005]"
+86,heart,donying,donying,དོ་སྙིང་,དོ་སྙིང་,2001
+87,blood,khyag,khyag,ཁྱག་,ཁྱག་,"2001, 2004 [2005]"
+88,sickness/illness,na,na,ན་,ན་,BLDWG
+89,shoulder,pungpo,pungpo,པུང་པོ་,པུང་པོ་,BLDWG
+90,elbow,kiling,kiling,ཀི་ལིང་,ཀི་ལིང་,2004 [2005]
+91,heel, tingpo, tingpo," ཏིན་པོ་, ", ཏིན་པོ་,2004 [2005]
+92,top,teng,teng,སྟེང་,སྟེང་,2001
+93,"down, lower, bottom",hog,hog,འོག་,འོག་,2001
+94,left,yoen,yoen,གཡོན་,གཡོན་,2001
+95,right,yas,yas,གཡས་,གཡས་,2001
+96,north,jyang,jyang,བྱང་,བྱང་,2001
+97,south,lho,lho,ལྷོ་,ལྷོ་,2001
+98,east ,shar,shar,ཤར་,ཤར་,2001
+99,west,Nub,Nub,ནུབ་,ནུབ་,BLDWG
+100,Monday,Zadawo,Zadawo,གཟའ་ཟླ་བ་,གཟའ་ཟླ་བ་,BLDWG
+101,Tuesday,Zamigmar,Zamigmar,གཟའ་མིག་དམར་,གཟའ་མིག་དམར་,BLDWG
+102,Wednesday,Zalhako,Zalhako,གཟའ་ལྷག་པ་,གཟའ་ལྷག་པ་,BLDWG
+103,Thursday,Zaphurbo,Zaphurbo,གའཟ་ཕུར་བུ་,གའཟ་ཕུར་བུ་,BLDWG
+104,Friday,Zapasang,Zapasang,གཟའ་པ་སངས་,གཟའ་པ་སངས་,BLDWG
+105,Saturday,Zapenpo,Zapenpo,གཟའ་སྤེན་པ་,གཟའ་སྤེན་པ་,BLDWG
+106,Sunday,Zanyima,Zanyima,གཟའཉི་མ་,གཟའཉི་མ་,BLDWG
+107,question,"dewa, kha di",,"དྲི་བ་, ཁ་འདྲི་",,2004 [2005]
+108,again,"yangkyar, log chen, log te ra",,"ཡང་སྐྱར་, ལོག་ཅན་, ལོག་ཏེ་ར་",,2001/ BLDWG
+109,all,"yongdom, yongzogs, thamcath",,"ཡོངས་བསྡོམ་, ཡོངས་རྫོགས་, ཐམས་ཅད་",,2001
+110,"further, still, even",darong,,ད་རོང་,,2001
+111,any,gandrey,,གན་འདྲེ་,གན་འདྲེ་,2001
+112,and,dang,,དང་,,BLDWG
+113,here,na,,ན་,,2001
+114,there,ona,,འོ་ན་,,BLDWG
+115,"he, they (gender neutral pronoun)",khong,kho,ཁོང་,ཁོ་,2001
+116,she,khong,mo,ཁོང་,མོ་,2001
+117,"they, them, themselves","khongtso, khocheg",,"ཁོང་ཚོ་, ཁོ་ཅག་",,2004 [2005]
+118,his,khong ki,khoi,ཁོང་གི་,ཁོའི་,BLDWG
+119,hers,khong ki,moi,ཁོང་གི་,མོའི་,BLDWG
+120,theirs,khongtsho ki,khongtshay,ཁོང་ཚོ་གི་,ཁོང་ཚོའི་,BLDWG
+121,later,gyabley,,གྱབ་ལས་,,BLDWG
+122,earlier,haley,,ཧ་ལས་,,BLDWG
+123,maybe,yintro,,ཡིན་ཏྲོ་,,BLDWG
+124,many,"key po, mang-po",key po,"ཀེས་པོ་་, མང་པོ་",ཀེས་པོ་་,2001
+125,few,nyoung,shulcig,ཉུང་,ཤུལ་ཅིག་,2001
+126,"close, shut",tsum,,བཙུམ་,,2001
+127,only,chuko,,ཅུ་ཀོ་,,BLDWG
+128,others,jomey,shen,ཇོ་མེ་,གཞན་,2001
+129,hard,"tag drag, thig",tag drag,"ཀྲག་དྲགས་, མཁྲེགས་",ཀྲག་དྲགས་,"2001, 2004 [2005]"
+130,soft,sop,,སོབ་,,2001
+131,some,khashes,lala,ཁ་ཤས་,ལ་ལ་,2001
+132,start,go,,འགོ་,,2001
+133,finish,"drup, dzog-po, lhag, droi",,"སྒྲུབ་, རྫོགས་པོ་, ལྷག. སྒྲོས་་","སྒྲུབ་, རྫོགས་པོ་","2001, 2004 [2005]"
+134,that person,odey mi,,འོད་དི་མི་,,BLDWG
+135,this person,di mi,,དི་མི་,,BLDWG
+136,those people,odey mitsho,,འོད་་དི་མི་ཙོ་,,BLDWG
+137,these people,di mitsho,,འདི་མི་ཙོ་,,BLDWG
+138,turn it off,sim,,སིམ་,,BLDWG
+139,light blue,ngo-kya,སྔོ་སྐྱ་,,,2001
+140,wait,zhu,gug,ཞུགས་,སྒུག་,BLDWG/ 2004[2005]
+141,places,yul,,ཡུལ་,,BLDWG
+142,"house, home",khyim,zim-khang,ཁྱིམ་,གཟིམ་ཁང་,2001
+143,bank,ngul-khang,,དངུལ་ཁང་,,BLDWG
+144,school,lhopdra,,སློབ་གྲྭ་,,2001
+145,hospital,men-khang,,སྨན་ཁང་,,2001
+146,city,grongkher,,གྲོང་ཁྱེར་,,BLDWG
+147,village,"gyong, kyong, gyang",,"གྱོང་, གྱང་",,2004 [2005]
+148,hotel,zim-khang,nyal-khang,གཟིམ་ཁང་,ངལ་ཁང་,2004 [2005]
+149,prison,tsan,,བཙན་,,2001
+150,monastery,"gonpo, gonpa, gompa",,དགོན་པོ་,དགོན་པོ་,2001
+151,church,yishu lhakhang,,ཡི་ཤུ་ལྷ་ཁང་,,BLDWG
+152,temple,lha khang,,ལྷ་ཁང་,,BLDWG
+153,restaurant,za-khang,,ཟ་ཁང་,,2001
+154,country,yule,,ཡུལ་,,2001
+155,time,khap,khap,སྐབས་,སྐབས་,2001
+156,year,gunglo,rab-lo (according to Tibetan calendar),དགུང་ལོ་,རབ་ལོ་,2001
+157,month,dawa,,ཟླ་བ་,,BLDWG
+158,week,dun-thak,,བདུན་ཕྲག་,,2001
+159,day,nyim,,ཉི་མ་,,BLDWG
+160,January,Yin lo Daw dangpo,,ཡིན་ལོ་ཟླ་བ་དང་པོ་,,BLDWG
+161,February,Yin lo Daw nyidpo,,ཡིན་ལོ་ཟླ་བ་གཉིས་པོ་,,BLDWG
+162,March,Yin lo daw sumpo,,ཡིན་ལོ་ཟླ་བ་གསུམ་པོ་,,BLDWG
+163,April,Yin lo daw shipo,,ཡིན་ལོ་ཟླ་བ་བཞི་པོ་,,BLDWG
+164,May,Yin lo daw ngapo,,ཡིན་ལོ་ཟླ་བ་ལྔ་པོ་,,BLDWG
+165,June,Yin lo daw druggo,,ཡིན་ལོ་ཟླ་བ་དྲུག་པོ་,,BLDWG
+166,July,Yin lo daw dunpo,,ཡིན་ལོ་ཟླ་བ་བདུན་པོ་,,BLDWG
+167,August,Yin lo daw gedpo,,ཡིན་ལོ་ཟླ་བ་བགྱད་པོ,,BLDWG
+168,September,Yin lo daw gupo,,ཡིན་ལོ་ཟླ་བ་དགུ་པོ་,,BLDWG
+169,October,Yin lo daw chupo,,ཡིན་ལོ་ཟླ་བ་བཅུ་པོ་,,BLDWG
+170,November,Yin lo daw chupchi,,ཡིན་ལོ་ཟླ་བ་བཅུ་གཅིག་པོ་,,BLDWG
+171,December,Yin lo daw chungi,,ཡིན་ལོ་ཟླ་བ་བཅུ་གཉིས་པོ་,,BLDWG
+172,The year 1000,Yishi di lo dongtra gcig,,ཡི་ཤུ་འདས་ལོ་སྟོང་ཕྲག་གཅིག་,,BLDWG
+173,The year 2000,Yishu di lo dongtra nyi,,ཡི་ཤུ་འདས་ལོ་སྟོང་ཕྲག་གཉིས་,,BLDWG
+174,The year 1910,Yishu di lo chigdong gubgya chu,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་བརྒྱ་བཅུ་,,BLDWG
+175,The year 1920,Yishu di lo chigdong gubgya nyishu,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་བརྒྱ་གཉིས་བཅུ་,,BLDWG
+176,The year 1930,Yishu di lo  chigdong gubgya sumchu,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་བརྒྱ་གསུམ་བཅུ་,,BLDWG
+177,the year 1940,Yishu di lo chigdong gubgya zhibchu,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་བརྒྱ་བཞི་བཅུ་,,BLDWG
+178,the year 1950,Yishu di lo chigdong gubgya ngachu,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་བརྒྱ་ལྔ་བཅུ་,,BLDWG
+179,the year 1960,Yishu di lo chigdong gubgya  drugchu,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་བརྒྱ་དྲུག་བཅུ་,,BLDWG
+180,the year 1970,Yishu di lo chigdong gubgya denchu,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་བརྒྱ་བདུན་བཅུ་,,BLDWG
+181,the year 1980,Yishu di lo chigdong gubgya gechu,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་བརྒྱད་བརྒྱད་བཅུ་,,BLDWG
+182,the year 1990,Yishu di lo chigdong gubgya gubchu,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་བརྒྱ་དགུ་བཅུ་,,BLDWG
+183,the year 2010,Yishu di lo nyidong chu,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཅུ་,,BLDWG
+184,the year 2020,Yishu di lo nyidong ngishu,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་གཉིས་བཅུ་,,BLDWG
+185,the year 1991,Yishu di lo chigdong gubgya gubchu go cig,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་གྱ་གོ་གཅིག་,,BLDWG
+186,the year 1992,Yishu di lo chigdong gubgya gubchu go nyi,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་གྱ་གོ་གཉིས་,,BLDWG
+187,the year1993,Yishu di lo chigdong gubgya gubchu go sum,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་གྱ་གོ་གསུམ་,,BLDWG
+188,1994,Yishu di lo chigdong gubgya gubchu go shi,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་གྱ་གོ་བཞི་,,BLDWG
+189,1995,Yishu di lo chigdong gubgya gubchu go nga,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་གྱ་གོ་ལྔ་,,BLDWG
+190,1996,Yishu di lo chigdong gubgya gubchu go drug,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་གྱ་གོ་འདྲུག་,,BLDWG
+191,1997,Yishu di lo chigdong gubgya gubchu go den,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་གྱ་གོ་བདུན་,,BLDWG
+192,1998,Yishu di lo chigdong gubgya gubchu go gey,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་བཅུ་བརྒྱད་བཅུ་,,BLDWG
+193,1999,Yishu di lo chigdong gubgya gubchu go gu,,ཡི་ཤུ་འདས་ལོ་གཅིག་སྟོང་དགུ་གྱ་གོ་དགུ་,,BLDWG
+194,2001,Yishu di lo nyidong chig,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་གཅིག་,,BLDWG
+195,2002,Yishu di lo nyidong nyi,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་གཉིས་,,BLDWG
+196,2003,Yishu di lo nyidongsum,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་གསུམ་,,BLDWG
+197,2004,Yishu di lo nyidongshi,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཞི་,,BLDWG
+198,2005,Yishu di lo nyidong nga,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་ལྔ་,,BLDWG
+199,2006,Yishu di lo nyidong drug,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་འདྲུག་,,BLDWG
+200,2007,Yishu di lo nyidong den,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བདུན་,,BLDWG
+201,2008,Yishu di lo nyidong gyad,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བརྒྱད་,,BLDWG
+202,2009,Yishu di lo nyidong gu,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་དགུ་,,BLDWG
+203,2011,Yishu di lo nyidong zhupcig,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཅུ་གཅིག་་,,BLDWG
+204,2012,Yishu di lo nyidong zhupnyi,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཅུ་གཉིས་,,BLDWG
+205,2013,Yishu di lo nyidong zhupsum,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཅུ་གསུམ་,,BLDWG
+206,2014,Yishu di lo nyidong zhupshi,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཅུ་བཞི་,,BLDWG
+207,2015,Yishu di lo nyidong chenga,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཅོ་ལྔ་,,BLDWG
+208,2016,Yishu di lo nyidong zhudrug,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཅུ་འདྲུག་,,BLDWG
+209,2017,Yishu di lo nyidong zhupden,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཅུ་བདུན་་,,BLDWG
+210,2018,Yishu di lo nyidong zhupgey,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཅོ་བརྒྱད་,,BLDWG
+211,2019,Yishu di lo nyidong zhupgu,,ཡི་ཤུ་འདས་ལོ་གཉིས་སྟོང་བཅུ་དགུ་,,BLDWG
+212,happened,tensa,,ཏེན་ས་,,BLDWG
+213,day,nyen,,ཉིན་,,2001
+214,morning,ngaru,shogs,སྔ་རུ་,ཞོགས་,2001
+215,afternoon,Nyim-ped,,ཉི་མ་ཕད་,,BLDWG
+216,"evening, dusk",thun-tsams,,ཐུན་མཚམས་,ཐུན་མཚམས་,2001
+217,night,shag,,ཞག་,,2001
+218,one o'clock,chhu-tshoth chig,,ཆུ་ཚོད་གཅིག་,,2001
+219,two o'clock,chhu-tshoth nyid,,ཆུ་ཚོད་གཉིས་,,2001
+220,three o'clock,chhu-tshoth sum,,ཆུ་ཚོད་གསུམ་,,2001
+221,four o'clock,chhu-tshoth shi,,ཆུ་ཚོད་གཞི་,,2001
+222,five o'clock,chhu-tshoth nga,,ཆུ་ཚོད་ལྔ་,,2001
+223,six o'clock,chhu-tshoth drug,,ཆུ་ཚོད་འདྲུག་,,2001
+224,seven o'clock,chhu-tshoth den,,ཆུ་ཚོད་དེན་,,2001
+225,eight o'clock,chhu-tshoth gey,,ཆུ་ཚོད་བརྒྱད་ ,,2001
+226,nine o 'clock,chhu-tshoth gu,,ཆུ་ཚོད་གུ་,,2001
+227,ten o'clock,chhu-tshoth chu,,ཆུ་ཚོད་བཅུ་,,2001
+228,eleven o'clock,chhu-tshoth chucig,,ཆུ་ཚོད་བཅུ་གཅིག་,,2001
+229,twelve o'clock,chhu-tshoth chunyi,,ཆུ་ཚོད་བཅུ་གཉིས་,,2001
+230,directions,choks,,ཕྱོགས་,,2001
+231,come,shog,shegs,ཤོག་,གཤེགས་,2001
+232,go,chen,shegs,ཆེན་,གཤེགས་,2001
+233,leave,gom shu she,log gyu she,གོམ་ཤུ་ཤེ་,ལོག་གྱུ་ཤེ་,BLDWG
+234,"take, lead, accept",len,"khyig, thit",ལེན་,"ཁྱིག་, འཁྲིད་","2001, 2004 [2005]"
+235,eat,zhe,za,ཞེས་,ཟ་,2001
+236,drink,zhe,thung,ཞེས་,འཐུང་,2001
+237,get up,shangs,Long,བཞངས་,ལོང་,2001
+238,sleep,zim,nyal,ཟིམ་,ཉལ་,BLDWG
+239,,,,,,
+240,hold,she ,she,ཤེ་,ཤེ་,BLDWG
+241,lie , zim,nyi,ས་ཀ་ཟིམ་,ས་ཀ་ཉི་,BLDWG
+242,listen,nyenbo,senpo,ཉན་བོ་,གསན་པོ་,2001
+243,speak,songbona,lap,གསུངས་བོ་ན་,ལབ་བོ་ན་,BLDWG
+244,be quiet,,"ur ma gyab, kha tsum",,"ཨུར་མ་གྱབ་, ཁ་ཚུམ་",BLDWG
+245,run,Gyuk,Gyuk,གྱུག་,གྱུག་,BLDWG
+246,sit,zhu,den,ཞུགས་,དེན་,BLDWG
+247,stand,yarshangs,longs,ཡར་བཞངས་,ལོངས་,2001
+248,walk - to talk,"gompo, ghom po",,"བགོམ་པོ་,  གོམ་པོ་",བགོམ་པོ་,"2001, 2004 [2005]"
+249,tell,song,lap,གསུངས་,ལབ་,BLDWG
+250,mud,dam-pa,,འདམ་པག་,འདམ་པག་,2001
+251,dirt,drag-ka,,དྲག་ཀ་,,2001
+252,earth,sashi,,ས་གཞི་,,2001
+253,dust,teou,,ཐེའོ་,,BLDWG
+254,fire,mea,,མེ་,,2001
+255,grass,yusm,,ཡུས་མ་,,2001
+256,plant,shing,,ཤིང་,,BLDWG
+257,hail,so,,སོ་,,BLDWG
+258,"ice, snow","kawo, khawo",,ཁ་བོ་,,2004 [2005]
+259,metal,chak,,ལྕགས་,,BLDWG
+260,liquid,chu,,ཆུ་,,BLDWG
+261,water,chu,chhab,ཆུ་,ཆབ་,2001
+262,moon,dawa,,ཟླ་བ་,,2001
+263,sun,nyema,,ཉི་མ་,,2001
+264,rock,do,,རྡོ་,,BLDWG
+265,rainbow,ja,,འཇའ་,འཇའ་,2001
+266,sky,kha,,མཁའ་,,2001
+267,star,karma,,ཀ་རྨ་,,2004 [2005]
+268,tree,shing,,ཤིང་,,2001
+269,wind,lhung-ma,,རླུང་མ་,,2001
+270,rain,chhar-po,,ཆར་པོ་,,2001
+271,"seasons, period of time, era",dhue-tsams,,དུས་ཚམས་,,2001
+272,summer,byar,,དབྱར་,,2001
+273,winter,"guen, gun",souka,དགུན་,སེ་ཀ་,"2001, 2004 [2005]"
+274,autumn,toenka,,སྟོན་ཀ་,སྟོན་ཀ་,2001
+275,spring,"chika, cheka",,དཔྱིད་ཀ་,,2001
+276,appearance,"zhota, zob-tra",,བཟོ་ལྟ་,,2001
+277,colour,dog,,མདོག་,མདོག་,2001
+278,red,mar-po,,དམར་པོ་,,2001
+279,black,nakku,,ནགས་གོ་,,BLDWG
+280,white,"kar, karpo","kar, karpo","དཀར་, དཀར་པོ་","དཀར་, དཀར་པོ་",2001
+281,yellow,searpo,,སེར་པོ་,,2001
+282,blue,ngon po,,སྔོན་པོ་,,2004 [2005]
+283,orange,tsalum,,ཚ་ལུམ་,,2001
+284,green,jang-ku,,ལྗང་ཀུ་,,2001
+285,purple,"gya-muk, gya mug",,རྒྱ་མུག་,,2001
+286,pink,mar-khya,,དམར་སྐྱ་,,2001
+287,silver,ngul,,དངུལ་,,BLDWG
+288,gold,ser,,གསེར་,,2001
+289,brown,mug po,,སྨྱུག་པོ་,,BLDWG
+290,humans,mi,,མི་,,BLDWG
+291,"progress, develop",yargay,,ཡར་རྒྱས་,,BLDWG
+292,same,dra-o,,འདྲ་བོ་,,BLDWG
+293,different,khet,,ཁྱད་,,2004 [2005]
+294,content,kar chhag,,ཀར་ཆག་,,2004 [2005]
+295,mouse,ding-jing,,དིང་ཇིང་,,BLDWG
+296,rat,byi-tsi,,བྱི་ཙི་,,2001
+297,fox,"wa, wam",,"ཝ་, ལྦམ་, ལྦ",,2001
+298,deer,sha-ow,,ཤ་བོ་,,2001
+299,bear,dhom,,དོམ་,,2001
+300,snake,byew,,སྦྱིའུ་,,2001
+301,scorpion,"dik sing, dig shing",,སྡིག་སྲིང་,,BLDWG
+302,spider,bag-rag,,བག་ཧྲག་,,2001
+303,ant,gyuma,,གྱུ་མ་, ,BLDWG
+304,mosquito,"cha phi, chafi, dhug-byam",,"ཅ་ཕྱི་, དུག་སྦྱམ་",,"2001, 2004 [2005]"
+305,butterfly,byam lab,,སྦྱམ་ལྷབ་,,BLDWG
+306,cold,"khyag, khyag",,"ཁྱག་, ཁྱག་",,"2001, 2004 [2005]"
+307,hot,tsha drag,,ཚ་དྲགས་,,2001
+308,rain,"chab, char, charpo",,"ཆབ་, ཆར་, ཆར་པོ་",,BLDWG
+309,snow,"kawo, kao",,ཁ་བོ་,,BLDWG
+310,windy,lung-ma,,རླུང་མ་,,BLDWG
+311,sunny,nyim shar ,,ཉི་མ་ཤར་,,BLDWG
+312,"hygiene, cleanliness, free from dirt, clean","tsang-mu, zangmo",,གཙང་མུ་,,BLDWG
+313,wash,sil,kyu,བསིལ་,ཁྱུ་,BLDWG
+314,small plate,lichung,,ལི་ཆུང་,,2001
+315,"couple, married couple","zatsang, zaku",,"བཟའ་ཚང་, བཟའ་ཀོ་",,2001
+316,shoes,zhab ja,lham,ཞབས་ཆ་,ལྷམ་,2001
+317,bag,surgeb,geb,སུར་གྱབ་,"གྱབ་, འགེབ་","2001, 2004 [2005]"
+318,small,chung,,ཆུང་,,2004 [2005]
+319,mirror,me-long,,མེ་ལོང་,,BLDWG
+320,"research center, institute",nyamship-khang,,ཉམ་ཞིབ་ཁང་,,2001
+321,"necessary, need[ed], want[ed]","kho, gopo",,"མཁོ་, དགོས་པོ་",,2004 [2005]
+322,fragrance,,drim,དྲིམ་,,BLDWG
+323,"ill motive, nlack hearted",nyingngag,,ཉིང་ནག་,,2001
+324,cheese,chhus,,ཆུར་,,2004 [2005]
+325,"towel, napkin, hankerchief",,toras,,ལྟོས་རས་,2001
+326,"cook, make food",tso,,བཙོ་,,2001
+327,vegetables,tshom,,ཚོད་མ་,,2001
+328,beans,chamta,tibig,ལྕམ་ཏ་,ཏི་བིག་,2001
+329,corn,"ken chong, kensong",,ཀེན་ཙོང་,,2004 [2005]
+330,cucumber,"gha nyon, kanyu",,ག་ཉོན་,,2004 [2005]
+331,"potato, edible root","kyeu, kihu",,"ཀྱའུ་, ཀིའུ་",,2004 [2005]
+332,tomato,benda,,བེན་ད་,,BLDWG
+333,onion,tsong,o chong,ཙོང་,ཨོ་ཅོང་,2001
+334,mole,meo,,རྨེ་བོ་,,2001
+335,squash,iskus,,ཨིས་ཀུས་,,BLDWG
+336,rice,chum,do,ཆུམ་,དོ་,2004 [2005]; BLDWG
+337,noodle,gyathug,,རྒྱ་ཐུག་,རྒྱ་ཐུག་,2001
+338,dumpling,zhe-mo,mo-mo,བཞེས་མོགས་,མོགས་མོགས་,BLDWG
+339,apple,kushu,,ཀུ་ཤུ་,,2004 [2005]
+340,sweet,"gnam, nam",,མངམ་,,2004 [2005]
+341,snacks,"dzo, jo",,ཛ་བོ་,,2001
+342,orangle,sa-lum,,ཚ་ལུམ་,,2001
+343,beer,sui-chhang,chang,སུའི་ཆང་,ཆང་,BLDWG
+344,tea,ja,,ཇ་,,2001
+345,coffee,co-fi,,ཀོ་ཕི་,ཀོ་ཕི་,BLDWG
+346,wild roots,nangtsan kyu,,ནང་ཙན་ཀུའུ་,,BLDWG
+347,meat,sha,,ཤ་,,2001
+348,chicken meat,bya sha,,བྱ་ཤ་,,BLDWG
+349,fish meat,nya  sha,,ཉ་ཤ་,,2001
+350,mutton (goat meat),rasha,, ་ར་ཤ་,,2001
+351,mutton (sheep) sha,lug-sha,,ལུག་ཤ་,,2001
+352,beef,lang-sha,,གླང་ཤ་,,2004 [2005]
+353,"vegetarian, green leafy vegetable",ngo-tshoth,,སྔོ་ཚོད་,,2001
+354,food,shal lag,"to, zan ",ཞལ་ལག་,"ལྟོ་, ཟན་",2001
+355,Buddhist monastery,Nang po'i gonpa,,ནང་པོའི་དགོན་པ་,,BLDWG
+356,Christian church,Yishu lhakhang,,ཡི་ཤུ་ལྷ་ཁང་,,BLDWG
+357,Hindu mandir,Hindu lhakhang,,ཧིན་དུ་ལྷ་ཁང་,,BLDWG
+358,Sikh gurudwara,Sikh ki lhakhang,,སིགྷ་ལྷ་ཁང་,,BLDWG
+359,Muslim mosque,Muslim lhakhang,,མུས་ལིམ་ལྷ་ཁང་,,BLDWG
+360,form of knowledge,rig gney,,རིག་གནས་,,BLDWG
+361,agriculture,sonam,,"ས་ནམས་,ས་ནམ་",,2001
+362,archaeology,nangorigney,,གནའ་དངོས་རིག་གནས་,,Goldstein and Narkyid.
+363,architecture,tsikdzorikney,,རྩིག་བཟོ་རིག་གནས་,,Goldstein and Narkyid.
+364,astronomy,gyukarrikney,,རྒྱུ་དཀར་རིག་གནས་,,Goldstein and Narkyid.
+365,biology,Kengorigney,,སྐྱེས་དངོ་རིག་གནས་,,Goldstein and Narkyid.
+366,botany,tsishingrigney,,རྩི་ཤིང་རིག་གནས་,,Goldstein and Narkyid.
+367,cosmology,,,,,
+368,chemistry,dzey-gyur,,རྫས་གྱུར་,,2001
+369,drama,do-gar,,ཟློ་གར་,,Goldstein and Narkyid.
+370,ecology,khoryugrigney,,འཁོར་ཡུག་རིགས་གནས་,,BLDWG
+371,economics,paljorrigney,,དཔལ་འབྱོར་རིག་གནས་,,Goldstein and Narkyid.
+372,ethics,tshultrimrigney,,ཚུལ་ཁྲིམས་རིགས་གནས་,,BLDWG
+373,engineering,,,,,
+374,geography,sazhirigney,,ས་གཞི་རིག་གནས་,,BLDWG
+375,geology,sashi,,ས་གཞིས་,,2001
+376,history,log-gues,,ལོ་རྒྱུས་,,2001
+377,horticulture,ngotshalrigney,,སྔོ་ཚལ་རིགས་གནས་,,Goldstein and Narkyid.
+378,law,chatrim,,བཅ་ཁྲིམས་,,2001
+379,literature,tsomrig,,རྩོམ་རིག་,,2001
+380,mathematics,angtsi,,ཨང་རྩིས་,,2001
+381,philosophy,tshen-rig,,མཚན་རིག་,,2001
+382,physics,,,,,
+383,psychology,seamkham,,སེམས་ཁམས་,,2001
+384,sociology,milugrigney,,མི་ལུགས་རིགས་གནས་,,BLDWG
+385,grammar,bya-ka-ran,,བྱ་ཀ་རན་,,2001
+386,medicine,men-rik,,སྨན་རིགས་,,BLDWG
+387,zoology/ veterinary science,seams chen rigney,,སེམས་ཅན་རིགས་གནས་,,BLDWG
+388,queen,gyal mo,,རྒྱལ་མོ་,,2004 [2005]
+389,king,"gyal-po, chos-rgyal, zhung-kyang",,"རྒྱལ་པོ་, ཆོས་རྒྱལ་, གཞུངས་སྐྱང་",,2004 [2005]
+390,prime minister,srea-lon,,སྲིད་བློན་,,2001
+391,minister,ka lon,lhon-po,བཀའ་བློན་,བློན་པོ་,"2001, 2004 [2005]"
+392,Judge,khrimdag/ khrimpon,,ཁྲིམ་བདག་/ ཁྲིམ་དཔོན་,,2001
+393,advocate,,,,,
+394,Director,,,,,
+395,Governor,sreth kyong,,སྲིད་སྐྱོངས་,,2001
+396,President,srhezing,,སྲིད་འཛིན་,,2001
+397,"pot, vessel",,"dzama, dzam",,"རྫ་མ་, རྫམ་",2001
+398,writer/ clerk,tsom-poen/ drung-yig,,"རྩོམ་དཔོན་, དྲུང་ཡིག་",,2001
+399,household objects,,khyim ki charkar,,ཁྱིམ་གི་ཆ་ཀར་,BLDWG
+400,"stove, fireplace",thab,,ཐབ་,,BLDWG
+401,cup,"pob, kar-yol",,"པོབ་, ཀར་ཡོལ་",,"BLDWG, 2001"
+402,pan,lhanga,,སླ་རྔ་,,2001
+403,gas,lungthab,,རླུང་ཐབ་,,BLDWG
+404,knife,"gye-chung, gyi chung",,གྱི་ཅུང་,,"2001, 2004 [2005]"
+405,kettle,jam bim,,རྫམ་བིམ་,,2001
+406,plate,li dir,,ལི་སྡིར་,,BLDWG
+407,spoon,zhe-thoom,thoom,ཞེས་མཐུམ་,མཐུམ་,2001
+408,tea strainer,ja tsa,,ཇ་ཙ་,,BLDWG
+409,water container,,"dzama, dzam",,"རྫ་མ་, རྫམ་",2001
+410,time,"kab, du tshu",,སྐབས་,,2004 [2005]
+411,tomorrow,thong-rangs,sang,ཐོ་རངས་,སང་,2001
+412,before last year,shosning,,གཞོས་ནིང་,,2001
+413,last year,na-ning,,ན་ཉིང་,ན་ཉིང་,2001
+414,today,dha-ring,,ད་རིང་,ད་རིང་,2001
+415,this year,dhyu-chig,,དུ་ཅིག་,,2001
+416,day before yesterday,kha-nup,,ཁ་ནུབ་,,2001
+417,yesterday,"kha-sang, dang",,"ཁ་སང་, མདང་","ཁ་སང་, མདང་",2001
+418,day after tomorrow,nan tsi,,གནངས་ཚེ་,,2001
+419,in the future,gyabley,,གྱབ་ལས་,,BLDWG
+420,a long time a go,dang po ngon lay,,དང་པོ་སྔོན་ལས་,,BLDWG
+421,hour,chu tsod,,ཆུ་ཚོད་,,2001
+422,minute,karmo,karmo,སྐར་མོ་,སྐར་མོ་,2001
+423,second,karcha,,སྐར་ཆ་,,BLDWG
+424,same,chig ko,,གཅིག་ཀོ་,,2004 [2005]
+425,next year,sangphoth,,"སང་ཕོད་, སང་སྤོད་",,2001
+426,right now,da tho,,ད་ལྟོ་,,BLDWG
+427,knowledge,khyenbo,yea-shes,མཁྱེན་བོ་,ཡེ་ཤེས་,2001
+428,"custom, system, way, procedure","gyen-rab, do lug",,འགྲོ་ལུགས་,,2004 [2005]
+429,story,sungtam,,གསུང་གཏམ་,,2001
+430,book,deb,,དེབ་,,2001
+431,classes,dzintra,,འཛིན་ཁྲ་,,BLDWG
+432,"learn, study, read",chos dok,,ཆོས་སྒྲོག་,,2004 [2005]
+433,internet,drawa,,དྲ་བ་,,BLDWG
+434,place,"lung-po, ne",,"ལུང་པོ་, གནས་",,2001
+435,environment,khor yog,,འཁོར་ཡུག་,,2004 [2005]
+436,ocean,gyatso,,རྒྱ་མཚོ་,རྒྱ་མཚོ་,2001
+437,river,tsang-chhu,,གཙང་ཆུ་,,2001
+438,stream,kyong,,ཀྱོང་,,BLDWG
+439,mountain,"ghang, ghangri","ghang, ghangri","གངས་, གངས་རི་","གངས་, གངས་རི་",2004 [2005]
+440,hills,ri,ri,རི་,རི་,BLDWG
+441,plains,thang,thang,ཐང་,ཐང་,BLDWG
+442,wetland,"dam jab, dam job",,"བསྡམ་རྫབ་, བསྡམ་རྫོབ་",,BLDWG
+443,"forest, jungle",nagstsan,shingnags,ནགས་ཙན་,ཤིང་ནགས་,2001
+444,tree,shingdong,,ཤིངས་སྡོང་,,2001
+445,sand,bem,,བྱེམ་,,BLDWG
+446,flower,me-tog,,མེ་ཏོག་,,2001
+447,actions,ley,yog,ལས་,གཡོག་,BLDWG
+448,think,gongpo,gongpo,དགོངས་པོ་,དགོངས་པོ་,2001
+449,see,thong-po,,མཐོང་པོ་,,2001
+450,look,zhigs,ta,གཟིགས་,ལྟ་,2001
+451,talk,sung,lap,གསུང་,ལ་པ,2001
+452,sit,shughs,den,བཞུགས་,སྡོད་,2001
+453,walk,chen,gyu,བྱོན་,རྒྱུ་,BLDWG
+454,stand,shang,long,ཞང་,ལོང་,BLDWG
+455,lie down,nyal,,སྙལ་,,2001
+456,run,gyug,,རྒྱུགས་,,BLDWG
+457,sleep,zim,nyal,གཟིམ་,ཉལ་,2001
+458,practice,laglen,,ལག་ལེན་,,2001
+459,be concerned with,thu dug,sem dug,ཐུགས་དུག་,སེམས་དུག་,BLDWG
+460,care about,gatsho,,དགའ་ཚོ་,,BLDWG
+461,happy,"gawa, ga",," དགའ་བ་, དགའ་,",,2001
+462,like/ be pleased,gakyith,,དགའ་སྐྱིད་,,2001
+463,love,chaepo,shen,གཅེས་པོ་,"གཅེས་པོ་, ཞེན་",2001
+464,hate,she-dhang,,ཞེ་སྡང་,,2001
+465,funny (amusing),gyalrolong cici,,གྱལ་རོ་ལོང་ཅི་ཅི་,,BLDWG
+466,sad,kyo,"yeth-khyo, seamkhyo",སྐྱོ་,"ཡིད་སྐྱོ་, སེམས་སྐྱོ་",2001
+467,despair,kyom,,སྐྱོམ་,,2004 [2005]
+468,annoying,tsingcici,,ཙིང་ཅི་ཅི་,,BLDWG
+469,anger,"tsigko, thong tho, thawo",,"ཚིག་ཀོ་, ཁོང་ཁྲོ་, ཁྲོ་བོ་",,2001. 2004 [2005]
+470,peaceful,shi-wa,,ཞི་བ་,,2001
+471,examine,"cheyth, shipchath",,"དཔྱད་, ཞིབ་བཅད་",,2001
+472,explore,tshur she,,ཚུར་ཤེ་,,BLDWG
+473,"ask, ask to do","lhongpo, kul bo",,"སློང་པོ་, སྐུལ་བོ་",,"2001, 2004 [2005]"
+474,look for/ seek,tshole,,འཚོལ་,,2001
+475,to obtain,drup,lone,གྲུབ་,ལོན་,2001
+476,throw away/ cast off,"tokko, ko she",,"ཏོག་ཀོ་, གོ་ཤེ་",,BLDWG
+477,common,thunmong,,ཐུན་མོང་,,BLDWG
+478,rare,kon po,,ཀོན་པོ་,,BLDWG
+479,beautiful,"dze po, dza cici",,"མཛད་པོ་, ཛ་ཅི་ཅི་",,2001
+480,intelligent,"rig-chen, khenbo, gyugchen",,"རིག་ཅན་, མཁན་བོ་, རྒྱུགས་ཅན་",,"2001, 2004 [2005]"
+481,ugly,ma-lep,,མ་ལེཔ་,,BLDWG
+482,"unpleasant, evil",ngen po,,ངན་པོ་,,BLDWG
+483,fat,"gyag, gyatgtom",,"རྒྱགས་, རྒྱགས་ཏོམ་",,2004 [2005]
+484,thin,biko,,བི་ཀོ་,,BLDWG
+485,plain,drang po,,དྲང་པོ་,,BLDWG
+486,flashy,a ci ci,,ཨ་ཅི་ཅི་,,BLDWG
+487,"level, floor",thog,,ཐོག་,,2001
+488,"fair, simple",drang-po,,དྲང་པོ་,,2001
+489,not fair,drang-po me,,དྲང་པོ་མེད་,,BLDWG
+490,"produce, make",dzo,,ཛོད་,,BLDWG
+491,weak,lingling,,ལིང་ལིང་,,BLDWG
+492,strong,dingding,,དིང་དིང་,,BLDWG
+493,be unproductive,shel-lo,,ཤེ་ལོགས་,,BLDWG
+494,"labour, work",lea,,ལས་,,2001
+495,hardworking,u-tshog,,ཨུ་ཚོག་,,BLDWG
+496,lazy,she-log,,ཞེ་ལོག་,,2001
+497,live,"tshe, zhu",den,"ཚེ་, ཞུགས་",དེན་,BLDWG
+498,travel,due,, འགྲུལ་,,2004 [2005]
+499,die,drong,"chi, shi",གྲོངས་,"འཆི་, ཤི་",2001
+500,be born,kyiwa,"khrung, thung",སྐྱེ་བ་,འཁྲུངས་,"2001, 2004 [2005]"
+501,inspire,salba,,གསལ་བ་,,BLDWG
+502,"wander, roam",,khyam,,"ཁྱམ་, འཁྱམས་",2004 [2005]
+503,insist,nyakya,,ཉ་ཀྱ་,,BLDWG
+504,frequent,atara,,ཨ་ཏ་ར་,,BLDWG
+505,rare,kentra,,ཀེན་ཏྲ་,,BLDWG
+506,"skill, expertise, talent",keytra,,རྩལ་,,2001
+507,poor,byangka,,བྱང་ཀ་,,BLDWG
+508,rich,pyiku,,པྱི་ཀུ་,,BLDWG
+509,spiritual,chos sem,,ཆོས་སེམས་,,BLDWG
+510,short temper,tsinglug,,ཙིང་ལུགས་,,BLDWG
+511,good temper,shiwa,,ཞི་བ་,,BLDWG
+512,point of view/ perspective,"dazang, ngosam",,"ད་སང་, ངོ་ཙམ་",,BLDWG
+513,mind/ heart,"seam, sem",seam ngith,སེམས་,སེམས་ཉིད་,2001
+514,opinion,samcha,,བསམ་ཆ་,,2001
+515,idea,samchar,,བསམ་འཆར་,,2001
+516,friend,"drogko (male), drome (female)",,གྲོགས་ཀོ་ / གྲོགམ་,,2001
+517,enemy,dra,,དགྲ་,,2001
+518,know (a person),ngo-khen,ngo-shes,ངོ་མཁྱེན་,ངོ་ཤེས་,BLDWG
+519,not know (a person),ngo-mi-khen,ngo-mi-shes,ངོ་མི་མཁྱེན་,ངོ་མི་ཤེས་,BLDWG
+520,understanding,gotog,sam shes,གོ་རྟོགས་,བསམ་ཤེས་,2001
+521,not understand,shu she me,ha-min-go,སུ་ཤེས་མེད་,ཧ་མིང་གོ་,BLDWG
+522,equal,nyamchung,,ཉམ་ཆུང་,,BLDWG
+523,bored,she-log,,ཤེ་ལོགས་,,BLDWG
+524,"arrogant, prideful",nga-gyal,,ང་རྒྱལ་,ང་རྒྱལ་,2001
+525,excited,gatrashe,,དགའ་ཏྲ་ཤེས་,,BLDWG
+526,interested,"shesdoth, seamsa",,ཤེས་འདོད་,,2001
+527,attitude,sam chog,,བསམ་ཕྱོགས་,,2001
+528,weigh,je,,ཇེ་,,BLDWG
+529,fit,shong,,ཤོང་,,BLDWG
+530,not fit,mi-shong,,མི་ཤོང་,,BLDWG
+531,appropriate,"tshathag choth, tshung-po",,"ཚ་ཐག་ཆོད, མཚུངས་པོ་་",,2001
+532,not appropriate,,tshung-po med,,ཚུངས་པོ་མེད་,BLDWG
+533,oppress,nem,,ནེམ་,,BLDWG
+534,liberate,thar,,མཐར་,,BLDWG
+535,complain,,,,,BLDWG
+536,boast,nga-gyal,,ང་རྒྱལ་,,BLDWG
+537,praise,toeth,,སྟོད་,,2001
+538,celebrate,sung,,སུང་,,BLDWG
+539,"give, bestow",pe she,,པེ་ཤེས་,,BLDWG
+540,provoke,nye-ta,,ཉེ་ཏ་,,BLDWG
+541,not take responsibility,ke ma ley,,ཀེ་མ་ལེགས་,,BLDWG
+542,"take responsibility, responsibility, duty","ke, gen",,"ཀེ་, འགན་",,2004 [2005]
+543,expand,par che,,པར་ཆེ་,,BLDWG
+544,destroy,"lhags-sheth, chag-sheth, lhag",sig,"རླགས་ཤད་, ཀླག་",ཤིགས་,"2001, 2004 [2005]"
+545,laugh,goet,,"དགོད་, རྒོད་",,2004 [2005]
+546,cry,"ngu, gnu",shums,ངུ་,"ཤུམས་, བཤུམས་",2001. 2004 [2005]
+547,respect,"kur, tsi, ghue","gue-shap, she-sa","བཀུར་, བརྩི་, གུས་","གུས་ཞབས་, ཞེ་ས་","2001, 2004 [2005]"
+548,disrespect,tsi meth,,རྩི་མེད་,,2001
+549,help,rogsram,,རོགས་རམ་,,2001
+550,hungry,trespo,trespo,བཀྲེས་པོ་,བཀྲེས་པོ་,2001
+551,throat,"kea, koem, gul",,"སྐེ་, སྐོསམ་, མགུལ་",,"2001 , 2004 [2005]"
+552,about/ topic,kor,kor,སྐོར་,སྐོར་,2001
+553,hair,u-ta,kya,,ཀྱ་,2001
+554,"poop, stool, excrement",kham sang,kyako,ཁམས་སང་,སྐྱག་ཀོ་,"2001, 2004 [2005]"
+555,thirsty,,"khom, kha khom",,"སྐོམ་, ཁ་སྐོམ་",2001. 2004 [2005]
+556,gift,"khyom, khyum",,"འཁྱོམས་, འཁྱོམ་","འཁྱོམས་, འཁྱོམ་","2001 , 2004 [2005]"
+557,important,"gay-chi-tag, gay-chen, ghael chen",,གལ་ཆེ་དྲགས་,,"2001 , 2004 [2005]"
+558,"yourself, you all","gu-chag, ghu chag",,གུ་ཅག་,,"2001 , 2004 [2005]"
+559,"defilement, contamination, pollution",drip,,གྲིབ་,,2001
+560,"change, increase","gyur-wa, phar",,"འགྱུར་བ་, འཕར་",འགྱུར་བ་,2001
+561,"money, silver, currency",ngul,,ངུལ་,ངུལ་,2001
+562,forget,jeth po,,བརྗོད་པོ་,བརྗོད་པོ་,2001
+563,"obstacle, blunder, problem",nyogtra,,རྙོག་ཁྲ་,,2001
+564,"compassion, love, kindness","nyining zie, nyinje, kadin",,"སྙིང་རྗེ་, བཀའ་དྲིན་",སྙིང་རྗེ་,"2001 , 2004 [2005]"
+565,"strength, forve","top, khoe ka",,"སྟོབས་, འཁོས་ཀ་",,"2001, 2004 [2005]"
+566,weaken/ powerless,topchung,,སྟོབས་ཆུང་,,2001
+567,"all, totality of things, plural","tham-chath, kun",,"ཐམས་ཅད་, ཀུན་","ཐམས་ཅད་, ཀུན་",2001
+568,"now, at the moment",da-ta,,ད་ལྟ་,,2001
+569,"further, still",dha-rung,,ད་རུང་,ད་རུང་,2001
+570,"first, before",dhang-po,,དང་པོ་,དང་པོ་,2001
+571,monsoon,dhues lhungs,,དུས་རླུངས་,,2001
+572,these days,dhing sang,,དེང་སང་,,2001
+573,smell,drim,,དྲིམ་,,2001
+574,this,di,,འདི་,,2001
+575,"to have, is",dug,,འདུག་,,2001
+576,clothes,nam za,,ནམ་བཟའ་,,2001
+577,ear,nam chog,,རྣམ་ཅོག་,,2001
+578,"obstacle, obstruction","bar-cheth, barchay",,བར་ཆད་,,2001
+579,"dictionary, glossary",tsigzoth,,ཚིག་མཛོད་,,2001
+580,business,tshong,,ཚོང་,,2001
+581,lake,tsho,,མཚོ་,,2001
+582,excellent,zick-dak,,རྫིགས་དྲགས་,,2001
+583,"cautious, attentive",zhap zhap,,གཟབ་གཟབ་,,2001
+584,"power, force",shugs,,ཤུགས་,,2001
+585,grandfather,a zoe,,ཨ་ཇོ་བོ་,,2001
+586,grandmother,a nyo,,ཨ་ཉོ་,,2001
+587,offering bowl/ plate,katora,,ཀ་ཏོ་ར་,,2004 [2005]
+588,"pillar, column",kawa,,ཀ་བ་,,2004 [2005]
+589,cotton fibre,kawo,,ཀ་བོ་,,2004 [2005]
+590,alphabet [for Bhutia/Lhokyed and Tibetan),kayig sum chu,,"ཀ་ཡིག་སུམ་ཅུ་, ཀ་ཡིག་གསུམ་བཅུ་",,2004 [2005]
+591,dry,kam,,ཀམ་,,2004 [2005]
+592,"tick, lice",kishig,,ཀི་ཤིག་,,2004 [2005]
+593,"equality, even",kun nyam,,ཀུན་མཉམ་,,2004 [2005]
+594,benefit all,kun phen,,ཀུན་ཕན་,,2004 [2005]
+595,"to reach, re return",kesong,,སྐེ་སོང་,,2004 [2005]
+596,banana,kedong,,ཀེ་སྡོང་,,2004 [2005]
+597,fern,kem,,ཀེམ་,,2004 [2005]
+598,fern shoot,ketchot,,ཀེས་ཚོད་,,2004 [2005]
+599,fern plant,keshing,,ཀེས་ཤིང་,,2004 [2005]
+600,"cunning, clever, naughty",kya hu,,"ཀྱག་ཧུ་, སྐྱ་ཧུ་",,2004 [2005]
+601,"irritating, bad, agitating","kyom, kha khyom",,"ཀྱོམ་, ཁ་སྐྱོམ་",,2004 [2005]
+602,"read, study",log,,ཀློག་,,2004 [2005]
+603,difficult,"ka , ka le, ghag shog, ghah dag",,"དཀའ་, དཀའ་ལས་, གག་ཤོག་, གག་དྲགས་",,2004 [2005]
+604,"to fill up, to pour","kang, kong",,"བཀང་, སྐོང་",,2004 [2005]
+605,"consent, approve","ka se, dig ko",,"བཀའ་གསེས་, འགྲིགས་གོ་",,2004 [2005]
+606,"meeting, discussion",kamol,,བཀའ་མོལ་,,2004 [2005]
+607,"advice, instruction","kalob, kotpo",,"བཀའ་སློབ་, བཀོད་པོ་",,2004 [2005]
+608,"good luck, congratulations, good wishes",tashi delek,,བཀྲ་ཤིས་བདེ་ལེགས་,,2004 [2005]
+609,"reason, cause",kyen,,རྐྱེན་,,2004 [2005]
+610,"speech, voice, sound",ket,,སྐད་,,2004 [2005]
+611,body,"ku, ku jug",,"སྐུ་, སྐུ་གཟུགས་",,2004 [2005]
+612,sour,kyum,,སྐྱུམ་,,2004 [2005]
+613,"saying, idiom",khatam,,ཁ་གཏམ་,,2004 [2005]
+614,bad speech,kha nen,,ཁ་ངན་,,2004 [2005]
+615,teeth,khaso,,ཁ་སོ་,,2004 [2005]
+616,"personality, character",kham shi,,ཁམ་གཤིས་,,2004 [2005]
+617,special,khyet chen,,ཁྱད་ཅན་,,2004 [2005]
+618,blood pressure,tha lung,,ཁྲ་རླུང་,,2004 [2005]
+619,"teach, lecture",thit,,ཁྲིད་,,2004 [2005]
+620,"laws, rules",thim,,ཁྲིམ་,,2004 [2005]
+621,market,"thom, throm",,ཁྲོམ་,,2004 [2005]
+622,why,"ghan bya, kumbeya",,གན་བྱ་,,2004 [2005]
+623,[to] become,dub,,གྲུབ་,,2004 [2005]
+624,"move, go",chen,gyu,,འགྱུ་,2004 [2005]

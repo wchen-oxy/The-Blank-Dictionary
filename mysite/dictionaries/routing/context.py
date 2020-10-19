@@ -33,8 +33,8 @@ class SearchContext(ABC):
         """
         self._strategy = strategy
 
-    def execute_strategy(self, request, lang, translation):
-      
-        return self._strategy.execute(request, lang, translation)
+    def execute_strategy(self, request, lang, translation, optional_id=None):
+        print(translation)
+        return self._strategy.execute(request, lang, translation,  optional_id)
 
                 

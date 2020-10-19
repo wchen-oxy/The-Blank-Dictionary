@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import errorcode
-
+import sys
 import csv
 
 
@@ -14,13 +14,12 @@ if __name__ == "__main__":
                                 database='BlankDictionary')
         cursor = cnx.cursor()
 
-        with open('word_list.csv', newline='') as csvfile:
+        with open('words.csv') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
 
-
             insert = ("INSERT INTO bhutia "
-               "(eng_trans, bhut_rom_formal, bhut_rom_informal, bhut_script_formal, bhut_script_informal,  category, spoken_b, spoken_e) "
-               "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)")
+               "(entry_id, eng_trans, bhut_rom_formal, bhut_rom_informal, bhut_script_formal, bhut_script_informal, source) "
+               "VALUES (%s, %s, %s, %s, %s, %s, %s)")
            
             query = ("SELECT * FROM Bhutia")
            
@@ -36,7 +35,8 @@ if __name__ == "__main__":
                 cursor.execute(insert, row)
                 cnx.commit()
 
-
+    except csv.Error as e:
+        sys.exit('file %s, line %d: %s' % (reader.line_num, e))
 
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
