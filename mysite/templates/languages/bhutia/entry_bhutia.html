@@ -76,10 +76,10 @@
 	{% for match in be_f_possible %}
 	<!--skip the exact match query-->
 	{% if match.bhut_rom_formal != be_f_exact.0.bhut_rom_formal %}
-	{% url 'exact' lang='bhutia' translation='bhutia_english_formal' entry_id=match.entry_id as brf_url %}
+	{% url 'exact' lang='bhutia' translation='bhutia_english_formal' entry_id=match.entry_id as bef_url %}
 	<div class="row">
-		<p class="col"> {{match.bhut_rom_formal}} </p>
-		<a class="col" href="{{ brf_url }}">{{match.bhut_rom_formal}}</a>
+		<!-- <p class="col"> {{match.bhut_rom_formal}} </p> -->
+		<a class="col" href="{{ bef_url }}">{{match.bhut_rom_formal}}</a>
 	</div>
 		{% endif %}
 		{% endfor %}
@@ -93,8 +93,11 @@
 	{% for match in be_i_possible %}
 	<!--skip the exact match query-->
 	{% if match.bhut_rom_informal != be_f_exact.0.bhut_rom_informal %}
+	{% url 'exact' lang='bhutia' translation='bhutia_english_informal' entry_id=match.entry_id as bei_url %}
 	<div class="row">
-		<p class="col"> {{match.bhut_rom_informal}} </p>
+		<!-- <p class="col"> {{match.bhut_rom_informal}} </p> -->
+		<a class="col" href="{{ bei_url }}">{{match.bhut_rom_informal}}</a>
+
 			</div>
 		{% endif %}
 		{% endfor %}
@@ -107,8 +110,11 @@
 	{% for match in eb_f_possible %}
 	<!--skip the exact match query-->
 	{% if match.eng_trans != be_f_exact.0.eng_trans %}
+	{% url 'exact' lang='bhutia' translation='english_bhutia_formal' entry_id=match.entry_id as ebf_url %}
 	<div class="row">
-		<p class="col"> {{match.eng_trans}} </p>
+		<!-- <p class="col"> {{match.eng_trans}} </p> -->
+		<a class="col" href="{{ ebf_url }}">{{match.eng_trans}}</a>
+
 			</div>
 		{% endif %}
 		{% endfor %}
@@ -121,8 +127,11 @@
 	{% for match in eb_i_possible %}
 	<!--skip the exact match query-->
 	{% if match.eng_trans != be_f_exact.0.eng_trans %}
+	{% url 'exact' lang='bhutia' translation='english_bhutia_informal' entry_id=match.entry_id as ebi_url %}
 	<div class="row">
-		<p class="col"> {{match.eng_trans}} </p>
+		<!-- <p class="col"> {{match.eng_trans}} </p> -->
+		<a class="col" href="{{ ebi_url }}">{{match.eng_trans}}</a>
+
 			</div>
 		{% endif %}
 		{% endfor %}
@@ -135,8 +144,11 @@
 	{% for match in bse_f_possible %}
 	<!--skip the exact match query-->
 	{% if match.bhut_script_formal != be_f_exact.0.bhut_script_formal %}
+	{% url 'exact' lang='bhutia' translation='bhutiascript_english_formal' entry_id=match.entry_id as bsef_url %}
 	<div class="row">
-		<p class="col"> {{match.bhut_script_formal}} </p>
+		<!-- <p class="col"> {{match.bhut_script_formal}} </p> -->
+		<a class="col" href="{{ bsef_url }}">{{match.bhut_script_formal}}</a>
+
 			</div>
 		{% endif %}
 		{% endfor %}
@@ -150,8 +162,11 @@
 	{% for match in bse_i_possible %}
 	<!--skip the exact match query-->
 	{% if bhut_script_informal != be_f_exact.0.bhut_script_informal  %}
+	{% url 'exact' lang='bhutia' translation='bhutiascript_english_informal' entry_id=match.entry_id as bsei_url %}
 	<div class="row">
-		<p class="col"> {{match.bhut_script_informal}} </p>
+		<!-- <p class="col"> {{match.bhut_script_informal}} </p> -->
+		<a class="col" href="{{ bsei_url }}">{{match.bhut_script_formal}}</a>
+
 			</div>
 		{% endif %}
 		{% endfor %}
