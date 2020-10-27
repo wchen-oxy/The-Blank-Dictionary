@@ -1,0 +1,7 @@
+venv/
+Android/.idea
+Android/.gradle
+*.env
+*.DS_Store
+Android/local.properties
+

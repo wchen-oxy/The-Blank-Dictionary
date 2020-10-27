@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg fixed-top">
+  <nav class="navbar navbar-expand-lg fixed-top">
     <a id="home" class="navbar-brand" href="/">Blank Dictionary</a>
     <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -25,77 +25,83 @@
         <li class="nav-item active">
           <a class="nav-link" href="/d/bhutia/">Home<span class="sr-only">
           (current)</span>
-          </a>
-        </li>
-        {% endif %}
-
-        {% if english %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/d/english/">Home<span class="sr-only">
-          (current)</span>
-          </a>
-        </li>
-        {% endif %}
-
-        <!-- MASTER LIST OF WORDS -->
-
-        {% if bhutia %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/d/bhutia/master/">Master List of Words<span class="sr-only">
-          (current)</span>
-          </a>
-        </li>
-        {% endif %}
-
-            {% if english %}
-        <li class="nav-item active">
-          <a class="nav-link" href="/d/english/master/">Master List of Words<span class="sr-only">
-          (current)</span>
-          </a>
-        </li>
-        {% endif %}
-
-      </ul>
-
-      <!-- SEARCH AND TRANSLATION -->
-
-      {% if not home and not master %}
-       {% if user.is_authenticated %}
-    <ul class="navbar-nav mr-sm-2">
-
-      {% if bhutia %}
-     {% include "languages/bhutia/navbar/search.html" %}
+        </a>
+      </li>
       {% endif %}
 
       {% if english %}
-     {% include "languages/english/navbar/search.html" %}
-      {% endif %}
+      <li class="nav-item active">
+        <a class="nav-link" href="/d/english/">Home<span class="sr-only">
+        (current)</span>
+      </a>
+    </li>
+    {% endif %}
 
-    </ul>
-   
-    
-        <div class="selection">
-        <select id="translation" class="custom-select">
-      {% if bhutia %}
-        {% include "languages/bhutia/navbar/trans.html" %}
-      {% endif %}
-      {% if english %}
-        {% include "languages/english/navbar/trans.html" %}
-      {% endif %}
+    <!-- MASTER LIST OF WORDS -->
 
-        </select>
-      </div>
+    {% if bhutia %}
+    <li class="nav-item active">
+      <a class="nav-link" href="/d/bhutia/master/">Master List of Words<span class="sr-only">
+      (current)</span>
+    </a>
+  </li>
+  {% endif %}
 
-      {% endif %}
-            {% endif %}
+  {% if english %}
+  <li class="nav-item active">
+    <a class="nav-link" href="/d/english/master/">Master List of Words<span class="sr-only">
+    (current)</span>
+  </a>
+</li>
+{% endif %}
+
+</ul>
+
+<!-- SEARCH AND TRANSLATION -->
+
+{% if not home and not master %}
+{% if user.is_authenticated %}
+<ul class="navbar-nav mr-sm-2">
+
+  {% if bhutia %}
+  {% include "languages/bhutia/navbar/search.html" %}
+  {% endif %}
+
+  {% if english %}
+  {% include "languages/english/navbar/search.html" %}
+  {% endif %}
+
+</ul>
+
+
+<div class="selection">
+  <select id="translation" class="custom-select">
+    {% if bhutia %}
+    {% include "languages/bhutia/navbar/trans.html" %}
+    {% endif %}
+    {% if english %}
+    {% include "languages/english/navbar/trans.html" %}
+    {% endif %}
+
+  </select>
+</div>
+
+{% endif %}
+{% endif %}
 
 
 
-    </div>
+</div>
 
 {% if user.is_authenticated %}
-      <form action="/accounts/logout/">
-    <input type="submit" value="Log Out" />
-    </form>
-    {% endif %}
-  </nav>
+<form action="/accounts/logout/">
+  <input className="login-logout-button" type="submit" value="Log Out" />
+</form>
+
+{% else %}
+<form action="/accounts/login/">
+  <input class="login-logout-button" type="submit" value="Login" />
+</form>
+{% endif %}
+
+</nav>

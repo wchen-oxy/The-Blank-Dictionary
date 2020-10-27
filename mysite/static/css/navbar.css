@@ -27,8 +27,14 @@ body {
 .space{
 	margin: 50px;
 }
+
 form-inline > * {
    margin:5px 3px;
 }
 
+.login-logout-button{
+  background: none;
+  border: none;
+  color: white;
+}
 
