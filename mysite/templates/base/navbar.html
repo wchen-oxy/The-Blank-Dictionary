@@ -60,6 +60,7 @@
       <!-- SEARCH AND TRANSLATION -->
 
       {% if not home and not master %}
+       {% if user.is_authenticated %}
     <ul class="navbar-nav mr-sm-2">
 
       {% if bhutia %}
@@ -71,6 +72,7 @@
       {% endif %}
 
     </ul>
+   
     
         <div class="selection">
         <select id="translation" class="custom-select">
@@ -84,7 +86,16 @@
         </select>
       </div>
 
-
       {% endif %}
+            {% endif %}
+
+
+
     </div>
+
+{% if user.is_authenticated %}
+      <form action="/accounts/logout/">
+    <input type="submit" value="Log Out" />
+    </form>
+    {% endif %}
   </nav>

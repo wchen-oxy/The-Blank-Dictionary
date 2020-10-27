@@ -28,7 +28,6 @@ body {
   background-color: #ba375c !important;
   border-radius: 10px;
   padding: 15px 30px;
-
   text-decoration: none;
 }
 .btn:hover, .btn:active {
@@ -36,27 +35,29 @@ body {
 }
 
 
- @media only screen and (max-width: 1160px) {
+@media only screen and (max-width: 1160px) {
 	#title{
 		font-size: 3.5em;
     line-height: normal;
-	}
+  }
   #title-container{
     margin: auto;
-
+    margin-bottom: 180px;
     top:200px;
   }
 }
 
- @media only screen and (max-width: 600px) {
+@media only screen and (max-width: 600px) {
 	#title{
 		font-size: 3.5em;
     line-height: normal;
-	}
+  }
   #title-container{
     margin: auto;
     top:100px;
     padding-top: 7%;
+    margin-bottom: 180px;
+
   }
 }
 

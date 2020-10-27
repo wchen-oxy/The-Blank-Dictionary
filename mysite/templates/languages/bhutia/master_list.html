@@ -1,6 +1,10 @@
 {% load staticfiles %}
 {% include "base/navbar.html" %}
 <link rel="stylesheet" href="{% static 'css/languages/bhutia/master.css' %}">
+<link rel="stylesheet" href="{% static 'css/login_logout.css' %}">
+
+{% if user.is_authenticated %}
+
 <main role="main" class="container">
   <h1>Currently Available Words:</h1>
   <table class="table table-striped">
@@ -28,6 +32,7 @@
       {% endfor %}
     </tbody>
   </table>
+
   <!-- 
 <div class="row">
 <h1>Currently Available Words:</h1>
@@ -73,7 +78,23 @@
 </div>
 {% endfor %} -->
 
-</main>
+</main>   
+{% else %}
+
+<div class="login-logout-page">
+  <div class="login-logout-container">
+          <p>Please login to see this page.</p>
+
+  <form action="/accounts/login/">
+    <input type="submit" value="Go To Login" />
+</form>
+
+</div>
+
+</div>
+  
+
+{% endif %}
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -1,0 +1,22 @@
+.login-logout-page{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.login-logout-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: auto;
+}
+
+.login-logout-button-container{
+	padding: 2vh;
+	text-align: center;
+}
+
+#login-needed-container{
+	height: 80vh;
+}

@@ -1,6 +1,8 @@
 {% load staticfiles %}
 {% include "base/navbar.html" %}
 <link rel="stylesheet" href="{% static 'css/entry.css' %}">
+<link rel="stylesheet" href="{% static 'css/login_logout.css' %}">
+
 
 <div class="row spacer">
 	<div class="span4"></div>
@@ -9,7 +11,7 @@
 </div>
 
 <!-- Section for if an error exists -->
-
+{% if user.is_authenticated %}
 {% if error %}
 <main role="main" class="container">
 	<div class="row">
@@ -205,6 +207,32 @@
 	{% endif %} -->
 
 </main>
+   {% else %}
+   <!-- <div id="login-needed-container content"> -->
+   <!-- 	<div>
+   		        <a href="{% url 'login'%}?next={{request.path}}">Please Login</a> 
+
+   	</div> -->
+       
+    <!-- </div> -->
+
+
+
+ 
+<div class="login-logout-page">
+  <div class="login-logout-container">
+  	      <p>Please login to see this page.</p>
+
+  <form action="/accounts/login/">
+    <input type="submit" value="Go To Login" />
+</form>
+
+</div>
+
+</div>
+  
+
+{% endif %}
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
