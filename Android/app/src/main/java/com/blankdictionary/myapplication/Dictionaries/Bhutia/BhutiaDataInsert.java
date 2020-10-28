@@ -27,10 +27,6 @@ public class BhutiaDataInsert {
         reader.beginObject();
 
         while (reader.hasNext()) {
-            System.out.println("Data insert");
-            System.out.println(reader.peek());
-
-
             switch (reader.nextName()) {
                 case ("entry_id"):
                     if (reader.peek() == JsonToken.NULL) {

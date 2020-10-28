@@ -17,7 +17,7 @@ class BhutiaSerializer(serializers.Serializer):
     bhut_rom_informal =  serializers.CharField(read_only=True, allow_null=True)
     bhut_script_formal = serializers.CharField(read_only=True, allow_null=True)
     bhut_script_informal = serializers.CharField(read_only=True, allow_null=True)
-    source = serializers.CharField(read_only=True, allow_null=True)
+    bhutia_source = serializers.CharField(read_only=True, allow_null=True)
 
     # example = serializers.CharField(read_only=True, allow_null=True)
     # spoken_b = serializers.CharField(read_only=True, allow_null=True)
