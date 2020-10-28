@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
@@ -56,26 +57,32 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
         SharedPreferences pref = context.getSharedPreferences("BlankDictPref", 0); // 0 - for private mode
         final SharedPreferences.Editor editor = pref.edit();
         //build an abstract factory
-        switch (type) {
-            case BHUTIA: {
-                BhutiaDao bhutiaDao = db.getBhutiaDao();
-                BhutiaDataInsert.BhuInsert(bhutiaDao, file);
-                editor.putBoolean(BHUTIA, true);
-                editor.commit();
-                break;
+        try {
+            switch (type) {
+                case BHUTIA: {
+                    BhutiaDao bhutiaDao = db.getBhutiaDao();
+                    BhutiaDataInsert.BhuInsert(bhutiaDao, file);
+                    editor.putBoolean(BHUTIA, true);
+                    editor.commit();
+                    break;
+
+                }
+                case ENGLISH: {
+                    EnglishDao englishDao = db.getEnglishDao();
+                    EnglishDataInsert.engInsert(englishDao, file);
+                    editor.putBoolean(ENGLISH, true);
+                    editor.commit();
+                    break;
+
+                }
+                default:
+                    Log.d("myDictionaryReciever", "Something went wrong and here is the lang --" + type);
 
             }
-            case ENGLISH: {
-                EnglishDao englishDao = db.getEnglishDao();
-                EnglishDataInsert.engInsert(englishDao, file);
-                editor.putBoolean(ENGLISH, true);
-                editor.commit();
-                break;
-
-            }
-            default:
-                Log.d("myDictionaryReciever", "Something went wrong and here is the lang --" + type);
-
+        }
+        catch (SQLiteConstraintException exception){
+            System.out.println("Exception in myDictionaryDownloadReciever");
+            exception.printStackTrace();
         }
 
         Log.i("Temp Payload Deleted:", Boolean.toString(file.delete()));

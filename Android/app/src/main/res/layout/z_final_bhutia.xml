@@ -15,11 +15,11 @@
         android:id="@+id/bhutia_title_text"
         style="@style/Title" />
 
-    <TextView
-        android:id="@+id/bhutia_ipa"
-        style="@style/SubTitles"
+    <!--<TextView-->
+        <!--android:id="@+id/bhutia_ipa"-->
+        <!--style="@style/SubTitles"-->
 
-        />
+        <!--/>-->
 
     <TextView
         android:id="@+id/bhutia_category"
@@ -49,8 +49,11 @@
 
         />
 
+    <!--<TextView-->
+        <!--android:id="@+id/bhutia_example"-->
+        <!--style="@style/SubTitles" />-->
     <TextView
-        android:id="@+id/bhutia_example"
+        android:id="@+id/bhutia_source"
         style="@style/SubTitles" />
 
 

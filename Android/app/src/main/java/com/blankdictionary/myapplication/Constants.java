@@ -7,7 +7,9 @@ import java.security.NoSuchAlgorithmException;
 public final class Constants {
     //Network Constants
     public static class Network {
-        public static final String BASE_URL = "http://blank-dictionary.herokuapp.com/";
+//        public static final String BASE_URL = "http://blank-dictionary.herokuapp.com/";
+        public static final String BASE_URL = "http://www.blankdictionary.com/";
+
         public static final String DOWNLOAD_URL_PART = "api/";
         public static final String STATUS_URL_PART = "status/";
         public static final String DICT_LIST_URL_PART = "all/";

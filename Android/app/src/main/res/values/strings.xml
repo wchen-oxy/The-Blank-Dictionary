@@ -66,6 +66,7 @@
     <string name="desc_pronounciation">Pronunciation: </string>
     <string name="desc_category">Category: </string>
     <string name="desc_example">Example: </string>
+    <string name="desc_source">Source: </string>
     <string name="bhutia_eng_trans">English Translation: </string>
     <string name="bhutia_bhutia_inf_trans">Bhutia (Informal): </string>
     <string name="bhutia_bhutiascript_form_trans">Bhutia Script (Formal): </string>

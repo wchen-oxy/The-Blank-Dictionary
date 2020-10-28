@@ -7,8 +7,6 @@ bhut_rom_informal varchar (50),
 bhut_script_formal varchar (50),
 bhut_script_informal varchar (50),
 source varchar (200),
-spoken_b varchar (150),
-spoken_e varchar (150),
 PRIMARY KEY (entry_id)
 );
 
