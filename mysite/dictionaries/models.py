@@ -23,7 +23,7 @@ class Bhutia(models.Model):
     bhut_rom_informal =  models.CharField(max_length=50, blank=True, null=True)
     bhut_script_formal = models.CharField(max_length=50, blank=True, null=True)
     bhut_script_informal = models.CharField(max_length=50, blank=True, null=True)
-    source =  models.CharField(max_length=20, blank=True, null=True)
+    bhutia_source =  models.CharField(max_length=20, blank=True, null=True)
     # example = models.CharField(max_length=200, blank=True, null=True)
     # spoken_b = models.CharField(max_length=150, blank=True, null=True)
     # spoken_e = models.CharField(max_length=150, blank=True, null=True)
