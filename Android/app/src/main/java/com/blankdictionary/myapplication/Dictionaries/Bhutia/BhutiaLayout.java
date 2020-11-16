@@ -59,7 +59,7 @@ public class BhutiaLayout implements ILayoutSetter {
         String bhutiaInformal =   "<b>" + context.getString(R.string.bhutia_bhutia_inf_trans)+ "</b> "  + bhutiaWord.bhut_rom_informal;
         String bhutiaScriptFormal =  "<b>" + context.getString(R.string.bhutia_bhutiascript_form_trans)+ "</b> " + bhutiaWord.bhut_script_formal;
         String bhutiaScriptInformal =  "<b>" + context.getString(R.string.bhutia_bhutiascript_inf_trans)+ "</b> " + bhutiaWord.bhut_script_informal;
-        String sourceContent = "<b>" + context.getString(R.string.desc_source) + "</b>" + bhutiaWord.source;
+        String sourceContent = "<b>" + context.getString(R.string.desc_source) + "</b>" + " " + bhutiaWord.source;
 
 //        ipa.setText(Html.fromHtml(ipaContent));
 //        category.setText(Html.fromHtml(categoryContent));

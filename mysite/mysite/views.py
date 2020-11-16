@@ -50,7 +50,6 @@ def test(request, lang, word=None):
         ##FIXME NEED TO DESIGN INDIVIDUAL WORD SEARCH
          if (word == None):
              dictionary = apps.get_model("dictionaries", lang)
-             print(dictionary)
              dic = dictionary.objects.all()
              serializer = None
              if lang.lower() =="bhutia":

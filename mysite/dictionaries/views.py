@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.apps import apps
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
-
 ##for some reason django crashes with multiple relative imports... Below might be the reason
 # http://python-notes.curiousefficiency.org/en/latest/python_concepts/import_traps.html
 from .routing.strategy import *
@@ -31,10 +30,6 @@ def master_list(request, lang):
         return render(request,'languages/english/master_list.html', {'master':master, 'english': True})
  
 def exact(request, lang, translation, entry_id):
-    print(translation)
-    print(lang)
-    print(entry_id)
-    print("123123")
     if lang.lower() == 'bhutia':
             context = SearchContext(BhutiaStrategy())
     if lang.lower() == "english":
@@ -42,8 +37,6 @@ def exact(request, lang, translation, entry_id):
     return context.execute_strategy(request, lang, translation, entry_id)
 
 def search(request, lang, translation):
-    print(translation)
-    print(lang)
     error = False  
     #FIXME 
     if 'query' in request.GET:

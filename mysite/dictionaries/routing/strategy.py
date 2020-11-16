@@ -23,11 +23,6 @@ class Strategy():
 
 class BhutiaStrategy(Strategy):
     def execute(self, request, lang, translation, entry_id) -> HttpResponse:
-        print(translation)
-        print(request)
-        print("1e3")
-        print(entry_id)
-
         # get dictionary pack
         target = apps.get_model('dictionaries', lang)
 
@@ -44,8 +39,6 @@ class BhutiaStrategy(Strategy):
             error = True
             return render(request, 'languages/bhutia/entry_bhutia.html', {'error': error, 'bhutia': True})
         if len(request.GET) == 0 and entry_id != None:
-            print("blahblah")
-
             params = {
                 "bhutia_english_formal": {"entry_id__iexact": entry_id},
                 "bhutia_english_informal": {"entry_id__iexact": entry_id},
@@ -53,11 +46,8 @@ class BhutiaStrategy(Strategy):
                 "english_bhutia_informal": {"entry_id__iexact": entry_id},
                 "bhutiascript_english_formal": {"entry_id__iexact": entry_id},
                 "bhutiascript_english_informal": {"entry_id__iexact": entry_id}
-            }
-        # for trans in ['bhutia_english', 'english_bhutia', 'tibetan_bhutia']:
-       
+            }       
             exact_entry = target.objects.filter(**params.get(translation))
-         
             # Checker for no matching
             if not exact_entry:
                 error = True
@@ -65,7 +55,8 @@ class BhutiaStrategy(Strategy):
             return render(request, 'languages/bhutia/entry_bhutia.html', {all_tran.get(translation)[1]: exact_entry, 'bhutia': True})
 
 
-        query = request.GET['query']
+        query = request.GET['query'].strip()
+       
 
         params = {
             "bhutia_english_formal": [{"bhut_rom_formal__iexact": query}, {"bhut_rom_formal__icontains": query}],
@@ -75,14 +66,14 @@ class BhutiaStrategy(Strategy):
             "bhutiascript_english_formal": [{"bhut_script_formal__iexact": query}, {"bhut_script_formal__icontains": query}],
             "bhutiascript_english_informal": [{"bhut_script_informal__iexact": query}, {"bhut_script_informal__icontains": query}]
         }
-        print(all_tran)
+    
         # for trans in ['bhutia_english', 'english_bhutia', 'tibetan_bhutia']:
         if translation in all_tran:
             exact_entry = target.objects.filter(**params.get(translation)[0])
             entries = target.objects.filter(**params.get(translation)[1])
             # Checker for no matching
-            if len(entries) == 1:
-                entries = None
+            # if len(entries) == 1:
+            #     entries = None
             if not exact_entry and not entries:
                 error = True
                 return render(request, 'languages/bhutia/entry_bhutia.html', {'error': error, 'bhutia': True})
