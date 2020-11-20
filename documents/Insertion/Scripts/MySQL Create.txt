@@ -13,12 +13,21 @@ PRIMARY KEY (entry_id)
 
 CREATE TABLE English(
 
+entry_id MEDIUMINT,
 word varchar (50),
 ipa varchar(100),
 eng_trans varchar (50),
 definition varchar (800),
 example varchar (200),
-PRIMARY KEY (word)
+PRIMARY KEY (entry_id)
+);
+
+CREATE TABLE English(
+
+entry_id MEDIUMINT,
+word varchar (50),
+definition varchar (800),
+PRIMARY KEY (entry_id)
 );
 
 

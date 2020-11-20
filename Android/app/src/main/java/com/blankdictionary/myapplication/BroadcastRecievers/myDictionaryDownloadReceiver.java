@@ -24,6 +24,7 @@ import java.io.File;
 import static android.content.Context.DOWNLOAD_SERVICE;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.BHUTIA;
 import static com.blankdictionary.myapplication.Constants.SupportedDictionaries.ENGLISH;
+import static com.blankdictionary.myapplication.Constants.System.APP_DICTIONARY_FOLDER;
 import static com.blankdictionary.myapplication.Constants.System.APP_NAME;
 import static com.blankdictionary.myapplication.Constants.System.DATABASE_UPDATED;
 
@@ -50,7 +51,7 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
         //Checking if the received broadcast is for our enqueued download by matching download id
         Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
 
-        final File file = new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME, type);
+        final File file = new File(context.getExternalFilesDir(null) + APP_DICTIONARY_FOLDER, type);
         //builds database upon completion of download
         AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").fallbackToDestructiveMigration().enableMultiInstanceInvalidation().build();
         //create a value to store in shared preferences

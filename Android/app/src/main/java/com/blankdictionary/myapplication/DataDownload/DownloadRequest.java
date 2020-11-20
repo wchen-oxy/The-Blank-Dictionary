@@ -30,6 +30,7 @@ import static com.blankdictionary.myapplication.Constants.Network.REQUEST_AUTH_H
 import static com.blankdictionary.myapplication.Constants.Network.REQUEST_DESCRIPTION;
 import static com.blankdictionary.myapplication.Constants.Network.REQUEST_TITLE;
 import static com.blankdictionary.myapplication.Constants.Network.authDigest;
+import static com.blankdictionary.myapplication.Constants.System.APP_DICTIONARY_FOLDER;
 import static com.blankdictionary.myapplication.Constants.System.APP_NAME;
 import static com.blankdictionary.myapplication.Constants.Toast.DICTIONARY_IS_DOWNLOADING_TOAST;
 
@@ -50,8 +51,9 @@ public class DownloadRequest {
     private void makeFile(String url, String buttonText) {
         Log.d("Download URL: ", url);
         Toast.makeText(mContext, DICTIONARY_IS_DOWNLOADING_TOAST, Toast.LENGTH_SHORT).show();
-        file = new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME, buttonText);
-        Log.d("Is Folder Writable", String.valueOf(new File(Environment.getExternalStorageDirectory() + "/" + APP_NAME).canWrite()));
+        file = new File(mContext.getExternalFilesDir(null) + APP_DICTIONARY_FOLDER , buttonText);
+        System.out.println( String.valueOf(new File(mContext.getExternalFilesDir(null) + APP_DICTIONARY_FOLDER )));
+        Log.d("Is Folder Writable", String.valueOf(new File(mContext.getExternalFilesDir(null) + APP_DICTIONARY_FOLDER ).canWrite()));
 
         file.setWritable(true);
         if (file.exists()) {

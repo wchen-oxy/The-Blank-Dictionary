@@ -121,7 +121,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 28 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 29 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: androidx.room:room-common:2.2.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.test:core:1.2.0@aar" level="project" />
@@ -207,8 +207,8 @@
     <orderEntry type="library" scope="TEST" name="Gradle: net.bytebuddy:byte-buddy-agent:1.9.10@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.mockito:mockito-core:2.28.2@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: net.bytebuddy:byte-buddy:1.9.10@jar" level="project" />
-    <orderEntry type="library" name="Gradle: android.test.mock-android-28" level="project" />
-    <orderEntry type="library" name="Gradle: android.test.base-android-28" level="project" />
-    <orderEntry type="library" name="Gradle: android.test.runner-android-28" level="project" />
+    <orderEntry type="library" name="Gradle: android.test.mock-android-29" level="project" />
+    <orderEntry type="library" name="Gradle: android.test.base-android-29" level="project" />
+    <orderEntry type="library" name="Gradle: android.test.runner-android-29" level="project" />
   </component>
 </module>

@@ -15,11 +15,11 @@
         android:id="@+id/english_title_text"
         style="@style/Title" />
 
-    <TextView
-        android:id="@+id/english_ipa"
-        style="@style/SubTitles"
+    <!--<TextView-->
+        <!--android:id="@+id/english_ipa"-->
+        <!--style="@style/SubTitles"-->
 
-        />
+        <!--/>-->
 
     <TextView
         android:id="@+id/english_definition"
@@ -27,9 +27,9 @@
 
         />
 
-    <TextView
-        android:id="@+id/english_example"
-        style="@style/SubTitles" />
+    <!--<TextView-->
+        <!--android:id="@+id/english_example"-->
+        <!--style="@style/SubTitles" />-->
 
 
 </LinearLayout>

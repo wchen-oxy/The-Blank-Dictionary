@@ -39,7 +39,7 @@ public class DictionaryClientUsage {
                         e.printStackTrace();
                     }
                 }
-                DataSerialization.serializer(arrayListResponse);
+                DataSerialization.serializer(arrayListResponse, context);
 
                 LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent("DICTIONARY_LIST_DOWNLOADED"));
 

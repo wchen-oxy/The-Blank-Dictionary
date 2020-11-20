@@ -41,9 +41,9 @@ public class EnglishLayout implements ILayoutSetter {
         ArrayList<TextView> textViewArrayList = new ArrayList<>();
 
         TextView title = view.findViewById(R.id.english_title_text);
-        TextView ipa = view.findViewById(R.id.english_ipa);
+//        TextView ipa = view.findViewById(R.id.english_ipa);
         TextView definition = view.findViewById(R.id.english_definition);
-        TextView example = view.findViewById(R.id.english_example);
+//        TextView example = view.findViewById(R.id.english_example);
 
         //FIXME put on separate thread!
         AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").allowMainThreadQueries().enableMultiInstanceInvalidation().build();
@@ -53,13 +53,13 @@ public class EnglishLayout implements ILayoutSetter {
         Log.d("Translation num", String.valueOf(selectedTranslationId));
 
 
-        String ipaContent = "<b>" + context.getString(R.string.desc_pronounciation) + "</b>" + englishWord.ipa;
-        String definitionContent = "<b>" + context.getString(R.string.desc_category) + "</b>" + englishWord.definition;
-        String exampleContent = "<b>" + context.getString(R.string.desc_example) + "</b>" + englishWord.example;
+//        String ipaContent = "<b>" + context.getString(R.string.desc_pronounciation) + "</b>" + englishWord.ipa;
+        String definitionContent = "<b>" + context.getString(R.string.definition) + "</b>"  + " " + englishWord.definition;
+//        String exampleContent = "<b>" + context.getString(R.string.desc_example) + "</b>" + englishWord.example;
 
-        ipa.setText(Html.fromHtml(ipaContent));
+//        ipa.setText(Html.fromHtml(ipaContent));
         definition.setText(Html.fromHtml(definitionContent));
-        example.setText(Html.fromHtml(exampleContent));
+//        example.setText(Html.fromHtml(exampleContent));
 
         switch (tranType[selectedTranslationId]) {
             case ("English to English"):

@@ -14,13 +14,13 @@ if __name__ == "__main__":
                                 database='BlankDictionary')
         cursor = cnx.cursor()
 
-        with open('output.csv') as csvfile:
+        with open('output 2.csv') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
 
 
             insert = ("INSERT INTO English "
-               "(word, definition) "
-               "VALUES (%s, %s)")
+               "(entry_id, word, definition) "
+               "VALUES (%s, %s, %s)")
            
             query = ("SELECT * FROM English")
            

@@ -9,13 +9,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import android.content.Context;
 
 import static com.blankdictionary.myapplication.Constants.System.APP_DICTIONARY_FILE;
+import static com.blankdictionary.myapplication.Constants.System.APP_DICTIONARY_FOLDER;
+
 
 public class DataSerialization {
-    public static void serializer(ArrayList arrayList) {
+    public static void serializer(ArrayList arrayList, Context context) {
         try {
-            FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory() + APP_DICTIONARY_FILE);
+            File folder = new File(context.getExternalFilesDir(null), APP_DICTIONARY_FOLDER);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+            File file = new File(context.getExternalFilesDir(null) +  APP_DICTIONARY_FILE);
+            System.out.println(file.getAbsolutePath());
+            System.out.println(folder.exists());
+            FileOutputStream fos = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(arrayList);
             oos.close();

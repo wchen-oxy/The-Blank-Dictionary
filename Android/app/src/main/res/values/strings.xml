@@ -31,39 +31,38 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="about_app_title">About This App</string>
     <string name="about_app_desc">
-        \t Hello! This app is designed for people who speak lesser known languages and need a
+        Hello! This app is designed for people who speak lesser known languages and need a
         digital dictionary for reference. Since there are so many languages out there in the world
         that need digital dictionaries, we have created one massive mega dictionary that will contain
         all these individual dictionaries. That\'s why we\'re
         calling this \"The Blank Dictionary\".
         \n\n
-        \t To switch between a dictionary, just toggle between
+        To switch between a dictionary, just toggle between
         dictionaries in the settings. Return to the home page by pressing the home button in the
         bottom navigation menu and then proceed as you normally would.
         \n\n
-        \t We also have other versions of this service as well! You can access the website on your
-        computer or phone at www.blank-dictionary.herokuapp.com (The website may take a couple
-        seconds to load if it
-        hasn\'t been used for awhile). The website offers more or less the same things as the app,
+        We also have other versions of this service as well! You can access the website on your
+        computer or phone at www.blankdictionary.com. The website offers more or less the same things as the app,
         but it also contains a master word list for each dictionary. Furthermore, if you become a
         contributor to the app, you may edit and add dictionary content in a special administrative
         page.
         \n\n
-        \t If you like what we do, please consider supporting us. This project is intended to grow
+        If you like what we do, please consider supporting us. This project is intended to grow
         with the support of local communities. We need your help to create dictionary content
         for a language of your choice, considering the thousands of words that need to be defined.
         Furthermore, if you are in a position to do so, please consider donating to us to continue
         and improve this project. We are not a major nonprofit organization, so we currently have no
         funding and limited resources (e.g only one person is developing all the software).
         \n\n
-        \t To conclude, if you would like to contribute content to an existing dictionary, create
-        a brand new dictionary, or to support us in some other way, feel free to email
+        To conclude, if you would like to contribute content to an existing dictionary, create
+        a brand new dictionary, join a test group or to support us in some other way, feel free to email
         88developers@gmail.com!
         \n\n
-        \t If something isn\'t working or if you have any questions or suggestions, free free to
+        If something isn\'t working or if you have any questions or suggestions, free free to
         email me as well!
     </string>
     <string name="desc_pronounciation">Pronunciation: </string>
+    <string name="definition">Definition: </string>
     <string name="desc_category">Category: </string>
     <string name="desc_example">Example: </string>
     <string name="desc_source">Source: </string>

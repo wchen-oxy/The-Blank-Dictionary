@@ -84,6 +84,7 @@ public class BhutiaDataInsert {
             }
 
         }
+        System.out.println(entry_id);
 
         reader.endObject();
         return new BhutiaWord(entry_id, eng_trans, bhut_rom_formal, bhut_rom_informal,

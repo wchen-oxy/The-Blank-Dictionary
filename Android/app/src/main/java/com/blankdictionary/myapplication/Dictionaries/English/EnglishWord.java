@@ -11,18 +11,18 @@ public class EnglishWord {
 
     @PrimaryKey
     @NonNull
+    public int entry_id;
+    @ColumnInfo(name = "word")
     public String word;
-    @ColumnInfo(name = "ipa")
-    public String ipa;
     @ColumnInfo(name = "definition")
     public String definition;
-    @ColumnInfo(name = "example")
-    public String example;
 
-    public EnglishWord(String word, String ipa, String definition, String example) {
+
+    public EnglishWord(int entry_id, String word, String definition) {
+        this.entry_id = entry_id;
         this.word = word;
-        this.ipa = ipa;
+//        this.ipa = ipa;
         this.definition = definition;
-        this.example = example;
+//        this.example = example;
     }
 }

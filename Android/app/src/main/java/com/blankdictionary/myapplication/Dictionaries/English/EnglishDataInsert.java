@@ -11,13 +11,24 @@ import java.util.List;
 
 public class EnglishDataInsert {
     private static EnglishWord readEng(JsonReader reader) throws IOException {
+        int entry_id;
+
         String word, ipa, definition, example;
         word = ipa = definition = example = "";
+        entry_id = 0;
+
         reader.beginObject();
 
         while (reader.hasNext()) {
 
             switch (reader.nextName()) {
+                case ("entry_id"):
+                    if (reader.peek() == JsonToken.NULL) {
+                        reader.skipValue();
+                        continue;
+                    }
+                    entry_id = reader.nextInt();
+                    break;
                 case ("word"):
                     if (reader.peek() == JsonToken.NULL) {
                         reader.skipValue();
@@ -58,7 +69,7 @@ public class EnglishDataInsert {
         }
 
         reader.endObject();
-        return new EnglishWord(word, ipa, definition, example);
+        return new EnglishWord(entry_id, word, definition);
 
     }
 
