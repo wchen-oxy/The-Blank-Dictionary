@@ -189,6 +189,6 @@ LOGIN_REDIRECT_URL = '/d/bhutia'
 django_heroku.settings(locals())
 #IMPORTANT!!!
 #workaround for sslmode not supported when accessing admin on heroku (disable when running locally)
-if not LOCAL: 
-    del DATABASES['default']['OPTIONS']['sslmode']
+# if not LOCAL: 
+#     del DATABASES['default']['OPTIONS']['sslmode']
 

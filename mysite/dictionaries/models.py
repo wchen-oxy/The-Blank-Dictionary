@@ -48,11 +48,12 @@ class Bhutia(models.Model):
         template = '{0.eng_trans}'
         return template.format(self)
 
-class English(models.Model):
+class English(models.Model):    
+    entry_id = models.IntegerField()
     word = models.CharField(primary_key=True, max_length=50)
-    ipa =  models.CharField(max_length=100, blank=True, null=True)
+    # ipa =  models.CharField(max_length=100, blank=True, null=True)
     definition = models.CharField(max_length=200, blank=True, null=True)
-    example = models.CharField(max_length=400, blank = True, null= True)
+    # example = models.CharField(max_length=400, blank = True, null= True)
 
     class Meta:
         managed = False

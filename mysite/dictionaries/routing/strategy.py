@@ -81,7 +81,7 @@ class BhutiaStrategy(Strategy):
 
 
 class EnglishStrategy(Strategy):
-    def execute(self, request, lang, translation) -> HttpResponse:
+    def execute(self, request, lang, translation, entry_id) -> HttpResponse:
         if not request.GET['query']:
             error = True
             return render(request, 'languages/english/entry_english.html', {'error': error, 'english': True})
@@ -102,8 +102,7 @@ class EnglishStrategy(Strategy):
         if translation in all_tran:
             exact_entry = target.objects.filter(**params.get(translation)[0])
             entries = target.objects.filter(**params.get(translation)[1])
-            if len(entries) == 1:
-                entries = None
+          
             # Checker for no matching
             if not exact_entry and not entries:
                 error = True
