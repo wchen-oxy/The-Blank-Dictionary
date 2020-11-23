@@ -36,9 +36,10 @@ public class DataSerialization {
 
     }
 
-    public static ArrayList<String> deserializer(File file) {
+    public static ArrayList<String> deserializer(Context context) {
         ArrayList<String> arrayList = new ArrayList<>();
         try {
+            File file = new File(context.getExternalFilesDir(null) +  APP_DICTIONARY_FILE);
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
             arrayList = (ArrayList) ois.readObject();

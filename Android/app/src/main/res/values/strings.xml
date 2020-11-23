@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">The Blank Dictionary</string>
+    <string name="app_name">Blank Dictionary</string>
     <string name="title_home">Home</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_settings">Settings</string>
@@ -35,7 +35,7 @@
         digital dictionary for reference. Since there are so many languages out there in the world
         that need digital dictionaries, we have created one massive mega dictionary that will contain
         all these individual dictionaries. That\'s why we\'re
-        calling this \"The Blank Dictionary\".
+        calling this \"Blank Dictionary\".
         \n\n
         To switch between a dictionary, just toggle between
         dictionaries in the settings. Return to the home page by pressing the home button in the

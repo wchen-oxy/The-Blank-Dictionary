@@ -89,7 +89,7 @@ public class DictionarySelectionFragment extends Fragment {
                 settingsListsAdapter.notifyDataSetChanged();
             }
         };
-        available = DataSerialization.deserializer(new File(Environment.getExternalStorageDirectory() + "/BlankDictionary/list.json"));
+        available = DataSerialization.deserializer(context);
 
     }
 
