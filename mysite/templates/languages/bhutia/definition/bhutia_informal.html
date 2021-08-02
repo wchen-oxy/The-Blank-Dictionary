@@ -1,13 +1,12 @@
-
-    <div class="row">
-      <h1 class="col">{{word.bhut_rom_informal}}</h1>
-    </div>
-    {% if word.spoken_b %}
-      <div class="row">
-
- <!-- <p class="col">Bhutia Pronounciation:</p> -->
+<div class="row">
+  <h1 class="col">{{word.bhut_rom_informal}}</h1>
 </div>
-   <!--  <div class="row">
+{% if word.spoken_b %}
+<div class="row">
+
+  <!-- <p class="col">Bhutia Pronounciation:</p> -->
+</div>
+<!--  <div class="row">
      <iframe
    frameborder="0"
    width="500"
@@ -15,9 +14,9 @@
    src="{{word.spoken_b}}">
 </iframe>
     </div> -->
-  
-    {% endif %}
-     <!-- {% if word.spoken_e %}
+
+{% endif %}
+<!-- {% if word.spoken_e %}
     <div class="row">
 
  <p class="col">English Pronounciation:</p>
@@ -32,22 +31,19 @@
     </div>
     {% endif %} -->
 
-    <div class="row">
-      <p class="col">Bhutia (formal): {{word.bhut_rom_formal}}</p>
-    </div>
-    <!-- <div class="row">
+<div class="row">
+  <p class="col">Bhutia (formal): {{word.bhut_rom_formal}}</p>
+</div>
+<!-- <div class="row">
       <p class="col"> Pronounciation: {{word.ipa}}</p>
     </div> -->
-    <div class="row">
-    <p class="col"> English Translation: {{word.eng_trans}}</p>
-  </div>
-    <div class="row">
-    <p class="col">Bhutia Script (formal): {{word.bhut_script_formal}}</p>
-  </div>
-  </div>
-    <div class="row">
-    <p class="col">Bhutia Script (informal): {{word.bhut_script_informal}}</p>
-  </div>
-    <div class="row">
-      <p class="col"> Source: {{word.bhutia_source}}</p>
-    </div>
+<div class="row">
+  <p class="col"> English Translation: {{word.eng_trans}}</p>
+</div>
+<div class="row">
+  <p class="col">Bhutia Script (formal): {{word.bhut_script_formal}}</p>
+</div>
+</div>
+<div class="row">
+  <p class="col">Bhutia Script (informal): {{word.bhut_script_informal}}</p>
+</div>
