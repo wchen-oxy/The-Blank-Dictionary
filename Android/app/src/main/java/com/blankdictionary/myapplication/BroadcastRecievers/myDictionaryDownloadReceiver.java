@@ -52,6 +52,7 @@ public class myDictionaryDownloadReceiver extends BroadcastReceiver {
         Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
 
         final File file = new File(context.getExternalFilesDir(null) + APP_DICTIONARY_FOLDER, type);
+        System.out.println((file.getAbsolutePath()));
         //builds database upon completion of download
         AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").fallbackToDestructiveMigration().enableMultiInstanceInvalidation().build();
         //create a value to store in shared preferences

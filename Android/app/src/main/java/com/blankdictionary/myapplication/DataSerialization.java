@@ -23,8 +23,6 @@ public class DataSerialization {
                 folder.mkdirs();
             }
             File file = new File(context.getExternalFilesDir(null) +  APP_DICTIONARY_FILE);
-            System.out.println(file.getAbsolutePath());
-            System.out.println(folder.exists());
             FileOutputStream fos = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(arrayList);
