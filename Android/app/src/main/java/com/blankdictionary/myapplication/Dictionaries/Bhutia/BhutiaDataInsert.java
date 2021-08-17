@@ -17,11 +17,10 @@ public class BhutiaDataInsert {
                 bhut_rom_formal,
                 bhut_rom_informal,
                 bhut_script_formal,
-                bhut_script_informal,
-                bhutia_source;
+                bhut_script_informal;
 
         eng_trans = bhut_rom_formal = bhut_rom_informal = bhut_script_formal =
-                bhut_script_informal = bhutia_source = "";
+                bhut_script_informal = "";
         entry_id = 0;
 
         reader.beginObject();
@@ -71,13 +70,13 @@ public class BhutiaDataInsert {
                     bhut_script_informal = reader.nextString();
                     break;
 
-                case ("bhutia_source"):
-                    if (reader.peek() == JsonToken.NULL) {
-                        reader.skipValue();
-                        continue;
-                    }
-                    bhutia_source = reader.nextString();
-                    break;
+//                case ("bhutia_source"):
+//                    if (reader.peek() == JsonToken.NULL) {
+//                        reader.skipValue();
+//                        continue;
+//                    }
+//                    bhutia_source = reader.nextString();
+//                    break;
                 default:
                     reader.skipValue();
 
@@ -88,8 +87,7 @@ public class BhutiaDataInsert {
 
         reader.endObject();
         return new BhutiaWord(entry_id, eng_trans, bhut_rom_formal, bhut_rom_informal,
-                bhut_script_formal, bhut_script_informal,
-                bhutia_source);
+                bhut_script_formal, bhut_script_informal);
 
     }
 

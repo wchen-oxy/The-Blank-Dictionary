@@ -18,8 +18,8 @@ if __name__ == "__main__":
             reader = csv.reader(csvfile, delimiter=',')
 
             insert = ("INSERT INTO bhutia "
-               "(entry_id, eng_trans, bhut_rom_formal, bhut_rom_informal, bhut_script_formal, bhut_script_informal, source) "
-               "VALUES (%s, %s, %s, %s, %s, %s, %s)")
+               "(entry_id, eng_trans, bhut_rom_formal, bhut_rom_informal, bhut_script_formal, bhut_script_informal) "
+               "VALUES (%s, %s, %s, %s, %s, %s)")
            
             query = ("SELECT * FROM Bhutia")
            

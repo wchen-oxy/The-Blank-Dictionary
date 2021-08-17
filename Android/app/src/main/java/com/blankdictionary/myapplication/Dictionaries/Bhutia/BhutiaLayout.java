@@ -47,7 +47,7 @@ public class BhutiaLayout implements ILayoutSetter {
         TextView subTitle2 = view.findViewById(R.id.bhutia_sub_title_2);
         TextView subTitle3 = view.findViewById(R.id.bhutia_sub_title_3);
         TextView subTitle4 = view.findViewById(R.id.bhutia_sub_title_4);
-        TextView source = view.findViewById(R.id.bhutia_source);
+//        TextView source = view.findViewById(R.id.bhutia_source);
 
         AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "Database").allowMainThreadQueries().enableMultiInstanceInvalidation().build();
         BhutiaWord bhutiaWord = db.getBhutiaDao().engTranSearch(args.getString(QUERY_ID)).get(0);
@@ -59,11 +59,11 @@ public class BhutiaLayout implements ILayoutSetter {
         String bhutiaInformal =   "<b>" + context.getString(R.string.bhutia_bhutia_inf_trans)+ "</b> "  + bhutiaWord.bhut_rom_informal;
         String bhutiaScriptFormal =  "<b>" + context.getString(R.string.bhutia_bhutiascript_form_trans)+ "</b> " + bhutiaWord.bhut_script_formal;
         String bhutiaScriptInformal =  "<b>" + context.getString(R.string.bhutia_bhutiascript_inf_trans)+ "</b> " + bhutiaWord.bhut_script_informal;
-        String sourceContent = "<b>" + context.getString(R.string.desc_source) + "</b>" + " " + bhutiaWord.source;
+//        String sourceContent = "<b>" + context.getString(R.string.desc_source) + "</b>" + " " + bhutiaWord.source;
 
 //        ipa.setText(Html.fromHtml(ipaContent));
 //        category.setText(Html.fromHtml(categoryContent));
-        source.setText(Html.fromHtml(sourceContent));
+//        source.setText(Html.fromHtml(sourceContent));
 //        example.setText(Html.fromHtml(exampleContent));
 
         switch (tranType[selectedTranslationId]) {
@@ -73,7 +73,7 @@ public class BhutiaLayout implements ILayoutSetter {
                 subTitle2.setText(Html.fromHtml(bhutiaInformal));
                 subTitle3.setText(Html.fromHtml(bhutiaScriptFormal));
                 subTitle4.setText(Html.fromHtml(bhutiaScriptInformal));
-                source.setText(Html.fromHtml(sourceContent));
+//                source.setText(Html.fromHtml(sourceContent));
                 break;
             case ("English to Bhutia (Informal)"):
                 title.setText(bhutiaWord.bhut_rom_informal);
@@ -81,7 +81,7 @@ public class BhutiaLayout implements ILayoutSetter {
                 subTitle2.setText(Html.fromHtml(bhutiaFormal));
                 subTitle3.setText(Html.fromHtml(bhutiaScriptFormal));
                 subTitle4.setText(Html.fromHtml(bhutiaScriptInformal));
-                source.setText(Html.fromHtml(sourceContent));
+//                source.setText(Html.fromHtml(sourceContent));
                 break;
 
             //Everything to English
@@ -92,7 +92,7 @@ public class BhutiaLayout implements ILayoutSetter {
                 subTitle2.setText(Html.fromHtml(bhutiaInformal));
                 subTitle3.setText(Html.fromHtml(bhutiaScriptFormal));
                 subTitle4.setText(Html.fromHtml(bhutiaScriptInformal));
-                source.setText(Html.fromHtml(sourceContent));
+//                source.setText(Html.fromHtml(sourceContent));
 
         }
 

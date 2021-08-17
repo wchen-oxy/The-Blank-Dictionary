@@ -2,23 +2,31 @@
 {% load staticfiles %}
 {% include "base/navbar.html" %}
 
-        {% block title %}The Bhutia Dictionary{% endblock %}
-        
-        {% block search_form %}
-         <form name="myform" method="get" action="/d/bhutia/bhutia_english_formal/" method="get">
-          <div class="form-inline justify-content-center">
-            <input class="form-control col-md-6 col-8" type="text" placeholder="Search" aria-label="Search" name="query">
-            <button class="btn btn-outline-light" type="submit" action="/d/bhutia/" method="get">Search</button>
-          </div>
-        </form>
-        {% endblock %}
+{% block title %}The Bhutia Dictionary{% endblock %}
 
-        {% block translation_options%}    
-        {% include "languages/bhutia/navbar/trans.html" %}
-        {% endblock %}
+{% block search_form %}
+<link rel="stylesheet" href="{% static 'css/languages/bhutia/search_bar.css' %}">
+
+<form autocomplete="off" name="myform" method="get" action="/d/bhutia/bhutia_english_formal/" method="get">
+  <div class="form-inline justify-content-center search-bar-container">
+    <input id='bhutia-searchbar' class="form-control col-md-6 col-8" type="text" placeholder="Search"
+      aria-label="Search" name="query">
+    <button class="btn btn-outline-light" type="submit" action="/d/bhutia/" method="get">Search</button>
+  </div>
+</form>
+{% endblock %}
+
+{% block translation_options%}
+{% include "languages/bhutia/navbar/trans.html" %}
+{% endblock %}
 
 
-{% block script%}<script src="{% static 'js/lang/bhutia.js' %}"></script>{% endblock %}
+{% block script%}
+<script src="{% static 'js/lang/bhutia.js' %}"></script>
+<script type="module" src="{% static 'js/auto-complete.js' %}"></script>
+<script type="module" src="{% static 'js/debounce.js' %}"></script>
+
+{% endblock %}
 
 
 </html>

@@ -47,6 +47,8 @@ def exact(request, lang, translation, entry_id):
 def search(request, lang, translation):
     error = False
     # FIXME
+    print("lang", lang)
+    print(request)
     if 'query' in request.GET:
         context = None
         if lang.lower() == 'bhutia':

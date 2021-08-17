@@ -21,12 +21,10 @@ public class BhutiaWord {
     public String bhut_script_formal;
     @ColumnInfo(name = "bhut_script_informal")
     public String bhut_script_informal;
-    @ColumnInfo(name = "source")
-    public String source;
 
     public BhutiaWord(int entry_id, String eng_trans, String bhut_rom_formal,
                       String bhut_rom_informal, String bhut_script_formal,
-                      String bhut_script_informal, String source) {
+                      String bhut_script_informal) {
 
         this.entry_id = entry_id;
         this.eng_trans = eng_trans;
@@ -34,6 +32,5 @@ public class BhutiaWord {
         this.bhut_rom_informal = bhut_rom_informal;
         this.bhut_script_formal = bhut_script_formal;
         this.bhut_script_informal = bhut_script_informal;
-        this.source = source;
-    }
+     }
 }
