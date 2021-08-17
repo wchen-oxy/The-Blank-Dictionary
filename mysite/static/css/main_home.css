@@ -2,6 +2,10 @@ body {
   background: white;
 }
 
+#logo {
+  height: 35px;
+}
+
 #title{
 	color: black;
   font-size: 4em;
