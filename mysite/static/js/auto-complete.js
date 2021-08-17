@@ -37,6 +37,11 @@ function autocomplete(inp, arr) {
                 return handleInput(inp, suggestArray);
             });
     }, 1000));
+    inp.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            returnForm().submit();
+        }
+    });
     /*execute a function presses a key on the keyboard:*/
     inp.addEventListener("keydown", function (e) {
         var x = document.getElementById(this.id + "autocomplete-list");
@@ -145,5 +150,9 @@ function autocomplete(inp, arr) {
 }
 function returnAction() {
     return document.getElementById('translation').value
+}
+
+function returnForm(){
+    return document.myform;
 }
 autocomplete(document.getElementById('bhutia-searchbar'), ["China", "Chinglish", "cc", "ce", "ci", "cb", "cz", "cap"])

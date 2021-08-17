@@ -2,72 +2,75 @@ body {
   background: white;
 }
 
-#title{
-	color: black;
+#logo {
+  height: 35px;
+}
+
+#title {
+  color: black;
   font-size: 4em;
-
 }
 
-.desc{
-	margin-bottom: 70px;
+.desc {
+  margin-bottom: 70px;
 }
 
-.about-desc{
-	margin-top: 20px;
+.about-desc {
+  margin-top: 20px;
 }
 
 /*--- screen resize ---*/
 
- @media only screen and (max-width: 1160px) {
-	#title{
-		font-size: 3.5em;
+@media only screen and (max-width: 1160px) {
+  #title {
+    font-size: 3.5em;
     line-height: normal;
-	}
-  #title-container{
+  }
+  #title-container {
     margin: auto;
-
-    top:50px;
+    top: 50px;
   }
 }
 
- @media only screen and (max-width: 600px) {
-	#title{
-		font-size: 3.5em;
+@media only screen and (max-width: 600px) {
+  #title {
+    font-size: 3.5em;
     line-height: normal;
-	}
-  #title-container{
+  }
+  #title-container {
     margin: auto;
-    top:50px;
+    top: 50px;
     padding-top: 7%;
   }
 }
 
 /*--- navigation bar ---*/
-.navbar {
-  background:#ba375c;
 
+.navbar {
+  background: #ba375c;
 }
-.nav-link,
-.navbar-brand {
+
+.nav-link, .navbar-brand {
   color: #fff;
   cursor: pointer;
 }
+
 .nav-link {
   margin-right: 1em !important;
 }
+
 .nav-link:hover {
   color: #000;
 }
+
 .navbar-collapse {
   justify-content: flex-end;
 }
 
-
-.container{
-	margin-top: 10%;
+.container {
+  margin-top: 10%;
 }
 
-.title{
-	font-weight: bold;
+.title {
+  font-weight: bold;
 }
-
