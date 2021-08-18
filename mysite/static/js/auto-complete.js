@@ -37,7 +37,7 @@ function autocomplete(inp, arr) {
                 return handleInput(inp, suggestArray);
             });
     }, 1000));
-    inp.addEventListener("keyup", function(event) {
+    inp.addEventListener("keyup", function (event) {
         if (event.keyCode === 13) {
             returnForm().submit();
         }
@@ -79,7 +79,13 @@ function autocomplete(inp, arr) {
         a = document.createElement("DIV");
         a.setAttribute("id", e.target.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
-        a.setAttribute("style", "left:-76.61px; width:50%; margin:0 auto;")
+        if (returnIsHome()) {
+            a.setAttribute("style", "left:-76.61px; width:50%; margin:0 auto;")
+        }
+        else {
+            a.setAttribute("style", "margin-right: 0.5rem!important")
+
+        }
         /*append the DIV element as a child of the autocomplete container:*/
         e.target.parentNode.appendChild(a);
         /*for each item in the array...*/
@@ -148,11 +154,16 @@ function autocomplete(inp, arr) {
         closeAllLists(e.target);
     });
 }
+
+function returnIsHome() {
+    return window.location.pathname.split('/').length < 5
+}
+
 function returnAction() {
     return document.getElementById('translation').value
 }
 
-function returnForm(){
+function returnForm() {
     return document.myform;
 }
 autocomplete(document.getElementById('bhutia-searchbar'), ["China", "Chinglish", "cc", "ce", "ci", "cb", "cz", "cap"])

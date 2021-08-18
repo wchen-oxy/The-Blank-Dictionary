@@ -1,4 +1,12 @@
- <form class="form-inline my-2 my-lg-0" name="myform" method="get" action="/d/bhutia/bhutia_english_formal/">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query">
-        <button class="btn btn-outline-light my-2 my-sm-0" type="submit" action="/d/bhutia/bhutia_english_formal/" method="get">Search</button>
- </form>
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'css/auto_complete_dropdown.css' %}">
+<form autocomplete="off" class="form-inline my-2 my-lg-0" name="myform" method="get"
+       action="/d/bhutia/bhutia_english_formal/">
+       <div class="search-bar-container" style="position: relative;">
+              <input id='bhutia-searchbar' class="form-control mr-sm-2" type="text" placeholder="Search"
+                     aria-label="Search" name="query">
+       </div>
+       <button class="btn btn-outline-light my-2 my-sm-0" type="submit" action="/d/bhutia/bhutia_english_formal/"
+              method="get">Search</button>
+</form>
