@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from .forms import ContactForm
-from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.core import serializers
 from django.apps import apps

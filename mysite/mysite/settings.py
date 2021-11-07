@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-#heroku import
+# heroku import
 import django_heroku
 # import urllib.parse as urlparse
 import sys
@@ -21,7 +21,6 @@ LOCAL = os.getenv("LOCAL")
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 
 # Quick-start development settings - unsuitable for production
@@ -46,9 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #API stuff
+    # API stuff
     'rest_framework',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -88,8 +87,8 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # OLD ONE
 DATABASES = {
-    
-     'default': {
+
+    'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'BlankDictionary',
         'USER': 'root',
@@ -148,13 +147,19 @@ STATICFILES_DIRS = [
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/d/bhutia'
 
-#Form submission
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Form submission
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = '88developers@gmail.com'
+DEFAULT_FROM_EMAIL = '88developers@gmail.com'
+EMAIL_HOST_PASSWORD = 'axuvavzjxjbbiped'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
 
+DEFAULT_BHUTIA_RECIPIENT = 'williamshengchen8@gmail.com'
 
-
-#ClearDB specific code
-#HEROKU SPECIFIC
+# ClearDB specific code
+# HEROKU SPECIFIC
 # urlparse.uses_netloc.append('mysql')
 
 # try:
@@ -189,8 +194,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
-#IMPORTANT!!!
-#workaround for sslmode not supported when accessing admin on heroku (disable when running locally)
-if not LOCAL: 
+# IMPORTANT!!!
+# workaround for sslmode not supported when accessing admin on heroku (disable when running locally)
+if not LOCAL:
     del DATABASES['default']['OPTIONS']['sslmode']
-

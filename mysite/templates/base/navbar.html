@@ -59,6 +59,16 @@
       </ul>
       {% endif %}
 
+      {% if home and not master %}
+      <ul class="navbar-nav ml-sm-2">
+        {% if bhutia %}
+        <li class="nav-item active">
+          <a class="nav-link" href="suggest">Suggest<span class="sr-only">(suggest)</span></a>
+        </li>
+        {% endif %}
+      </ul>
+      {% endif %}
+
       <!-- SEARCH AND TRANSLATION -->
 
       {% if not home and not master %}
