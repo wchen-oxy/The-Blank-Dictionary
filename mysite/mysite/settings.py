@@ -150,13 +150,13 @@ LOGIN_REDIRECT_URL = '/d/bhutia'
 # Form submission
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = '88developers@gmail.com'
-DEFAULT_FROM_EMAIL = '88developers@gmail.com'
-EMAIL_HOST_PASSWORD = 'axuvavzjxjbbiped'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 
-DEFAULT_BHUTIA_RECIPIENT = 'williamshengchen8@gmail.com'
+DEFAULT_BHUTIA_RECIPIENT = os.getenv('DEFAULT_BHUTIA_RECIPIENT')
 
 # ClearDB specific code
 # HEROKU SPECIFIC
