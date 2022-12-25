@@ -5,10 +5,8 @@ from django.apps import apps
 from django.urls import reverse
 #API STUFF
 #API Specific imports
-from rest_framework.parsers import JSONParser
 from .serializers import BhutiaSerializer, EnglishSerializer
 from rest_framework import generics
-import dictionaries 
 from django.views.decorators.csrf import csrf_exempt
 import hashlib
 import json
