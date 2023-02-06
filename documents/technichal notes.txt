@@ -12,3 +12,9 @@ https://stackoverflow.com/questions/53985649/download-failed-with-error-400-when
 
 #Solution for a MysqlDB bug!!!
 https://stackoverflow.com/questions/6383310/python-mysqldb-library-not-loaded-libmysqlclient-18-dylib
+
+
+#if the server keeps dropping connection
+#try restarting the server
+sudo /usr/local/mysql/support-files/mysql.server start 
+sudo /usr/local/mysql/support-files/mysql.server stop
