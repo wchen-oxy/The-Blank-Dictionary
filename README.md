@@ -5,9 +5,10 @@ This project is a dictionary platform intended to promote endangered or at-risk 
 ## See It Live!
 #### The Website
 ###### *We are currently using free website hosting so the website may take a couple seconds to load if it hasn't been used in awhile*
-http://blank-dictionary.herokuapp.com/
+http://blankdictionary.com/
 #### The Android App
-###### *Almost There!*
+###### 
+https://play.google.com/store/apps/details?id=com.blankdictionary.myapplication&pli=1
 
 ------------------
 ## Overview
