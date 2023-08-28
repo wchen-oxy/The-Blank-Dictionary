@@ -18,21 +18,19 @@ import sys
 from dotenv import load_dotenv
 load_dotenv()
 LOCAL = os.getenv("LOCAL")
+SECRET_KEY = os.getenv("SECRET")
+DEBUG = os.getenv("DEBUG")
+DATABASE_URL = os.getenv("JAWSDB_URL")
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+database_attr = DATABASE_URL.split(':')
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'y)i1bq+nsu0377az=6+4eq5utii#bn$$9ywc)t!q1ypa@d%e@i'
+ 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+ 
 ALLOWED_HOSTS = ['heroku.com', 'herokuapp.com', '127.0.0.1', 'localhost']
 
 
@@ -85,18 +83,24 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+ 
 
-# OLD ONE
-DATABASES = {
-    
-     'default': {
+
+JaName = database_attr[3].split('/')[1].rstrip("'")
+JaUser = database_attr[1].lstrip('//')
+JaPwrd = database_attr[2].split('@')[0]
+JaHost = database_attr[2].split('@')[1]
+JaPort = int(database_attr[3].split('/')[0])
+
+DATABASES = { 
+    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'BlankDictionary',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-        # 'POR,T': '5432',
-    },
+        'NAME': JaName,
+        'USER': JaUser,
+        'PASSWORD': JaPwrd,
+        'HOST': JaHost,
+    }
+    ,
     'OPTIONS': {
             'connect_timeout': 60,
         }
